@@ -16,10 +16,18 @@ import httpx
 
 from buildsleuth.llm.rate_limit import RateLimiter
 from buildsleuth.llm.registry import ModelSpec
-from buildsleuth.llm.types import CompletionRequest, CompletionResult, ModelError, Usage
+from buildsleuth.llm.types import (
+    CompletionRequest,
+    CompletionResult,
+    ModelError,
+    QuotaExhaustedError,
+    Usage,
+)
 
 CHAT_COMPLETIONS_PATH = "/chat/completions"
-DEFAULT_TIMEOUT_SECONDS = 60.0
+# Triage is a batch operation over long logs, and reasoning models can take a
+# while on a large context. Nothing here is interactive, so wait generously.
+DEFAULT_TIMEOUT_SECONDS = 180.0
 BACKOFF_BASE_SECONDS = 0.5
 BACKOFF_MULTIPLIER = 2.0
 BACKOFF_MAX_SECONDS = 30.0
@@ -39,6 +47,18 @@ RETRYABLE_STATUSES = frozenset(
         httpx.codes.GATEWAY_TIMEOUT,
     }
 )
+
+# A 429 can mean "slow down" or "your daily allowance is gone". Retrying the
+# second kind cannot succeed and burns three more requests against the very
+# quota that is already exhausted, so it fails fast instead.
+_QUOTA_EXHAUSTED_MARKERS = ("exceeded your current quota", "quota_exceeded", "billing details")
+
+
+def _is_quota_exhausted(response: httpx.Response) -> bool:
+    if response.status_code != httpx.codes.TOO_MANY_REQUESTS:
+        return False
+    body = response.text.lower()
+    return any(marker in body for marker in _QUOTA_EXHAUSTED_MARKERS)
 
 
 def _redact_url(url: str) -> str:
@@ -136,10 +156,27 @@ class OpenAICompatClient:
     def _post_with_retries(self, payload: dict[str, Any]) -> httpx.Response:
         attempts = self._spec.quirks.max_retries + 1
         for attempt in range(attempts):
-            response = self._http.post(self._url, json=payload, headers=self._headers())
+            last_attempt = attempt == attempts - 1
+            try:
+                response = self._http.post(self._url, json=payload, headers=self._headers())
+            except httpx.TimeoutException as error:
+                # A timeout is transient. Dropping the case here would silently
+                # shrink the evaluated set, so retry before giving up.
+                if last_attempt:
+                    raise ModelError(
+                        f"{self._spec.name}: timed out after {attempts} attempts"
+                    ) from error
+                self._sleep(self._backoff(attempt))
+                continue
+
             if response.is_success:
                 return response
-            if response.status_code not in RETRYABLE_STATUSES or attempt == attempts - 1:
+            if _is_quota_exhausted(response):
+                raise QuotaExhaustedError(
+                    f"{self._spec.name}: {self._spec.provider.value} daily quota is exhausted."
+                    " Wait for it to reset or pick another model."
+                )
+            if response.status_code not in RETRYABLE_STATUSES or last_attempt:
                 raise self._error(response)
             self._sleep(self._retry_delay(attempt, response))
         raise ModelError(f"{self._spec.name}: no attempt was made against {self._url}")
@@ -147,8 +184,9 @@ class OpenAICompatClient:
     def _retry_delay(self, attempt: int, response: httpx.Response) -> float:
         """Server-stated wait when there is one, jittered exponential backoff otherwise."""
         stated = _retry_after_seconds(response)
-        if stated is not None:
-            return stated
+        return stated if stated is not None else self._backoff(attempt)
+
+    def _backoff(self, attempt: int) -> float:
         delay = min(BACKOFF_BASE_SECONDS * (BACKOFF_MULTIPLIER**attempt), BACKOFF_MAX_SECONDS)
         return delay + random.uniform(0.0, JITTER_FRACTION * delay)
 

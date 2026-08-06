@@ -77,6 +77,8 @@ GEMINI_FLASH_LITE_RPD = 1000
 GEMINI_CONTEXT_WINDOW = 1_048_576
 
 MODEL_SPECS: tuple[ModelSpec, ...] = (
+    # The newest Flash model is not on the free tier: an unbilled key gets a
+    # 429 on the first request. Kept for anyone running with billing enabled.
     ModelSpec(
         name="gemini-3.6-flash",
         api_model="gemini-3.6-flash",

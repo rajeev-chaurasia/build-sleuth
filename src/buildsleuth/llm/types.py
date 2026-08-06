@@ -58,3 +58,7 @@ class ModelError(Exception):
 
 class RateLimitExceededError(ModelError):
     """The configured daily or per-minute budget is spent."""
+
+
+class QuotaExhaustedError(ModelError):
+    """The provider says the account's allowance is gone, so retrying is futile."""

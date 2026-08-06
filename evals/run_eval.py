@@ -5,10 +5,9 @@ dependency one way: evals imports buildsleuth, never the reverse.
 """
 
 import argparse
-import os
 from pathlib import Path
 
-from buildsleuth.config import load_settings
+from buildsleuth.config import Settings, load_settings
 from buildsleuth.dataset.loader import load_cases
 from buildsleuth.llm.client import OpenAICompatClient
 from buildsleuth.llm.rate_limit import RateLimiter
@@ -41,25 +40,27 @@ class MissingApiKeyError(SystemExit):
     """The chosen model needs a key that is not in the environment."""
 
 
-def build_classifier(name: str, dataset_dir: Path, subset: str | None) -> Classifier:
+def build_classifier(
+    name: str, dataset_dir: Path, subset: str | None, settings: Settings
+) -> Classifier:
     """Build a baseline or a model-backed classifier from its id."""
     if name == MAJORITY_MODEL_NAME:
         return MajorityClassClassifier(truth_labels(load_cases(dataset_dir, subset=subset)))
     if name == REGEX_MODEL_NAME:
         return RegexRuleClassifier()
     if name in MODEL_REGISTRY:
-        return _build_llm_classifier(name)
+        return _build_llm_classifier(name, settings)
 
     valid = ", ".join([*BASELINE_NAMES, *sorted(MODEL_REGISTRY)])
     raise SystemExit(f"unknown model {name!r}, expected one of: {valid}")
 
 
-def _build_llm_classifier(name: str) -> LlmClassifier:
+def _build_llm_classifier(name: str, settings: Settings) -> LlmClassifier:
     spec = get_model_spec(name)
-    env_var = api_key_env_var(spec.provider)
-    api_key = os.environ.get(env_var) if env_var else None
+    api_key = settings.api_key_for(spec.provider)
 
     if spec.provider is not Provider.OLLAMA and not api_key:
+        env_var = api_key_env_var(spec.provider)
         raise MissingApiKeyError(
             f"{name} needs an API key. Put it in .env as {env_var}=<key>, or export it."
         )
@@ -78,11 +79,11 @@ def main() -> int:
     parser.add_argument("--trace", action="store_true", help="Export OTLP traces.")
     args = parser.parse_args()
 
-    load_settings()  # loads .env so provider keys are visible as env vars
+    settings = load_settings()
     if args.trace:
         setup_tracing()
 
-    classifier = build_classifier(args.model, args.dataset, args.subset)
+    classifier = build_classifier(args.model, args.dataset, args.subset, settings)
     prompt_hash = getattr(classifier, "prompt_hash", NO_PROMPT_HASH)
     card = evaluate(classifier, args.dataset, subset=args.subset, prompt_hash=prompt_hash)
     _attach_cost(card, classifier)
