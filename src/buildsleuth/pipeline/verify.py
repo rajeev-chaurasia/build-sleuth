@@ -42,6 +42,20 @@ class VerificationResult:
         return self.level >= VerificationLevel.FAILING_TEST_PASSES
 
 
+def normalize_patch(patch: str) -> str:
+    """Make a model's diff acceptable to git without changing what it says.
+
+    Line endings become LF and a trailing newline is added if it is missing.
+    Models routinely omit that newline, and git rejects the whole patch as
+    corrupt when it is absent, which looks like a wrong patch rather than a
+    formatting slip.
+    """
+    if not patch.strip():
+        return patch
+    normalized = patch.replace("\r\n", "\n").replace("\r", "\n")
+    return normalized if normalized.endswith("\n") else normalized + "\n"
+
+
 def check_applies(
     patch: str, repo_dir: Path, timeout: int = APPLY_CHECK_TIMEOUT_SECONDS
 ) -> VerificationResult:
@@ -52,6 +66,8 @@ def check_applies(
     """
     if not patch.strip():
         return VerificationResult(VerificationLevel.NOTHING, EMPTY_PATCH_REASON)
+
+    patch = normalize_patch(patch)
 
     try:
         completed = subprocess.run(
