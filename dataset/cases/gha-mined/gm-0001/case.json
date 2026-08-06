@@ -11,7 +11,9 @@
     "pr_number": null,
     "failed_job_name": "CI image checks / Build documentation (--spellcheck-only)",
     "failed_step_name": "Building docs with --spellcheck-only flag",
-    "log_files": ["logs/failed_job.txt"],
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
     "diff_file": null,
     "workflow_file": null,
     "passing_run_log": null
@@ -19,8 +21,10 @@
   "ground_truth": {
     "failure_class": "code_change",
     "subcategory": "lint_or_format",
-    "related_to_diff": true,
-    "culprit_files": ["docs/spelling_wordlist.txt"],
+    "related_to_diff": null,
+    "culprit_files": [
+      "docs/spelling_wordlist.txt"
+    ],
     "failing_tests": [],
     "fix_commit_sha": null,
     "fix_summary": "Add 'oci' to docs/spelling_wordlist.txt, or quote the package names with backticks, so sphinxcontrib-spelling accepts the docs of the newly added OCI provider."
@@ -32,7 +36,9 @@
     "verified_date": null,
     "original_url": "https://github.com/apache/airflow/actions/runs/31063661240",
     "snapshot_date": "2026-08-05",
-    "notes": "Labelled code_change/lint_or_format because the only failing package is the one this branch adds and the failure is a spelling gate, not a code defect: 'providers/oci/docs/index.rst:70: (oci)  apache-airflow-providers-oci package' followed by 'build finished with problems, 1 warning (with warnings treated as errors)'. related_to_diff is true because the head branch is add-oci-generative-ai-hook and every one of the four reported errors is inside providers/oci/docs. culprit_files names docs/spelling_wordlist.txt because the log states the remedy directly ('add the spelling to docs/spelling_wordlist.txt'); the three .rst sites it reports are generated or new provider docs. No diff was captured for this run, so the label rests on the log plus the branch name and the enum value fix_commit_heuristic is the closest available fit rather than a literal description. Log truncated to the last 2000 of 3427 cleaned lines; the spelling errors summary and the final error are inside the kept region."
+    "notes": "Labelled code_change/lint_or_format because the only failing package is the one this branch adds and the failure is a spelling gate, not a code defect: 'providers/oci/docs/index.rst:70: (oci)  apache-airflow-providers-oci package' followed by 'build finished with problems, 1 warning (with warnings treated as errors)'. related_to_diff is true because the head branch is add-oci-generative-ai-hook and every one of the four reported errors is inside providers/oci/docs. culprit_files names docs/spelling_wordlist.txt because the log states the remedy directly ('add the spelling to docs/spelling_wordlist.txt'); the three .rst sites it reports are generated or new provider docs. No diff was captured for this run, so the label rests on the log plus the branch name and the enum value fix_commit_heuristic is the closest available fit rather than a literal description. Log truncated to the last 2000 of 3427 cleaned lines; the spelling errors summary and the final error are inside the kept region. Blind adjudication: both labellers agreed on code_change/lint_or_format. They split on related_to_diff, one reading the log's own PR reference as sufficient and one holding that no diff means no verification. Set to null because the case carries no diff, so the question is not answerable from the evidence a model is given.",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 1
   },
   "verification": {
     "method": "none",
@@ -42,5 +48,9 @@
     "no_new_breaks_command": null,
     "timeout_seconds": 600
   },
-  "tags": ["docs", "sphinx", "spellcheck"]
+  "tags": [
+    "docs",
+    "sphinx",
+    "spellcheck"
+  ]
 }

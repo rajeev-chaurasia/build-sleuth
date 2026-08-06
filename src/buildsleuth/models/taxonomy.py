@@ -26,6 +26,9 @@ SUBCATEGORIES: dict[FailureClass, frozenset[str]] = {
             "type_check",
             "lint_or_format",
             "dependency_conflict",
+            # Added after two independent labellers both forced a missing
+            # changelog entry into lint_or_format and flagged it as wrong.
+            "policy_gate",
         }
     ),
     FailureClass.FLAKY_TEST: frozenset(
@@ -54,6 +57,9 @@ SUBCATEGORIES: dict[FailureClass, frozenset[str]] = {
             "permissions_or_secrets",
             "cache_misconfig",
             "matrix_or_trigger",
+            # Added after both labellers reported that no value described a
+            # build or checkout step that cannot build the project.
+            "build_step_misconfig",
         }
     ),
 }

@@ -11,15 +11,17 @@
     "pr_number": null,
     "failed_job_name": "A reviewer will let you know if it is required or can be bypassed",
     "failed_step_name": "Check changelog entry",
-    "log_files": ["logs/failed_job.txt"],
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
     "diff_file": null,
     "workflow_file": null,
     "passing_run_log": null
   },
   "ground_truth": {
     "failure_class": "code_change",
-    "subcategory": "lint_or_format",
-    "related_to_diff": true,
+    "subcategory": "policy_gate",
+    "related_to_diff": null,
     "culprit_files": [],
     "failing_tests": [],
     "fix_commit_sha": null,
@@ -32,7 +34,9 @@
     "verified_date": null,
     "original_url": "https://github.com/scikit-learn/scikit-learn/actions/runs/31050607706",
     "snapshot_date": "2026-08-05",
-    "notes": "Labelled code_change/lint_or_format because the gate reads the contents of the change and finds a required artefact missing: 'No changelog file was added in the correct directories for PR 34137, looked in 45 directories'. related_to_diff is true because the preceding step matched the changed file list against sklearn/.+test_.+py and only then enabled the check. The trailing 'exit 1' step is a deliberate instruction printer, so the failure is policy, not a broken pipeline, which is why this is not pipeline_config. culprit_files is empty because the fix is a new file that does not exist yet and the log names no existing file at fault. Note that snapshot.json records pr_number as null while the log names PR 34137; the inputs keep the snapshot value."
+    "notes": "Labelled code_change/lint_or_format because the gate reads the contents of the change and finds a required artefact missing: 'No changelog file was added in the correct directories for PR 34137, looked in 45 directories'. related_to_diff is true because the preceding step matched the changed file list against sklearn/.+test_.+py and only then enabled the check. The trailing 'exit 1' step is a deliberate instruction printer, so the failure is policy, not a broken pipeline, which is why this is not pipeline_config. culprit_files is empty because the fix is a new file that does not exist yet and the log names no existing file at fault. Note that snapshot.json records pr_number as null while the log names PR 34137; the inputs keep the snapshot value. Blind adjudication: both labellers agreed on code_change and both said lint_or_format was a forced fit for a contribution policy gate, so policy_gate was added to the taxonomy and the label moved to it. They split on related_to_diff; set to null since the case carries no diff.",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 1
   },
   "verification": {
     "method": "none",
@@ -42,5 +46,9 @@
     "no_new_breaks_command": null,
     "timeout_seconds": 600
   },
-  "tags": ["policy-check", "changelog", "towncrier"]
+  "tags": [
+    "policy-check",
+    "changelog",
+    "towncrier"
+  ]
 }

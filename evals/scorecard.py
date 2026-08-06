@@ -46,7 +46,7 @@ class CaseResult(BaseModel):
     predicted_class: FailureClass | None = None
     correct: bool = False
     subcategory_correct: bool = False
-    related_to_diff_correct: bool = False
+    related_to_diff_correct: bool | None = False
     localization_rank: int | None = None
     latency_ms: float | None = None
     error: str | None = None
@@ -155,12 +155,17 @@ def _subcategory_rate(card: Scorecard) -> float:
     return sum(case.subcategory_correct for case in answered) / len(answered)
 
 
+def _related_to_diff_scored(card: Scorecard) -> list[CaseResult]:
+    """Cases where the evidence can settle whether the failure follows the diff."""
+    return [case for case in _answered(card) if case.related_to_diff_correct is not None]
+
+
 def _related_to_diff_rate(card: Scorecard) -> float:
-    """Share of answered cases that correctly judged patch relatedness."""
-    answered = _answered(card)
-    if not answered:
+    """Share of scorable cases that correctly judged patch relatedness."""
+    scored = _related_to_diff_scored(card)
+    if not scored:
         return 0.0
-    return sum(case.related_to_diff_correct for case in answered) / len(answered)
+    return sum(bool(case.related_to_diff_correct) for case in scored) / len(scored)
 
 
 def _table(header: Sequence[str], rows: Sequence[Sequence[str]]) -> list[str]:
@@ -208,7 +213,13 @@ def render_markdown(card: Scorecard) -> str:
             ]
         )
         headline.append(["subcategory accuracy", _num(_subcategory_rate(card))])
-        headline.append(["related to diff accuracy", _num(_related_to_diff_rate(card))])
+        scorable = len(_related_to_diff_scored(card))
+        headline.append(
+            [
+                f"related to diff accuracy ({scorable} scorable)",
+                _num(_related_to_diff_rate(card)),
+            ]
+        )
     if card.localization is not None:
         headline.append(["hit@1", _num(card.localization.hit_at_1)])
         headline.append(["hit@5", _num(card.localization.hit_at_5)])

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "dataset_hash": "89c740280243",
+  "dataset_hash": "b7da606b3784",
   "case_count": 6,
   "cases": [
     {
@@ -20,7 +20,8 @@
       "tags": [
         "dependencies",
         "uv",
-        "python"
+        "python",
+        "smoke"
       ]
     },
     {
@@ -50,7 +51,8 @@
       "tags": [
         "python",
         "packaging",
-        "smoke-test"
+        "smoke-test",
+        "smoke"
       ]
     },
     {
@@ -60,7 +62,8 @@
       "tags": [
         "synthetic",
         "asyncio",
-        "pytest"
+        "pytest",
+        "smoke"
       ]
     }
   ]

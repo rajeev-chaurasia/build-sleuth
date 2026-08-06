@@ -103,7 +103,7 @@ def _score_case(
                 predicted_class=None,
                 correct=False,
                 subcategory_correct=False,
-                related_to_diff_correct=False,
+                related_to_diff_correct=None,
                 localization_rank=None,
                 latency_ms=None,
                 error=f"{type(error).__name__}: {error}",
@@ -118,7 +118,12 @@ def _score_case(
         predicted_class=verdict.failure_class,
         correct=verdict.failure_class == truth.failure_class,
         subcategory_correct=verdict.subcategory == truth.subcategory,
-        related_to_diff_correct=verdict.related_to_diff == truth.related_to_diff,
+        # None means the case cannot settle the question, so it is not scored.
+        related_to_diff_correct=(
+            None
+            if truth.related_to_diff is None
+            else verdict.related_to_diff == truth.related_to_diff
+        ),
         localization_rank=None,
         latency_ms=latency_ms,
         error=None,

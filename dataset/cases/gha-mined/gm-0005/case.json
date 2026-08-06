@@ -11,7 +11,9 @@
     "pr_number": 22730,
     "failed_job_name": "Build and run prefect-client",
     "failed_step_name": "Run deploy and execute smoke test using the built client",
-    "log_files": ["logs/failed_job.txt"],
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
     "diff_file": "diff.patch",
     "workflow_file": null,
     "passing_run_log": null
@@ -20,7 +22,9 @@
     "failure_class": "code_change",
     "subcategory": "compile_error",
     "related_to_diff": true,
-    "culprit_files": ["src/prefect/server/task_queue/__init__.py"],
+    "culprit_files": [
+      "src/prefect/server/task_queue/__init__.py"
+    ],
     "failing_tests": [],
     "fix_commit_sha": null,
     "fix_summary": "Import Self from typing_extensions instead of typing in the new task_queue package, which is required for the Python 3.10 floor this job runs on. src/prefect/server/task_queue/memory.py has the same new import."
@@ -32,7 +36,9 @@
     "verified_date": null,
     "original_url": "https://github.com/PrefectHQ/prefect/actions/runs/31023605871",
     "snapshot_date": "2026-08-05",
-    "notes": "Labelled code_change/compile_error because the server never starts: 'ImportError: cannot import name 'Self' from 'typing' (/home/runner/work/_temp/uv-python-dir/cpython-3.10-linux-x86_64-gnu/lib/python3.10/typing.py)', and typing.Self only exists from Python 3.11 while this job sets UV_PYTHON 3.10. The later httpx.ConnectError on 127.0.0.1:4200 that ends the job is the downstream symptom, not the cause, so this is not network flakiness. related_to_diff is true with direct evidence: the captured diff adds the exact failing line, 'from typing import Any, Protocol, Self, runtime_checkable', to src/prefect/server/task_queue/__init__.py, which is the file named on the last frame of the traceback. Worth noting for triage evaluation that the 'Start server' step is still reported as successful. Log truncated to the last 2000 of 2973 cleaned lines; both the ImportError and the final error are inside the kept region."
+    "notes": "Labelled code_change/compile_error because the server never starts: 'ImportError: cannot import name 'Self' from 'typing' (/home/runner/work/_temp/uv-python-dir/cpython-3.10-linux-x86_64-gnu/lib/python3.10/typing.py)', and typing.Self only exists from Python 3.11 while this job sets UV_PYTHON 3.10. The later httpx.ConnectError on 127.0.0.1:4200 that ends the job is the downstream symptom, not the cause, so this is not network flakiness. related_to_diff is true with direct evidence: the captured diff adds the exact failing line, 'from typing import Any, Protocol, Self, runtime_checkable', to src/prefect/server/task_queue/__init__.py, which is the file named on the last frame of the traceback. Worth noting for triage evaluation that the 'Start server' step is still reported as successful. Log truncated to the last 2000 of 2973 cleaned lines; both the ImportError and the final error are inside the kept region. Blind adjudication: both labellers independently reached code_change/compile_error with related_to_diff true, citing the same ImportError and the diff that introduces it. One noted memory.py carries the same import and would fail too.",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
   },
   "verification": {
     "method": "none",
@@ -42,5 +48,10 @@
     "no_new_breaks_command": null,
     "timeout_seconds": 600
   },
-  "tags": ["python", "packaging", "smoke-test"]
+  "tags": [
+    "python",
+    "packaging",
+    "smoke-test",
+    "smoke"
+  ]
 }

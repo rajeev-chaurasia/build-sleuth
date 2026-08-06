@@ -14,6 +14,9 @@ from pydantic import BaseModel, HttpUrl, model_validator
 from buildsleuth.models.taxonomy import FailureClass, is_valid_subcategory
 
 SMOKE_TAG = "smoke"
+# Two blind labellers who agree is the floor for trusting a label nobody has
+# signed off on. One labeller is an opinion, not a check.
+MIN_ADJUDICATORS = 2
 
 
 class CaseSource(StrEnum):
@@ -61,9 +64,17 @@ class CaseInputs(BaseModel):
 
 
 class GroundTruth(BaseModel):
+    """The answer a triage agent is scored against.
+
+    `related_to_diff` is None when the case carries no diff and the class does
+    not settle the question. Scoring a model on a fact it was never shown
+    measures guessing, so those cases are excluded from that metric rather
+    than given an answer inferred from a branch name.
+    """
+
     failure_class: FailureClass
     subcategory: str
-    related_to_diff: bool
+    related_to_diff: bool | None
     culprit_files: list[str] = []
     failing_tests: list[str] = []
     fix_commit_sha: str | None = None
@@ -79,6 +90,15 @@ class GroundTruth(BaseModel):
 
 
 class Provenance(BaseModel):
+    """Where a label came from and how much scrutiny it has had.
+
+    Human verification and independent adjudication are tracked separately on
+    purpose. Adjudication is several blind labellers, each shown only the
+    evidence, agreeing without seeing the recorded label or each other. That
+    is a real quality signal and it is not the same thing as a person signing
+    off, so it does not get to claim that name.
+    """
+
     source: CaseSource
     labeling_method: LabelingMethod
     verified_by_human: bool = False
@@ -86,6 +106,26 @@ class Provenance(BaseModel):
     original_url: HttpUrl | None = None
     snapshot_date: date
     notes: str = ""
+    independent_adjudications: int = 0
+    adjudicators_agreeing: int = 0
+
+    @property
+    def unanimously_adjudicated(self) -> bool:
+        return (
+            self.independent_adjudications >= MIN_ADJUDICATORS
+            and self.adjudicators_agreeing == self.independent_adjudications
+        )
+
+    @property
+    def trusted(self) -> bool:
+        """Good enough to gate a pull request on."""
+        return self.verified_by_human or self.unanimously_adjudicated
+
+    @model_validator(mode="after")
+    def check_agreement_is_possible(self) -> Self:
+        if self.adjudicators_agreeing > self.independent_adjudications:
+            raise ValueError("more adjudicators agreed than were consulted")
+        return self
 
 
 class Verification(BaseModel):
@@ -118,8 +158,11 @@ class TriageCase(BaseModel):
         return SMOKE_TAG in self.tags
 
     @model_validator(mode="after")
-    def check_smoke_cases_are_verified(self) -> Self:
-        """Heuristic labels are fine for the full suite but never for the PR gate."""
-        if self.is_smoke and not self.provenance.verified_by_human:
-            raise ValueError(f"smoke case {self.case_id} must have verified_by_human set")
+    def check_smoke_cases_are_trusted(self) -> Self:
+        """An unchecked label is fine for the full suite but never for the PR gate."""
+        if self.is_smoke and not self.provenance.trusted:
+            raise ValueError(
+                f"smoke case {self.case_id} needs human verification, or agreement from at"
+                f" least {MIN_ADJUDICATORS} independent adjudicators"
+            )
         return self
