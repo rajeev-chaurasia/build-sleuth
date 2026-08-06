@@ -1,0 +1,66 @@
+name: eval-smoke
+
+# Guards against silent quality regressions: any change to prompts, agent
+# code, or the dataset must show its effect on the scorecard before merging.
+on:
+  pull_request:
+    paths:
+      - "src/buildsleuth/**"
+      - "evals/**"
+      - "dataset/**"
+      - ".github/workflows/eval-smoke.yml"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  scorecard:
+    runs-on: ubuntu-latest
+    # Never expose model credentials to a pull request from a fork.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: uv sync --all-groups
+
+      - name: Check dataset manifest is current
+        run: uv run buildsleuth dataset --check
+
+      - name: Score this revision
+        run: uv run python -m evals.run_eval --model baseline-regex --save --results results/current
+
+      - name: Compare against baseline
+        id: compare
+        run: |
+          baseline=$(uv run python -c "
+          import json, pathlib
+          pointer = pathlib.Path('results/baseline.json')
+          print(pointer.read_text().strip() if pointer.exists() else '')
+          ")
+          current=$(ls results/current/*.json | head -1)
+          if [ -z "$baseline" ] || [ ! -f "results/$baseline" ]; then
+            echo "no baseline recorded yet, skipping the gate" | tee comparison.md
+            exit 0
+          fi
+          uv run python -m evals.diff_baseline \
+            --baseline "results/$baseline" --current "$current" | tee comparison.md
+
+      - name: Comment the scorecard diff
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            if (!fs.existsSync('comparison.md')) return;
+            const body = '## Eval scorecard\n\n' + fs.readFileSync('comparison.md', 'utf8');
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });

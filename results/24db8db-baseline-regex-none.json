@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "git_sha": "6530ba5",
+  "git_sha": "24db8db",
   "model": "baseline-regex",
   "prompt_hash": "none",
   "dataset_hash": "89c740280243",
   "subset": "full",
-  "created_at": "2026-08-06T04:16:47.643333Z",
+  "created_at": "2026-08-06T04:19:20.810912Z",
   "classification": {
     "per_class": {
       "code_change": {
@@ -55,7 +55,7 @@
     "total_input_tokens": 0,
     "total_output_tokens": 0,
     "total_requests": 6,
-    "wall_seconds": 0.041365800017956644,
+    "wall_seconds": 0.03512019998743199,
     "estimated_usd": 0.0,
     "schema_failure_rate": 0.0
   },
@@ -68,7 +68,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": 8.58439999865368,
+      "latency_ms": 8.36669999989681,
       "error": null
     },
     {
@@ -79,7 +79,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": 3.5436999751254916,
+      "latency_ms": 3.140699991490692,
       "error": null
     },
     {
@@ -90,7 +90,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": 7.1638000081293285,
+      "latency_ms": 5.87899997481145,
       "error": null
     },
     {
@@ -101,7 +101,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": 3.917499998351559,
+      "latency_ms": 3.421900008106604,
       "error": null
     },
     {
@@ -112,7 +112,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 7.027999992715195,
+      "latency_ms": 4.4569000019691885,
       "error": null
     },
     {
@@ -123,7 +123,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 1.4392999873962253,
+      "latency_ms": 1.273300003958866,
       "error": null
     }
   ]
