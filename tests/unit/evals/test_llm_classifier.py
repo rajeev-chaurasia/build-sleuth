@@ -8,7 +8,7 @@ from evals.runner import Classifier
 from buildsleuth.llm.types import CompletionRequest, CompletionResult, Usage
 from buildsleuth.models.taxonomy import FailureClass
 
-MODEL = "gemini-2.5-flash"
+MODEL = "gemini-3.6-flash"
 
 
 class ScriptedClient:
