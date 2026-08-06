@@ -21,6 +21,13 @@ from buildsleuth.llm.types import (
 )
 
 REPAIR_ATTEMPTS = 1
+# Providers enforce schemas to three different degrees and some not at all, so
+# the schema always travels in the prompt too. It costs a few tokens and means
+# one code path works everywhere.
+SCHEMA_INSTRUCTION = (
+    "Reply with a single JSON object matching this schema exactly."
+    " No prose, no code fences, no extra keys.\n{schema}"
+)
 _JSON_FENCE_RE = re.compile(r"```(?:json)?\s*(?P<body>.*?)```", re.DOTALL)
 _FIRST_OBJECT_RE = re.compile(r"\{.*\}", re.DOTALL)
 
@@ -79,7 +86,13 @@ def complete_structured[T: BaseModel](
 ) -> StructuredResult[T]:
     """Call the model and validate its answer, repairing once on failure."""
     schema = output_model.model_json_schema()
-    conversation = list(messages)
+    conversation = [
+        *messages,
+        Message(
+            role=Role.USER,
+            content=SCHEMA_INSTRUCTION.format(schema=json.dumps(schema, separators=(",", ":"))),
+        ),
+    ]
     usage = Usage()
     latency_ms = 0.0
     raw_responses: list[str] = []

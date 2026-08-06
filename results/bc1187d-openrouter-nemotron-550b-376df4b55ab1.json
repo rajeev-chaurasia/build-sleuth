@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "git_sha": "bc1187d",
+  "model": "openrouter-nemotron-550b",
+  "prompt_hash": "376df4b55ab1",
+  "dataset_hash": "89c740280243",
+  "subset": "full",
+  "created_at": "2026-08-06T06:08:47.620271Z",
+  "classification": {
+    "per_class": {
+      "code_change": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 3
+      },
+      "flaky_test": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "infra_environment": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "pipeline_config": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 0
+      }
+    },
+    "macro_f1": 0.25,
+    "accuracy": 1.0,
+    "confusion": {
+      "counts": {
+        "code_change": {
+          "code_change": 3
+        }
+      }
+    },
+    "cost_weighted_error": 0.0
+  },
+  "localization": null,
+  "cost": {
+    "total_input_tokens": 4940,
+    "total_output_tokens": 2163,
+    "total_requests": 6,
+    "wall_seconds": 192.66258299999754,
+    "estimated_usd": 0.0,
+    "list_price_usd": 0.0068574,
+    "schema_failure_rate": 0.0
+  },
+  "per_case": [
+    {
+      "case_id": "gm-0001",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 32636.34270001785,
+      "error": null
+    },
+    {
+      "case_id": "gm-0002",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 15088.879999995697,
+      "error": null
+    },
+    {
+      "case_id": "gm-0003",
+      "truth_class": "pipeline_config",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "ModelError: openrouter-nemotron-550b: response carried no choices"
+    },
+    {
+      "case_id": "gm-0004",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 18769.25789998495,
+      "error": null
+    },
+    {
+      "case_id": "gm-0005",
+      "truth_class": "code_change",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "StructuredOutputError: TriageVerdict did not validate after 2 attempts: response was not JSON: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "case_id": "sy-0001",
+      "truth_class": "flaky_test",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "ModelError: openrouter-nemotron-550b: response carried no choices"
+    }
+  ]
+}

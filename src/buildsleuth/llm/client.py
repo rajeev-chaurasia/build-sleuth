@@ -136,16 +136,20 @@ class OpenAICompatClient:
             "temperature": request.temperature,
             "max_tokens": request.max_tokens,
         }
-        if request.response_schema is not None:
-            payload["response_format"] = self._response_format(request.response_schema)
+        response_format = self._response_format(request.response_schema)
+        if response_format is not None:
+            payload["response_format"] = response_format
         return payload
 
-    def _response_format(self, schema: dict[str, Any]) -> dict[str, Any]:
-        """Strict schema where the provider enforces one, plain JSON mode otherwise.
+    def _response_format(self, schema: dict[str, Any] | None) -> dict[str, Any] | None:
+        """Strictest JSON control the model accepts, or nothing when it accepts none.
 
-        Under plain JSON mode the provider only guarantees valid JSON, so the
-        caller is the one that has to put the schema in the prompt.
+        Below a strict schema the provider only promises valid JSON, and below
+        that nothing at all, so the caller carries the schema in the prompt and
+        the structured output layer validates and repairs what comes back.
         """
+        if schema is None or not self._spec.quirks.supports_response_format:
+            return None
         if not self._spec.quirks.native_json_schema:
             return JSON_OBJECT_FORMAT
         return {

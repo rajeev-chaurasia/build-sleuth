@@ -41,6 +41,11 @@ class ProviderQuirks:
 
     A `None` limit means the provider publishes no cap on that axis, not that
     the cap is zero. `tpd` counts input plus output tokens together.
+
+    JSON support has three levels, not two. Some models enforce a schema, some
+    only promise valid JSON, and some accept no response_format at all. Sending
+    the parameter to that last group is rejected or silently ignored, so it has
+    to be omitted and the schema carried in the prompt instead.
     """
 
     native_json_schema: bool
@@ -50,6 +55,7 @@ class ProviderQuirks:
     tpd: int | None
     context_window: int
     max_retries: int
+    supports_response_format: bool = True
 
 
 @dataclass(frozen=True, slots=True)
@@ -198,6 +204,47 @@ MODEL_SPECS: tuple[ModelSpec, ...] = (
         usd_per_million_output=FREE,
         list_usd_per_million_input=0.10,
         list_usd_per_million_output=0.40,
+    ),
+    ModelSpec(
+        name="openrouter-nemotron-9b",
+        api_model="nvidia/nemotron-nano-9b-v2:free",
+        provider=Provider.OPENROUTER,
+        base_url=OPENROUTER_BASE_URL,
+        quirks=ProviderQuirks(
+            native_json_schema=True,
+            supports_tools=True,
+            rpm=20,
+            rpd=50,
+            tpd=None,
+            context_window=128_000,
+            max_retries=2,
+        ),
+        usd_per_million_input=FREE,
+        usd_per_million_output=FREE,
+        list_usd_per_million_input=0.04,
+        list_usd_per_million_output=0.16,
+    ),
+    # Accepts no response_format at all, so the schema rides in the prompt and
+    # the structured output layer is what actually enforces it.
+    ModelSpec(
+        name="openrouter-nemotron-550b",
+        api_model="nvidia/nemotron-3-ultra-550b-a55b:free",
+        provider=Provider.OPENROUTER,
+        base_url=OPENROUTER_BASE_URL,
+        quirks=ProviderQuirks(
+            native_json_schema=False,
+            supports_response_format=False,
+            supports_tools=True,
+            rpm=20,
+            rpd=50,
+            tpd=None,
+            context_window=1_000_000,
+            max_retries=2,
+        ),
+        usd_per_million_input=FREE,
+        usd_per_million_output=FREE,
+        list_usd_per_million_input=0.60,
+        list_usd_per_million_output=1.80,
     ),
     ModelSpec(
         name="ollama-llama3.1-8b",
