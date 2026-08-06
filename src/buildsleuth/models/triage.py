@@ -23,4 +23,11 @@ class FileCandidate(BaseModel):
 
 
 class Localization(BaseModel):
-    ranked_files: list[FileCandidate] = Field(default_factory=list, max_length=MAX_RANKED_FILES)
+    """Culprit files, best first.
+
+    The cap is a presentation limit, not a correctness one, so an overlong
+    answer is trimmed by the localize stage rather than rejected. Spending a
+    repair call to argue about a sixth entry is not worth the tokens.
+    """
+
+    ranked_files: list[FileCandidate] = Field(default_factory=list)

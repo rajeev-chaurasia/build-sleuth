@@ -10,7 +10,7 @@ import time
 from collections.abc import Sequence
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 from buildsleuth.dataset.loader import case_dir_for, load_cases, read_case_diff, read_case_log
 from buildsleuth.dataset.manifest import dataset_hash
@@ -18,6 +18,7 @@ from buildsleuth.models.case import TriageCase
 from buildsleuth.models.taxonomy import FailureClass
 from buildsleuth.models.triage import TriageVerdict
 from evals.scorecard import CaseResult, CostSummary, Scorecard, build_scorecard
+from evals.scorers.localization import normalize_path
 
 FULL_SUBSET = "full"
 UNKNOWN_GIT_SHA = "unknown"
@@ -29,6 +30,24 @@ class Classifier(Protocol):
     name: str
 
     def classify(self, log_text: str, diff_text: str | None = None) -> TriageVerdict: ...
+
+
+@runtime_checkable
+class Localizer(Protocol):
+    """Optional second capability. A classifier without it is scored on class only."""
+
+    def localize(
+        self, verdict: TriageVerdict, log_text: str, diff_text: str | None = None
+    ) -> list[str]: ...
+
+
+def _rank_of_first_hit(truth_files: Sequence[str], ranked: Sequence[str]) -> int | None:
+    """1-based rank of the first correct path, or None when none of them hit."""
+    truth = {normalize_path(path) for path in truth_files}
+    for position, path in enumerate(ranked, start=1):
+        if normalize_path(path) in truth:
+            return position
+    return None
 
 
 def git_sha(repo_root: Path) -> str:
@@ -59,10 +78,13 @@ def evaluate(
     schema_failures = 0
     started = time.perf_counter()
 
+    localization_samples: list[tuple[Sequence[str], Sequence[str]]] = []
     for case in cases:
-        result, failed = _score_case(classifier, dataset_dir, case)
+        result, failed, sample = _score_case(classifier, dataset_dir, case)
         results.append(result)
         schema_failures += int(failed)
+        if sample is not None:
+            localization_samples.append(sample)
 
     wall_seconds = time.perf_counter() - started
     cost = CostSummary(
@@ -80,13 +102,14 @@ def evaluate(
         subset=subset or FULL_SUBSET,
         created_at=datetime.now(UTC),
         per_case=results,
+        localization_samples=localization_samples,
         cost=cost,
     )
 
 
 def _score_case(
     classifier: Classifier, dataset_dir: Path, case: TriageCase
-) -> tuple[CaseResult, bool]:
+) -> tuple[CaseResult, bool, tuple[Sequence[str], Sequence[str]] | None]:
     """Score one case. A classifier error is recorded, never raised."""
     case_dir = case_dir_for(dataset_dir, case)
     truth = case.ground_truth
@@ -109,8 +132,10 @@ def _score_case(
                 error=f"{type(error).__name__}: {error}",
             ),
             True,
+            None,
         )
 
+    ranked = _localize(classifier, verdict, log_text, diff_text)
     latency_ms = (time.perf_counter() - started) * MILLISECONDS_PER_SECOND
     result = CaseResult(
         case_id=case.case_id,
@@ -124,11 +149,31 @@ def _score_case(
             if truth.related_to_diff is None
             else verdict.related_to_diff == truth.related_to_diff
         ),
-        localization_rank=None,
+        localization_rank=_rank_of_first_hit(truth.culprit_files, ranked) if ranked else None,
         latency_ms=latency_ms,
         error=None,
     )
-    return result, False
+    # Cases with no culprit file are excluded by the localization scorer, so
+    # a run that localizes nothing reports no localization rather than zero.
+    sample = (truth.culprit_files, ranked) if ranked is not None else None
+    return result, False, sample
+
+
+def _localize(
+    classifier: Classifier, verdict: TriageVerdict, log_text: str, diff_text: str | None
+) -> list[str] | None:
+    """Ask for ranked culprit files when the classifier can produce them.
+
+    A localization failure must not discard the classification that already
+    succeeded, so it is recorded as no localization rather than raised.
+    """
+    localizer = classifier if isinstance(classifier, Localizer) else None
+    if localizer is None:
+        return None
+    try:
+        return localizer.localize(verdict, log_text, diff_text)
+    except Exception:
+        return None
 
 
 def truth_labels(cases: Sequence[TriageCase]) -> list[FailureClass]:

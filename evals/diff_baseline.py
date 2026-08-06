@@ -43,12 +43,19 @@ class MetricDelta(BaseModel):
 
 
 class Tolerances(BaseModel):
-    """How far each metric may drift before the gate fails."""
+    """How far each metric may drift before the gate fails.
 
-    macro_f1_drop: float = 0.02
-    accuracy_drop: float = 0.02
-    cost_weighted_error_rise: float = 0.05
-    hit_at_1_drop: float = 0.02
+    These have to sit above the run-to-run noise or the gate fires on the
+    noise, and a gate that cries wolf gets ignored. Two runs of one model over
+    the current six cases swung macro F1 by 0.26, so the tolerances below are
+    deliberately loose. Measure yours with `python -m evals.trials`, and
+    tighten these as the dataset grows and the spread falls.
+    """
+
+    macro_f1_drop: float = 0.30
+    accuracy_drop: float = 0.20
+    cost_weighted_error_rise: float = 0.40
+    hit_at_1_drop: float = 0.35
     # Answering fewer cases inflates every other metric, so coverage is held
     # to a tighter bound than accuracy itself.
     coverage_drop: float = 0.0

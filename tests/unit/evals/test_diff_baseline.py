@@ -84,29 +84,37 @@ def test_identical_scorecards_do_not_regress() -> None:
     assert all(delta.delta == 0.0 for delta in report.deltas)
 
 
+# Boundaries are derived from the configured tolerances rather than written
+# out, so retuning a tolerance to match measured noise does not silently stop
+# testing the behaviour it guards.
+EPSILON = 0.001
+
+
 def test_macro_f1_drop_exactly_at_tolerance_is_not_flagged() -> None:
-    # 0.80 - 0.78 = 0.02, the tolerance itself, so the gate stays green.
-    report = compare(_card(), _card(macro_f1=0.78), TOL)
+    at_limit = BASE_MACRO_F1 - TOL.macro_f1_drop
+    report = compare(_card(), _card(macro_f1=at_limit), TOL)
     assert _delta_named(report, MACRO_F1) is False
     assert report.regressed is False
 
 
 def test_macro_f1_drop_one_epsilon_past_tolerance_is_flagged() -> None:
-    # 0.80 - 0.779 = 0.021, past the 0.02 tolerance.
-    report = compare(_card(), _card(macro_f1=0.779), TOL)
+    past_limit = BASE_MACRO_F1 - TOL.macro_f1_drop - EPSILON
+    report = compare(_card(), _card(macro_f1=past_limit), TOL)
     assert _delta_named(report, MACRO_F1) is True
     assert report.regressed is True
 
 
 def test_accuracy_tolerance_boundary() -> None:
-    assert compare(_card(), _card(accuracy=0.73), TOL).regressed is False  # drop 0.02
-    assert compare(_card(), _card(accuracy=0.729), TOL).regressed is True  # drop 0.021
+    at_limit = BASE_ACCURACY - TOL.accuracy_drop
+    assert compare(_card(), _card(accuracy=at_limit), TOL).regressed is False
+    assert compare(_card(), _card(accuracy=at_limit - EPSILON), TOL).regressed is True
 
 
 def test_cost_weighted_error_rise_boundary() -> None:
     # Higher cost is worse, so this metric is gated in the opposite direction.
-    assert compare(_card(), _card(cost_weighted_error=0.55), TOL).regressed is False  # rise 0.05
-    assert compare(_card(), _card(cost_weighted_error=0.551), TOL).regressed is True  # rise 0.051
+    at_limit = BASE_COST + TOL.cost_weighted_error_rise
+    assert compare(_card(), _card(cost_weighted_error=at_limit), TOL).regressed is False
+    assert compare(_card(), _card(cost_weighted_error=at_limit + EPSILON), TOL).regressed is True
 
 
 def test_cost_weighted_error_falling_is_never_a_regression() -> None:
@@ -116,8 +124,9 @@ def test_cost_weighted_error_falling_is_never_a_regression() -> None:
 
 
 def test_hit_at_1_tolerance_boundary() -> None:
-    assert compare(_card(), _card(hit_at_1=0.58), TOL).regressed is False  # drop 0.02
-    assert compare(_card(), _card(hit_at_1=0.579), TOL).regressed is True  # drop 0.021
+    at_limit = BASE_HIT_AT_1 - TOL.hit_at_1_drop
+    assert compare(_card(), _card(hit_at_1=at_limit), TOL).regressed is False
+    assert compare(_card(), _card(hit_at_1=at_limit - EPSILON), TOL).regressed is True
 
 
 def test_improvements_are_not_regressions() -> None:
@@ -144,12 +153,15 @@ def test_losing_a_report_is_a_regression() -> None:
 
 
 def test_render_comparison_markdown() -> None:
+    regressed_f1 = BASE_MACRO_F1 - TOL.macro_f1_drop - EPSILON
     baseline = _card(cases={"a": True, "b": False})
-    current = _card(macro_f1=0.70, cases={"a": False, "b": True})
+    current = _card(macro_f1=regressed_f1, cases={"a": False, "b": True})
     rendered = render_comparison_markdown(compare(baseline, current, TOL))
+
     assert "Verdict: **REGRESSED**" in rendered
-    assert "| macro_f1 | 0.800 | 0.700 | -0.100 | v | REGRESSED |" in rendered
-    assert "| accuracy | 0.750 | 0.750 | +0.000 | = | ok |" in rendered
+    assert f"| macro_f1 | {BASE_MACRO_F1:.3f} | {regressed_f1:.3f} |" in rendered
+    assert "| REGRESSED |" in rendered
+    assert f"| accuracy | {BASE_ACCURACY:.3f} | {BASE_ACCURACY:.3f} | +0.000 | = | ok |" in rendered
     assert "Newly failing cases: `a`" in rendered
     assert "Newly passing cases: `b`" in rendered
     assert EM_DASH not in rendered
@@ -179,7 +191,8 @@ def test_main_returns_one_when_regressed(
     tmp_path: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     baseline = _write(tmp_path / "baseline.json", _card())
-    current = _write(tmp_path / "current.json", _card(macro_f1=0.60))
+    collapsed = _card(macro_f1=BASE_MACRO_F1 - TOL.macro_f1_drop - EPSILON)
+    current = _write(tmp_path / "current.json", collapsed)
     code = main(["--baseline", str(baseline), "--current", str(current)])
     assert code == EXIT_REGRESSED
     assert "REGRESSED" in capsys.readouterr().out

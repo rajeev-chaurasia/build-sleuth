@@ -56,9 +56,17 @@ Both annotators refused to judge whether a failure followed the diff on cases th
 
 Both also hit the same two taxonomy gaps, independently, so `code_change` gained `policy_gate` and `pipeline_config` gained `build_step_misconfig`, and the two cases forced into a poor fit moved to them. A taxonomy that annotators cannot apply consistently is a broken measuring instrument, and disagreement is how you find out.
 
+## A single run is not a measurement
+
+Two runs of the same model, same prompt, same six cases, at temperature zero, gave macro F1 of 0.714 and 0.450. Nothing differed but model nondeterminism.
+
+That 0.26 swing was larger than the 0.02 regression tolerance the gate shipped with, which means the gate would have fired on noise and taught everyone to ignore it. Tolerances are now set above the measured spread, and `python -m evals.trials --model M --trials 3` reports mean, range and standard deviation so the numbers can be retuned from evidence instead of taste.
+
+The real fix is more cases: with six, one case flipping moves accuracy by 17 points. The tolerances stay loose until the dataset is large enough for them to tighten honestly.
+
 Honest caveats, kept current:
 
-- 6 cases so far, target is 80. Numbers this small are directional, not conclusive.
+- 6 cases so far, target is 80. Numbers this small are directional, not conclusive, and the trial spread above is the proof.
 - **The model choice is not settled on quality.** `gemini-3.1-flash-lite` is the default because it is the only model that has answered all six cases. `gemini-3.5-flash` looked stronger on the four it finished before running out of free quota, but four of six is exactly the partial number this harness exists to distrust. That comparison is open.
 - `gemini-3.6-flash` is in the registry but has no free tier: an unbilled key gets a 429 on the first request.
 
