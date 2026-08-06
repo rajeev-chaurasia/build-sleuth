@@ -1,0 +1,745 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {98505a02-8087-4a99-bb39-b5cc51e524ba}
+Azure Region: westus2
+##[endgroup]
+##[group]Operating System
+Microsoft Windows Server 2025
+10.0.26100
+Datacenter
+##[endgroup]
+##[group]Runner Image
+Image: windows-2025-vs2026
+Version: 20260728.188.1
+Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20260728.188/images/windows/Windows2025-VS2026-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20260728.188
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0' (SHA:9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0)
+Download action repository 'astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9' (SHA:c771a70e6277c0a99b617c7a806ffedaca235ff9)
+Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+Complete job name: Test windows-latest / 3.12
+##[group]Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+with:
+  persist-credentials: false
+  repository: pydantic/pydantic
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  OS: windows-latest
+  DEPS: yes
+  UV_PYTHON_PREFERENCE: only-managed
+##[endgroup]
+Syncing repository: pydantic/pydantic
+##[group]Getting Git version info
+Working directory is 'D:\a\pydantic\pydantic'
+[command]"C:\Program Files\Git\bin\git.exe" version
+git version 2.55.0.windows.3
+##[endgroup]
+Temporarily overriding HOME='D:\a\_temp\415628ab-6242-4dbe-9166-40c477f634c8' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\pydantic\pydantic
+Deleting the contents of 'D:\a\pydantic\pydantic'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]"C:\Program Files\Git\bin\git.exe" init D:\a\pydantic\pydantic
+Initialized empty Git repository in D:/a/pydantic/pydantic/.git/
+[command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/pydantic/pydantic
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Removing HTTP extra header
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Removing includeIf entries pointing to credentials config files
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+[command]"C:\Program Files\Git\bin\git.exe" config --file D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+[command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/pydantic/pydantic/.git.path D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/pydantic/pydantic/.git/worktrees/*.path D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+##[endgroup]
+##[group]Fetching the repository
+[command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +94aada8707f685b53a91ccf26b77361fe1c4f255:refs/remotes/pull/13583/merge
+From https://github.com/pydantic/pydantic
+ * [new ref]         94aada8707f685b53a91ccf26b77361fe1c4f255 -> pull/13583/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+[command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/13583/merge
+Note: switching to 'refs/remotes/pull/13583/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 94aada8 Merge d0b6ebbf0a465e392a3d65dcd7859aa32426f8c2 into 57d0ad870110765089b6037313e8c4f507b7c4de
+##[endgroup]
+[command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+94aada8707f685b53a91ccf26b77361fe1c4f255
+##[group]Removing auth
+Removing SSH command configuration
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Removing HTTP extra header
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Removing includeIf entries pointing to credentials config files
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:D:/a/pydantic/pydantic/.git.path
+includeif.gitdir:D:/a/pydantic/pydantic/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/pydantic/pydantic/.git.path
+D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/pydantic/pydantic/.git.path D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/pydantic/pydantic/.git/worktrees/*.path
+D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/pydantic/pydantic/.git/worktrees/*.path D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+Removing credentials config 'D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config'
+##[endgroup]
+##[group]Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+with:
+  python-version: 3.12
+  enable-cache: true
+  activate-environment: false
+  no-project: false
+  working-directory: D:\a\pydantic\pydantic
+  github-token: ***
+  cache-dependency-glob: **/*requirements*.txt
+**/*requirements*.in
+**/*constraints*.txt
+**/*constraints*.in
+**/pyproject.toml
+**/uv.lock
+**/*.py.lock
+
+  restore-cache: true
+  save-cache: true
+  prune-cache: false
+  cache-python: false
+  ignore-nothing-to-cache: false
+  ignore-empty-workdir: false
+  download-from-astral-mirror: true
+  add-problem-matchers: true
+  quiet: false
+  resolution-strategy: highest
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  OS: windows-latest
+  DEPS: yes
+  UV_PYTHON_PREFERENCE: only-managed
+##[endgroup]
+Trying to find version for uv in: D:\a\pydantic\pydantic\uv.toml
+Could not find file: D:\a\pydantic\pydantic\uv.toml
+Trying to find version for uv in: D:\a\pydantic\pydantic\pyproject.toml
+Found version for uv in D:\a\pydantic\pydantic\pyproject.toml: >=0.8.4
+Found minimum version specifier, using latest version
+Fetching manifest data from https://raw.githubusercontent.com/astral-sh/versions/main/v1/uv.ndjson ...
+Downloading uv from "https://releases.astral.sh/github/uv/releases/download/0.12.2/uv-x86_64-pc-windows-msvc.zip" ...
+[command]C:\Windows\system32\tar.exe x -C D:\a\_temp\ecf2900f-f7f7-4f7f-83a2-76cb1b66adb3 -f D:\a\_temp\8e3dce87-8c1c-45d9-9e9f-25d815121431
+Set UV_TOOL_BIN_DIR to D:\a\_temp\uv-tool-bin-dir
+Added D:\a\_temp\uv-tool-bin-dir to the path
+Added C:\hostedtoolcache\windows\uv\0.12.2\x86_64 to the path
+Set UV_TOOL_DIR to D:\a\_temp\uv-tool-dir
+Set UV_PYTHON_INSTALL_DIR to D:\a\_temp\uv-python-dir
+Added D:\a\_temp\uv-python-dir to the path
+Set UV_PYTHON to 3.12
+Set UV_CACHE_DIR to D:\a\_temp\setup-uv-cache
+Successfully installed uv version 0.12.2
+Searching files using cache dependency glob: D:\a\pydantic\pydantic\**\*requirements*.txt,D:\a\pydantic\pydantic\**\*requirements*.in,D:\a\pydantic\pydantic\**\*constraints*.txt,D:\a\pydantic\pydantic\**\*constraints*.in,D:\a\pydantic\pydantic\**\pyproject.toml,D:\a\pydantic\pydantic\**\uv.lock,D:\a\pydantic\pydantic\**\*.py.lock
+D:\a\pydantic\pydantic\.github\actions\people\requirements.in
+D:\a\pydantic\pydantic\.github\pyodide\requirements.in
+D:\a\pydantic\pydantic\pydantic-core\pyproject.toml
+D:\a\pydantic\pydantic\pydantic-core\uv.lock
+D:\a\pydantic\pydantic\pyproject.toml
+D:\a\pydantic\pydantic\tests\plugin\pyproject.toml
+D:\a\pydantic\pydantic\tests\typechecking\pyproject.toml
+D:\a\pydantic\pydantic\uv.lock
+Found 8 files to hash.
+Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-pc-windows-msvc-windows-2025-3.12-929644ec7edfc879b2ed9c924d0700b7fc1b6dee99728d8ba9aee3fb3ee9965a
+No GitHub Actions cache found for key: setup-uv-2-x86_64-pc-windows-msvc-windows-2025-3.12-929644ec7edfc879b2ed9c924d0700b7fc1b6dee99728d8ba9aee3fb3ee9965a
+##[group]Run uv sync --all-packages --group testing-extra --all-extras
+uv sync --all-packages --group testing-extra --all-extras
+shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  OS: windows-latest
+  DEPS: yes
+  UV_PYTHON_PREFERENCE: only-managed
+  UV_TOOL_BIN_DIR: D:\a\_temp\uv-tool-bin-dir
+  UV_TOOL_DIR: D:\a\_temp\uv-tool-dir
+  UV_PYTHON_INSTALL_DIR: D:\a\_temp\uv-python-dir
+  UV_PYTHON: 3.12
+  UV_CACHE_DIR: D:\a\_temp\setup-uv-cache
+##[endgroup]
+Downloading cpython-3.12.13-windows-x86_64-none (download) (20.9MiB)
+ Downloaded cpython-3.12.13-windows-x86_64-none (download)
+Using CPython 3.12.13
+Creating virtual environment at: .venv
+   Building pydantic-core @ file:///D:/a/pydantic/pydantic/pydantic-core
+   Building pydantic @ file:///D:/a/pydantic/pydantic
+Downloading pygments (1.2MiB)
+Downloading ruff (11.2MiB)
+Downloading black (1.4MiB)
+Downloading sqlalchemy (2.0MiB)
+Downloading faker (1.8MiB)
+Downloading maturin (9.9MiB)
+ Downloaded black
+ Downloaded maturin
+ Downloaded ruff
+ Downloaded sqlalchemy
+ Downloaded pygments
+ Downloaded faker
+      Built pydantic @ file:///D:/a/pydantic/pydantic
+      Built pydantic-core @ file:///D:/a/pydantic/pydantic/pydantic-core
+Prepared 58 packages in 1m 39s
+Installed 58 packages in 394ms
+ + annotated-types==0.7.0
+ + ansi2html==1.9.2
+ + asttokens==2.4.1
+ + attrs==24.3.0
+ + black==26.5.1
+ + cffi==2.1.0
+ + click==8.1.8
+ + cloudpickle==3.1.2
+ + colorama==0.4.6
+ + coverage==7.13.5
+ + devtools==0.12.2
+ + dirty-equals==0.9.0
+ + dnspython==2.7.0
+ + email-validator==2.2.0
+ + executing==2.2.0
+ + faker==35.0.0
+ + greenlet==3.1.1
+ + hypothesis==6.147.0
+ + idna==3.15
+ + iniconfig==2.0.0
+ + inline-snapshot==0.32.2
+ + jsonschema==4.26.0
+ + jsonschema-specifications==2024.10.1
+ + markdown-it-py==3.0.0
+ + maturin==1.13.3
+ + mdurl==0.1.2
+ + mypy-extensions==1.0.0
+ + packaging==24.2
+ + pathspec==1.1.1
+ + platformdirs==4.3.6
+ + pluggy==1.5.0
+ + py-cpuinfo==9.0.0
+ + pycparser==2.22
+ + pydantic==2.14.0a1 (from file:///D:/a/pydantic/pydantic)
+ + pydantic-core==2.47.0 (from file:///D:/a/pydantic/pydantic/pydantic-core)
+ + pygments==2.19.1
+ + pytest==9.1.1
+ + pytest-benchmark==5.1.0
+ + pytest-codspeed==4.5.0
+ + pytest-examples==0.0.15
+ + pytest-mock==3.14.0
+ + pytest-pretty==1.2.0
+ + pytest-run-parallel==0.7.1
+ + pytest-timeout==2.4.0
+ + python-dateutil==2.9.0.post0
+ + pytokens==0.4.1
+ + pytz==2024.2
+ + referencing==0.36.1
+ + rich==13.9.4
+ + rpds-py==2026.6.3
+ + ruff==0.15.10
+ + six==1.17.0
+ + sortedcontainers==2.4.0
+ + sqlalchemy==2.0.37
+ + time-machine==3.3.0
+ + typing-extensions==4.15.0
+ + typing-inspection==0.4.2
+ + tzdata==2025.1
+##[group]Run uv run python -c "import pydantic.version; print(pydantic.version.version_info())"
+uv run python -c "import pydantic.version; print(pydantic.version.version_info())"
+shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  OS: windows-latest
+  DEPS: yes
+  UV_PYTHON_PREFERENCE: only-managed
+  UV_TOOL_BIN_DIR: D:\a\_temp\uv-tool-bin-dir
+  UV_TOOL_DIR: D:\a\_temp\uv-tool-dir
+  UV_PYTHON_INSTALL_DIR: D:\a\_temp\uv-python-dir
+  UV_PYTHON: 3.12
+  UV_CACHE_DIR: D:\a\_temp\setup-uv-cache
+##[endgroup]
+             pydantic version: 2.14.0a1
+        pydantic-core version: 2.47.0
+          pydantic-core build: profile=debug pgo=false
+               python version: 3.12.13 (main, Aug  5 2026, 17:14:30) [MSC v.1944 64 bit (AMD64)]
+                     platform: Windows-2025Server-10.0.26100-SP0
+             related packages: typing_extensions-4.15.0
+                       commit: 94aada8
+##[group]Run mkdir coverage
+mkdir coverage
+shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  OS: windows-latest
+  DEPS: yes
+  UV_PYTHON_PREFERENCE: only-managed
+  UV_TOOL_BIN_DIR: D:\a\_temp\uv-tool-bin-dir
+  UV_TOOL_DIR: D:\a\_temp\uv-tool-dir
+  UV_PYTHON_INSTALL_DIR: D:\a\_temp\uv-python-dir
+  UV_PYTHON: 3.12
+  UV_CACHE_DIR: D:\a\_temp\setup-uv-cache
+##[endgroup]
+
+    Directory: D:\a\pydantic\pydantic
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----            8/6/2026  7:06 AM                coverage
+
+##[group]Run make test NUM_THREADS=1
+make test NUM_THREADS=1
+shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  OS: windows-latest
+  DEPS: yes
+  UV_PYTHON_PREFERENCE: only-managed
+  UV_TOOL_BIN_DIR: D:\a\_temp\uv-tool-bin-dir
+  UV_TOOL_DIR: D:\a\_temp\uv-tool-dir
+  UV_PYTHON_INSTALL_DIR: D:\a\_temp\uv-python-dir
+  UV_PYTHON: 3.12
+  UV_CACHE_DIR: D:\a\_temp\setup-uv-cache
+  COVERAGE_FILE: coverage/.coverage.Windows-py3.12
+  CONTEXT: Windows-py3.12-without-deps
+##[endgroup]
+uv 0.12.2 (46ead6098 2026-08-05 x86_64-pc-windows-msvc)
+uv run coverage run -m pytest --durations=10 --parallel-threads 1
+================================================================ test session starts ================================================================
+platform win32 -- Python 3.12.13, pytest-9.1.1, pluggy-1.5.0
+codspeed: 4.5.0 (disabled, mode: walltime, callgraph: not supported, timer_resolution: 100.0ns)
+benchmark: 5.1.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=True warmup_iterations=100000)
+rootdir: D:\a\pydantic\pydantic
+configfile: pyproject.toml
+testpaths: tests
+plugins: devtools-0.12.2, Faker-35.0.0, hypothesis-6.147.0, inline-snapshot-0.32.2, benchmark-5.1.0, codspeed-4.5.0, examples-0.0.15, mock-3.14.0, pretty-1.2.0, run-parallel-0.7.1, timeout-2.4.0, time-machine-3.3.0
+collected 12115 items
+Collected 0 items to run in parallel
+
+tests\benchmarks\test_attribute_access.py ..                                                                                                   [  0%]
+tests\benchmarks\test_discriminated_unions.py ..                                                                                               [  0%]
+tests\benchmarks\test_fastapi_startup_generics.py .                                                                                            [  0%]
+tests\benchmarks\test_fastapi_startup_simple.py .                                                                                              [  0%]
+tests\benchmarks\test_imports.py ..                                                                                                            [  0%]
+tests\benchmarks\test_isinstance.py .                                                                                                          [  0%]
+tests\benchmarks\test_model_eq.py ...                                                                                                          [  0%]
+tests\benchmarks\test_model_schema_generation.py ..............sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [  0%]
+sssssssssssssssssssssssssssss                                                                                                                  [  1%]
+tests\benchmarks\test_model_schema_generation_recursive.py ......                                                                              [  1%]
+tests\benchmarks\test_model_serialization.py .....                                                                                             [  1%]
+tests\benchmarks\test_model_validation.py ........                                                                                             [  1%]
+tests\benchmarks\test_north_star.py ........                                                                                                   [  1%]
+tests\benchmarks\test_regex.py .                                                                                                               [  1%]
+tests\benchmarks\test_validators_build.py .                                                                                                    [  1%]
+tests\mypy\test_mypy.py sssssssssssssssssssssssssssssssssssssssssssssssssssss                                                                  [  1%]
+tests\plugin\test_plugin.py s                                                                                                                  [  1%]
+tests\pydantic_core\benchmarks\test_complete_benchmark.py ............                                                                         [  1%]
+tests\pydantic_core\benchmarks\test_micro_benchmarks.py ...................................................................................... [  2%]
+...............................                                                                                                                [  2%]
+tests\pydantic_core\benchmarks\test_nested_benchmark.py ..                                                                                     [  2%]
+tests\pydantic_core\benchmarks\test_serialization_micro.py ..................................                                                  [  3%]
+tests\pydantic_core\serializers\test_any.py ..............................s....................................................s.............. [  3%]
+...                                                                                                                                            [  3%]
+tests\pydantic_core\serializers\test_bytes.py ................                                                                                 [  4%]
+tests\pydantic_core\serializers\test_complex.py ............                                                                                   [  4%]
+tests\pydantic_core\serializers\test_dataclasses.py .....x..........                                                                           [  4%]
+tests\pydantic_core\serializers\test_datetime.py .......................................                                                       [  4%]
+tests\pydantic_core\serializers\test_decimal.py .......                                                                                        [  4%]
+tests\pydantic_core\serializers\test_definitions.py .......                                                                                    [  4%]
+tests\pydantic_core\serializers\test_definitions_recursive.py .....                                                                            [  4%]
+tests\pydantic_core\serializers\test_dict.py ............................                                                                      [  5%]
+tests\pydantic_core\serializers\test_enum.py .....                                                                                             [  5%]
+tests\pydantic_core\serializers\test_format.py ...............                                                                                 [  5%]
+tests\pydantic_core\serializers\test_functions.py .........................s....s.                                                             [  5%]
+tests\pydantic_core\serializers\test_generator.py ......                                                                                       [  5%]
+tests\pydantic_core\serializers\test_infer.py ...                                                                                              [  5%]
+tests\pydantic_core\serializers\test_json.py ....                                                                                              [  5%]
+tests\pydantic_core\serializers\test_json_or_python.py ..                                                                                      [  5%]
+tests\pydantic_core\serializers\test_list_tuple.py ...............................................................                             [  6%]
+tests\pydantic_core\serializers\test_literal.py ......                                                                                         [  6%]
+tests\pydantic_core\serializers\test_model.py ...................................................................                              [  6%]
+tests\pydantic_core\serializers\test_model_root.py ........                                                                                    [  6%]
+tests\pydantic_core\serializers\test_none.py ............................                                                                      [  7%]
+tests\pydantic_core\serializers\test_nullable.py .                                                                                             [  7%]
+tests\pydantic_core\serializers\test_other.py .......                                                                                          [  7%]
+tests\pydantic_core\serializers\test_pickling.py ......                                                                                        [  7%]
+tests\pydantic_core\serializers\test_serialize_as_any.py ............                                                                          [  7%]
+tests\pydantic_core\serializers\test_set_frozenset.py .......                                                                                  [  7%]
+tests\pydantic_core\serializers\test_simple.py ..........................s.............                                                        [  7%]
+tests\pydantic_core\serializers\test_string.py .....................                                                                           [  7%]
+tests\pydantic_core\serializers\test_timedelta.py ...s...............................................................................          [  8%]
+tests\pydantic_core\serializers\test_typed_dict.py .....................................                                                       [  8%]
+tests\pydantic_core\serializers\test_union.py ................................................................................................ [  9%]
+..........                                                                                                                                     [  9%]
+tests\pydantic_core\serializers\test_url.py ..........                                                                                         [  9%]
+tests\pydantic_core\serializers\test_uuid.py .......                                                                                           [  9%]
+tests\pydantic_core\test_build.py .........                                                                                                    [  9%]
+tests\pydantic_core\test_config.py ..............                                                                                              [ 10%]
+tests\pydantic_core\test_custom_errors.py ....                                                                                                 [ 10%]
+tests\pydantic_core\test_docstrings.py sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                                         [ 10%]
+tests\pydantic_core\test_errors.py ........................................................................................................... [ 11%]
+............................................................s.......................s.......                                                   [ 12%]
+tests\pydantic_core\test_garbage_collection.py ...                                                                                             [ 12%]
+tests\pydantic_core\test_hypothesis.py .s.........                                                                                             [ 12%]
+tests\pydantic_core\test_isinstance.py ...                                                                                                     [ 12%]
+tests\pydantic_core\test_json.py ...............                                                                                               [ 12%]
+tests\pydantic_core\test_misc.py .................                                                                                             [ 12%]
+tests\pydantic_core\test_prebuilt.py .........                                                                                                 [ 12%]
+tests\pydantic_core\test_schema_functions.py ...................................................................................               [ 13%]
+tests\pydantic_core\test_typing.py ..........                                                                                                  [ 13%]
+tests\pydantic_core\test_tzinfo.py ..........................................                                                                  [ 13%]
+tests\pydantic_core\validators\arguments_v3\test_alias.py .....sss.........sssss...s.s........................................................ [ 14%]
+........................s                                                                                                                      [ 14%]
+tests\pydantic_core\validators\arguments_v3\test_build_errors.py ......                                                                        [ 14%]
+tests\pydantic_core\validators\arguments_v3\test_extra.py ........ssss........ss..                                                             [ 14%]
+tests\pydantic_core\validators\arguments_v3\test_general.py ....s.ss......ssss...s...s.                                                        [ 15%]
+tests\pydantic_core\validators\arguments_v3\test_keyword_only.py ....ss....s...s.                                                              [ 15%]
+tests\pydantic_core\validators\arguments_v3\test_positional_only.py ....ss...s.s                                                               [ 15%]
+tests\pydantic_core\validators\arguments_v3\test_positional_or_keyword.py ......ssss.....ss...s.                                               [ 15%]
+tests\pydantic_core\validators\arguments_v3\test_var_args.py .....ss.......ss....                                                              [ 15%]
+tests\pydantic_core\validators\arguments_v3\test_var_kwargs_uniform.py ....ss......ss....                                                      [ 15%]
+tests\pydantic_core\validators\arguments_v3\test_var_kwargs_unpacked_typed_dict.py ...........sssss........                                    [ 16%]
+tests\pydantic_core\validators\test_allow_partial.py ..............                                                                            [ 16%]
+tests\pydantic_core\validators\test_arguments.py ..............s..s....s........s.ssssss........ssssss................ss......s..s............ [ 16%]
+.s...sss.....s...s......ssss......sss....ssss...sss.....sssss.s.s............................................................................. [ 18%]
+...........s                                                                                                                                   [ 18%]
+tests\pydantic_core\validators\test_bool.py .......................................                                                            [ 18%]
+tests\pydantic_core\validators\test_bytes.py ............................                                                                      [ 18%]
+tests\pydantic_core\validators\test_call.py ..........................                                                                         [ 19%]
+tests\pydantic_core\validators\test_callable.py ..............                                                                                 [ 19%]
+tests\pydantic_core\validators\test_chain.py ............                                                                                      [ 19%]
+tests\pydantic_core\validators\test_complex.py ....................................................                                            [ 19%]
+tests\pydantic_core\validators\test_custom_error.py .....                                                                                      [ 19%]
+tests\pydantic_core\validators\test_dataclasses.py .......s..sss........sssss......s.......................................................... [ 20%]
+.............................................................................................................................................. [ 21%]
+..............s.                                                                                                                               [ 21%]
+tests\pydantic_core\validators\test_date.py .................................................................................................. [ 22%]
+.......................                                                                                                                        [ 22%]
+tests\pydantic_core\validators\test_datetime.py .............................................................................................. [ 23%]
+...........................                                                                                                                    [ 23%]
+tests\pydantic_core\validators\test_decimal.py ............................................................................................... [ 24%]
+.............................................................................................................................................. [ 25%]
+....................................................................................................................................           [ 26%]
+tests\pydantic_core\validators\test_definitions.py ...........                                                                                 [ 26%]
+tests\pydantic_core\validators\test_definitions_recursive.py ....................................                                              [ 27%]
+tests\pydantic_core\validators\test_dict.py ....................................                                                               [ 27%]
+tests\pydantic_core\validators\test_enums.py .......................                                                                           [ 27%]
+tests\pydantic_core\validators\test_float.py ................................................................................................. [ 28%]
+.............................................................................................................................................. [ 29%]
+...................................................................................                                                            [ 30%]
+tests\pydantic_core\validators\test_frozenset.py .........................................................................                     [ 30%]
+tests\pydantic_core\validators\test_function.py ..........................................................                                     [ 31%]
+tests\pydantic_core\validators\test_generator.py ......................................                                                        [ 31%]
+tests\pydantic_core\validators\test_int.py ................................................................................................... [ 32%]
+............................................................................................................................................   [ 33%]
+tests\pydantic_core\validators\test_is_instance.py .................................                                                           [ 33%]
+tests\pydantic_core\validators\test_is_subclass.py ..............                                                                              [ 34%]
+tests\pydantic_core\validators\test_json.py .................................                                                                  [ 34%]
+tests\pydantic_core\validators\test_json_or_python.py .                                                                                        [ 34%]
+tests\pydantic_core\validators\test_lax_or_strict.py ..                                                                                        [ 34%]
+tests\pydantic_core\validators\test_list.py ................................................................................................   [ 35%]
+tests\pydantic_core\validators\test_literal.py ..............................................                                                  [ 35%]
+tests\pydantic_core\validators\test_model.py .............................................                                                     [ 35%]
+tests\pydantic_core\validators\test_model_fields.py .......................................................................................... [ 36%]
+.............................................................................................................................................. [ 37%]
+............................................................................s                                                                  [ 38%]
+tests\pydantic_core\validators\test_model_init.py ..............                                                                               [ 38%]
+tests\pydantic_core\validators\test_model_root.py .........                                                                                    [ 38%]
+tests\pydantic_core\validators\test_none.py ..                                                                                                 [ 38%]
+tests\pydantic_core\validators\test_nullable.py ...                                                                                            [ 38%]
+tests\pydantic_core\validators\test_pickling.py ....                                                                                           [ 38%]
+tests\pydantic_core\validators\test_set.py ............................................................................                        [ 39%]
+tests\pydantic_core\validators\test_string.py ................................................................................................ [ 40%]
+..............                                                                                                                                 [ 40%]
+tests\pydantic_core\validators\test_tagged_union.py ................................................                                           [ 40%]
+tests\pydantic_core\validators\test_time.py ...................................................................................                [ 41%]
+tests\pydantic_core\validators\test_timedelta.py ...................................................................................s          [ 42%]
+tests\pydantic_core\validators\test_tuple.py .........................................................................................         [ 42%]
+tests\pydantic_core\validators\test_typed_dict.py ............................................................................................ [ 43%]
+.............................................................................................................................................. [ 44%]
+....................s                                                                                                                          [ 44%]
+tests\pydantic_core\validators\test_union.py .....................................................x..............................              [ 45%]
+tests\pydantic_core\validators\test_url.py ................................................................................................... [ 46%]
+.............................................................................................................................................. [ 47%]
+.............................................................................................................................xx..xxx.x........ [ 48%]
+                                                                                                                                               [ 48%]
+tests\pydantic_core\validators\test_uuid.py .................................................................................................  [ 49%]
+tests\pydantic_core\validators\test_with_default.py .......................................................................................... [ 50%]
+..................................                                                                                                             [ 50%]
+tests\test_abc.py ...                                                                                                                          [ 50%]
+tests\test_aliases.py ...................................................................s.....s..s.....ssssssssss..s.....s..s.....s..s.....s. [ 51%]
+.s.....s..s.....ssssssssss..........                                                                                                           [ 51%]
+tests\test_allow_partial.py ...................                                                                                                [ 52%]
+tests\test_annotated.py ....................................                                                                                   [ 52%]
+tests\test_assert_in_validators.py .                                                                                                           [ 52%]
+tests\test_callable.py ........                                                                                                                [ 52%]
+tests\test_color.py ..........................................................................................                                 [ 53%]
+tests\test_computed_fields.py ............................x...s...x                                                                            [ 53%]
+tests\test_config.py ....................................................................................                                      [ 54%]
+tests\test_construction.py .......................................................                                                             [ 54%]
+tests\test_create_model.py ............................                                                                                        [ 54%]
+tests\test_dataclasses.py .............................................x..........................................................s........... [ 55%]
+..............................ss.............................................................................................................. [ 56%]
+..........                                                                                                                                     [ 57%]
+tests\test_datetime.py ....................................................................................................................... [ 58%]
+.................................................................................................................                              [ 58%]
+tests\test_decorators.py ...............................                                                                                       [ 59%]
+tests\test_deferred_annotations.py sssssssss                                                                                                   [ 59%]
+tests\test_deprecated.py ................................................                                                                      [ 59%]
+tests\test_deprecated_fields.py ............                                                                                                   [ 59%]
+tests\test_deprecated_validate_arguments.py .....................                                                                              [ 59%]
+tests\test_docs.py sss..                                                                                                                       [ 60%]
+tests\test_docs_extraction.py ..........xx....                                                                                                 [ 60%]
+tests\test_dunder_all.py ..                                                                                                                    [ 60%]
+tests\test_edge_cases.py ..................................................................................................................... [ 61%]
+.................................................................................                                                              [ 61%]
+tests\test_errors.py ....                                                                                                                      [ 61%]
+tests\test_experimental_arguments_schema.py ..........                                                                                         [ 61%]
+tests\test_exports.py ........................................................................................................................ [ 62%]
+.....................................                                                                                                          [ 63%]
+tests\test_fields.py .......................................................................                                                   [ 63%]
+tests\test_forward_ref.py ................................................xx..........x....F                                                   [ 64%]
+tests\test_forward_ref.py:1555 test_implicit_type_alias_recursive_error_message - AssertionError: Regex pattern did not match.   Expected �
+tests\test_forward_ref.py ...x....                                                                                                             [ 64%]
+tests\test_generics.py ................................................s..........................x.....................sx.......xx........... [ 65%]
+..........                                                                                                                                     [ 65%]
+tests\test_internal.py ...xx.......................                                                                                            [ 65%]
+tests\test_json.py ............................s...............................                                                                [ 66%]
+tests\test_json_schema.py .................................................................................................................... [ 67%]
+.............................................................................................................................................. [ 68%]
+...............ss.........................................x................................................................................... [ 69%]
+....s....................................................................................................................................      [ 70%]
+tests\test_main.py ..........................................................................................................sssssssssssssssss [ 71%]
+ssssssss...........................................x.......................................................................................... [ 72%]
+...............s                                                                                                                               [ 72%]
+tests\test_meta.py x                                                                                                                           [ 72%]
+tests\test_migration.py ...................................................................................................................... [ 73%]
+...............................................................................................................                                [ 74%]
+tests\test_missing_sentinel.py ..x.....                                                                                                        [ 74%]
+tests\test_model_signature.py ...............                                                                                                  [ 75%]
+tests\test_model_validator.py .........                                                                                                        [ 75%]
+tests\test_networks.py ....................................................................s.................................................. [ 76%]
+..............................................................................x............................................................... [ 77%]
+.................................................                                                                                              [ 77%]
+tests\test_networks_ipaddress.py ............................................................................................................. [ 78%]
+................................................                                                                                               [ 78%]
+tests\test_parse.py ...........                                                                                                                [ 79%]
+tests\test_pickle.py ......................                                                                                                    [ 79%]
+tests\test_pipeline.py ...........................................................................................                             [ 79%]
+tests\test_plugin_loader.py .........                                                                                                          [ 80%]
+tests\test_plugins.py ..............                                                                                                           [ 80%]
+tests\test_private_attributes.py ...................................                                                                           [ 80%]
+tests\test_rich_repr.py ..                                                                                                                     [ 80%]
+tests\test_root_model.py ...............................................................................                                       [ 81%]
+tests\test_serialize.py ...........................................................................................                            [ 81%]
+tests\test_serialize_as_any.py ..............                                                                                                  [ 81%]
+tests\test_strict.py ......                                                                                                                    [ 82%]
+tests\test_structural_pattern_matching.py .                                                                                                    [ 82%]
+tests\test_titles.py ....................................................................................................................      [ 83%]
+tests\test_tools.py .........                                                                                                                  [ 83%]
+tests\test_type_adapter.py .........................................................x......................................................... [ 84%]
+..........................................................................................................                                     [ 84%]
+tests\test_type_alias_type.py ...................                                                                                              [ 85%]
+tests\test_type_hints.py ......                                                                                                                [ 85%]
+tests\test_types.py .......s...........................x.......................ss............................................................. [ 86%]
+.............................................................................................................................................. [ 87%]
+....................                                                                                                                           [ 87%]
+tests\test_types_payment_card_number.py ..............................................                                                         [ 87%]
+tests\test_types_self.py .............                                                                                                         [ 87%]
+tests\test_types_typeddict.py ................................................................................                                 [ 88%]
+tests\test_types_zoneinfo.py ......                                                                                                            [ 88%]
+tests\test_typing.py ................                                                                                                          [ 88%]
+tests\test_utils.py .......................................................................................................................... [ 89%]
+......................................                                                                                                         [ 90%]
+tests\test_v1.py ...                                                                                                                           [ 90%]
+tests\test_validate_call.py ...............................................................                                                    [ 90%]
+tests\test_validation_context.py ....                                                                                                          [ 90%]
+tests\test_validators.py ..................................................................................................................... [ 91%]
+...................................................x.......x..                                                                                 [ 92%]
+tests\test_validators_dataclass.py ........                                                                                                    [ 92%]
+tests\test_version.py .......                                                                                                                  [ 92%]
+tests\test_warnings.py .....                                                                                                                   [ 92%]
+tests\types\test_bool.py ...........................................................                                                           [ 92%]
+tests\types\test_bytes.py ......................                                                                                               [ 92%]
+tests\types\test_complex.py ..                                                                                                                 [ 93%]
+tests\types\test_counter.py ..                                                                                                                 [ 93%]
+tests\types\test_date.py ................                                                                                                      [ 93%]
+tests\types\test_datetime.py ..............                                                                                                    [ 93%]
+tests\types\test_decimal.py .................................................................................................................. [ 94%]
+..........................................................                                                                                     [ 94%]
+tests\types\test_defaultdict.py ......                                                                                                         [ 94%]
+tests\types\test_deque.py ........................                                                                                             [ 94%]
+tests\types\test_dict.py ...                                                                                                                   [ 94%]
+tests\types\test_ellipsis.py .                                                                                                                 [ 94%]
+tests\types\test_enum.py ...................                                                                                                   [ 95%]
+tests\types\test_float.py ........................................                                                                             [ 95%]
+tests\types\test_fraction.py ......................................................................................                            [ 96%]
+tests\types\test_frozenset.py .................                                                                                                [ 96%]
+tests\types\test_int.py ......................................................                                                                 [ 96%]
+tests\types\test_iterable.py .........                                                                                                         [ 96%]
+tests\types\test_list.py .........................                                                                                             [ 97%]
+tests\types\test_literal.py ....                                                                                                               [ 97%]
+tests\types\test_mapping.py ...                                                                                                                [ 97%]
+tests\types\test_model.py ..................                                                                                                   [ 97%]
+tests\types\test_namedtuple.py ...........................                                                                                     [ 97%]
+tests\types\test_none.py .....                                                                                                                 [ 97%]
+tests\types\test_ordered_dict.py ......                                                                                                        [ 97%]
+tests\types\test_path.py .......................s.......                                                                                       [ 97%]
+tests\types\test_pattern.py ...............                                                                                                    [ 97%]
+tests\types\test_sequence.py .....................                                                                                             [ 98%]
+tests\types\test_set.py ..........................                                                                                             [ 98%]
+tests\types\test_str.py ................................................                                                                       [ 98%]
+tests\types\test_time.py ..............                                                                                                        [ 98%]
+tests\types\test_timedelta.py ...........                                                                                                      [ 98%]
+tests\types\test_tuple.py .....................                                                                                                [ 99%]
+tests\types\test_uuid.py ..........                                                                                                            [ 99%]
+tests\types\unions\test_discriminated_union.py ...........................................................x.........x...x..x.....              [ 99%]
+tests\types\unions\test_union.py .................                                                                                             [100%]
+
+------------------------------------------------------------------ inline-snapshot ------------------------------------------------------------------
+INFO: CI run was detected because environment variable "CI" was defined. inline-snapshot runs with --inline-snapshot=disable by default in CI. This 
+means that tests with snapshots will continue to run, but snapshot(x) will only return x and inline-snapshot will not be able to fix snapshots or 
+generate reports. You can change this by using --inline-snapshot=report for example.
+
+
+
+===================================================================== FAILURES ======================================================================
+_________________________________________________ test_implicit_type_alias_recursive_error_message __________________________________________________
+
+    @pytest.mark.skipif(
+        platform.python_implementation() == 'PyPy',
+        reason='Flaky on PyPy',
+    )
+    def test_implicit_type_alias_recursive_error_message() -> None:
+        Json = list['Json']
+    
+        with pytest.raises(RecursionError, match='.*If you made use of an implicit recursive type alias.*'):
+            TypeAdapter(Json)
+    
+>       with pytest.raises(RecursionError, match='.*If you made use of an implicit recursive type alias.*'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: '.*If you made use of an implicit recursive type alias.*'
+E         Actual message: 'maximum recursion depth exceeded'
+
+tests\test_forward_ref.py:1566: AssertionError
+=============================================================== slowest 10 durations ================================================================
+3.48s call     tests/benchmarks/test_model_schema_generation.py::test_lots_of_models_with_lots_of_fields
+2.66s call     tests/pydantic_core/test_hypothesis.py::test_urls_text
+2.03s call     tests/test_json_schema.py::test_multiple_enums_with_same_name
+1.72s call     tests/test_generics.py::test_generics_work_with_many_parametrized_base_models
+1.59s call     tests/pydantic_core/test_hypothesis.py::test_datetime_datetime
+1.00s setup    tests/benchmarks/test_north_star.py::test_north_star_validate_json
+0.86s call     tests/test_json_schema.py::test_multiple_parametrization_of_generic_model
+0.80s call     tests/pydantic_core/test_garbage_collection.py::test_gc_schema_validator
+0.80s call     tests/pydantic_core/test_garbage_collection.py::test_gc_schema_serializer
+0.73s call     tests/test_json_schema.py::test_multiple_models_with_same_name_different_input_output
+                                                          Summary of Failures                                                           
++--------------------------------------------------------------------------------------------------------------------------------------+
+|  File                       |  Function                                          |  Function Line  |  Error Line  |  Error           |
+|-----------------------------+----------------------------------------------------+-----------------+--------------+------------------|
+|  tests\test_forward_ref.py  |  test_implicit_type_alias_recursive_error_message  |  1556           |  1566        |  AssertionError  |
++--------------------------------------------------------------------------------------------------------------------------------------+
+Results (106.35s):
+         1 failed
+     11643 passed
+       435 skipped
+        36 xfailed
+make: *** [Makefile:75: test] Error 1
+##[error]Process completed with exit code 1.
+Post job cleanup.
+[command]"C:\Program Files\Git\bin\git.exe" version
+git version 2.55.0.windows.3
+Temporarily overriding HOME='D:\a\_temp\df89f269-d1c3-4015-8ce6-c39c19af70c2' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\pydantic\pydantic
+Removing SSH command configuration
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Removing HTTP extra header
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Removing includeIf entries pointing to credentials config files
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:D:/a/pydantic/pydantic/.git.path
+includeif.gitdir:D:/a/pydantic/pydantic/.git/worktrees/*.path
+[command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/pydantic/pydantic/.git.path
+D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/pydantic/pydantic/.git.path D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/pydantic/pydantic/.git/worktrees/*.path
+D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/pydantic/pydantic/.git/worktrees/*.path D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+Removing credentials config 'D:\a\_temp\git-credentials-8abba2c0-48c5-4c63-9357-b0be0a8e703a.config'
+Cleaning up orphan processes
+Terminate orphan process: pid (384) (vctip)

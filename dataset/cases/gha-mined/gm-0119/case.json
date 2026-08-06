@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0119",
+  "title": "huggingface/transformers pr-ci / Check repository consistency",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "huggingface/transformers",
+    "run_id": 31078170794,
+    "run_attempt": 1,
+    "head_sha": "730ba388ef5363e17e3dd69a2830ed0bcf7873a2",
+    "pr_number": 47809,
+    "failed_job_name": "pr-ci / Check repository consistency",
+    "failed_step_name": "Check repository consistency",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": "diff.patch",
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "lint_or_format",
+    "related_to_diff": true,
+    "culprit_files": [
+      "src/transformers/generation/configuration_utils.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/huggingface/transformers/actions/runs/31078170794",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/lint_or_format. Lowest confidence of the two was 0.85. Decisive evidence: ValueError: There was at least one problem when checking docstrings of public objects.",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

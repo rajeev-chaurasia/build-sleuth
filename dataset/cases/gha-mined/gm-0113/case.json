@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0113",
+  "title": "home-assistant/core Run tests Python 3.14.5 (7)",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "home-assistant/core",
+    "run_id": 31076186620,
+    "run_attempt": 1,
+    "head_sha": "82b4c8a537f0351849fc84cf2f69c7aace92c2dd",
+    "pr_number": 178318,
+    "failed_job_name": "Run tests Python 3.14.5 (7)",
+    "failed_step_name": "Run pytest",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": "diff.patch",
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "flaky_test",
+    "subcategory": "async_wait",
+    "related_to_diff": false,
+    "culprit_files": [],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/home-assistant/core/actions/runs/31076186620",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on flaky_test/async_wait. Lowest confidence of the two was 0.70. Decisive evidence: FAILED tests/components/sonos/test_init.py::test_async_poll_manual_hosts_6 - assert 1 == 0",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

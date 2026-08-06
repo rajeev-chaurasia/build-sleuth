@@ -1,0 +1,593 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {ccd46692-418a-47d5-bc70-59acbad21032}
+Azure Region: westus3
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260720.247.2
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: None
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Download action repository 'scientific-python/action-towncrier-changelog@v2' (SHA:f9c7df9a9f8b55cb0c12d94d14b281e9bcd101c0)
+Complete job name: A reviewer will let you know if it is required or can be bypassed
+##[group]Build container for action use: '/home/runner/work/_actions/scientific-python/action-towncrier-changelog/v2/Dockerfile'.
+##[command]/usr/bin/docker build -t 6dc4a4:2018475a9c3a4d95a740e55d70a9635c -f "/home/runner/work/_actions/scientific-python/action-towncrier-changelog/v2/Dockerfile" "/home/runner/work/_actions/scientific-python/action-towncrier-changelog/v2"
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 567B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.13.9-slim
+#2 ...
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.13.9-slim
+#2 DONE 0.9s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 9.53kB done
+#5 DONE 0.0s
+
+#6 [1/4] FROM docker.io/library/python:3.13.9-slim@sha256:326df678c20c78d465db501563f3492d17c42a4afe33a1f2bf5406a1d56b0e86
+#6 resolve docker.io/library/python:3.13.9-slim@sha256:326df678c20c78d465db501563f3492d17c42a4afe33a1f2bf5406a1d56b0e86 done
+#6 sha256:4bed2b8b523314dbacb1acce4f093ff6a6039a928ed726d74f96df90b165a773 5.52kB / 5.52kB done
+#6 sha256:0e4bc2bd6656e6e004e3c749af70e5650bac2258243eb0949dea51cb8b7863db 2.10MB / 29.78MB 0.1s
+#6 sha256:e1c27c1ad6818bd18e470be14362744b21707a85a30252589428196d8057992f 0B / 1.29MB 0.1s
+#6 sha256:ff144b626b583c65b39cb27234788d3e935a1fe7c2b4e2aa294a131a6cabc109 0B / 11.73MB 0.1s
+#6 sha256:326df678c20c78d465db501563f3492d17c42a4afe33a1f2bf5406a1d56b0e86 10.37kB / 10.37kB done
+#6 sha256:3f1ce1c415054488586812b63270daf89d97b4f23416e1288003816790eb08de 1.75kB / 1.75kB done
+#6 sha256:0e4bc2bd6656e6e004e3c749af70e5650bac2258243eb0949dea51cb8b7863db 29.78MB / 29.78MB 0.2s done
+#6 sha256:e1c27c1ad6818bd18e470be14362744b21707a85a30252589428196d8057992f 1.29MB / 1.29MB 0.2s done
+#6 sha256:ff144b626b583c65b39cb27234788d3e935a1fe7c2b4e2aa294a131a6cabc109 7.34MB / 11.73MB 0.2s
+#6 sha256:253f8a2a30398d4727214fdc156b961bd25a97292de7c70fbfb7e77d72765438 0B / 251B 0.2s
+#6 sha256:ff144b626b583c65b39cb27234788d3e935a1fe7c2b4e2aa294a131a6cabc109 11.73MB / 11.73MB 0.2s done
+#6 sha256:253f8a2a30398d4727214fdc156b961bd25a97292de7c70fbfb7e77d72765438 251B / 251B 0.2s done
+#6 extracting sha256:0e4bc2bd6656e6e004e3c749af70e5650bac2258243eb0949dea51cb8b7863db 0.1s
+#6 extracting sha256:0e4bc2bd6656e6e004e3c749af70e5650bac2258243eb0949dea51cb8b7863db 1.0s done
+#6 extracting sha256:e1c27c1ad6818bd18e470be14362744b21707a85a30252589428196d8057992f
+#6 extracting sha256:e1c27c1ad6818bd18e470be14362744b21707a85a30252589428196d8057992f 0.1s done
+#6 extracting sha256:ff144b626b583c65b39cb27234788d3e935a1fe7c2b4e2aa294a131a6cabc109
+#6 extracting sha256:ff144b626b583c65b39cb27234788d3e935a1fe7c2b4e2aa294a131a6cabc109 0.5s done
+#6 extracting sha256:253f8a2a30398d4727214fdc156b961bd25a97292de7c70fbfb7e77d72765438 done
+#6 DONE 3.7s
+
+#7 [2/4] RUN python -m pip install --upgrade pip PyGithub towncrier
+#7 1.480 Requirement already satisfied: pip in /usr/local/lib/python3.13/site-packages (25.2)
+#7 1.570 Collecting pip
+#7 1.615   Downloading pip-26.2.1-py3-none-any.whl.metadata (4.6 kB)
+#7 1.644 Collecting PyGithub
+#7 1.655   Downloading pygithub-2.9.1-py3-none-any.whl.metadata (3.9 kB)
+#7 1.678 Collecting towncrier
+#7 1.691   Downloading towncrier-25.8.0-py3-none-any.whl.metadata (4.3 kB)
+#7 1.725 Collecting pynacl>=1.4.0 (from PyGithub)
+#7 1.737   Downloading pynacl-1.6.2-cp38-abi3-manylinux_2_34_x86_64.whl.metadata (10.0 kB)
+#7 1.777 Collecting requests>=2.14.0 (from PyGithub)
+#7 1.789   Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+#7 1.815 Collecting pyjwt>=2.4.0 (from pyjwt[crypto]>=2.4.0->PyGithub)
+#7 1.827   Downloading pyjwt-2.13.0-py3-none-any.whl.metadata (3.4 kB)
+#7 1.855 Collecting typing-extensions>=4.5.0 (from PyGithub)
+#7 1.867   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#7 1.901 Collecting urllib3>=1.26.0 (from PyGithub)
+#7 1.912   Downloading urllib3-2.7.0-py3-none-any.whl.metadata (6.9 kB)
+#7 1.942 Collecting click (from towncrier)
+#7 1.953   Downloading click-8.4.2-py3-none-any.whl.metadata (2.6 kB)
+#7 1.978 Collecting jinja2 (from towncrier)
+#7 1.988   Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+#7 2.239 Collecting cryptography>=3.4.0 (from pyjwt[crypto]>=2.4.0->PyGithub)
+#7 2.250   Downloading cryptography-50.0.0-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.3 kB)
+#7 2.373 Collecting cffi>=2.0.0 (from cryptography>=3.4.0->pyjwt[crypto]>=2.4.0->PyGithub)
+#7 2.383   Downloading cffi-2.1.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+#7 2.403 Collecting pycparser (from cffi>=2.0.0->cryptography>=3.4.0->pyjwt[crypto]>=2.4.0->PyGithub)
+#7 2.416   Downloading pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
+#7 2.544 Collecting charset_normalizer<4,>=2 (from requests>=2.14.0->PyGithub)
+#7 2.555   Downloading charset_normalizer-3.4.9-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (41 kB)
+#7 2.588 Collecting idna<4,>=2.5 (from requests>=2.14.0->PyGithub)
+#7 2.600   Downloading idna-3.18-py3-none-any.whl.metadata (6.1 kB)
+#7 2.637 Collecting certifi>=2023.5.7 (from requests>=2.14.0->PyGithub)
+#7 2.647   Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+#7 2.711 Collecting MarkupSafe>=2.0 (from jinja2->towncrier)
+#7 2.722   Downloading markupsafe-3.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+#7 2.737 Downloading pip-26.2.1-py3-none-any.whl (1.8 MB)
+#7 2.800    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 36.8 MB/s  0:00:00
+#7 2.811 Downloading pygithub-2.9.1-py3-none-any.whl (449 kB)
+#7 2.826 Downloading towncrier-25.8.0-py3-none-any.whl (65 kB)
+#7 2.839 Downloading pyjwt-2.13.0-py3-none-any.whl (31 kB)
+#7 2.854 Downloading cryptography-50.0.0-cp311-abi3-manylinux_2_34_x86_64.whl (4.7 MB)
+#7 2.888    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 141.2 MB/s  0:00:00
+#7 2.899 Downloading cffi-2.1.1-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+#7 2.912 Downloading pynacl-1.6.2-cp38-abi3-manylinux_2_34_x86_64.whl (1.4 MB)
+#7 2.922    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.4/1.4 MB 152.4 MB/s  0:00:00
+#7 2.934 Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+#7 2.947 Downloading charset_normalizer-3.4.9-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (223 kB)
+#7 2.965 Downloading idna-3.18-py3-none-any.whl (65 kB)
+#7 2.978 Downloading urllib3-2.7.0-py3-none-any.whl (131 kB)
+#7 2.992 Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+#7 3.005 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#7 3.018 Downloading click-8.4.2-py3-none-any.whl (119 kB)
+#7 3.031 Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+#7 3.045 Downloading markupsafe-3.0.3-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+#7 3.058 Downloading pycparser-3.0-py3-none-any.whl (48 kB)
+#7 3.121 Installing collected packages: urllib3, typing-extensions, pyjwt, pycparser, pip, MarkupSafe, idna, click, charset_normalizer, certifi, requests, jinja2, cffi, towncrier, pynacl, cryptography, PyGithub
+#7 3.284   Attempting uninstall: pip
+#7 3.287     Found existing installation: pip 25.2
+#7 3.332     Uninstalling pip-25.2:
+#7 3.343       Successfully uninstalled pip-25.2
+#7 5.145 
+#7 5.148 Successfully installed MarkupSafe-3.0.3 PyGithub-2.9.1 certifi-2026.7.22 cffi-2.1.1 charset_normalizer-3.4.9 click-8.4.2 cryptography-50.0.0 idna-3.18 jinja2-3.1.6 pip-26.2.1 pycparser-3.0 pyjwt-2.13.0 pynacl-1.6.2 requests-2.34.2 towncrier-25.8.0 typing-extensions-4.16.0 urllib3-2.7.0
+#7 5.148 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#7 DONE 5.4s
+
+#8 [3/4] COPY entrypoint.sh /entrypoint.sh
+#8 DONE 0.0s
+
+#9 [4/4] COPY check_changelog.py /check_changelog.py
+#9 DONE 0.0s
+
+#10 exporting to image
+#10 exporting layers
+#10 exporting layers 0.7s done
+#10 writing image sha256:2d295a2c4063eadd18599a3abeff111cd606a493dfb3dd02d9d163f5e1f6e6c5 done
+#10 naming to docker.io/library/6dc4a4:2018475a9c3a4d95a740e55d70a9635c done
+#10 DONE 0.7s
+##[endgroup]
+##[group]Run actions/checkout@v7
+with:
+  fetch-depth: 0
+  repository: scikit-learn/scikit-learn
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  persist-credentials: true
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+##[endgroup]
+Syncing repository: scikit-learn/scikit-learn
+##[group]Getting Git version info
+Working directory is '/home/runner/work/scikit-learn/scikit-learn'
+[command]/usr/bin/git version
+git version 2.54.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/9de249d1-c2b4-4849-a6c6-fc6e99ea704a' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/scikit-learn/scikit-learn
+Deleting the contents of '/home/runner/work/scikit-learn/scikit-learn'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/scikit-learn/scikit-learn
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/scikit-learn/scikit-learn/.git/
+[command]/usr/bin/git remote add origin https://github.com/scikit-learn/scikit-learn
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-543ef908-edcd-496f-83b7-c6504579ddd0.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/scikit-learn/scikit-learn/.git.path /home/runner/work/_temp/git-credentials-543ef908-edcd-496f-83b7-c6504579ddd0.config
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/scikit-learn/scikit-learn/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-543ef908-edcd-496f-83b7-c6504579ddd0.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-543ef908-edcd-496f-83b7-c6504579ddd0.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-543ef908-edcd-496f-83b7-c6504579ddd0.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +ea90811e4a7f883f6a1475b0fb1d653be9ad0295:refs/remotes/pull/34659/merge
+From https://github.com/scikit-learn/scikit-learn
+ * [new branch]            0.10.X                -> origin/0.10.X
+ * [new branch]            0.11.X                -> origin/0.11.X
+ * [new branch]            0.12.X                -> origin/0.12.X
+ * [new branch]            0.13.X                -> origin/0.13.X
+ * [new branch]            0.14.X                -> origin/0.14.X
+ * [new branch]            0.15.X                -> origin/0.15.X
+ * [new branch]            0.16.X                -> origin/0.16.X
+ * [new branch]            0.17.X                -> origin/0.17.X
+ * [new branch]            0.18.X                -> origin/0.18.X
+ * [new branch]            0.19.X                -> origin/0.19.X
+ * [new branch]            0.20.X                -> origin/0.20.X
+ * [new branch]            0.21.X                -> origin/0.21.X
+ * [new branch]            0.22.X                -> origin/0.22.X
+ * [new branch]            0.23.X                -> origin/0.23.X
+ * [new branch]            0.24.X                -> origin/0.24.X
+ * [new branch]            0.6.X                 -> origin/0.6.X
+ * [new branch]            0.7.X                 -> origin/0.7.X
+ * [new branch]            0.8.X                 -> origin/0.8.X
+ * [new branch]            0.9.X                 -> origin/0.9.X
+ * [new branch]            1.0.X                 -> origin/1.0.X
+ * [new branch]            1.1.X                 -> origin/1.1.X
+ * [new branch]            1.2.X                 -> origin/1.2.X
+ * [new branch]            1.3.X                 -> origin/1.3.X
+ * [new branch]            1.4.X                 -> origin/1.4.X
+ * [new branch]            1.5.X                 -> origin/1.5.X
+ * [new branch]            1.6.X                 -> origin/1.6.X
+ * [new branch]            1.7.X                 -> origin/1.7.X
+ * [new branch]            1.8.X                 -> origin/1.8.X
+ * [new branch]            1.9.X                 -> origin/1.9.X
+ * [new branch]            copilot/fix-ci-issue  -> origin/copilot/fix-ci-issue
+ * [new branch]            copilot/fix-ci-issues-in-pr-34303 -> origin/copilot/fix-ci-issues-in-pr-34303
+ * [new branch]            copilot/investigate-performance-regression -> origin/copilot/investigate-performance-regression
+ * [new branch]            copilot/list-open-prs-ci-update-lock-files -> origin/copilot/list-open-prs-ci-update-lock-files
+ * [new branch]            copilot/review-ci-issues-pr-33899 -> origin/copilot/review-ci-issues-pr-33899
+ * [new branch]            copilot/root-cause-analysis-test-failure -> origin/copilot/root-cause-analysis-test-failure
+ * [new branch]            copilot/search-root-cause-openblas-to-blis -> origin/copilot/search-root-cause-openblas-to-blis
+ * [new branch]            copilot/sub-pr-32981  -> origin/copilot/sub-pr-32981
+ * [new branch]            copilot/update-lock-files-failure -> origin/copilot/update-lock-files-failure
+ * [new branch]            copilot/update-pr-34153-user-guide -> origin/copilot/update-pr-34153-user-guide
+ * [new branch]            debian                -> origin/debian
+ * [new branch]            debug-publish-failure -> origin/debug-publish-failure
+ * [new branch]            dependabot/github_actions/actions-26d12d5f7e -> origin/dependabot/github_actions/actions-26d12d5f7e
+ * [new branch]            feature/engine-api    -> origin/feature/engine-api
+ * [new branch]            fix-git-link          -> origin/fix-git-link
+ * [new branch]            main                  -> origin/main
+ * [new branch]            pull/29138/head       -> origin/pull/29138/head
+ * [new branch]            refactor/cython-tree-class-hierarchy -> origin/refactor/cython-tree-class-hierarchy
+ * [new branch]            tweak-build-script-shebang -> origin/tweak-build-script-shebang
+ * [new tag]               0.1                   -> 0.1
+ * [new tag]               0.1-beta              -> 0.1-beta
+ * [new tag]               0.10                  -> 0.10
+ * [new tag]               0.10-branching        -> 0.10-branching
+ * [new tag]               0.11                  -> 0.11
+ * [new tag]               0.11-beta             -> 0.11-beta
+ * [new tag]               0.11-branching        -> 0.11-branching
+ * [new tag]               0.12                  -> 0.12
+ * [new tag]               0.12-branching        -> 0.12-branching
+ * [new tag]               0.12.1                -> 0.12.1
+ * [new tag]               0.13                  -> 0.13
+ * [new tag]               0.13-branching        -> 0.13-branching
+ * [new tag]               0.13.1                -> 0.13.1
+ * [new tag]               0.14                  -> 0.14
+ * [new tag]               0.14.1                -> 0.14.1
+ * [new tag]               0.14a1                -> 0.14a1
+ * [new tag]               0.15-branching        -> 0.15-branching
+ * [new tag]               0.15.0                -> 0.15.0
+ * [new tag]               0.15.0b1              -> 0.15.0b1
+ * [new tag]               0.15.0b2              -> 0.15.0b2
+ * [new tag]               0.15.1                -> 0.15.1
+ * [new tag]               0.15.2                -> 0.15.2
+ * [new tag]               0.16-branching        -> 0.16-branching
+ * [new tag]               0.16.0                -> 0.16.0
+ * [new tag]               0.16.1                -> 0.16.1
+ * [new tag]               0.16b1                -> 0.16b1
+ * [new tag]               0.17                  -> 0.17
+ * [new tag]               0.17-branching        -> 0.17-branching
+ * [new tag]               0.17.1                -> 0.17.1
+ * [new tag]               0.17.1-1              -> 0.17.1-1
+ * [new tag]               0.17b1                -> 0.17b1
+ * [new tag]               0.18                  -> 0.18
+ * [new tag]               0.18.1                -> 0.18.1
+ * [new tag]               0.18.2                -> 0.18.2
+ * [new tag]               0.18rc                -> 0.18rc
+ * [new tag]               0.18rc1               -> 0.18rc1
+ * [new tag]               0.18rc2               -> 0.18rc2
+ * [new tag]               0.19-branching        -> 0.19-branching
+ * [new tag]               0.19.0                -> 0.19.0
+ * [new tag]               0.19.1                -> 0.19.1
+ * [new tag]               0.19.2                -> 0.19.2
+ * [new tag]               0.19b1                -> 0.19b1
+ * [new tag]               0.19b2                -> 0.19b2
+ * [new tag]               0.2                   -> 0.2
+ * [new tag]               0.2-beta              -> 0.2-beta
+ * [new tag]               0.20.0                -> 0.20.0
+ * [new tag]               0.20.1                -> 0.20.1
+ * [new tag]               0.20.2                -> 0.20.2
+ * [new tag]               0.20.3                -> 0.20.3
+ * [new tag]               0.20.4                -> 0.20.4
+ * [new tag]               0.20rc1               -> 0.20rc1
+ * [new tag]               0.21.0                -> 0.21.0
+ * [new tag]               0.21.1                -> 0.21.1
+ * [new tag]               0.21.2                -> 0.21.2
+ * [new tag]               0.21.3                -> 0.21.3
+ * [new tag]               0.21b2                -> 0.21b2
+ * [new tag]               0.21rc1               -> 0.21rc1
+ * [new tag]               0.21rc2               -> 0.21rc2
+ * [new tag]               0.22                  -> 0.22
+ * [new tag]               0.22.1                -> 0.22.1
+ * [new tag]               0.22.2                -> 0.22.2
+ * [new tag]               0.22.2.post1          -> 0.22.2.post1
+ * [new tag]               0.22rc1               -> 0.22rc1
+ * [new tag]               0.22rc2               -> 0.22rc2
+ * [new tag]               0.22rc2.post1         -> 0.22rc2.post1
+ * [new tag]               0.22rc3               -> 0.22rc3
+ * [new tag]               0.23.0                -> 0.23.0
+ * [new tag]               0.23.0rc1             -> 0.23.0rc1
+ * [new tag]               0.23.1                -> 0.23.1
+ * [new tag]               0.23.2                -> 0.23.2
+ * [new tag]               0.24.0                -> 0.24.0
+ * [new tag]               0.24.0rc1             -> 0.24.0rc1
+ * [new tag]               0.24.1                -> 0.24.1
+ * [new tag]               0.24.2                -> 0.24.2
+ * [new tag]               0.3                   -> 0.3
+ * [new tag]               0.4                   -> 0.4
+ * [new tag]               0.5                   -> 0.5
+ * [new tag]               0.5.rc                -> 0.5.rc
+ * [new tag]               0.5.rc2               -> 0.5.rc2
+ * [new tag]               0.5.rc3               -> 0.5.rc3
+ * [new tag]               0.6-rc                -> 0.6-rc
+ * [new tag]               0.6.0                 -> 0.6.0
+ * [new tag]               0.7                   -> 0.7
+ * [new tag]               0.7-branching         -> 0.7-branching
+ * [new tag]               0.7.1                 -> 0.7.1
+ * [new tag]               0.8                   -> 0.8
+ * [new tag]               0.8-branching         -> 0.8-branching
+ * [new tag]               0.8.1                 -> 0.8.1
+ * [new tag]               0.9                   -> 0.9
+ * [new tag]               0.9-branching         -> 0.9-branching
+ * [new tag]               1.0                   -> 1.0
+ * [new tag]               1.0.1                 -> 1.0.1
+ * [new tag]               1.0.2                 -> 1.0.2
+ * [new tag]               1.0.rc1               -> 1.0.rc1
+ * [new tag]               1.0.rc2               -> 1.0.rc2
+ * [new tag]               1.1.0                 -> 1.1.0
+ * [new tag]               1.1.0rc1              -> 1.1.0rc1
+ * [new tag]               1.1.1                 -> 1.1.1
+ * [new tag]               1.1.2                 -> 1.1.2
+ * [new tag]               1.1.3                 -> 1.1.3
+ * [new tag]               1.2.0                 -> 1.2.0
+ * [new tag]               1.2.0rc1              -> 1.2.0rc1
+ * [new tag]               1.2.1                 -> 1.2.1
+ * [new tag]               1.2.2                 -> 1.2.2
+ * [new tag]               1.3.0                 -> 1.3.0
+ * [new tag]               1.3.0rc1              -> 1.3.0rc1
+ * [new tag]               1.3.1                 -> 1.3.1
+ * [new tag]               1.3.2                 -> 1.3.2
+ * [new tag]               1.4.0                 -> 1.4.0
+ * [new tag]               1.4.0-1               -> 1.4.0-1
+ * [new tag]               1.4.0rc1              -> 1.4.0rc1
+ * [new tag]               1.4.1                 -> 1.4.1
+ * [new tag]               1.4.1.post1           -> 1.4.1.post1
+ * [new tag]               1.4.2                 -> 1.4.2
+ * [new tag]               1.5.0                 -> 1.5.0
+ * [new tag]               1.5.0rc1              -> 1.5.0rc1
+ * [new tag]               1.5.1                 -> 1.5.1
+ * [new tag]               1.5.2                 -> 1.5.2
+ * [new tag]               1.6.0                 -> 1.6.0
+ * [new tag]               1.6.0rc1              -> 1.6.0rc1
+ * [new tag]               1.6.1                 -> 1.6.1
+ * [new tag]               1.7.0                 -> 1.7.0
+ * [new tag]               1.7.0rc1              -> 1.7.0rc1
+ * [new tag]               1.7.1                 -> 1.7.1
+ * [new tag]               1.7.2                 -> 1.7.2
+ * [new tag]               1.8.0                 -> 1.8.0
+ * [new tag]               1.8.0rc1              -> 1.8.0rc1
+ * [new tag]               1.9.0                 -> 1.9.0
+ * [new tag]               1.9.0rc1              -> 1.9.0rc1
+ * [new tag]               debian/0.10.0-1       -> debian/0.10.0-1
+ * [new tag]               debian/0.11.0-1       -> debian/0.11.0-1
+ * [new tag]               debian/0.11.0-2       -> debian/0.11.0-2
+ * [new tag]               debian/0.12.0-1       -> debian/0.12.0-1
+ * [new tag]               debian/0.16.1-2       -> debian/0.16.1-2
+ * [new tag]               debian/0.17.0-1       -> debian/0.17.0-1
+ * [new tag]               debian/0.17.0-3       -> debian/0.17.0-3
+ * [new tag]               debian/0.17.0-4       -> debian/0.17.0-4
+ * [new tag]               debian/0.17.0_b1+git14-g4e6829c-1 -> debian/0.17.0_b1+git14-g4e6829c-1
+ * [new tag]               debian/0.17.0_b1-1    -> debian/0.17.0_b1-1
+ * [new tag]               debian/0.2+svn625-1   -> debian/0.2+svn625-1
+ * [new tag]               debian/0.3-1          -> debian/0.3-1
+ * [new tag]               debian/0.3-2          -> debian/0.3-2
+ * [new tag]               debian/0.3-3          -> debian/0.3-3
+ * [new tag]               debian/0.3-4          -> debian/0.3-4
+ * [new tag]               debian/0.4-1          -> debian/0.4-1
+ * [new tag]               debian/0.4-2          -> debian/0.4-2
+ * [new tag]               debian/0.4-3          -> debian/0.4-3
+ * [new tag]               debian/0.5-1          -> debian/0.5-1
+ * [new tag]               debian/0.6.0.dfsg-1   -> debian/0.6.0.dfsg-1
+ * [new tag]               debian/0.7.1.dfsg-1   -> debian/0.7.1.dfsg-1
+ * [new tag]               debian/0.7.1.dfsg-3   -> debian/0.7.1.dfsg-3
+ * [new tag]               debian/0.8.0.dfsg-1   -> debian/0.8.0.dfsg-1
+ * [new tag]               debian/0.8.1.dfsg-1   -> debian/0.8.1.dfsg-1
+ * [new tag]               debian/0.9.0.dfsg-1   -> debian/0.9.0.dfsg-1
+ * [new tag]               sprint01              -> sprint01
+ * [new ref]               ea90811e4a7f883f6a1475b0fb1d653be9ad0295 -> pull/34659/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/34659/merge
+Note: switching to 'refs/remotes/pull/34659/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at ea90811e4a Merge b8acd7c53611f9617e0b8bb9b9599008f4a82724 into 1074736921eecc3ba84743404696bdcaf877c023
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+ea90811e4a7f883f6a1475b0fb1d653be9ad0295
+##[group]Run set -xe
+set -xe
+changed_files=$(git diff --name-only origin/main)
+# Changelog should be updated only if tests have been modified
+if [[ "$changed_files" =~ sklearn\/.+test_.+\.py ]]
+then
+  echo "check_changelog=true" >> $GITHUB_OUTPUT
+fi
+shell: /usr/bin/bash -e {0}
+##[endgroup]
+++ git diff --name-only origin/main
++ changed_files='benchmarks/bench_logistic_regression_cv.py
+sklearn/linear_model/_logistic.py
+sklearn/linear_model/tests/test_logistic.py
+sklearn/utils/parallel.py'
++ [[ benchmarks/bench_logistic_regression_cv.py
+sklearn/linear_model/_logistic.py
+sklearn/linear_model/tests/test_logistic.py
+sklearn/utils/parallel.py =~ sklearn/.+test_.+\.py ]]
++ echo check_changelog=true
+##[group]Run scientific-python/action-towncrier-changelog@v2
+env:
+  GITHUB_TOKEN: ***
+  BOT_USERNAME: changelog-bot
+##[endgroup]
+##[command]/usr/bin/docker run --name dc4a42018475a9c3a4d95a740e55d70a9635c_17f4ea --label 6dc4a4 --workdir /github/workspace --rm -e "GITHUB_TOKEN" -e "BOT_USERNAME" -e "HOME" -e "GITHUB_JOB" -e "GITHUB_REF" -e "GITHUB_SHA" -e "GITHUB_REPOSITORY" -e "GITHUB_REPOSITORY_OWNER" -e "GITHUB_REPOSITORY_OWNER_ID" -e "GITHUB_RUN_ID" -e "GITHUB_RUN_NUMBER" -e "GITHUB_RETENTION_DAYS" -e "GITHUB_RUN_ATTEMPT" -e "GITHUB_ACTOR_ID" -e "GITHUB_ACTOR" -e "GITHUB_WORKFLOW" -e "GITHUB_HEAD_REF" -e "GITHUB_BASE_REF" -e "GITHUB_EVENT_NAME" -e "GITHUB_SERVER_URL" -e "GITHUB_API_URL" -e "GITHUB_GRAPHQL_URL" -e "GITHUB_REF_NAME" -e "GITHUB_REF_PROTECTED" -e "GITHUB_REF_TYPE" -e "GITHUB_WORKFLOW_REF" -e "GITHUB_WORKFLOW_SHA" -e "GITHUB_REPOSITORY_ID" -e "GITHUB_TRIGGERING_ACTOR" -e "GITHUB_WORKSPACE" -e "GITHUB_ACTION" -e "GITHUB_EVENT_PATH" -e "GITHUB_ACTION_REPOSITORY" -e "GITHUB_ACTION_REF" -e "GITHUB_PATH" -e "GITHUB_ENV" -e "GITHUB_STEP_SUMMARY" -e "GITHUB_STATE" -e "GITHUB_OUTPUT" -e "GITHUB_ARTIFACTS" -e "GITHUB_ARTIFACTS_LIST" -e "RUNNER_OS" -e "RUNNER_ARCH" -e "RUNNER_NAME" -e "RUNNER_ENVIRONMENT" -e "RUNNER_TOOL_CACHE" -e "RUNNER_TEMP" -e "RUNNER_WORKSPACE" -e "ACTIONS_RUNTIME_URL" -e "ACTIONS_RUNTIME_TOKEN" -e "ACTIONS_CACHE_URL" -e "ACTIONS_RESULTS_URL" -e "ACTIONS_ORCHESTRATION_ID" -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp":"/github/runner_temp" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/_temp/_runner_file_commands":"/github/file_commands" -v "/home/runner/work/scikit-learn/scikit-learn":"/github/workspace" 6dc4a4:2018475a9c3a4d95a740e55d70a9635c  "none"
+Bot username: changelog-bot
+Base repository: scikit-learn/scikit-learn
+
+PR author: itamarst
+
+PR labels: ['module:linear_model', 'module:utils']
+
+No "whatsnew-needed" label, skipping What's New entry check
+No changelog file was added in the correct directories for PR 34659, looked in 45 directories:
+doc/whats_new/upcoming_changes/security
+doc/whats_new/upcoming_changes/changed-models
+doc/whats_new/upcoming_changes/many-modules
+doc/whats_new/upcoming_changes/array-api
+doc/whats_new/upcoming_changes/metadata-routing
+doc/whats_new/upcoming_changes/callback
+doc/whats_new/upcoming_changes/custom-top-level
+doc/whats_new/upcoming_changes/sklearn.base
+doc/whats_new/upcoming_changes/sklearn.calibration
+doc/whats_new/upcoming_changes/sklearn.cluster
+doc/whats_new/upcoming_changes/sklearn.compose
+doc/whats_new/upcoming_changes/sklearn.covariance
+doc/whats_new/upcoming_changes/sklearn.cross_decomposition
+doc/whats_new/upcoming_changes/sklearn.datasets
+doc/whats_new/upcoming_changes/sklearn.decomposition
+doc/whats_new/upcoming_changes/sklearn.discriminant_analysis
+doc/whats_new/upcoming_changes/sklearn.dummy
+doc/whats_new/upcoming_changes/sklearn.ensemble
+doc/whats_new/upcoming_changes/sklearn.exceptions
+doc/whats_new/upcoming_changes/sklearn.feature_extraction
+doc/whats_new/upcoming_changes/sklearn.feature_selection
+doc/whats_new/upcoming_changes/sklearn.frozen
+doc/whats_new/upcoming_changes/sklearn.gaussian_process
+doc/whats_new/upcoming_changes/sklearn.impute
+doc/whats_new/upcoming_changes/sklearn.inspection
+doc/whats_new/upcoming_changes/sklearn.isotonic
+doc/whats_new/upcoming_changes/sklearn.kernel_approximation
+doc/whats_new/upcoming_changes/sklearn.kernel_ridge
+doc/whats_new/upcoming_changes/sklearn.linear_model
+doc/whats_new/upcoming_changes/sklearn.manifold
+doc/whats_new/upcoming_changes/sklearn.metrics
+doc/whats_new/upcoming_changes/sklearn.mixture
+doc/whats_new/upcoming_changes/sklearn.model_selection
+doc/whats_new/upcoming_changes/sklearn.multiclass
+doc/whats_new/upcoming_changes/sklearn.multioutput
+doc/whats_new/upcoming_changes/sklearn.naive_bayes
+doc/whats_new/upcoming_changes/sklearn.neighbors
+doc/whats_new/upcoming_changes/sklearn.neural_network
+doc/whats_new/upcoming_changes/sklearn.pipeline
+doc/whats_new/upcoming_changes/sklearn.preprocessing
+doc/whats_new/upcoming_changes/sklearn.random_projection
+doc/whats_new/upcoming_changes/sklearn.semi_supervised
+doc/whats_new/upcoming_changes/sklearn.svm
+doc/whats_new/upcoming_changes/sklearn.tree
+doc/whats_new/upcoming_changes/sklearn.utils
+##[group]Run cat << EOF
+
+cat << EOF
+- if your PR is likely to affect users, you will need to add a changelog entry describing your PR changes
+- otherwise you don't need to do anything, a maintainer will set the relevant label to make this CI build pass
+
+See instructions on how to write a changelog entry:
+https://github.com/scikit-learn/scikit-learn/blob/main/doc/whats_new/upcoming_changes/README.md
+
+EOF
+
+exit 1
+shell: /usr/bin/bash -e {0}
+##[endgroup]
+- if your PR is likely to affect users, you will need to add a changelog entry describing your PR changes
+- otherwise you don't need to do anything, a maintainer will set the relevant label to make this CI build pass
+
+See instructions on how to write a changelog entry:
+https://github.com/scikit-learn/scikit-learn/blob/main/doc/whats_new/upcoming_changes/README.md
+
+##[error]Process completed with exit code 1.
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/682115a2-85cb-4e19-83c6-b4b30fd85f20' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/scikit-learn/scikit-learn
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/home/runner/work/scikit-learn/scikit-learn/.git.path
+includeif.gitdir:/home/runner/work/scikit-learn/scikit-learn/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/scikit-learn/scikit-learn/.git.path
+/home/runner/work/_temp/git-credentials-543ef908-edcd-496f-83b7-c6504579ddd0.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/scikit-learn/scikit-learn/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-543ef908\-edcd\-496f\-83b7\-c6504579ddd0\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/scikit-learn/scikit-learn/.git/worktrees/*.path
+/home/runner/work/_temp/git-credentials-543ef908-edcd-496f-83b7-c6504579ddd0.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/scikit-learn/scikit-learn/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-543ef908\-edcd\-496f\-83b7\-c6504579ddd0\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-543ef908-edcd-496f-83b7-c6504579ddd0.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-543ef908\-edcd\-496f\-83b7\-c6504579ddd0\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-543ef908-edcd-496f-83b7-c6504579ddd0.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-543ef908\-edcd\-496f\-83b7\-c6504579ddd0\.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/home/runner/work/_temp/git-credentials-543ef908-edcd-496f-83b7-c6504579ddd0.config'
+Cleaning up orphan processes

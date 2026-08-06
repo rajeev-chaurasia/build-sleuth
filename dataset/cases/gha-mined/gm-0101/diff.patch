@@ -1,0 +1,835 @@
+diff --git a/src/integrations/prefect-redis/prefect_redis/task_queue.py b/src/integrations/prefect-redis/prefect_redis/task_queue.py
+new file mode 100644
+index 000000000000..f1247a6d6874
+--- /dev/null
++++ b/src/integrations/prefect-redis/prefect_redis/task_queue.py
+@@ -0,0 +1,210 @@
++"""Redis-backed delivery for Prefect background tasks."""
++
++from __future__ import annotations
++
++import asyncio
++from collections import deque
++from types import TracebackType
++from typing import Self
++from uuid import uuid4
++
++from pydantic import Field
++from redis.asyncio import Redis
++from redis.exceptions import ResponseError
++
++from prefect.server.schemas.core import TaskRun
++from prefect.server.task_queue import TaskQueueDelivery, TaskQueuePriority
++from prefect.settings.base import PrefectBaseSettings, build_settings_config
++from prefect_redis.client import get_async_redis_client, redis_key
++
++_GROUP = "prefect-task-workers"
++_PREFIX = "prefect:background-task-runs"
++_ACK_SCRIPT = """
++redis.call('XACK', KEYS[1], ARGV[1], ARGV[2])
++redis.call('XDEL', KEYS[1], ARGV[2])
++return 1
++"""
++_RELEASE_SCRIPT = """
++redis.call('XADD', KEYS[2], '*', 'data', ARGV[3])
++redis.call('XACK', KEYS[1], ARGV[1], ARGV[2])
++redis.call('XDEL', KEYS[1], ARGV[2])
++return 1
++"""
++
++
++class RedisTaskQueueSettings(PrefectBaseSettings):
++    """Settings for Redis-backed background task delivery."""
++
++    model_config = build_settings_config(("redis", "task_queue"))
++
++    visibility_timeout: int = Field(
++        default=30,
++        gt=0,
++        description="Seconds before delivery abandoned by a failed server is reclaimed.",
++    )
++    block_timeout: float = Field(
++        default=0.5,
++        ge=0.001,
++        lt=1,
++        description="Seconds a consumer blocks while waiting for a task run.",
++    )
++
++
++def _stream(task_key: str, priority: TaskQueuePriority) -> str:
++    kind = "retry" if priority is TaskQueuePriority.RETRY else "scheduled"
++    return redis_key(_PREFIX, f"{kind}:{task_key}")
++
++
++class Publisher:
++    """Publish task runs durably before returning from orchestration."""
++
++    def __init__(self) -> None:
++        self._redis: Redis = get_async_redis_client(decode_responses=False)
++
++    async def publish(
++        self,
++        task_run: TaskRun,
++        priority: TaskQueuePriority = TaskQueuePriority.SCHEDULED,
++    ) -> None:
++        await self._redis.xadd(
++            _stream(task_run.task_key, priority),
++            {"data": task_run.model_dump_json()},
++        )
++
++
++class Consumer:
++    """Reserve task runs matching a TaskWorker's registered task keys."""
++
++    def __init__(self, task_keys: list[str], consumer_id: str) -> None:
++        settings = RedisTaskQueueSettings()
++        self._redis: Redis = get_async_redis_client(decode_responses=False)
++        self._consumer_id = f"{consumer_id}-{uuid4()}"
++        self._visibility_timeout_ms = settings.visibility_timeout * 1000
++        self._block_timeout_ms = int(settings.block_timeout * 1000)
++        self._streams = {
++            priority: [_stream(key, priority) for key in task_keys]
++            for priority in TaskQueuePriority
++        }
++        self._buffer: deque[TaskQueueDelivery] = deque()
++        self._outstanding: dict[tuple[str, str], TaskQueueDelivery] = {}
++        self._ack = self._redis.register_script(_ACK_SCRIPT)
++        self._release = self._redis.register_script(_RELEASE_SCRIPT)
++        self._next_recovery_check = 0.0
++
++    async def __aenter__(self) -> Self:
++        for stream in self._all_streams:
++            try:
++                await self._redis.xgroup_create(stream, _GROUP, id="0", mkstream=True)
++            except ResponseError as exc:
++                if "BUSYGROUP" not in str(exc):
++                    raise
++        return self
++
++    async def __aexit__(
++        self,
++        exc_type: type[BaseException] | None,
++        exc_val: BaseException | None,
++        exc_tb: TracebackType | None,
++    ) -> None:
++        deliveries = [*self._buffer, *self._outstanding.values()]
++        self._buffer.clear()
++        self._outstanding.clear()
++        if deliveries:
++            await asyncio.gather(*(self._release_delivery(item) for item in deliveries))
++        for stream in self._all_streams:
++            try:
++                await self._redis.xgroup_delconsumer(stream, _GROUP, self._consumer_id)
++            except ResponseError:
++                pass
++
++    @property
++    def _all_streams(self) -> list[str]:
++        return [
++            *self._streams[TaskQueuePriority.RETRY],
++            *self._streams[TaskQueuePriority.SCHEDULED],
++        ]
++
++    async def get(self) -> TaskQueueDelivery:
++        if not self._buffer:
++            await self._fill_buffer()
++        delivery = self._buffer.popleft()
++        stream, message_id = delivery.token
++        self._outstanding[(stream, message_id)] = delivery
++        return delivery
++
++    async def acknowledge(self, delivery: TaskQueueDelivery) -> None:
++        stream, message_id = delivery.token
++        await self._ack(keys=[stream], args=[_GROUP, message_id])
++        self._outstanding.pop((stream, message_id), None)
++
++    async def release(self, delivery: TaskQueueDelivery) -> None:
++        await self._release_delivery(delivery)
++        stream, message_id = delivery.token
++        self._outstanding.pop((stream, message_id), None)
++
++    async def _release_delivery(self, delivery: TaskQueueDelivery) -> None:
++        stream, message_id = delivery.token
++        retry_stream = _stream(delivery.task_run.task_key, TaskQueuePriority.RETRY)
++        await self._release(
++            keys=[stream, retry_stream],
++            args=[_GROUP, message_id, delivery.task_run.model_dump_json()],
++        )
++
++    async def _fill_buffer(self) -> None:
++        # Recover work reserved by a server process that disappeared before its
++        # TaskWorker acknowledged receipt.
++        loop = asyncio.get_running_loop()
++        if loop.time() >= self._next_recovery_check:
++            self._next_recovery_check = loop.time() + min(
++                self._visibility_timeout_ms / 2000, 5
++            )
++            for priority in TaskQueuePriority:
++                for stream in self._streams[priority]:
++                    claimed = await self._redis.xautoclaim(
++                        stream,
++                        _GROUP,
++                        self._consumer_id,
++                        min_idle_time=self._visibility_timeout_ms,
++                        start_id="0-0",
++                        count=1,
++                    )
++                    if claimed[1]:
++                        self._append(stream, claimed[1][0])
++            if self._buffer:
++                return
++
++        # Redis reads all subscribed streams in one round-trip. Retry streams
++        # come first and the returned deliveries are sorted again below.
++        result = await self._redis.xreadgroup(
++            _GROUP,
++            self._consumer_id,
++            streams={stream: ">" for stream in self._all_streams},
++            count=1,
++            block=self._block_timeout_ms,
++        )
++        if not result:
++            raise asyncio.TimeoutError
++
++        retry_streams = set(self._streams[TaskQueuePriority.RETRY])
++        result.sort(key=lambda item: 0 if self._decode(item[0]) in retry_streams else 1)
++        for stream, entries in result:
++            for entry in entries:
++                self._append(stream, entry)
++
++    def _append(self, stream: bytes | str, entry: tuple[bytes, dict]) -> None:
++        message_id, fields = entry
++        stream = self._decode(stream)
++        message_id = self._decode(message_id)
++        data = fields.get(b"data", fields.get("data"))
++        if data is None:
++            raise ValueError(f"Task queue entry {message_id} has no data")
++        self._buffer.append(
++            TaskQueueDelivery(
++                task_run=TaskRun.model_validate_json(data),
++                token=(stream, message_id),
++            )
++        )
++
++    @staticmethod
++    def _decode(value: bytes | str) -> str:
++        return value.decode() if isinstance(value, bytes) else value
+diff --git a/src/integrations/prefect-redis/tests/test_task_queue.py b/src/integrations/prefect-redis/tests/test_task_queue.py
+new file mode 100644
+index 000000000000..3008ddba2dc7
+--- /dev/null
++++ b/src/integrations/prefect-redis/tests/test_task_queue.py
+@@ -0,0 +1,119 @@
++import asyncio
++from uuid import uuid4
++
++import pytest
++from prefect_redis.task_queue import Consumer, Publisher, RedisTaskQueueSettings
++
++from prefect.server.schemas.core import TaskRun
++from prefect.server.task_queue import TaskQueuePriority
++
++
++def task_run(task_key: str = "tasks.example") -> TaskRun:
++    return TaskRun(
++        id=uuid4(),
++        flow_run_id=None,
++        task_key=task_key,
++        dynamic_key=str(uuid4()),
++    )
++
++
++async def test_only_delivers_registered_task_keys() -> None:
++    expected = task_run("tasks.expected")
++    unexpected = task_run("tasks.unexpected")
++    publisher = Publisher()
++    await publisher.publish(unexpected)
++    await publisher.publish(expected)
++
++    async with Consumer([expected.task_key], "worker") as consumer:
++        delivery = await consumer.get()
++        assert delivery.task_run.id == expected.id
++        await consumer.acknowledge(delivery)
++
++
++async def test_competing_consumers_deliver_each_run_once() -> None:
++    runs = [task_run() for _ in range(10)]
++    publisher = Publisher()
++    for run in runs:
++        await publisher.publish(run)
++
++    async with (
++        Consumer([runs[0].task_key], "worker-a") as first,
++        Consumer([runs[0].task_key], "worker-b") as second,
++    ):
++        deliveries = []
++        for consumer in [first, second] * 5:
++            delivery = await consumer.get()
++            deliveries.append(delivery)
++            await consumer.acknowledge(delivery)
++
++    assert {delivery.task_run.id for delivery in deliveries} == {run.id for run in runs}
++
++
++async def test_retries_are_delivered_before_scheduled_runs() -> None:
++    scheduled = task_run()
++    retry = task_run()
++    publisher = Publisher()
++    await publisher.publish(scheduled)
++    await publisher.publish(retry, TaskQueuePriority.RETRY)
++
++    async with Consumer([scheduled.task_key], "worker") as consumer:
++        first = await consumer.get()
++        await consumer.acknowledge(first)
++        second = await consumer.get()
++        await consumer.acknowledge(second)
++
++    assert [first.task_run.id, second.task_run.id] == [retry.id, scheduled.id]
++
++
++async def test_graceful_disconnect_releases_unacknowledged_run() -> None:
++    run = task_run()
++    await Publisher().publish(run)
++
++    async with Consumer([run.task_key], "departing-worker") as consumer:
++        delivery = await consumer.get()
++        assert delivery.task_run.id == run.id
++
++    async with Consumer([run.task_key], "replacement-worker") as consumer:
++        redelivered = await consumer.get()
++        await consumer.acknowledge(redelivered)
++
++    assert redelivered.task_run.id == run.id
++
++
++async def test_failed_server_delivery_is_reclaimed(
++    monkeypatch: pytest.MonkeyPatch,
++) -> None:
++    monkeypatch.setenv("PREFECT_REDIS_TASK_QUEUE_VISIBILITY_TIMEOUT", "1")
++    run = task_run()
++    await Publisher().publish(run)
++
++    failed = Consumer([run.task_key], "failed-server")
++    await failed.__aenter__()
++    delivery = await failed.get()
++    assert delivery.task_run.id == run.id
++    # Deliberately omit __aexit__, as if the server process was killed.
++
++    await asyncio.sleep(1)
++    async with Consumer([run.task_key], "replacement-server") as replacement:
++        redelivered = await replacement.get()
++        await replacement.acknowledge(redelivered)
++
++    assert redelivered.task_run.id == run.id
++
++
++async def test_acknowledged_run_is_not_redelivered() -> None:
++    run = task_run()
++    await Publisher().publish(run)
++
++    async with Consumer([run.task_key], "first-worker") as consumer:
++        delivery = await consumer.get()
++        await consumer.acknowledge(delivery)
++
++    async with Consumer([run.task_key], "second-worker") as consumer:
++        with pytest.raises(asyncio.TimeoutError):
++            await asyncio.wait_for(consumer.get(), timeout=0.1)
++
++
++def test_settings_are_scoped_to_prefect_redis(monkeypatch: pytest.MonkeyPatch) -> None:
++    monkeypatch.setenv("PREFECT_REDIS_TASK_QUEUE_VISIBILITY_TIMEOUT", "42")
++    assert RedisTaskQueueSettings().visibility_timeout == 42
+diff --git a/src/prefect/server/api/task_runs.py b/src/prefect/server/api/task_runs.py
+index a572994bbfd0..9765f0f1bd65 100644
+--- a/src/prefect/server/api/task_runs.py
++++ b/src/prefect/server/api/task_runs.py
+@@ -34,7 +34,8 @@
+     OrchestrationResult,
+     TaskRunPaginationResponse,
+ )
+-from prefect.server.task_queue import MultiQueue, TaskQueue
++from prefect.server.task_queue import TaskQueue as TaskQueue
++from prefect.server.task_queue import create_task_queue_consumer
+ from prefect.server.utilities import subscriptions
+ from prefect.server.utilities.server import PrefectRouter
+ from prefect.types import DateTime
+@@ -382,39 +383,35 @@ async def scheduled_task_subscription(websocket: WebSocket) -> None:
+             reason="Protocol violation: expected 'client_id' in subscribe message",
+         )
+ 
+-    subscribed_queue = MultiQueue(task_keys)
+-
+     logger.info(f"Task worker {client_id!r} subscribed to task keys {task_keys!r}")
+-
+-    while True:
+-        try:
+-            # observe here so that all workers with active websockets are tracked
+-            await models.task_workers.observe_worker(task_keys, client_id)
+-            task_run = await asyncio.wait_for(subscribed_queue.get(), timeout=1)
+-        except asyncio.TimeoutError:
+-            if not await subscriptions.still_connected(websocket):
+-                await models.task_workers.forget_worker(client_id)
+-                return
+-            continue
+-
+-        try:
+-            await websocket.send_json(task_run.model_dump(mode="json"))
+-
+-            acknowledgement = await websocket.receive_json()
+-            ack_type = acknowledgement.get("type")
+-            if ack_type != "ack":
++    async with create_task_queue_consumer(task_keys, client_id) as consumer:
++        while True:
++            try:
++                await models.task_workers.observe_worker(task_keys, client_id)
++                delivery = await asyncio.wait_for(consumer.get(), timeout=1)
++            except asyncio.TimeoutError:
++                if not await subscriptions.still_connected(websocket):
++                    await models.task_workers.forget_worker(client_id)
++                    return
++                continue
++
++            try:
++                await websocket.send_json(delivery.task_run.model_dump(mode="json"))
++                acknowledgement = await websocket.receive_json()
++                ack_type = acknowledgement.get("type")
++                if ack_type not in {"ack", "quit"}:
++                    raise WebSocketDisconnect(
++                        code=4001,
++                        reason="Protocol violation: expected 'ack' message",
++                    )
++
++                await consumer.acknowledge(delivery)
++                await models.task_workers.observe_worker(
++                    [delivery.task_run.task_key], client_id
++                )
+                 if ack_type == "quit":
+                     return await websocket.close()
+-
+-                raise WebSocketDisconnect(
+-                    code=4001, reason="Protocol violation: expected 'ack' message"
+-                )
+-
+-            await models.task_workers.observe_worker([task_run.task_key], client_id)
+-
+-        except subscriptions.NORMAL_DISCONNECT_EXCEPTIONS:
+-            # If sending fails or pong fails, put the task back into the retry queue
+-            await asyncio.shield(TaskQueue.for_key(task_run.task_key).retry(task_run))
+-            return
+-        finally:
+-            await models.task_workers.forget_worker(client_id)
++            except subscriptions.NORMAL_DISCONNECT_EXCEPTIONS:
++                return
++            finally:
++                await models.task_workers.forget_worker(client_id)
+diff --git a/src/prefect/server/orchestration/core_policy.py b/src/prefect/server/orchestration/core_policy.py
+index b2bc8cc720b8..d2ad03415cb1 100644
+--- a/src/prefect/server/orchestration/core_policy.py
++++ b/src/prefect/server/orchestration/core_policy.py
+@@ -52,7 +52,7 @@
+ )
+ from prefect.server.schemas import core, filters, states
+ from prefect.server.schemas.states import StateType
+-from prefect.server.task_queue import TaskQueue
++from prefect.server.task_queue import TaskQueuePriority, create_task_queue_publisher
+ from prefect.settings import (
+     get_current_settings,
+ )
+@@ -1204,12 +1204,12 @@ async def after_transition(
+             return
+ 
+         task_run: core.TaskRun = core.TaskRun.model_validate(context.run)
+-        queue: TaskQueue = TaskQueue.for_key(task_run.task_key)
+-
+-        if validated_state.name == "AwaitingRetry":
+-            await queue.retry(task_run)
+-        else:
+-            await queue.enqueue(task_run)
++        priority = (
++            TaskQueuePriority.RETRY
++            if validated_state.name == "AwaitingRetry"
++            else TaskQueuePriority.SCHEDULED
++        )
++        await create_task_queue_publisher().publish(task_run, priority)
+ 
+ 
+ class RenameReruns(GenericOrchestrationRule):
+diff --git a/src/prefect/server/task_queue.py b/src/prefect/server/task_queue.py
+deleted file mode 100644
+index 5854eda8ff8d..000000000000
+--- a/src/prefect/server/task_queue.py
++++ /dev/null
+@@ -1,103 +0,0 @@
+-"""
+-Implements an in-memory task queue for delivering background task runs to TaskWorkers.
+-"""
+-
+-import asyncio
+-from typing import Dict, List, Optional, Tuple
+-
+-from typing_extensions import Self
+-
+-import prefect.server.schemas as schemas
+-from prefect.settings import (
+-    PREFECT_TASK_SCHEDULING_MAX_RETRY_QUEUE_SIZE,
+-    PREFECT_TASK_SCHEDULING_MAX_SCHEDULED_QUEUE_SIZE,
+-)
+-
+-
+-class TaskQueue:
+-    _task_queues: Dict[str, Self] = {}
+-
+-    default_scheduled_max_size: int = (
+-        PREFECT_TASK_SCHEDULING_MAX_SCHEDULED_QUEUE_SIZE.value()
+-    )
+-    default_retry_max_size: int = PREFECT_TASK_SCHEDULING_MAX_RETRY_QUEUE_SIZE.value()
+-
+-    _queue_size_configs: Dict[str, Tuple[int, int]] = {}
+-
+-    task_key: str
+-    _scheduled_queue: asyncio.Queue
+-    _retry_queue: asyncio.Queue
+-
+-    @classmethod
+-    async def enqueue(cls, task_run: schemas.core.TaskRun) -> None:
+-        await cls.for_key(task_run.task_key).put(task_run)
+-
+-    @classmethod
+-    def configure_task_key(
+-        cls,
+-        task_key: str,
+-        scheduled_size: Optional[int] = None,
+-        retry_size: Optional[int] = None,
+-    ) -> None:
+-        scheduled_size = scheduled_size or cls.default_scheduled_max_size
+-        retry_size = retry_size or cls.default_retry_max_size
+-        cls._queue_size_configs[task_key] = (scheduled_size, retry_size)
+-
+-    @classmethod
+-    def for_key(cls, task_key: str) -> Self:
+-        if task_key not in cls._task_queues:
+-            sizes = cls._queue_size_configs.get(
+-                task_key, (cls.default_scheduled_max_size, cls.default_retry_max_size)
+-            )
+-            cls._task_queues[task_key] = cls(task_key, *sizes)
+-        return cls._task_queues[task_key]
+-
+-    @classmethod
+-    def reset(cls) -> None:
+-        """A unit testing utility to reset the state of the task queues subsystem"""
+-        cls._task_queues.clear()
+-        cls._scheduled_tasks_already_restored = False
+-
+-    def __init__(self, task_key: str, scheduled_queue_size: int, retry_queue_size: int):
+-        self.task_key = task_key
+-        self._scheduled_queue = asyncio.Queue(maxsize=scheduled_queue_size)
+-        self._retry_queue = asyncio.Queue(maxsize=retry_queue_size)
+-
+-    async def get(self) -> schemas.core.TaskRun:
+-        # First, check if there's anything in the retry queue
+-        try:
+-            return self._retry_queue.get_nowait()
+-        except asyncio.QueueEmpty:
+-            return await self._scheduled_queue.get()
+-
+-    def get_nowait(self) -> schemas.core.TaskRun:
+-        # First, check if there's anything in the retry queue
+-        try:
+-            return self._retry_queue.get_nowait()
+-        except asyncio.QueueEmpty:
+-            return self._scheduled_queue.get_nowait()
+-
+-    async def put(self, task_run: schemas.core.TaskRun) -> None:
+-        await self._scheduled_queue.put(task_run)
+-
+-    async def retry(self, task_run: schemas.core.TaskRun) -> None:
+-        await self._retry_queue.put(task_run)
+-
+-
+-class MultiQueue:
+-    """A queue that can pull tasks from from any of a number of task queues"""
+-
+-    _queues: List[TaskQueue]
+-
+-    def __init__(self, task_keys: List[str]):
+-        self._queues = [TaskQueue.for_key(task_key) for task_key in task_keys]
+-
+-    async def get(self) -> schemas.core.TaskRun:
+-        """Gets the next task_run from any of the given queues"""
+-        while True:
+-            for queue in self._queues:
+-                try:
+-                    return queue.get_nowait()
+-                except asyncio.QueueEmpty:
+-                    continue
+-            await asyncio.sleep(0.01)
+diff --git a/src/prefect/server/task_queue/__init__.py b/src/prefect/server/task_queue/__init__.py
+new file mode 100644
+index 000000000000..ba68d2b4a3c5
+--- /dev/null
++++ b/src/prefect/server/task_queue/__init__.py
+@@ -0,0 +1,95 @@
++"""Delivery primitives for standalone background task runs."""
++
++from __future__ import annotations
++
++import importlib
++from dataclasses import dataclass
++from enum import IntEnum
++from functools import lru_cache
++from types import TracebackType
++from typing import Any, Protocol, Self, runtime_checkable
++
++from prefect.server.schemas.core import TaskRun
++from prefect.settings import PREFECT_MESSAGING_BROKER
++
++
++class TaskQueuePriority(IntEnum):
++    """The delivery priority for a background task run."""
++
++    RETRY = 0
++    SCHEDULED = 1
++
++
++@dataclass(frozen=True)
++class TaskQueueDelivery:
++    """A task run reserved by a consumer for delivery to a TaskWorker."""
++
++    task_run: TaskRun
++    token: Any = None
++
++
++class TaskQueuePublisher(Protocol):
++    async def publish(
++        self,
++        task_run: TaskRun,
++        priority: TaskQueuePriority = TaskQueuePriority.SCHEDULED,
++    ) -> None: ...
++
++
++class TaskQueueConsumer(Protocol):
++    async def __aenter__(self) -> Self: ...
++
++    async def __aexit__(
++        self,
++        exc_type: type[BaseException] | None,
++        exc_val: BaseException | None,
++        exc_tb: TracebackType | None,
++    ) -> None: ...
++
++    async def get(self) -> TaskQueueDelivery: ...
++
++    async def acknowledge(self, delivery: TaskQueueDelivery) -> None: ...
++
++    async def release(self, delivery: TaskQueueDelivery) -> None: ...
++
++
++@runtime_checkable
++class TaskQueueModule(Protocol):
++    Publisher: type[TaskQueuePublisher]
++    Consumer: type[TaskQueueConsumer]
++
++
++def _task_queue_module_path() -> str:
++    messaging_module = PREFECT_MESSAGING_BROKER.value()
++    if messaging_module == "prefect_redis.messaging":
++        return "prefect_redis.task_queue"
++    return "prefect.server.task_queue.memory"
++
++
++@lru_cache
++def _task_queue_module(module_path: str) -> TaskQueueModule:
++    module = importlib.import_module(module_path)
++    if not isinstance(module, TaskQueueModule):
++        raise TypeError(
++            f"Module {module_path!r} must export TaskQueue Publisher and Consumer "
++            "classes."
++        )
++    return module
++
++
++def create_task_queue_publisher() -> TaskQueuePublisher:
++    """Create a publisher for the configured background task queue."""
++    return _task_queue_module(_task_queue_module_path()).Publisher()
++
++
++def create_task_queue_consumer(
++    task_keys: list[str], consumer_id: str
++) -> TaskQueueConsumer:
++    """Create a consumer subscribed to a set of background task keys."""
++    return _task_queue_module(_task_queue_module_path()).Consumer(
++        task_keys, consumer_id
++    )
++
++
++# These process-local classes were historically public from this module.
++from prefect.server.task_queue.memory import MultiQueue, TaskQueue
+diff --git a/src/prefect/server/task_queue/memory.py b/src/prefect/server/task_queue/memory.py
+new file mode 100644
+index 000000000000..7c347b7b6547
+--- /dev/null
++++ b/src/prefect/server/task_queue/memory.py
+@@ -0,0 +1,143 @@
++"""In-memory delivery for Prefect background tasks."""
++
++import asyncio
++from types import TracebackType
++from typing import ClassVar, Self
++
++from prefect.server.schemas.core import TaskRun
++from prefect.server.task_queue import TaskQueueDelivery, TaskQueuePriority
++from prefect.settings import (
++    PREFECT_TASK_SCHEDULING_MAX_RETRY_QUEUE_SIZE,
++    PREFECT_TASK_SCHEDULING_MAX_SCHEDULED_QUEUE_SIZE,
++)
++
++
++class TaskQueue:
++    _task_queues: ClassVar[dict[str, Self]] = {}
++
++    default_scheduled_max_size: int = (
++        PREFECT_TASK_SCHEDULING_MAX_SCHEDULED_QUEUE_SIZE.value()
++    )
++    default_retry_max_size: int = PREFECT_TASK_SCHEDULING_MAX_RETRY_QUEUE_SIZE.value()
++
++    _queue_size_configs: ClassVar[dict[str, tuple[int, int]]] = {}
++
++    @classmethod
++    async def enqueue(cls, task_run: TaskRun) -> None:
++        await cls.for_key(task_run.task_key).put(task_run)
++
++    @classmethod
++    def configure_task_key(
++        cls,
++        task_key: str,
++        scheduled_size: int | None = None,
++        retry_size: int | None = None,
++    ) -> None:
++        scheduled_size = scheduled_size or cls.default_scheduled_max_size
++        retry_size = retry_size or cls.default_retry_max_size
++        cls._queue_size_configs[task_key] = (scheduled_size, retry_size)
++
++    @classmethod
++    def for_key(cls, task_key: str) -> Self:
++        if task_key not in cls._task_queues:
++            sizes = cls._queue_size_configs.get(
++                task_key,
++                (cls.default_scheduled_max_size, cls.default_retry_max_size),
++            )
++            cls._task_queues[task_key] = cls(task_key, *sizes)
++        return cls._task_queues[task_key]
++
++    @classmethod
++    def reset(cls) -> None:
++        """Reset the process-local queues. Intended for tests."""
++        cls._task_queues.clear()
++
++    def __init__(
++        self, task_key: str, scheduled_queue_size: int, retry_queue_size: int
++    ) -> None:
++        self.task_key = task_key
++        self._scheduled_queue: asyncio.Queue[TaskRun] = asyncio.Queue(
++            maxsize=scheduled_queue_size
++        )
++        self._retry_queue: asyncio.Queue[TaskRun] = asyncio.Queue(
++            maxsize=retry_queue_size
++        )
++
++    async def get(self) -> TaskRun:
++        try:
++            return self._retry_queue.get_nowait()
++        except asyncio.QueueEmpty:
++            return await self._scheduled_queue.get()
++
++    def get_nowait(self) -> TaskRun:
++        try:
++            return self._retry_queue.get_nowait()
++        except asyncio.QueueEmpty:
++            return self._scheduled_queue.get_nowait()
++
++    async def put(self, task_run: TaskRun) -> None:
++        await self._scheduled_queue.put(task_run)
++
++    async def retry(self, task_run: TaskRun) -> None:
++        await self._retry_queue.put(task_run)
++
++
++class MultiQueue:
++    """A queue that pulls task runs from any of a set of task queues."""
++
++    def __init__(self, task_keys: list[str]) -> None:
++        self._queues = [TaskQueue.for_key(task_key) for task_key in task_keys]
++
++    async def get(self) -> TaskRun:
++        while True:
++            for queue in self._queues:
++                try:
++                    return queue.get_nowait()
++                except asyncio.QueueEmpty:
++                    continue
++            await asyncio.sleep(0.01)
++
++
++class Publisher:
++    async def publish(
++        self,
++        task_run: TaskRun,
++        priority: TaskQueuePriority = TaskQueuePriority.SCHEDULED,
++    ) -> None:
++        queue = TaskQueue.for_key(task_run.task_key)
++        if priority is TaskQueuePriority.RETRY:
++            await queue.retry(task_run)
++        else:
++            await queue.put(task_run)
++
++
++class Consumer:
++    def __init__(self, task_keys: list[str], consumer_id: str) -> None:
++        self._queue = MultiQueue(task_keys)
++        self._publisher = Publisher()
++        self._outstanding: dict[int, TaskQueueDelivery] = {}
++
++    async def __aenter__(self) -> Self:
++        return self
++
++    async def __aexit__(
++        self,
++        exc_type: type[BaseException] | None,
++        exc_val: BaseException | None,
++        exc_tb: TracebackType | None,
++    ) -> None:
++        await asyncio.gather(
++            *(self.release(delivery) for delivery in list(self._outstanding.values()))
++        )
++
++    async def get(self) -> TaskQueueDelivery:
++        delivery = TaskQueueDelivery(task_run=await self._queue.get())
++        self._outstanding[id(delivery)] = delivery
++        return delivery
++
++    async def acknowledge(self, delivery: TaskQueueDelivery) -> None:
++        self._outstanding.pop(id(delivery), None)
++
++    async def release(self, delivery: TaskQueueDelivery) -> None:
++        await self._publisher.publish(delivery.task_run, TaskQueuePriority.RETRY)
++        self._outstanding.pop(id(delivery), None)
+diff --git a/tests/server/test_task_queue.py b/tests/server/test_task_queue.py
+new file mode 100644
+index 000000000000..abb0d3b92a5e
+--- /dev/null
++++ b/tests/server/test_task_queue.py
+@@ -0,0 +1,14 @@
++from prefect.server.task_queue import _task_queue_module_path
++from prefect.settings import PREFECT_MESSAGING_BROKER, temporary_settings
++
++
++def test_redis_messaging_uses_durable_task_queue() -> None:
++    with temporary_settings({PREFECT_MESSAGING_BROKER: "prefect_redis.messaging"}):
++        assert _task_queue_module_path() == "prefect_redis.task_queue"
++
++
++def test_other_messaging_uses_process_local_task_queue() -> None:
++    with temporary_settings(
++        {PREFECT_MESSAGING_BROKER: "prefect.server.utilities.messaging.memory"}
++    ):
++        assert _task_queue_module_path() == "prefect.server.task_queue.memory"

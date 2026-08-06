@@ -1,0 +1,38 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {ad1f95e6-8a4e-4d96-9438-00bda3a677f4}
+Azure Region: centralus
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260720.247.2
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Actions: read
+Metadata: read
+##[endgroup]
+Secret source: None
+Prepare workflow directory
+Prepare all required actions
+Complete job name: cleanup
+##[group]Run gh cache delete --repo pandas-dev/pandas --all --ref refs/pull/66620/merge --succeed-on-no-caches
+gh cache delete --repo pandas-dev/pandas --all --ref refs/pull/66620/merge --succeed-on-no-caches
+shell: /usr/bin/bash -euxo pipefail {0}
+env:
+  GH_TOKEN: ***
+##[endgroup]
++ gh cache delete --repo pandas-dev/pandas --all --ref refs/pull/66620/merge --succeed-on-no-caches
+X Failed to delete cache: HTTP 403: Resource not accessible by integration (https://api.github.com/repos/pandas-dev/pandas/actions/caches/6368153115)
+##[error]Process completed with exit code 1.
+Cleaning up orphan processes

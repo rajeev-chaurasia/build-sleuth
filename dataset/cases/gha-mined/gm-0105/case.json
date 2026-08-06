@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0105",
+  "title": "apache/airflow Sqlite tests: core / DB-core:Sqlite:3.10:API...Always",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "apache/airflow",
+    "run_id": 31076813950,
+    "run_attempt": 1,
+    "head_sha": "79953f30068f551259129e61ecf349fb2fff8831",
+    "pr_number": null,
+    "failed_job_name": "Sqlite tests: core / DB-core:Sqlite:3.10:API...Always",
+    "failed_step_name": "core:DB Tests Sqlite  Py3.10:API Always",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "test_assertion",
+    "related_to_diff": null,
+    "culprit_files": [
+      "airflow-core/tests/unit/api_fastapi/core_api/test_security.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/apache/airflow/actions/runs/31076813950",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/test_assertion. Lowest confidence of the two was 0.70. Decisive evidence: FAILED test_security.py::test_requires_access_backfill_not_found_does_not_consult_body - AssertionError: expected call not found.",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

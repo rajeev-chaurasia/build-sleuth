@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0120",
+  "title": "pandas-dev/pandas Linux-Musl",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "pandas-dev/pandas",
+    "run_id": 30982935535,
+    "run_attempt": 1,
+    "head_sha": "e3d2447cc0f82cca8d9087aefcf10a432b04e407",
+    "pr_number": null,
+    "failed_job_name": "Linux-Musl",
+    "failed_step_name": "Run Tests",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "test_assertion",
+    "related_to_diff": null,
+    "culprit_files": [
+      "pandas/tests/reshape/merge/test_merge.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/pandas-dev/pandas/actions/runs/30982935535",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/test_assertion. Lowest confidence of the two was 0.65. Decisive evidence: FAILED test_merge.py::TestMerge::test_merge_left_empty_right_empty[right-kwarg2] - AssertionError: Attributes of DataFrame.iloc[:, 0] are different",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

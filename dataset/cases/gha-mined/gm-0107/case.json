@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0107",
+  "title": "apache/airflow Postgres tests: core / DB-core:Postgres:14:3.10:Core...Serialization",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "apache/airflow",
+    "run_id": 31078559056,
+    "run_attempt": 1,
+    "head_sha": "b24bdc494f7c2a9ee846188fa70cd9c6da89f78f",
+    "pr_number": null,
+    "failed_job_name": "Postgres tests: core / DB-core:Postgres:14:3.10:Core...Serialization",
+    "failed_step_name": "Migration Tests: 3.10:Core Other Serialization",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "test_assertion",
+    "related_to_diff": null,
+    "culprit_files": [
+      "airflow-core/src/airflow/migrations/versions/0129_3_4_0_add_dagrun_id_to_callback.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/apache/airflow/actions/runs/31078559056",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/test_assertion. Lowest confidence of the two was 0.75. Decisive evidence: sqlalchemy.exc.ProgrammingError: (psycopg.errors.UndefinedObject) index \"callback_dagrun_id_idx\" does not exist",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

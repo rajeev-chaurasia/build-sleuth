@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0133",
+  "title": "scikit-learn/scikit-learn Linux x86-64 pymin_conda_forge_openblas_min_dependencies",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "scikit-learn/scikit-learn",
+    "run_id": 31043830995,
+    "run_attempt": 1,
+    "head_sha": "5075549a7cda2a49367e51aec7a265e8ddab3f37",
+    "pr_number": null,
+    "failed_job_name": "Linux x86-64 pymin_conda_forge_openblas_min_dependencies",
+    "failed_step_name": "Run tests",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "test_assertion",
+    "related_to_diff": null,
+    "culprit_files": [
+      "sklearn/utils/validation.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/scikit-learn/scikit-learn/actions/runs/31043830995",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/test_assertion. Lowest confidence of the two was 0.78. Decisive evidence: TypeError: '>' not supported between instances of 'pyarrow.lib.Int64Scalar' and 'int'",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

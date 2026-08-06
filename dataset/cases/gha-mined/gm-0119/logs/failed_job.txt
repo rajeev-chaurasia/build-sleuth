@@ -1,0 +1,2253 @@
+Current runner version: '2.335.1'
+Runner name: 'aws-m8i-l-cache-use1-public-80-26kmn-runner-wb56l'
+Runner group name: 'aws-m8i-l-cache'
+Machine name: 'aws-m8i-l-cache-use1-public-80-26kmn-runner-wb56l'
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+Uses: huggingface/transformers-ci/.github/workflows/pr-ci_dynamic_caller_example.yml@refs/heads/main (6058dcce73686c86389fa51690ce7562d66bac55)
+Complete job name: pr-ci / Check repository consistency
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+with:
+  fetch-depth: 0
+  repository: huggingface/transformers
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  persist-credentials: true
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_repository_consistency
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Syncing repository: huggingface/transformers
+##[group]Getting Git version info
+Working directory is '/__w/transformers/transformers'
+[command]/usr/bin/git version
+git version 2.47.3
+##[endgroup]
+Copying '/root/.gitconfig' to '/__w/_temp/e14a3039-2142-48d2-987e-1127155c2d44/.gitconfig'
+Temporarily overriding HOME='/__w/_temp/e14a3039-2142-48d2-987e-1127155c2d44' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /__w/transformers/transformers
+Deleting the contents of '/__w/transformers/transformers'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]/usr/bin/git init /__w/transformers/transformers
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+Initialized empty Git repository in /__w/transformers/transformers/.git/
+[command]/usr/bin/git remote add origin https://github.com/huggingface/transformers
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /__w/_temp/git-credentials-f7c54501-8001-41e3-804f-be1db1220c7e.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/__w/transformers/transformers/.git.path /__w/_temp/git-credentials-f7c54501-8001-41e3-804f-be1db1220c7e.config
+[command]/usr/bin/git config --local includeIf.gitdir:/__w/transformers/transformers/.git/worktrees/*.path /__w/_temp/git-credentials-f7c54501-8001-41e3-804f-be1db1220c7e.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-f7c54501-8001-41e3-804f-be1db1220c7e.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-f7c54501-8001-41e3-804f-be1db1220c7e.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +c58a4a1e0b5907f3752ea8970a64225bad3aa0b1:refs/remotes/pull/47809/merge
+From https://github.com/huggingface/transformers
+ * [new branch]            'delete-delete-doc'         -> origin/'delete-delete-doc'
+ * [new branch]            29625_add_prefix_space      -> origin/29625_add_prefix_space
+ * [new branch]            29625_prefix_space          -> origin/29625_prefix_space
+ * [new branch]            30824-spmconverter-user-defined-symbol -> origin/30824-spmconverter-user-defined-symbol
+ * [new branch]            35597_custom_tokenizer      -> origin/35597_custom_tokenizer
+ * [new branch]            4.55.0-GLM-4.5V-preview-GLM-4.5V-release -> origin/4.55.0-GLM-4.5V-preview-GLM-4.5V-release
+ * [new branch]            4.55.0-GLM-4.5V-release     -> origin/4.55.0-GLM-4.5V-release
+ * [new branch]            5-to-50gb                   -> origin/5-to-50gb
+ * [new branch]            8a734ea2                    -> origin/8a734ea2
+ * [new branch]            BC_added_tokens_encoder     -> origin/BC_added_tokens_encoder
+ * [new branch]            BritneyMuller-housekeeping-patch -> origin/BritneyMuller-housekeeping-patch
+ * [new branch]            LysandreJik-patch-1         -> origin/LysandreJik-patch-1
+ * [new branch]            PP                          -> origin/PP
+ * [new branch]            _dummy_fix_weight_only_usage -> origin/_dummy_fix_weight_only_usage
+ * [new branch]            _dummy_fix_weight_only_usage_2 -> origin/_dummy_fix_weight_only_usage_2
+ * [new branch]            action_to_notify_new_model_push_backup -> origin/action_to_notify_new_model_push_backup
+ * [new branch]            add-amd-runners-to-run-slow-command -> origin/add-amd-runners-to-run-slow-command
+ * [new branch]            add-block-tables            -> origin/add-block-tables
+ * [new branch]            add-deci-lm                 -> origin/add-deci-lm
+ * [new branch]            add-ep                      -> origin/add-ep
+ * [new branch]            add-executorch-cpu-torch-image -> origin/add-executorch-cpu-torch-image
+ * [new branch]            add-flash-decoding          -> origin/add-flash-decoding
+ * [new branch]            add-flash-opt               -> origin/add-flash-opt
+ * [new branch]            add-fp8-llama-script        -> origin/add-fp8-llama-script
+ * [new branch]            add-k3                      -> origin/add-k3
+ * [new branch]            add-missing-truncate        -> origin/add-missing-truncate
+ * [new branch]            add-mlx-llamacpp            -> origin/add-mlx-llamacpp
+ * [new branch]            add-model-arcinstitute-state -> origin/add-model-arcinstitute-state
+ * [new branch]            add-modular-sarvam          -> origin/add-modular-sarvam
+ * [new branch]            add-pocr-conversion         -> origin/add-pocr-conversion
+ * [new branch]            add-qgalore                 -> origin/add-qgalore
+ * [new branch]            add-rwkv5                   -> origin/add-rwkv5
+ * [new branch]            add-sarvam-model            -> origin/add-sarvam-model
+ * [new branch]            add-spinquant               -> origin/add-spinquant
+ * [new branch]            add-transform-paths-and-join -> origin/add-transform-paths-and-join
+ * [new branch]            add-warning-4bit-opti       -> origin/add-warning-4bit-opti
+ * [new branch]            add_amd_daily_ci            -> origin/add_amd_daily_ci
+ * [new branch]            add_back_generative_class   -> origin/add_back_generative_class
+ * [new branch]            add_chat_template_tests     -> origin/add_chat_template_tests
+ * [new branch]            add_deformable_detr         -> origin/add_deformable_detr
+ * [new branch]            add_diffusers               -> origin/add_diffusers
+ * [new branch]            add_eagle                   -> origin/add_eagle
+ * [new branch]            add_fa2_bart                -> origin/add_fa2_bart
+ * [new branch]            add_fixed_cross_entropy_kwargs -> origin/add_fixed_cross_entropy_kwargs
+ * [new branch]            add_important_warning_padding_attention_mask -> origin/add_important_warning_padding_attention_mask
+ * [new branch]            add_kosmos_2_remote         -> origin/add_kosmos_2_remote
+ * [new branch]            add_kosmos_2_temp           -> origin/add_kosmos_2_temp
+ * [new branch]            add_kosmos_2_utm5_attn      -> origin/add_kosmos_2_utm5_attn
+ * [new branch]            add_kosmos_2_utm5_attn_rebased -> origin/add_kosmos_2_utm5_attn_rebased
+ * [new branch]            add_kosmos_2_utm5_attn_rebased_flat_layer_structure -> origin/add_kosmos_2_utm5_attn_rebased_flat_layer_structure
+ * [new branch]            add_locateanything          -> origin/add_locateanything
+ * [new branch]            add_mimimax_m2_7            -> origin/add_mimimax_m2_7
+ * [new branch]            add_minimax_m2_7            -> origin/add_minimax_m2_7
+ * [new branch]            add_mistral_common_support  -> origin/add_mistral_common_support
+ * [new branch]            add_num_workers_for_tf      -> origin/add_num_workers_for_tf
+ * [new branch]            add_pipeline_equivalence_testing -> origin/add_pipeline_equivalence_testing
+ * [new branch]            add_prefix_space_clean      -> origin/add_prefix_space_clean
+ * [new branch]            add_qat_fp8                 -> origin/add_qat_fp8
+ * [new branch]            add_tf_export_doc           -> origin/add_tf_export_doc
+ * [new branch]            add_word_level_timestamp_long -> origin/add_word_level_timestamp_long
+ * [new branch]            agent-first-cli             -> origin/agent-first-cli
+ * [new branch]            agent-first-cli-with-skill  -> origin/agent-first-cli-with-skill
+ * [new branch]            agent/resolve-revision-once -> origin/agent/resolve-revision-once
+ * [new branch]            agent_callback              -> origin/agent_callback
+ * [new branch]            agents-count-tokens         -> origin/agents-count-tokens
+ * [new branch]            agents-make-easier-tags     -> origin/agents-make-easier-tags
+ * [new branch]            agents-messages             -> origin/agents-messages
+ * [new branch]            albertvillanova-patch-1     -> origin/albertvillanova-patch-1
+ * [new branch]            alert-autofix-265           -> origin/alert-autofix-265
+ * [new branch]            all_jobs_can_compare_against_prev_runs_clean_trigger -> origin/all_jobs_can_compare_against_prev_runs_clean_trigger
+ * [new branch]            allow-disabling-compile     -> origin/allow-disabling-compile
+ * [new branch]            allow_ci_to_use_a10         -> origin/allow_ci_to_use_a10
+ * [new branch]            allow_old_falcon_name       -> origin/allow_old_falcon_name
+ * [new branch]            amd-hf-ci-branch            -> origin/amd-hf-ci-branch
+ * [new branch]            amd-nightly-ci              -> origin/amd-nightly-ci
+ * [new branch]            amdgpu-multi-gpu-tests      -> origin/amdgpu-multi-gpu-tests
+ * [new branch]            another_fix                 -> origin/another_fix
+ * [new branch]            another_prepare_dataset_fix -> origin/another_prepare_dataset_fix
+ * [new branch]            api_big2                    -> origin/api_big2
+ * [new branch]            app                         -> origin/app
+ * [new branch]            arijitx/wav2vec2_alignment  -> origin/arijitx/wav2vec2_alignment
+ * [new branch]            asr-pipeline-feature-extractor -> origin/asr-pipeline-feature-extractor
+ * [new branch]            assistant_decoding_batch    -> origin/assistant_decoding_batch
+ * [new branch]            attn-implementation-vision-enc-dec -> origin/attn-implementation-vision-enc-dec
+ * [new branch]            audio-processor             -> origin/audio-processor
+ * [new branch]            auot-convert-tekken         -> origin/auot-convert-tekken
+ * [new branch]            auto-detect-wrong-mapping-models -> origin/auto-detect-wrong-mapping-models
+ * [new branch]            auto-reparent-causal-lm-tests -> origin/auto-reparent-causal-lm-tests
+ * [new branch]            auto_gpt4_conversion        -> origin/auto_gpt4_conversion
+ * [new branch]            auto_tok_remote             -> origin/auto_tok_remote
+ * [new branch]            base-model-loading          -> origin/base-model-loading
+ * [new branch]            base_8a734ea2               -> origin/base_8a734ea2
+ * [new branch]            basic-app                   -> origin/basic-app
+ * [new branch]            batched-mm-index-select     -> origin/batched-mm-index-select
+ * [new branch]            batched_handle_empty_string -> origin/batched_handle_empty_string
+ * [new branch]            ben/check-peft-integration-tests -> origin/ben/check-peft-integration-tests
+ * [new branch]            bench-dtensor-vs-legacy-tp  -> origin/bench-dtensor-vs-legacy-tp
+ * [new branch]            best_benchmark              -> origin/best_benchmark
+ * [new branch]            best_benchmark_new          -> origin/best_benchmark_new
+ * [new branch]            best_benchmark_on_static_cache -> origin/best_benchmark_on_static_cache
+ * [new branch]            best_benchmark_on_static_cache_new -> origin/best_benchmark_on_static_cache_new
+ * [new branch]            better-fa-handling          -> origin/better-fa-handling
+ * [new branch]            better-fla                  -> origin/better-fla
+ * [new branch]            better_loss                 -> origin/better_loss
+ * [new branch]            better_sec                  -> origin/better_sec
+ * [new branch]            bloom_big                   -> origin/bloom_big
+ * [new branch]            bnb-parametrize-4bit        -> origin/bnb-parametrize-4bit
+ * [new branch]            bos_eos_token_fix           -> origin/bos_eos_token_fix
+ * [new branch]            buckets-trainer             -> origin/buckets-trainer
+ * [new branch]            build-check-deepspeed-image -> origin/build-check-deepspeed-image
+ * [new branch]            build-docker-torch-2.2      -> origin/build-docker-torch-2.2
+ * [new branch]            build_cache_test_files_in_docker -> origin/build_cache_test_files_in_docker
+ * [new branch]            build_ci_docker_image_amd1  -> origin/build_ci_docker_image_amd1
+ * [new branch]            build_ci_docker_image_amd2  -> origin/build_ci_docker_image_amd2
+ * [new branch]            build_ci_docker_image_amd3  -> origin/build_ci_docker_image_amd3
+ * [new branch]            build_ci_docker_image_amd_libjpeg_test -> origin/build_ci_docker_image_amd_libjpeg_test
+ * [new branch]            build_ci_docker_image_amd_rocm72 -> origin/build_ci_docker_image_amd_rocm72
+ * [new branch]            build_ci_docker_image_test_cache -> origin/build_ci_docker_image_test_cache
+ * [new branch]            build_ci_image              -> origin/build_ci_image
+ * [new branch]            build_ci_image2             -> origin/build_ci_image2
+ * [new branch]            build_docker_on_kube        -> origin/build_docker_on_kube
+ * [new branch]            build_docker_on_kube_2      -> origin/build_docker_on_kube_2
+ * [new branch]            build_docker_on_kube_3      -> origin/build_docker_on_kube_3
+ * [new branch]            build_image_abc             -> origin/build_image_abc
+ * [new branch]            build_image_circleci        -> origin/build_image_circleci
+ * [new branch]            build_why_break             -> origin/build_why_break
+ * [new branch]            build_with_2404             -> origin/build_with_2404
+ * [new branch]            bump-hfh-prerelease         -> origin/bump-hfh-prerelease
+ * [new branch]            bump-pytest-asyncio         -> origin/bump-pytest-asyncio
+ * [new branch]            bump-tokenizers-0.23.1      -> origin/bump-tokenizers-0.23.1
+ * [new branch]            byebye                      -> origin/byebye
+ * [new branch]            byebye_py_37                -> origin/byebye_py_37
+ * [new branch]            cache-refactor-1            -> origin/cache-refactor-1
+ * [new branch]            cache_exp                   -> origin/cache_exp
+ * [new branch]            camembert_incorrect         -> origin/camembert_incorrect
+ * [new branch]            cb-cache-upgrade            -> origin/cb-cache-upgrade
+ * [new branch]            cb-fix-k-race-bug           -> origin/cb-fix-k-race-bug
+ * [new branch]            cb-multimodal               -> origin/cb-multimodal
+ * [new branch]            cb-pad-pow2                 -> origin/cb-pad-pow2
+ * [new branch]            change-ci                   -> origin/change-ci
+ * [new branch]            change_build_input_tests    -> origin/change_build_input_tests
+ * [new branch]            change_to_draft_2           -> origin/change_to_draft_2
+ * [new branch]            change_to_draft_3           -> origin/change_to_draft_3
+ * [new branch]            change_to_draft_4           -> origin/change_to_draft_4
+ * [new branch]            change_to_draft_4-release   -> origin/change_to_draft_4-release
+ * [new branch]            chase_tokenizersbackend_issue -> origin/chase_tokenizersbackend_issue
+ * [new branch]            chat-extra                  -> origin/chat-extra
+ * [new branch]            chat-template-quick-fix     -> origin/chat-template-quick-fix
+ * [new branch]            chat_template_kwargs        -> origin/chat_template_kwargs
+ * [new branch]            check-deepspeed             -> origin/check-deepspeed
+ * [new branch]            check-docstring             -> origin/check-docstring
+ * [new branch]            check-refactor-weight-loading -> origin/check-refactor-weight-loading
+ * [new branch]            check-send-headers-when-converting-safetensors -> origin/check-send-headers-when-converting-safetensors
+ * [new branch]            check-v4.49-release         -> origin/check-v4.49-release
+ * [new branch]            check-whisper-slow-tests    -> origin/check-whisper-slow-tests
+ * [new branch]            check_amd_image_build       -> origin/check_amd_image_build
+ * [new branch]            check_bot                   -> origin/check_bot
+ * [new branch]            check_cancel                -> origin/check_cancel
+ * [new branch]            check_circleci_new_trigger  -> origin/check_circleci_new_trigger
+ * [new branch]            check_circleci_tokenizer    -> origin/check_circleci_tokenizer
+ * [new branch]            check_cleanup_workflow      -> origin/check_cleanup_workflow
+ * [new branch]            check_commit                -> origin/check_commit
+ * [new branch]            check_commit_3              -> origin/check_commit_3
+ * [new branch]            check_compile               -> origin/check_compile
+ * [new branch]            check_compile_if_flaky      -> origin/check_compile_if_flaky
+ * [new branch]            check_doc_image             -> origin/check_doc_image
+ * [new branch]            check_doc_test              -> origin/check_doc_test
+ * [new branch]            check_docker_i              -> origin/check_docker_i
+ * [new branch]            check_draft_4               -> origin/check_draft_4
+ * [new branch]            check_ds                    -> origin/check_ds
+ * [new branch]            check_env_runner            -> origin/check_env_runner
+ * [new branch]            check_example_ci            -> origin/check_example_ci
+ * [new branch]            check_example_job           -> origin/check_example_job
+ * [new branch]            check_fa2                   -> origin/check_fa2
+ * [new branch]            check_fastspeech            -> origin/check_fastspeech
+ * [new branch]            check_fix_fix_fix           -> origin/check_fix_fix_fix
+ * [new branch]            check_fix_torch_pip         -> origin/check_fix_torch_pip
+ * [new branch]            check_flaky                 -> origin/check_flaky
+ * [new branch]            check_flax_example          -> origin/check_flax_example
+ * [new branch]            check_force_n_layers        -> origin/check_force_n_layers
+ * [new branch]            check_gated_repo            -> origin/check_gated_repo
+ * [new branch]            check_gemma                 -> origin/check_gemma
+ * [new branch]            check_gemma_compile         -> origin/check_gemma_compile
+ * [new branch]            check_gemma_compile_2       -> origin/check_gemma_compile_2
+ * [new branch]            check_gen_2                 -> origin/check_gen_2
+ * [new branch]            check_import                -> origin/check_import
+ * [new branch]            check_install               -> origin/check_install
+ * [new branch]            check_kosmos2               -> origin/check_kosmos2
+ * [new branch]            check_layoutlm              -> origin/check_layoutlm
+ * [new branch]            check_layoutlmv2            -> origin/check_layoutlmv2
+ * [new branch]            check_limit                 -> origin/check_limit
+ * [new branch]            check_llama_tok             -> origin/check_llama_tok
+ * [new branch]            check_mem                   -> origin/check_mem
+ * [new branch]            check_mem_00c1d87           -> origin/check_mem_00c1d87
+ * [new branch]            check_mem_3cefac1d          -> origin/check_mem_3cefac1d
+ * [new branch]            check_mem_56b64bf           -> origin/check_mem_56b64bf
+ * [new branch]            check_mem_838b87a           -> origin/check_mem_838b87a
+ * [new branch]            check_mlinter               -> origin/check_mlinter
+ * [new branch]            check_new_failures_reporting_3 -> origin/check_new_failures_reporting_3
+ * [new branch]            check_new_failures_reporting_4 -> origin/check_new_failures_reporting_4
+ * [new branch]            check_new_failures_reporting_5 -> origin/check_new_failures_reporting_5
+ * [new branch]            check_new_failures_reporting_9 -> origin/check_new_failures_reporting_9
+ * [new branch]            check_nightly_build         -> origin/check_nightly_build
+ * [new branch]            check_nightly_build_build_image -> origin/check_nightly_build_build_image
+ * [new branch]            check_nougat                -> origin/check_nougat
+ * [new branch]            check_onnx_2.7.1            -> origin/check_onnx_2.7.1
+ * [new branch]            check_past_runner           -> origin/check_past_runner
+ * [new branch]            check_permission            -> origin/check_permission
+ * [new branch]            check_push                  -> origin/check_push
+ * [new branch]            check_quant2                -> origin/check_quant2
+ * [new branch]            check_quantized_param_bnb4  -> origin/check_quantized_param_bnb4
+ * [new branch]            check_report                -> origin/check_report
+ * [new branch]            check_run_slow_v2           -> origin/check_run_slow_v2
+ * [new branch]            check_safetensors_rc        -> origin/check_safetensors_rc
+ * [new branch]            check_slow                  -> origin/check_slow
+ * [new branch]            check_slow_pr               -> origin/check_slow_pr
+ * [new branch]            check_speed_no_empty        -> origin/check_speed_no_empty
+ * [new branch]            check_strange_doctest       -> origin/check_strange_doctest
+ * [new branch]            check_temp                  -> origin/check_temp
+ * [new branch]            check_test_from_pretrained_low_cpu_mem_usage_equal -> origin/check_test_from_pretrained_low_cpu_mem_usage_equal
+ * [new branch]            check_tiny_creation         -> origin/check_tiny_creation
+ * [new branch]            check_token                 -> origin/check_token
+ * [new branch]            check_torch_2.2             -> origin/check_torch_2.2
+ * [new branch]            check_torch_2.9             -> origin/check_torch_2.9
+ * [new branch]            check_torch_27              -> origin/check_torch_27
+ * [new branch]            check_trigger_4d8427f7      -> origin/check_trigger_4d8427f7
+ * [new branch]            check_trigger_a81cf9ee      -> origin/check_trigger_a81cf9ee
+ * [new branch]            check_update_cache_number   -> origin/check_update_cache_number
+ * [new branch]            check_ved_trocr             -> origin/check_ved_trocr
+ * [new branch]            check_what_wrong_in_tiny_creation -> origin/check_what_wrong_in_tiny_creation
+ * [new branch]            check_why_ci_killed         -> origin/check_why_ci_killed
+ * [new branch]            check_workflow              -> origin/check_workflow
+ * [new branch]            check_workflow_2            -> origin/check_workflow_2
+ * [new branch]            checkout-layoutlm-tokenizers -> origin/checkout-layoutlm-tokenizers
+ * [new branch]            chunk_length_ctc            -> origin/chunk_length_ctc
+ * [new branch]            ci-amdgpu-build-docker-images -> origin/ci-amdgpu-build-docker-images
+ * [new branch]            ci-amdgpu-mi250             -> origin/ci-amdgpu-mi250
+ * [new branch]            ci-amdgpu-nightly           -> origin/ci-amdgpu-nightly
+ * [new branch]            ci-ssh                      -> origin/ci-ssh
+ * [new branch]            ci-test-huggingface-hub-0.29.0.rc6 -> origin/ci-test-huggingface-hub-0.29.0.rc6
+ * [new branch]            ci-test-huggingface-hub-0.30.0.rc1 -> origin/ci-test-huggingface-hub-0.30.0.rc1
+ * [new branch]            ci-test-huggingface-hub-1.10.0.rc0-release -> origin/ci-test-huggingface-hub-1.10.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.10.0.rc1-release -> origin/ci-test-huggingface-hub-1.10.0.rc1-release
+ * [new branch]            ci-test-huggingface-hub-1.11.0.rc0-release -> origin/ci-test-huggingface-hub-1.11.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.12.0.rc0-release -> origin/ci-test-huggingface-hub-1.12.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.12.0.rc1-release -> origin/ci-test-huggingface-hub-1.12.0.rc1-release
+ * [new branch]            ci-test-huggingface-hub-1.13.0.rc0-release -> origin/ci-test-huggingface-hub-1.13.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.14.0.rc0-release -> origin/ci-test-huggingface-hub-1.14.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.15.0.rc0-release -> origin/ci-test-huggingface-hub-1.15.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.16.0.rc0-release -> origin/ci-test-huggingface-hub-1.16.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.17.0.rc0-release -> origin/ci-test-huggingface-hub-1.17.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.18.0.rc0-release -> origin/ci-test-huggingface-hub-1.18.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.19.0.rc1-release -> origin/ci-test-huggingface-hub-1.19.0.rc1-release
+ * [new branch]            ci-test-huggingface-hub-1.20.0.rc0-release -> origin/ci-test-huggingface-hub-1.20.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.21.0.rc0-release -> origin/ci-test-huggingface-hub-1.21.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.22.0.rc0-release -> origin/ci-test-huggingface-hub-1.22.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.23.0.rc0-release -> origin/ci-test-huggingface-hub-1.23.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.25.0.rc0-release -> origin/ci-test-huggingface-hub-1.25.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.26.0.rc0-release -> origin/ci-test-huggingface-hub-1.26.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.26.0.rc1-release -> origin/ci-test-huggingface-hub-1.26.0.rc1-release
+ * [new branch]            ci-test-huggingface-hub-1.26.0.rc2-release -> origin/ci-test-huggingface-hub-1.26.0.rc2-release
+ * [new branch]            ci-test-huggingface-hub-1.7.0.rc0-release -> origin/ci-test-huggingface-hub-1.7.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.7.0.rc1-release -> origin/ci-test-huggingface-hub-1.7.0.rc1-release
+ * [new branch]            ci-test-huggingface-hub-1.8.0.rc0-release -> origin/ci-test-huggingface-hub-1.8.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-1.9.0.rc0-release -> origin/ci-test-huggingface-hub-1.9.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-v0.15.0.rc0 -> origin/ci-test-huggingface-hub-v0.15.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.16.0.rc0 -> origin/ci-test-huggingface-hub-v0.16.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.17.0.rc0 -> origin/ci-test-huggingface-hub-v0.17.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.18.0.rc0 -> origin/ci-test-huggingface-hub-v0.18.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.19.0.rc0 -> origin/ci-test-huggingface-hub-v0.19.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.20.0.rc1 -> origin/ci-test-huggingface-hub-v0.20.0.rc1
+ * [new branch]            ci-test-huggingface-hub-v0.21.0.rc0 -> origin/ci-test-huggingface-hub-v0.21.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.22.0.rc0 -> origin/ci-test-huggingface-hub-v0.22.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.23.0.rc0 -> origin/ci-test-huggingface-hub-v0.23.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.23.0.rc1 -> origin/ci-test-huggingface-hub-v0.23.0.rc1
+ * [new branch]            ci-test-huggingface-hub-v0.24.0.rc0 -> origin/ci-test-huggingface-hub-v0.24.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.25.0.rc0 -> origin/ci-test-huggingface-hub-v0.25.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.25.0.rc1 -> origin/ci-test-huggingface-hub-v0.25.0.rc1
+ * [new branch]            ci-test-huggingface-hub-v0.26.0.rc0 -> origin/ci-test-huggingface-hub-v0.26.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.27.0.rc0 -> origin/ci-test-huggingface-hub-v0.27.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.27.0.rc1 -> origin/ci-test-huggingface-hub-v0.27.0.rc1
+ * [new branch]            ci-test-huggingface-hub-v0.27.0rc1 -> origin/ci-test-huggingface-hub-v0.27.0rc1
+ * [new branch]            ci-test-huggingface-hub-v0.28.0.rc0 -> origin/ci-test-huggingface-hub-v0.28.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.28.0.rc5 -> origin/ci-test-huggingface-hub-v0.28.0.rc5
+ * [new branch]            ci-test-huggingface-hub-v0.29.0.rc0 -> origin/ci-test-huggingface-hub-v0.29.0.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.29.0.rc1 -> origin/ci-test-huggingface-hub-v0.29.0.rc1
+ * [new branch]            ci-test-huggingface-hub-v0.29.0.rc2 -> origin/ci-test-huggingface-hub-v0.29.0.rc2
+ * [new branch]            ci-test-huggingface-hub-v0.29.0.rc5 -> origin/ci-test-huggingface-hub-v0.29.0.rc5
+ * [new branch]            ci-test-huggingface-hub-v0.29.0.rc7 -> origin/ci-test-huggingface-hub-v0.29.0.rc7
+ * [new branch]            ci-test-huggingface-hub-v0.29.3.rc0 -> origin/ci-test-huggingface-hub-v0.29.3.rc0
+ * [new branch]            ci-test-huggingface-hub-v0.30.0.rc3-release -> origin/ci-test-huggingface-hub-v0.30.0.rc3-release
+ * [new branch]            ci-test-huggingface-hub-v0.31.0.rc0-release -> origin/ci-test-huggingface-hub-v0.31.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-v0.32.0.rc0-release -> origin/ci-test-huggingface-hub-v0.32.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-v0.32.0.rc1-release -> origin/ci-test-huggingface-hub-v0.32.0.rc1-release
+ * [new branch]            ci-test-huggingface-hub-v0.33.0.rc0-release -> origin/ci-test-huggingface-hub-v0.33.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-v0.34.0.rc0-release -> origin/ci-test-huggingface-hub-v0.34.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-v0.35.0.rc0-release -> origin/ci-test-huggingface-hub-v0.35.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-v0.35.0.rc1-release -> origin/ci-test-huggingface-hub-v0.35.0.rc1-release
+ * [new branch]            ci-test-huggingface-hub-v1.0.0.rc0-release -> origin/ci-test-huggingface-hub-v1.0.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-v1.0.0.rc1-release -> origin/ci-test-huggingface-hub-v1.0.0.rc1-release
+ * [new branch]            ci-test-huggingface-hub-v1.1.0.rc2-release -> origin/ci-test-huggingface-hub-v1.1.0.rc2-release
+ * [new branch]            ci-test-huggingface-hub-v1.2.0.rc0-release -> origin/ci-test-huggingface-hub-v1.2.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-v1.3.0.rc0-release -> origin/ci-test-huggingface-hub-v1.3.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-v1.4.0.rc0-release -> origin/ci-test-huggingface-hub-v1.4.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-v1.5.0.rc0-release -> origin/ci-test-huggingface-hub-v1.5.0.rc0-release
+ * [new branch]            ci-test-huggingface-hub-v1.6.0.rc0-release -> origin/ci-test-huggingface-hub-v1.6.0.rc0-release
+ * [new branch]            ci-update                   -> origin/ci-update
+ * [new branch]            ci/maintainer-allowlist-via-team -> origin/ci/maintainer-allowlist-via-team
+ * [new branch]            ci_crying_becausse_torchcodec -> origin/ci_crying_becausse_torchcodec
+ * [new branch]            ci_with_commit_41b9b92b52215bed472c9a534a06abbc3a9a95cd -> origin/ci_with_commit_41b9b92b52215bed472c9a534a06abbc3a9a95cd
+ * [new branch]            ci_with_torch_2.7           -> origin/ci_with_torch_2.7
+ * [new branch]            ci_with_torch_2.7.1_commit_0ef339ff1b63bb03a388c79bfbebec9085e10564 -> origin/ci_with_torch_2.7.1_commit_0ef339ff1b63bb03a388c79bfbebec9085e10564
+ * [new branch]            ci_with_torch_2.7_commit_0ef339ff1b63bb03a388c79bfbebec9085e10564 -> origin/ci_with_torch_2.7_commit_0ef339ff1b63bb03a388c79bfbebec9085e10564
+ * [new branch]            ci_with_torch_version_base  -> origin/ci_with_torch_version_base
+ * [new branch]            circleci_combine_reports    -> origin/circleci_combine_reports
+ * [new branch]            circleci_debug_base         -> origin/circleci_debug_base
+ * [new branch]            circleci_debug_base_MobileNetV1ModelTest_test_batching_equivalence -> origin/circleci_debug_base_MobileNetV1ModelTest_test_batching_equivalence
+ * [new branch]            circleci_debug_base_timm    -> origin/circleci_debug_base_timm
+ * [new branch]            circleci_debug_base_timm_3  -> origin/circleci_debug_base_timm_3
+ * [new branch]            circleci_with_torch_2.9_rc  -> origin/circleci_with_torch_2.9_rc
+ * [new branch]            clarify-pipeline-device-placement -> origin/clarify-pipeline-device-placement
+ * [new branch]            clean-branch                -> origin/clean-branch
+ * [new branch]            clean-disentangle-rope      -> origin/clean-disentangle-rope
+ * [new branch]            clean-kwargs                -> origin/clean-kwargs
+ * [new branch]            clean-modeling              -> origin/clean-modeling
+ * [new branch]            clean_spmcoverter           -> origin/clean_spmcoverter
+ * [new branch]            cleaning_fsdp_tests         -> origin/cleaning_fsdp_tests
+ * [new branch]            cleanup_tok_save            -> origin/cleanup_tok_save
+ * [new branch]            cli-import-guards           -> origin/cli-import-guards
+ * [new branch]            cohere-diff                 -> origin/cohere-diff
+ * [new branch]            cohere-diff-2               -> origin/cohere-diff-2
+ * [new branch]            cohere2-moe-rm-sum          -> origin/cohere2-moe-rm-sum
+ * [new branch]            collated-reports-fix-artifact-upload -> origin/collated-reports-fix-artifact-upload
+ * [new branch]            compare-test-results        -> origin/compare-test-results
+ * [new branch]            compare-test-results-backup -> origin/compare-test-results-backup
+ * [new branch]            compare_ci_with_torch_2.2   -> origin/compare_ci_with_torch_2.2
+ * [new branch]            compile-bnb                 -> origin/compile-bnb
+ * [new branch]            compile-rope                -> origin/compile-rope
+ * [new branch]            composable-tp               -> origin/composable-tp
+ * [new branch]            config-inheritance-based-on-main-c0d2e26f -> origin/config-inheritance-based-on-main-c0d2e26f
+ * [new branch]            continuous-batching         -> origin/continuous-batching
+ * [new branch]            copilot/sub-pr-41916        -> origin/copilot/sub-pr-41916
+ * [new branch]            copilot/sub-pr-41916-again  -> origin/copilot/sub-pr-41916-again
+ * [new branch]            copilot/sub-pr-41975        -> origin/copilot/sub-pr-41975
+ * [new branch]            correct-mapping-vision2seq-->-image-text-to-text -> origin/correct-mapping-vision2seq-->-image-text-to-text
+ * [new branch]            correct_topk_handling       -> origin/correct_topk_handling
+ * [new branch]            custom-compute-loss-num-batches -> origin/custom-compute-loss-num-batches
+ * [new branch]            custom_bloom_kernel         -> origin/custom_bloom_kernel
+ * [new branch]            databricks                  -> origin/databricks
+ * [new branch]            dduf-compability            -> origin/dduf-compability
+ * [new branch]            dduf-compatibility-with-file-explorer -> origin/dduf-compatibility-with-file-explorer
+ * [new branch]            deberta-xla-fixes           -> origin/deberta-xla-fixes
+ * [new branch]            debug+_audio                -> origin/debug+_audio
+ * [new branch]            debug_bloom                 -> origin/debug_bloom
+ * [new branch]            debug_circleci              -> origin/debug_circleci
+ * [new branch]            debug_fix_more_read_only_cache_issues -> origin/debug_fix_more_read_only_cache_issues
+ * [new branch]            debug_get_jobs              -> origin/debug_get_jobs
+ * [new branch]            debug_kosmos_2_output       -> origin/debug_kosmos_2_output
+ * [new branch]            debug_mem                   -> origin/debug_mem
+ * [new branch]            debug_mem_0b192de1          -> origin/debug_mem_0b192de1
+ * [new branch]            debug_mem_95b37495          -> origin/debug_mem_95b37495
+ * [new branch]            debug_metadata_run          -> origin/debug_metadata_run
+ * [new branch]            debug_rate_limit            -> origin/debug_rate_limit
+ * [new branch]            debug_read_only             -> origin/debug_read_only
+ * [new branch]            debug_tiny_model_creation   -> origin/debug_tiny_model_creation
+ * [new branch]            debug_too_long_no_output    -> origin/debug_too_long_no_output
+ * [new branch]            debugdebug                  -> origin/debugdebug
+ * [new branch]            debugdebug-2                -> origin/debugdebug-2
+ * [new branch]            debugdebug-5                -> origin/debugdebug-5
+ * [new branch]            deepseek-snippet            -> origin/deepseek-snippet
+ * [new branch]            deepseek_ocr                -> origin/deepseek_ocr
+ * [new branch]            deepseek_v2_support         -> origin/deepseek_v2_support
+ * [new branch]            deepspeed-amd-pytorch-version-fix -> origin/deepspeed-amd-pytorch-version-fix
+ * [new branch]            default-fast-load           -> origin/default-fast-load
+ * [new branch]            default-kernels-ydshieh     -> origin/default-kernels-ydshieh
+ * [new branch]            delete_big_tokenizer_block  -> origin/delete_big_tokenizer_block
+ * [new branch]            dependabot-compatible-pin-comment -> origin/dependabot-compatible-pin-comment
+ * [new branch]            dependabot/github_actions/actions-7f30114b0d -> origin/dependabot/github_actions/actions-7f30114b0d
+ * [new branch]            dependabot/pip/examples/flax/vision/torch-2.8.0 -> origin/dependabot/pip/examples/flax/vision/torch-2.8.0
+ * [new branch]            dependabot/pip/examples/tensorflow/language-modeling-tpu/transformers-4.50.0 -> origin/dependabot/pip/examples/tensorflow/language-modeling-tpu/transformers-4.50.0
+ * [new branch]            deprecate_LegacyIndex       -> origin/deprecate_LegacyIndex
+ * [new branch]            dequant-fix                 -> origin/dequant-fix
+ * [new branch]            disable_multi_gpu           -> origin/disable_multi_gpu
+ * [new branch]            distributed                 -> origin/distributed
+ * [new branch]            distributed_api             -> origin/distributed_api
+ * [new branch]            doc-builder                 -> origin/doc-builder
+ * [new branch]            doc-kernels                 -> origin/doc-kernels
+ * [new branch]            doc-link-one-or-two-papers-lysandre -> origin/doc-link-one-or-two-papers-lysandre
+ * [new branch]            doc_builder_rename          -> origin/doc_builder_rename
+ * [new branch]            doc_pr                      -> origin/doc_pr
+ * [new branch]            docker-with-fa3             -> origin/docker-with-fa3
+ * [new branch]            docker_change_awq_version   -> origin/docker_change_awq_version
+ * [new branch]            docs-ctrl-lys               -> origin/docs-ctrl-lys
+ * [new branch]            document-serve-models       -> origin/document-serve-models
+ * [new branch]            drop-content                -> origin/drop-content
+ * [new branch]            drop_py38_build_img_2       -> origin/drop_py38_build_img_2
+ * [new branch]            ds-fix-resume               -> origin/ds-fix-resume
+ * [new branch]            ds-ignore_mismatched_sizes  -> origin/ds-ignore_mismatched_sizes
+ * [new branch]            dsa-with-no-materialized-mask -> origin/dsa-with-no-materialized-mask
+ * [new branch]            dsv4-static-cache           -> origin/dsv4-static-cache
+ * [new branch]            dummy-pr                    -> origin/dummy-pr
+ * [new branch]            dynamic_length_in_static_cache -> origin/dynamic_length_in_static_cache
+ * [new branch]            dynamic_length_in_static_cache_001 -> origin/dynamic_length_in_static_cache_001
+ * [new branch]            dynamic_length_in_static_cache_002 -> origin/dynamic_length_in_static_cache_002
+ * [new branch]            dynamic_length_in_static_cache_reconstruct_tensors_from_length -> origin/dynamic_length_in_static_cache_reconstruct_tensors_from_length
+ * [new branch]            dynamic_length_on_0ae789e0  -> origin/dynamic_length_on_0ae789e0
+ * [new branch]            dynamic_length_on_75bbfd5b  -> origin/dynamic_length_on_75bbfd5b
+ * [new branch]            dynamic_length_on_95b3c381  -> origin/dynamic_length_on_95b3c381
+ * [new branch]            dynamic_length_on_b6eb708b  -> origin/dynamic_length_on_b6eb708b
+ * [new branch]            eagle_speculative_decoding  -> origin/eagle_speculative_decoding
+ * [new branch]            elie-temp-nope              -> origin/elie-temp-nope
+ * [new branch]            enable_tf_numpy             -> origin/enable_tf_numpy
+ * [new branch]            esm_fix                     -> origin/esm_fix
+ * [new branch]            et-qnn                      -> origin/et-qnn
+ * [new branch]            example-explicit            -> origin/example-explicit
+ * [new branch]            examples-remove-telemetry   -> origin/examples-remove-telemetry
+ * [new branch]            export-ceil-floor-fix       -> origin/export-ceil-floor-fix
+ * [new branch]            fast_fix_read_only_cache    -> origin/fast_fix_read_only_cache
+ * [new branch]            faster-expand-image-tokens  -> origin/faster-expand-image-tokens
+ * [new branch]            faster_cache_without_compile -> origin/faster_cache_without_compile
+ * [new branch]            faster_checker              -> origin/faster_checker
+ * [new branch]            faster_copies               -> origin/faster_copies
+ * [new branch]            faster_set_initialized_submodules -> origin/faster_set_initialized_submodules
+ * [new branch]            fat_docker                  -> origin/fat_docker
+ * [new branch]            feat/add_cb_to_bench_ci     -> origin/feat/add_cb_to_bench_ci
+ * [new branch]            feat/add_otel_to_serve      -> origin/feat/add_otel_to_serve
+ * [new branch]            feat/add_sliding_window_attention_to_cb -> origin/feat/add_sliding_window_attention_to_cb
+ * [new branch]            feat/add_sliding_window_attn -> origin/feat/add_sliding_window_attn
+ * [new branch]            feat/bump_safetensors_new_version -> origin/feat/bump_safetensors_new_version
+ * [new branch]            feat/continuous_batching_visualizer -> origin/feat/continuous_batching_visualizer
+ * [new branch]            feat/hmll                   -> origin/feat/hmll
+ * [new branch]            feat/kv_cache_retention_across_convos -> origin/feat/kv_cache_retention_across_convos
+ * [new branch]            feat/multi-arch-ci-docker-images -> origin/feat/multi-arch-ci-docker-images
+ * [new branch]            feat_pp_inference           -> origin/feat_pp_inference
+ * [new branch]            feature/#35425              -> origin/feature/#35425
+ * [new branch]            find-test-failure-diff-between-envs -> origin/find-test-failure-diff-between-envs
+ * [new branch]            finegrained-fp8-v4          -> origin/finegrained-fp8-v4
+ * [new branch]            fire                        -> origin/fire
+ * [new branch]            fix-Parameter-init          -> origin/fix-Parameter-init
+ * [new branch]            fix-aqml                    -> origin/fix-aqml
+ * [new branch]            fix-args-ordering-for-tp    -> origin/fix-args-ordering-for-tp
+ * [new branch]            fix-asr-alm-automapping     -> origin/fix-asr-alm-automapping
+ * [new branch]            fix-audio-pipeline-with-torchcodec-input -> origin/fix-audio-pipeline-with-torchcodec-input
+ * [new branch]            fix-auto-doc                -> origin/fix-auto-doc
+ * [new branch]            fix-autoprocessor-import-order -> origin/fix-autoprocessor-import-order
+ * [new branch]            fix-casting                 -> origin/fix-casting
+ * [new branch]            fix-cb-testss               -> origin/fix-cb-testss
+ * [new branch]            fix-ci                      -> origin/fix-ci
+ * [new branch]            fix-ci-setup                -> origin/fix-ci-setup
+ * [new branch]            fix-cis                     -> origin/fix-cis
+ * [new branch]            fix-compressed-tensors      -> origin/fix-compressed-tensors
+ * [new branch]            fix-config                  -> origin/fix-config
+ * [new branch]            fix-continuous-batching-device-mesh-import -> origin/fix-continuous-batching-device-mesh-import
+ * [new branch]            fix-copies                  -> origin/fix-copies
+ * [new branch]            fix-dataset-run_object_detection -> origin/fix-dataset-run_object_detection
+ * [new branch]            fix-dataset-run_object_detection-and-add-torchcodec-trigger-ci -> origin/fix-dataset-run_object_detection-and-add-torchcodec-trigger-ci
+ * [new branch]            fix-deepseek-tokenizer-dispatch -> origin/fix-deepseek-tokenizer-dispatch
+ * [new branch]            fix-deepspeed-torch-compile-for-training-test -> origin/fix-deepspeed-torch-compile-for-training-test
+ * [new branch]            fix-deqant-fp8              -> origin/fix-deqant-fp8
+ * [new branch]            fix-doc-builder             -> origin/fix-doc-builder
+ * [new branch]            fix-doc-builder-edit        -> origin/fix-doc-builder-edit
+ * [new branch]            fix-dtype-mismatch          -> origin/fix-dtype-mismatch
+ * [new branch]            fix-dtype-prequantized      -> origin/fix-dtype-prequantized
+ * [new branch]            fix-eager                   -> origin/fix-eager
+ * [new branch]            fix-fallback                -> origin/fix-fallback
+ * [new branch]            fix-flash-comment           -> origin/fix-flash-comment
+ * [new branch]            fix-florence                -> origin/fix-florence
+ * [new branch]            fix-fp8                     -> origin/fix-fp8
+ * [new branch]            fix-from-pretrained         -> origin/fix-from-pretrained
+ * [new branch]            fix-gemma2-sdpa             -> origin/fix-gemma2-sdpa
+ * [new branch]            fix-gemma2-sliding-window   -> origin/fix-gemma2-sliding-window
+ * [new branch]            fix-gguf-import             -> origin/fix-gguf-import
+ * [new branch]            fix-gpt2-scaled-init        -> origin/fix-gpt2-scaled-init
+ * [new branch]            fix-helper                  -> origin/fix-helper
+ * [new branch]            fix-int8-serilation         -> origin/fix-int8-serilation
+ * [new branch]            fix-kernels-onnx            -> origin/fix-kernels-onnx
+ * [new branch]            fix-kwargs-issues           -> origin/fix-kwargs-issues
+ * [new branch]            fix-llama-3-gguf            -> origin/fix-llama-3-gguf
+ * [new branch]            fix-llama4-conversion       -> origin/fix-llama4-conversion
+ * [new branch]            fix-mamba2-decode-squeeze   -> origin/fix-mamba2-decode-squeeze
+ * [new branch]            fix-mask-generation-auto-mapping -> origin/fix-mask-generation-auto-mapping
+ * [new branch]            fix-meta-loading            -> origin/fix-meta-loading
+ * [new branch]            fix-more-moe-alignement     -> origin/fix-more-moe-alignement
+ * [new branch]            fix-mps-cuda-feature-ex-inklink -> origin/fix-mps-cuda-feature-ex-inklink
+ * [new branch]            fix-mxfp4                   -> origin/fix-mxfp4
+ * [new branch]            fix-other-quants            -> origin/fix-other-quants
+ * [new branch]            fix-peft-zero               -> origin/fix-peft-zero
+ * [new branch]            fix-pipeline-predict-transform-methods -> origin/fix-pipeline-predict-transform-methods
+ * [new branch]            fix-pixtral-tests           -> origin/fix-pixtral-tests
+ * [new branch]            fix-pytorch-deepspeed-image -> origin/fix-pytorch-deepspeed-image
+ * [new branch]            fix-q-tests                 -> origin/fix-q-tests
+ * [new branch]            fix-quality-2               -> origin/fix-quality-2
+ * [new branch]            fix-quantizer               -> origin/fix-quantizer
+ * [new branch]            fix-quants                  -> origin/fix-quants
+ * [new branch]            fix-scores-type             -> origin/fix-scores-type
+ * [new branch]            fix-slow-tests-shieh-trigger -> origin/fix-slow-tests-shieh-trigger
+ * [new branch]            fix-stranded-params-tp      -> origin/fix-stranded-params-tp
+ * [new branch]            fix-stuff                   -> origin/fix-stuff
+ * [new branch]            fix-suppress-forced-token-nan -> origin/fix-suppress-forced-token-nan
+ * [new branch]            fix-t5-gemma-config         -> origin/fix-t5-gemma-config
+ * [new branch]            fix-task-mappings           -> origin/fix-task-mappings
+ * [new branch]            fix-test-load-state-dict-config -> origin/fix-test-load-state-dict-config
+ * [new branch]            fix-tokeni                  -> origin/fix-tokeni
+ * [new branch]            fix-tokenizer-legacy        -> origin/fix-tokenizer-legacy
+ * [new branch]            fix-torchao                 -> origin/fix-torchao
+ * [new branch]            fix-transformers-serve-3    -> origin/fix-transformers-serve-3
+ * [new branch]            fix-typing                  -> origin/fix-typing
+ * [new branch]            fix-uris-in-audio           -> origin/fix-uris-in-audio
+ * [new branch]            fix-vllm-smoke-test         -> origin/fix-vllm-smoke-test
+ * [new branch]            fix-vlm-tie-word-embeddings-bc -> origin/fix-vlm-tie-word-embeddings-bc
+ * [new branch]            fix-wav2vec                 -> origin/fix-wav2vec
+ * [new branch]            fix-weight-tied             -> origin/fix-weight-tied
+ * [new branch]            fix-whisper-return-language -> origin/fix-whisper-return-language
+ * [new branch]            fix-whisper-tests           -> origin/fix-whisper-tests
+ * [new branch]            fix-word-ids                -> origin/fix-word-ids
+ * [new branch]            fix-workflow                -> origin/fix-workflow
+ * [new branch]            fix/cb-mps-serve-asyncio-hang -> origin/fix/cb-mps-serve-asyncio-hang
+ * [new branch]            fix/double-softmax-moe-router -> origin/fix/double-softmax-moe-router
+ * [new branch]            fix/lerobot_openpi          -> origin/fix/lerobot_openpi
+ * [new branch]            fix/next_token_never_returned -> origin/fix/next_token_never_returned
+ * [new branch]            fix/serve-models-null-architectures -> origin/fix/serve-models-null-architectures
+ * [new branch]            fix/style-bot-github-app    -> origin/fix/style-bot-github-app
+ * [new branch]            fix_TFMarianModelTest_test_xla_generate_slow -> origin/fix_TFMarianModelTest_test_xla_generate_slow
+ * [new branch]            fix_a10_ci_00006            -> origin/fix_a10_ci_00006
+ * [new branch]            fix_aria_ci                 -> origin/fix_aria_ci
+ * [new branch]            fix_attention_name          -> origin/fix_attention_name
+ * [new branch]            fix_auto_batch_size_tests   -> origin/fix_auto_batch_size_tests
+ * [new branch]            fix_auto_test               -> origin/fix_auto_test
+ * [new branch]            fix_autoawq_docker          -> origin/fix_autoawq_docker
+ * [new branch]            fix_autoawq_test            -> origin/fix_autoawq_test
+ * [new branch]            fix_check_copies            -> origin/fix_check_copies
+ * [new branch]            fix_chinese_clip            -> origin/fix_chinese_clip
+ * [new branch]            fix_convert_spm_bpe         -> origin/fix_convert_spm_bpe
+ * [new branch]            fix_deprecation_warnings    -> origin/fix_deprecation_warnings
+ * [new branch]            fix_dinat_2                 -> origin/fix_dinat_2
+ * [new branch]            fix_dinov2                  -> origin/fix_dinov2
+ * [new branch]            fix_docker_autoawq          -> origin/fix_docker_autoawq
+ * [new branch]            fix_docker_autogptq_from_source -> origin/fix_docker_autogptq_from_source
+ * [new branch]            fix_docker_file             -> origin/fix_docker_file
+ * [new branch]            fix_doctest                 -> origin/fix_doctest
+ * [new branch]            fix_doctest_based_on_refactor_doctest_2 -> origin/fix_doctest_based_on_refactor_doctest_2
+ * [new branch]            fix_eetq_test               -> origin/fix_eetq_test
+ * [new branch]            fix_exit                    -> origin/fix_exit
+ * [new branch]            fix_falcon_processor        -> origin/fix_falcon_processor
+ * [new branch]            fix_flaky_4                 -> origin/fix_flaky_4
+ * [new branch]            fix_flaky_test_assisted_decoding_matches_greedy_search -> origin/fix_flaky_test_assisted_decoding_matches_greedy_search
+ * [new branch]            fix_flaky_test_eager_matches_sdpa_generate -> origin/fix_flaky_test_eager_matches_sdpa_generate
+ * [new branch]            fix_flaky_test_pt_tf_model_equivalence -> origin/fix_flaky_test_pt_tf_model_equivalence
+ * [new branch]            fix_fp_32                   -> origin/fix_fp_32
+ * [new branch]            fix_generate_embeds         -> origin/fix_generate_embeds
+ * [new branch]            fix_gptq_test               -> origin/fix_gptq_test
+ * [new branch]            fix_gptq_tests              -> origin/fix_gptq_tests
+ * [new branch]            fix_kosmos2                 -> origin/fix_kosmos2
+ * [new branch]            fix_level_2                 -> origin/fix_level_2
+ * [new branch]            fix_mistral_3_clean         -> origin/fix_mistral_3_clean
+ * [new branch]            fix_module_conversion_util_ci -> origin/fix_module_conversion_util_ci
+ * [new branch]            fix_moe_for_vllm            -> origin/fix_moe_for_vllm
+ * [new branch]            fix_more_input_out          -> origin/fix_more_input_out
+ * [new branch]            fix_moshi                   -> origin/fix_moshi
+ * [new branch]            fix_nativ_tok               -> origin/fix_nativ_tok
+ * [new branch]            fix_nightly_ci_docker_build -> origin/fix_nightly_ci_docker_build
+ * [new branch]            fix_not_init                -> origin/fix_not_init
+ * [new branch]            fix_offload_disk_gguf       -> origin/fix_offload_disk_gguf
+ * [new branch]            fix_peft_model_in_pipelines -> origin/fix_peft_model_in_pipelines
+ * [new branch]            fix_phimoe2                 -> origin/fix_phimoe2
+ * [new branch]            fix_pipe_tests_001          -> origin/fix_pipe_tests_001
+ * [new branch]            fix_print                   -> origin/fix_print
+ * [new branch]            fix_quanto_llama27b         -> origin/fix_quanto_llama27b
+ * [new branch]            fix_qwen25_omni_values      -> origin/fix_qwen25_omni_values
+ * [new branch]            fix_qwen2_5_omni_check      -> origin/fix_qwen2_5_omni_check
+ * [new branch]            fix_qwen3_omni_config       -> origin/fix_qwen3_omni_config
+ * [new branch]            fix_recording_on_reload     -> origin/fix_recording_on_reload
+ * [new branch]            fix_remote_tool             -> origin/fix_remote_tool
+ * [new branch]            fix_require_class           -> origin/fix_require_class
+ * [new branch]            fix_sam_samhq               -> origin/fix_sam_samhq
+ * [new branch]            fix_script                  -> origin/fix_script
+ * [new branch]            fix_security_1              -> origin/fix_security_1
+ * [new branch]            fix_security_3              -> origin/fix_security_3
+ * [new branch]            fix_security_issue_4        -> origin/fix_security_issue_4
+ * [new branch]            fix_shieldgemma2            -> origin/fix_shieldgemma2
+ * [new branch]            fix_slow_gen_on_0ae789e0    -> origin/fix_slow_gen_on_0ae789e0
+ * [new branch]            fix_slow_gen_on_75bbfd5b    -> origin/fix_slow_gen_on_75bbfd5b
+ * [new branch]            fix_slow_gen_on_b6eb708b    -> origin/fix_slow_gen_on_b6eb708b
+ * [new branch]            fix_some_auto               -> origin/fix_some_auto
+ * [new branch]            fix_st5_docs                -> origin/fix_st5_docs
+ * [new branch]            fix_stupid_cond             -> origin/fix_stupid_cond
+ * [new branch]            fix_test_encode_decode      -> origin/fix_test_encode_decode
+ * [new branch]            fix_test_fetcher_tests      -> origin/fix_test_fetcher_tests
+ * [new branch]            fix_tie                     -> origin/fix_tie
+ * [new branch]            fix_tie3                    -> origin/fix_tie3
+ * [new branch]            fix_tiny_gh                 -> origin/fix_tiny_gh
+ * [new branch]            fix_tiny_to_make_everyone_LOVE_it -> origin/fix_tiny_to_make_everyone_LOVE_it
+ * [new branch]            fix_tiny_to_make_everyone_LOVE_it_2 -> origin/fix_tiny_to_make_everyone_LOVE_it_2
+ * [new branch]            fix_tiny_to_make_everyone_LOVE_it_sync_with_main -> origin/fix_tiny_to_make_everyone_LOVE_it_sync_with_main
+ * [new branch]            fix_weight_tying            -> origin/fix_weight_tying
+ * [new branch]            fix_whatever                -> origin/fix_whatever
+ * [new branch]            fix_whisper_ci              -> origin/fix_whisper_ci
+ * [new branch]            fix_whisper_tflite_export   -> origin/fix_whisper_tflite_export
+ * [new branch]            fix_worker_crash            -> origin/fix_worker_crash
+ * [new branch]            fix_worker_crash_2          -> origin/fix_worker_crash_2
+ * [new branch]            fix_zh_quicktour_md         -> origin/fix_zh_quicktour_md
+ * [new branch]            fixing_gptq_tests           -> origin/fixing_gptq_tests
+ * [new branch]            fixyolos                    -> origin/fixyolos
+ * [new branch]            flash-infer                 -> origin/flash-infer
+ * [new branch]            flash-mla-interface         -> origin/flash-mla-interface
+ * [new branch]            flex_attention_qwen2        -> origin/flex_attention_qwen2
+ * [new branch]            flex_attn_example           -> origin/flex_attn_example
+ * [new branch]            float32_embedding_precission -> origin/float32_embedding_precission
+ * [new branch]            for-a-green-ci              -> origin/for-a-green-ci
+ * [new branch]            for_test_run_squad_no_trainer -> origin/for_test_run_squad_no_trainer
+ * [new branch]            force_2_layers              -> origin/force_2_layers
+ * [new branch]            forked_pr_to_test_migration -> origin/forked_pr_to_test_migration
+ * [new branch]            formalize-kv-sharing        -> origin/formalize-kv-sharing
+ * [new branch]            fp8-per-tensor              -> origin/fp8-per-tensor
+ * [new branch]            from-config-quantization    -> origin/from-config-quantization
+ * [new branch]            fsdp-core-model-loading     -> origin/fsdp-core-model-loading
+ * [new branch]            fsdp-vs-ddp                 -> origin/fsdp-vs-ddp
+ * [new branch]            fsdp2-checkpointing         -> origin/fsdp2-checkpointing
+ * [new branch]            full-bf16-train             -> origin/full-bf16-train
+ * [new branch]            full_length_on_468f7cca     -> origin/full_length_on_468f7cca
+ * [new branch]            full_length_on_68b71c85     -> origin/full_length_on_68b71c85
+ * [new branch]            full_length_on_862cde4c     -> origin/full_length_on_862cde4c
+ * [new branch]            gemma_allow_compile         -> origin/gemma_allow_compile
+ * [new branch]            general_test_low_cpu_mem    -> origin/general_test_low_cpu_mem
+ * [new branch]            get-our-efficiency-back     -> origin/get-our-efficiency-back
+ * [new branch]            get_bad_commits_for_daily_ci_11_20 -> origin/get_bad_commits_for_daily_ci_11_20
+ * [new branch]            get_bad_commits_for_daily_ci_11_26 -> origin/get_bad_commits_for_daily_ci_11_26
+ * [new branch]            gguf-matmul-kernels         -> origin/gguf-matmul-kernels
+ * [new branch]            gguf-metal-kernels          -> origin/gguf-metal-kernels
+ * [new branch]            glm-ocr-mtp                 -> origin/glm-ocr-mtp
+ * [new branch]            gpt-mqa                     -> origin/gpt-mqa
+ * [new branch]            gpt-oss-slow-tests          -> origin/gpt-oss-slow-tests
+ * [new branch]            gpt2                        -> origin/gpt2
+ * [new branch]            gptneo_gpt4_port            -> origin/gptneo_gpt4_port
+ * [new branch]            gptneo_gpt4_port_new        -> origin/gptneo_gpt4_port_new
+ * [new branch]            grab_captured_info          -> origin/grab_captured_info
+ * [new branch]            great_trip_to_make_ci_great -> origin/great_trip_to_make_ci_great
+ * [new branch]            hardware-auto-setup         -> origin/hardware-auto-setup
+ * [new branch]            hardware-auto-setup-ci      -> origin/hardware-auto-setup-ci
+ * [new branch]            higgs_audio                 -> origin/higgs_audio
+ * [new branch]            hotfix_ci_222               -> origin/hotfix_ci_222
+ * [new branch]            hqq_serialization           -> origin/hqq_serialization
+ * [new branch]            hub-viz                     -> origin/hub-viz
+ * [new branch]            idefics3                    -> origin/idefics3
+ * [new branch]            ifix_aqlm_modules_to_not_convert -> origin/ifix_aqlm_modules_to_not_convert
+ * [new branch]            image-chunked-prefill       -> origin/image-chunked-prefill
+ * [new branch]            improve_dinos               -> origin/improve_dinos
+ * [new branch]            improve_dinos_dummy         -> origin/improve_dinos_dummy
+ * [new branch]            improve_error_message_asr_pipeline -> origin/improve_error_message_asr_pipeline
+ * [new branch]            improve_error_message_when_transformers_is_misconfigured -> origin/improve_error_message_when_transformers_is_misconfigured
+ * [new branch]            improve_torch_version_check -> origin/improve_torch_version_check
+ * [new branch]            informative-detr-message    -> origin/informative-detr-message
+ * [new branch]            init_round_2                -> origin/init_round_2
+ * [new branch]            init_round_5                -> origin/init_round_5
+ * [new branch]            int                         -> origin/int
+ * [new branch]            inverse_chat_templates      -> origin/inverse_chat_templates
+ * [new branch]            janus_fix_on_22b40e67       -> origin/janus_fix_on_22b40e67
+ * [new branch]            jeffboudier-transformers-docs-ad-copy -> origin/jeffboudier-transformers-docs-ad-copy
+ * [new branch]            jnp_devicearray             -> origin/jnp_devicearray
+ * [new branch]            kashif-patch-1              -> origin/kashif-patch-1
+ * [new branch]            keras-core-support          -> origin/keras-core-support
+ * [new branch]            keras3_compatibility_phase_2 -> origin/keras3_compatibility_phase_2
+ * [new branch]            keras_3_compatibility       -> origin/keras_3_compatibility
+ * [new branch]            kernel-mask-function        -> origin/kernel-mask-function
+ * [new branch]            kernel_config_nit           -> origin/kernel_config_nit
+ * [new branch]            kwargs_in_every_forward_method -> origin/kwargs_in_every_forward_method
+ * [new branch]            larger_runner               -> origin/larger_runner
+ * [new branch]            less-constraints            -> origin/less-constraints
+ * [new branch]            lhoestq-patch-3-10          -> origin/lhoestq-patch-3-10
+ * [new branch]            lightweight-plugin-system   -> origin/lightweight-plugin-system
+ * [new branch]            link-to-the-hub             -> origin/link-to-the-hub
+ * [new branch]            llama-break-fix             -> origin/llama-break-fix
+ * [new branch]            llama-cpp-serving           -> origin/llama-cpp-serving
+ * [new branch]            llama-pad-side              -> origin/llama-pad-side
+ * [new branch]            llama-refactor              -> origin/llama-refactor
+ * [new branch]            llama4-unhardcode           -> origin/llama4-unhardcode
+ * [new branch]            llama4_config               -> origin/llama4_config
+ * [new branch]            load_pretrainedfast_auto    -> origin/load_pretrainedfast_auto
+ * [new branch]            logger_refactor             -> origin/logger_refactor
+ * [new branch]            main                        -> origin/main
+ * [new branch]            make_ci_green_3             -> origin/make_ci_green_3
+ * [new branch]            mark_whisper_test_slow      -> origin/mark_whisper_test_slow
+ * [new branch]            maybe_fix_qhwen             -> origin/maybe_fix_qhwen
+ * [new branch]            measure_all_tests           -> origin/measure_all_tests
+ * [new branch]            measure_gen                 -> origin/measure_gen
+ * [new branch]            measure_gen_on_0ae789e0     -> origin/measure_gen_on_0ae789e0
+ * [new branch]            measure_gen_on_75bbfd5b     -> origin/measure_gen_on_75bbfd5b
+ * [new branch]            measure_gen_on_b6eb708b     -> origin/measure_gen_on_b6eb708b
+ * [new branch]            merge_text2text_into_text_generation -> origin/merge_text2text_into_text_generation
+ * [new branch]            merging_to_test             -> origin/merging_to_test
+ * [new branch]            metadata_job_2              -> origin/metadata_job_2
+ * [new branch]            migration-guide-disclaimer  -> origin/migration-guide-disclaimer
+ * [new branch]            mistral3-xpu-cpu-offload    -> origin/mistral3-xpu-cpu-offload
+ * [new branch]            mitigate_tf_stride_vulnerability -> origin/mitigate_tf_stride_vulnerability
+ * [new branch]            mlinter-pr-review           -> origin/mlinter-pr-review
+ * [new branch]            mllama_integration_tests    -> origin/mllama_integration_tests
+ * [new branch]            mllama_new_outputs          -> origin/mllama_new_outputs
+ * [new branch]            model-default-config-meta-init -> origin/model-default-config-meta-init
+ * [new branch]            model-handling-tools        -> origin/model-handling-tools
+ * [new branch]            modular_pixo                -> origin/modular_pixo
+ * [new branch]            modular_playground          -> origin/modular_playground
+ * [new branch]            moe-comments                -> origin/moe-comments
+ * [new branch]            moe-fullgraph               -> origin/moe-fullgraph
+ * [new branch]            molmo_finish_up             -> origin/molmo_finish_up
+ * [new branch]            more-cache-updates          -> origin/more-cache-updates
+ * [new branch]            more-cleaning               -> origin/more-cleaning
+ * [new branch]            more_flaky_tests            -> origin/more_flaky_tests
+ * [new branch]            more_info_ci_temp           -> origin/more_info_ci_temp
+ * [new branch]            more_reduced_dummy_memory_usage -> origin/more_reduced_dummy_memory_usage
+ * [new branch]            more_tf_int_dtypes          -> origin/more_tf_int_dtypes
+ * [new branch]            moshi-integration           -> origin/moshi-integration
+ * [new branch]            move_jobs_from_daily_ci_channel -> origin/move_jobs_from_daily_ci_channel
+ * [new branch]            move_part_2                 -> origin/move_part_2
+ * [new branch]            mtp-inference               -> origin/mtp-inference
+ * [new branch]            muellerzr-accum-plugin      -> origin/muellerzr-accum-plugin
+ * [new branch]            muellerzr-ds-investigation  -> origin/muellerzr-ds-investigation
+ * [new branch]            muellerzr-dummy-pr          -> origin/muellerzr-dummy-pr
+ * [new branch]            muellerzr-enable-quant      -> origin/muellerzr-enable-quant
+ * [new branch]            muellerzr-enable-torchdata  -> origin/muellerzr-enable-torchdata
+ * [new branch]            muellerzr-fix-autocast      -> origin/muellerzr-fix-autocast
+ * [new branch]            muellerzr-fix-integration-tests -> origin/muellerzr-fix-integration-tests
+ * [new branch]            muellerzr-fix-reentrant     -> origin/muellerzr-fix-reentrant
+ * [new branch]            muellerzr-fix-timeout       -> origin/muellerzr-fix-timeout
+ * [new branch]            muellerzr-fixup-warning     -> origin/muellerzr-fixup-warning
+ * [new branch]            muellerzr-free-memory       -> origin/muellerzr-free-memory
+ * [new branch]            muellerzr-free-memory-passthrough -> origin/muellerzr-free-memory-passthrough
+ * [new branch]            muellerzr-jobs              -> origin/muellerzr-jobs
+ * [new branch]            muellerzr-less-fixes        -> origin/muellerzr-less-fixes
+ * [new branch]            muellerzr-lr-sched-right-version -> origin/muellerzr-lr-sched-right-version
+ * [new branch]            muellerzr-metrics           -> origin/muellerzr-metrics
+ * [new branch]            muellerzr-modeling          -> origin/muellerzr-modeling
+ * [new branch]            muellerzr-more-models-sadface -> origin/muellerzr-more-models-sadface
+ * [new branch]            muellerzr-multinode-save    -> origin/muellerzr-multinode-save
+ * [new branch]            muellerzr-skip-dvc          -> origin/muellerzr-skip-dvc
+ * [new branch]            muellerzr-skip-failing-example -> origin/muellerzr-skip-failing-example
+ * [new branch]            muellerzr-speedup-modular-conversion -> origin/muellerzr-speedup-modular-conversion
+ * [new branch]            muellerzr-trainer-refactor  -> origin/muellerzr-trainer-refactor
+ * [new branch]            muellerzr-transformers-should-not-set-env-variables -> origin/muellerzr-transformers-should-not-set-env-variables
+ * [new branch]            muellerzr-use-scientific    -> origin/muellerzr-use-scientific
+ * [new branch]            multi_jobs_to_check_bad_commit -> origin/multi_jobs_to_check_bad_commit
+ * [new branch]            multiple-modular            -> origin/multiple-modular
+ * [new branch]            mup                         -> origin/mup
+ * [new branch]            mymain                      -> origin/mymain
+ * [new branch]            native-conv-kernels         -> origin/native-conv-kernels
+ * [new branch]            ncompass-kernels            -> origin/ncompass-kernels
+ * [new branch]            nemotron-h-split-dense-sparse -> origin/nemotron-h-split-dense-sparse
+ * [new branch]            new-split                   -> origin/new-split
+ * [new branch]            new_blt                     -> origin/new_blt
+ * [new branch]            new_code_encoder            -> origin/new_code_encoder
+ * [new branch]            new_doctest_workflow        -> origin/new_doctest_workflow
+ * [new branch]            next-token                  -> origin/next-token
+ * [new branch]            nezha_slow                  -> origin/nezha_slow
+ * [new branch]            nit-ga-condition            -> origin/nit-ga-condition
+ * [new branch]            nit-modular-reame           -> origin/nit-modular-reame
+ * [new branch]            nit-refactor                -> origin/nit-refactor
+ * [new branch]            nit-remove-irrelevant-comment -> origin/nit-remove-irrelevant-comment
+ * [new branch]            nit_cleanup                 -> origin/nit_cleanup
+ * [new branch]            nits-attention              -> origin/nits-attention
+ * [new branch]            no-more-pointing-at-remote-repos -> origin/no-more-pointing-at-remote-repos
+ * [new branch]            no_more_shape_list          -> origin/no_more_shape_list
+ * [new branch]            no_overwrite_test_batching_equivalence -> origin/no_overwrite_test_batching_equivalence
+ * [new branch]            no_repeat_kv                -> origin/no_repeat_kv
+ * [new branch]            non-model-inits             -> origin/non-model-inits
+ * [new branch]            noua/bloom_cugraph          -> origin/noua/bloom_cugraph
+ * [new branch]            nouamane/context-parallel   -> origin/nouamane/context-parallel
+ * [new branch]            np2                         -> origin/np2
+ * [new branch]            offloading-optimizations    -> origin/offloading-optimizations
+ * [new branch]            on_predict                  -> origin/on_predict
+ * [new branch]            one-class-to-rule-them-all  -> origin/one-class-to-rule-them-all
+ * [new branch]            one_tok_typing              -> origin/one_tok_typing
+ * [new branch]            onnx_gpt2_io_definition     -> origin/onnx_gpt2_io_definition
+ * [new branch]            openvino-exporter           -> origin/openvino-exporter
+ * [new branch]            output_ragged               -> origin/output_ragged
+ * [new branch]            override_tokenizer          -> origin/override_tokenizer
+ * [new branch]            parallel                    -> origin/parallel
+ * [new branch]            patch-tok-fail              -> origin/patch-tok-fail
+ * [new branch]            paulinebm-patch-1           -> origin/paulinebm-patch-1
+ * [new branch]            pcuenca-patch-1             -> origin/pcuenca-patch-1
+ * [new branch]            pe-av-follow-up             -> origin/pe-av-follow-up
+ * [new branch]            pin-ffspec                  -> origin/pin-ffspec
+ * [new branch]            pin-gguf                    -> origin/pin-gguf
+ * [new branch]            pin_ds                      -> origin/pin_ds
+ * [new branch]            ping_author                 -> origin/ping_author
+ * [new branch]            ping_author_6               -> origin/ping_author_6
+ * [new branch]            pipeline-revision-mirror    -> origin/pipeline-revision-mirror
+ * [new branch]            pipelines_signatures        -> origin/pipelines_signatures
+ * [new branch]            pixtral_batchmixfeature_fix -> origin/pixtral_batchmixfeature_fix
+ * [new branch]            pixtral_processor_structure_fix -> origin/pixtral_processor_structure_fix
+ * [new branch]            placeholder_tokens_update   -> origin/placeholder_tokens_update
+ * [new branch]            poc-gguf                    -> origin/poc-gguf
+ * [new branch]            populated_deprecated_models -> origin/populated_deprecated_models
+ * [new branch]            port-esmc-esmfold2          -> origin/port-esmc-esmfold2
+ * [new branch]            porting_jieba_dependency_to_rjieba -> origin/porting_jieba_dependency_to_rjieba
+ * [new branch]            post-action-build-test-tokenizers-main -> origin/post-action-build-test-tokenizers-main
+ * [new branch]            post_trigger_check_new_failing_tests -> origin/post_trigger_check_new_failing_tests
+ * [new branch]            pp_inference                -> origin/pp_inference
+ * [new branch]            pr-41251                    -> origin/pr-41251
+ * [new branch]            pr-43730-fresh              -> origin/pr-43730-fresh
+ * [new branch]            prefill-chunking            -> origin/prefill-chunking
+ * [new branch]            processing_kernels          -> origin/processing_kernels
+ * [new branch]            processor-template-duplicated-tokens -> origin/processor-template-duplicated-tokens
+ * [new branch]            protobuf-4                  -> origin/protobuf-4
+ * [new branch]            push-ci-image               -> origin/push-ci-image
+ * [new branch]            py39_typing_enforcement     -> origin/py39_typing_enforcement
+ * [new branch]            quantize-on-init            -> origin/quantize-on-init
+ * [new branch]            quick-fix                   -> origin/quick-fix
+ * [new branch]            quickfix_generate_tests     -> origin/quickfix_generate_tests
+ * [new branch]            qwen2_tok_merges            -> origin/qwen2_tok_merges
+ * [new branch]            qwen3-moe                   -> origin/qwen3-moe
+ * [new branch]            random_dispatch             -> origin/random_dispatch
+ * [new branch]            rc-tok                      -> origin/rc-tok
+ * [new branch]            re-run-scheduled-ci-on-7ff490aca20f-compared-to-08a7ef05bcf9 -> origin/re-run-scheduled-ci-on-7ff490aca20f-compared-to-08a7ef05bcf9
+ * [new branch]            re-run-scheduled-ci-on-effde209-compared-to-d3f05911 -> origin/re-run-scheduled-ci-on-effde209-compared-to-d3f05911
+ * [new branch]            reenable_test               -> origin/reenable_test
+ * [new branch]            refactor-attention-converesion -> origin/refactor-attention-converesion
+ * [new branch]            refactor-bamba-tests-inherit-causal-lm-base -> origin/refactor-bamba-tests-inherit-causal-lm-base
+ * [new branch]            refactor-causal-lm-tests    -> origin/refactor-causal-lm-tests
+ * [new branch]            refactor-from-pretrained-base-commit -> origin/refactor-from-pretrained-base-commit
+ * [new branch]            refactor-gemma3n            -> origin/refactor-gemma3n
+ * [new branch]            refactor-improc-backends    -> origin/refactor-improc-backends
+ * [new branch]            refactor-inner-training-loop-reorder-only -> origin/refactor-inner-training-loop-reorder-only
+ * [new branch]            refactor-tokenization       -> origin/refactor-tokenization
+ * [new branch]            refactor-tp-dtensor-scripts -> origin/refactor-tp-dtensor-scripts
+ * [new branch]            refactor-tp-loading         -> origin/refactor-tp-loading
+ * [new branch]            refactor-weight-loading-ben -> origin/refactor-weight-loading-ben
+ * [new branch]            refactor/nemotron-h-inherit-granitemoehybrid -> origin/refactor/nemotron-h-inherit-granitemoehybrid
+ * [new branch]            refactor_doctest_2          -> origin/refactor_doctest_2
+ * [new branch]            refactoring-new-version     -> origin/refactoring-new-version
+ * [new branch]            reference_VLM               -> origin/reference_VLM
+ * [new branch]            reflect-bos-eos-from-post-processor -> origin/reflect-bos-eos-from-post-processor
+ * [new branch]            regex-output-recorder       -> origin/regex-output-recorder
+ * [new branch]            relative-paths              -> origin/relative-paths
+ * [new branch]            relax-requires-fa3          -> origin/relax-requires-fa3
+ * [new branch]            remove-attributes-from-processors-ydshieh -> origin/remove-attributes-from-processors-ydshieh
+ * [new branch]            remove-attributes-from-processors-ydshieh-base -> origin/remove-attributes-from-processors-ydshieh-base
+ * [new branch]            remove-deprecated-stuff     -> origin/remove-deprecated-stuff
+ * [new branch]            remove-huggingface-cli-mentions -> origin/remove-huggingface-cli-mentions
+ * [new branch]            remove-items                -> origin/remove-items
+ * [new branch]            remove-script-datasets-in-tests -> origin/remove-script-datasets-in-tests
+ * [new branch]            remove-script-datasets-in-tests-test-datasets-main -> origin/remove-script-datasets-in-tests-test-datasets-main
+ * [new branch]            remove-tf-flax-readme       -> origin/remove-tf-flax-readme
+ * [new branch]            remove-torch-light-ci-images -> origin/remove-torch-light-ci-images
+ * [new branch]            remove-torch-pre-releases-amd-image -> origin/remove-torch-pre-releases-amd-image
+ * [new branch]            remove-use_auth_token       -> origin/remove-use_auth_token
+ * [new branch]            remove-var-env              -> origin/remove-var-env
+ * [new branch]            remove-warnings             -> origin/remove-warnings
+ * [new branch]            remove_strange_block        -> origin/remove_strange_block
+ * [new branch]            remove_unused_test_attribs  -> origin/remove_unused_test_attribs
+ * [new branch]            rename_modular_attrs        -> origin/rename_modular_attrs
+ * [new branch]            replace_regex_with_re       -> origin/replace_regex_with_re
+ * [new branch]            repost-daily-models-oneshot -> origin/repost-daily-models-oneshot
+ * [new branch]            repro-bug-pytorch-compile   -> origin/repro-bug-pytorch-compile
+ * [new branch]            repro-bug-pytorch-compile-cudagraph -> origin/repro-bug-pytorch-compile-cudagraph
+ * [new branch]            requires-backend-clean      -> origin/requires-backend-clean
+ * [new branch]            reset_logger_level_2        -> origin/reset_logger_level_2
+ * [new branch]            resnet_with_variants        -> origin/resnet_with_variants
+ * [new branch]            reverse-conversion          -> origin/reverse-conversion
+ * [new branch]            reverse_templating          -> origin/reverse_templating
+ * [new branch]            revert-17547-update-support-image -> origin/revert-17547-update-support-image
+ * [new branch]            revert-17646-skip_repo_not_found -> origin/revert-17646-skip_repo_not_found
+ * [new branch]            revert-31494-add_dac        -> origin/revert-31494-add_dac
+ * [new branch]            revert-33934-patch-1        -> origin/revert-33934-patch-1
+ * [new branch]            revert-37178-revert-loadibng-issue -> origin/revert-37178-revert-loadibng-issue
+ * [new branch]            revert-41610-ci_crying_becausse_torchcodec -> origin/revert-41610-ci_crying_becausse_torchcodec
+ * [new branch]            revert-42258-revert-42213-fix_tests_being_slow_002 -> origin/revert-42258-revert-42213-fix_tests_being_slow_002
+ * [new branch]            revert-42485-fix-docs-attmpt -> origin/revert-42485-fix-docs-attmpt
+ * [new branch]            revert-43230-simplify-extra-tokens -> origin/revert-43230-simplify-extra-tokens
+ * [new branch]            revert-47728-bench-dtensor-vs-legacy-tp -> origin/revert-47728-bench-dtensor-vs-legacy-tp
+ * [new branch]            revert-commit-30302         -> origin/revert-commit-30302
+ * [new branch]            revert_hard_error2          -> origin/revert_hard_error2
+ * [new branch]            rm_pytorch_triton           -> origin/rm_pytorch_triton
+ * [new branch]            robust-repo-check-workflow-bad-format -> origin/robust-repo-check-workflow-bad-format
+ * [new branch]            robust_config_ckpt_check    -> origin/robust_config_ckpt_check
+ * [new branch]            rope-refactor-version-2     -> origin/rope-refactor-version-2
+ * [new branch]            rope-refactor-version-2-ydshieh -> origin/rope-refactor-version-2-ydshieh
+ * [new branch]            run-amd                     -> origin/run-amd
+ * [new branch]            run-collated-reports-nvidia-ci -> origin/run-collated-reports-nvidia-ci
+ * [new branch]            run-fix-Parameter-init      -> origin/run-fix-Parameter-init
+ * [new branch]            run-move-integrations       -> origin/run-move-integrations
+ * [new branch]            run_add_tts_pip             -> origin/run_add_tts_pip
+ * [new branch]            run_amd_push_ci_caller      -> origin/run_amd_push_ci_caller
+ * [new branch]            run_amd_scheduled_ci_caller -> origin/run_amd_scheduled_ci_caller
+ * [new branch]            run_amd_scheduled_ci_caller_empty_cache -> origin/run_amd_scheduled_ci_caller_empty_cache
+ * [new branch]            run_amd_scheduled_ci_caller_mi325 -> origin/run_amd_scheduled_ci_caller_mi325
+ * [new branch]            run_amd_scheduled_ci_caller_mi325_qwen_models -> origin/run_amd_scheduled_ci_caller_mi325_qwen_models
+ * [new branch]            run_amd_scheduled_ci_caller_preview_image -> origin/run_amd_scheduled_ci_caller_preview_image
+ * [new branch]            run_amd_scheduled_ci_caller_test -> origin/run_amd_scheduled_ci_caller_test
+ * [new branch]            run_amd_scheduled_ci_caller_testing -> origin/run_amd_scheduled_ci_caller_testing
+ * [new branch]            run_amd_scheduled_ci_caller_testing1 -> origin/run_amd_scheduled_ci_caller_testing1
+ * [new branch]            run_amd_scheduler           -> origin/run_amd_scheduler
+ * [new branch]            run_better_job_artifact_name -> origin/run_better_job_artifact_name
+ * [new branch]            run_better_report           -> origin/run_better_report
+ * [new branch]            run_bon_courage             -> origin/run_bon_courage
+ * [new branch]            run_check_auto_mapping_importable -> origin/run_check_auto_mapping_importable
+ * [new branch]            run_check_natten            -> origin/run_check_natten
+ * [new branch]            run_ci_manually             -> origin/run_ci_manually
+ * [new branch]            run_ci_with_A10_and_torch_2.7.1 -> origin/run_ci_with_A10_and_torch_2.7.1
+ * [new branch]            run_ci_without_kenlm        -> origin/run_ci_without_kenlm
+ * [new branch]            run_daily_ci                -> origin/run_daily_ci
+ * [new branch]            run_daily_ci_11_20          -> origin/run_daily_ci_11_20
+ * [new branch]            run_daily_ci_11_21          -> origin/run_daily_ci_11_21
+ * [new branch]            run_deepspeed_ci            -> origin/run_deepspeed_ci
+ * [new branch]            run_doctest-tarekziade-doctest -> origin/run_doctest-tarekziade-doctest
+ * [new branch]            run_doctest_after_merge     -> origin/run_doctest_after_merge
+ * [new branch]            run_doctest_ci              -> origin/run_doctest_ci
+ * [new branch]            run_doctest_fix_all         -> origin/run_doctest_fix_all
+ * [new branch]            run_ds_ci                   -> origin/run_ds_ci
+ * [new branch]            run_fc639143                -> origin/run_fc639143
+ * [new branch]            run_fc639143_001            -> origin/run_fc639143_001
+ * [new branch]            run_fc639143_002            -> origin/run_fc639143_002
+ * [new branch]            run_fc639143_003            -> origin/run_fc639143_003
+ * [new branch]            run_feat/kv_cache_class     -> origin/run_feat/kv_cache_class
+ * [new branch]            run_fix_doc_on_circleci     -> origin/run_fix_doc_on_circleci
+ * [new branch]            run_fix_error_not_captured  -> origin/run_fix_error_not_captured
+ * [new branch]            run_nightly_ci_test_new_runner -> origin/run_nightly_ci_test_new_runner
+ * [new branch]            run_no_job_name             -> origin/run_no_job_name
+ * [new branch]            run_only_non_device_tests   -> origin/run_only_non_device_tests
+ * [new branch]            run_past_ci_2nd             -> origin/run_past_ci_2nd
+ * [new branch]            run_refactor_doctest        -> origin/run_refactor_doctest
+ * [new branch]            run_run_all_tests           -> origin/run_run_all_tests
+ * [new branch]            run_run_amd_scheduled_ci_caller_deepspeed_test -> origin/run_run_amd_scheduled_ci_caller_deepspeed_test
+ * [new branch]            run_scheduled_ci_now        -> origin/run_scheduled_ci_now
+ * [new branch]            run_scheduled_ci_now_2      -> origin/run_scheduled_ci_now_2
+ * [new branch]            run_scheduled_ci_now_3      -> origin/run_scheduled_ci_now_3
+ * [new branch]            run_scheduled_ci_now_4      -> origin/run_scheduled_ci_now_4
+ * [new branch]            run_scheduled_ci_now_5      -> origin/run_scheduled_ci_now_5
+ * [new branch]            run_scheduled_ci_now_6      -> origin/run_scheduled_ci_now_6
+ * [new branch]            run_sep_model_and_other_no_model_n_8_all_models -> origin/run_sep_model_and_other_no_model_n_8_all_models
+ * [new branch]            run_show_failure_better     -> origin/run_show_failure_better
+ * [new branch]            run_split_daily_ci_based_on_no_job_name -> origin/run_split_daily_ci_based_on_no_job_name
+ * [new branch]            run_split_daily_ci_based_on_no_job_name_2 -> origin/run_split_daily_ci_based_on_no_job_name_2
+ * [new branch]            run_tiny_with_fix_tiny_model_creation -> origin/run_tiny_with_fix_tiny_model_creation
+ * [new branch]            run_torch_v_2_1             -> origin/run_torch_v_2_1
+ * [new branch]            run_trigger_ci_when_tiny_summary_modified -> origin/run_trigger_ci_when_tiny_summary_modified
+ * [new branch]            run_truncate                -> origin/run_truncate
+ * [new branch]            run_update_important_models -> origin/run_update_important_models
+ * [new branch]            run_update_tiny_002         -> origin/run_update_tiny_002
+ * [new branch]            run_use_main_in_conversion_script -> origin/run_use_main_in_conversion_script
+ * [new branch]            run_with_info               -> origin/run_with_info
+ * [new branch]            safe_ci_report              -> origin/safe_ci_report
+ * [new branch]            safe_serialization_always_valid -> origin/safe_serialization_always_valid
+ * [new branch]            safetensors-0.4.2           -> origin/safetensors-0.4.2
+ * [new branch]            safetensors-step-2-2        -> origin/safetensors-step-2-2
+ * [new branch]            safetensors_pre_release     -> origin/safetensors_pre_release
+ * [new branch]            safetensors_rc              -> origin/safetensors_rc
+ * [new branch]            sam3                        -> origin/sam3
+ * [new branch]            sanitize_chat_inputs        -> origin/sanitize_chat_inputs
+ * [new branch]            sayak-kernels-temp-fix      -> origin/sayak-kernels-temp-fix
+ * [new branch]            scale                       -> origin/scale
+ * [new branch]            sdpa-Blip2QFormerModel      -> origin/sdpa-Blip2QFormerModel
+ * [new branch]            secure-amd-ci               -> origin/secure-amd-ci
+ * [new branch]            security-fix/-github-workflows-anti-slop-yml-1774532416 -> origin/security-fix/-github-workflows-anti-slop-yml-1774532416
+ * [new branch]            security-fix/-github-workflows-anti-slop-yml-1778739013 -> origin/security-fix/-github-workflows-anti-slop-yml-1778739013
+ * [new branch]            security-fix/-github-workflows-anti-slop-yml-1780929476 -> origin/security-fix/-github-workflows-anti-slop-yml-1780929476
+ * [new branch]            security-fix/-github-workflows-assign-reviewers-yml-1778739033 -> origin/security-fix/-github-workflows-assign-reviewers-yml-1778739033
+ * [new branch]            security-fix/-github-workflows-assign-reviewers-yml-1778741478 -> origin/security-fix/-github-workflows-assign-reviewers-yml-1778741478
+ * [new branch]            security-fix/-github-workflows-assign-reviewers-yml-1778742465 -> origin/security-fix/-github-workflows-assign-reviewers-yml-1778742465
+ * [new branch]            security-fix/-github-workflows-assign-reviewers-yml-1780929499 -> origin/security-fix/-github-workflows-assign-reviewers-yml-1780929499
+ * [new branch]            security-fix/-github-workflows-benchmark_v2-yml-1780929520 -> origin/security-fix/-github-workflows-benchmark_v2-yml-1780929520
+ * [new branch]            security-fix/-github-workflows-build-ci-docker-images-yml-1778741536 -> origin/security-fix/-github-workflows-build-ci-docker-images-yml-1778741536
+ * [new branch]            security-fix/-github-workflows-build-ci-docker-images-yml-1778742495 -> origin/security-fix/-github-workflows-build-ci-docker-images-yml-1778742495
+ * [new branch]            security-fix/-github-workflows-build-ci-docker-images-yml-1780929540 -> origin/security-fix/-github-workflows-build-ci-docker-images-yml-1780929540
+ * [new branch]            security-fix/-github-workflows-circleci-failure-summary-comment-yml-1778739099 -> origin/security-fix/-github-workflows-circleci-failure-summary-comment-yml-1778739099
+ * [new branch]            security-fix/-github-workflows-circleci-failure-summary-comment-yml-1778741575 -> origin/security-fix/-github-workflows-circleci-failure-summary-comment-yml-1778741575
+ * [new branch]            security-fix/-github-workflows-pr-ci-security-gate-yml-1781167225 -> origin/security-fix/-github-workflows-pr-ci-security-gate-yml-1781167225
+ * [new branch]            security-fix/-github-workflows-pr-ci-security-gate-yml-1781170565 -> origin/security-fix/-github-workflows-pr-ci-security-gate-yml-1781170565
+ * [new branch]            security-fix/-github-workflows-pr-ci-security-gate-yml-1781178483 -> origin/security-fix/-github-workflows-pr-ci-security-gate-yml-1781178483
+ * [new branch]            security-fix/-github-workflows-pr-ci-security-gate-yml-1781690423 -> origin/security-fix/-github-workflows-pr-ci-security-gate-yml-1781690423
+ * [new branch]            security-fix/-github-workflows-pr-repo-consistency-bot-yml-1773827355 -> origin/security-fix/-github-workflows-pr-repo-consistency-bot-yml-1773827355
+ * [new branch]            security-fix/-github-workflows-pr-repo-consistency-bot-yml-1778739176 -> origin/security-fix/-github-workflows-pr-repo-consistency-bot-yml-1778739176
+ * [new branch]            security-fix/-github-workflows-pr_build_doc_with_comment-yml-1778742606 -> origin/security-fix/-github-workflows-pr_build_doc_with_comment-yml-1778742606
+ * [new branch]            security-fix/-github-workflows-pr_slow_ci_suggestion-yml-1778740531 -> origin/security-fix/-github-workflows-pr_slow_ci_suggestion-yml-1778740531
+ * [new branch]            security-fix/-github-workflows-self-comment-ci-yml-1773243569 -> origin/security-fix/-github-workflows-self-comment-ci-yml-1773243569
+ * [new branch]            security-fix/-github-workflows-self-comment-ci-yml-1779357471 -> origin/security-fix/-github-workflows-self-comment-ci-yml-1779357471
+ * [new branch]            security-fix/-github-workflows-ssh-runner-yml-1780644555 -> origin/security-fix/-github-workflows-ssh-runner-yml-1780644555
+ * [new branch]            security-fix/-github-workflows-ssh-runner-yml-1785830803 -> origin/security-fix/-github-workflows-ssh-runner-yml-1785830803
+ * [new branch]            security-fix/-github-workflows-trl-ci-bot-yml-1778740574 -> origin/security-fix/-github-workflows-trl-ci-bot-yml-1778740574
+ * [new branch]            seed_test_load_balancing_loss -> origin/seed_test_load_balancing_loss
+ * [new branch]            serge/fix/itf-1175f61d4596-be47cfb1 -> origin/serge/fix/itf-1175f61d4596-be47cfb1
+ * [new branch]            serge/fix/itf-1a4592913dcb-7c93bb61 -> origin/serge/fix/itf-1a4592913dcb-7c93bb61
+ * [new branch]            serge/fix/itf-1c12a6ad471e-470a612b -> origin/serge/fix/itf-1c12a6ad471e-470a612b
+ * [new branch]            serge/fix/itf-1c12a6ad471e-ccb46e56 -> origin/serge/fix/itf-1c12a6ad471e-ccb46e56
+ * [new branch]            serge/fix/itf-1ebfc7bdcd77-1c194fd5 -> origin/serge/fix/itf-1ebfc7bdcd77-1c194fd5
+ * [new branch]            serge/fix/itf-23841b7d7082-158ad8ba -> origin/serge/fix/itf-23841b7d7082-158ad8ba
+ * [new branch]            serge/fix/itf-298481b43ba5-b77fd48a -> origin/serge/fix/itf-298481b43ba5-b77fd48a
+ * [new branch]            serge/fix/itf-2b6bc546d353-fc61fbb6 -> origin/serge/fix/itf-2b6bc546d353-fc61fbb6
+ * [new branch]            serge/fix/itf-2c9bcdbaeccf-55d8a030 -> origin/serge/fix/itf-2c9bcdbaeccf-55d8a030
+ * [new branch]            serge/fix/itf-3189716405a9-7383c052 -> origin/serge/fix/itf-3189716405a9-7383c052
+ * [new branch]            serge/fix/itf-3384f483abd9-3e9aa444 -> origin/serge/fix/itf-3384f483abd9-3e9aa444
+ * [new branch]            serge/fix/itf-39163e43731b-83398832 -> origin/serge/fix/itf-39163e43731b-83398832
+ * [new branch]            serge/fix/itf-3afca84a1f5b-f125056e -> origin/serge/fix/itf-3afca84a1f5b-f125056e
+ * [new branch]            serge/fix/itf-3beeaa3ab6cb-5b6f45e9 -> origin/serge/fix/itf-3beeaa3ab6cb-5b6f45e9
+ * [new branch]            serge/fix/itf-3beeaa3ab6cb-815ed3bc -> origin/serge/fix/itf-3beeaa3ab6cb-815ed3bc
+ * [new branch]            serge/fix/itf-3d095811de43-51ae9af2 -> origin/serge/fix/itf-3d095811de43-51ae9af2
+ * [new branch]            serge/fix/itf-3d095811de43-5b38ba35 -> origin/serge/fix/itf-3d095811de43-5b38ba35
+ * [new branch]            serge/fix/itf-50ea11303615-cb431752 -> origin/serge/fix/itf-50ea11303615-cb431752
+ * [new branch]            serge/fix/itf-511d4e150d04-a0721ffc -> origin/serge/fix/itf-511d4e150d04-a0721ffc
+ * [new branch]            serge/fix/itf-5fc9414f675d-a4d21333 -> origin/serge/fix/itf-5fc9414f675d-a4d21333
+ * [new branch]            serge/fix/itf-6aeb741f4078-5a5a0288 -> origin/serge/fix/itf-6aeb741f4078-5a5a0288
+ * [new branch]            serge/fix/itf-74089115a6cb-b4c5f89f -> origin/serge/fix/itf-74089115a6cb-b4c5f89f
+ * [new branch]            serge/fix/itf-74089115a6cb-cdffbaf1 -> origin/serge/fix/itf-74089115a6cb-cdffbaf1
+ * [new branch]            serge/fix/itf-7cbab94ba759-6843ab44 -> origin/serge/fix/itf-7cbab94ba759-6843ab44
+ * [new branch]            serge/fix/itf-811ecbfac645-b402e1a7 -> origin/serge/fix/itf-811ecbfac645-b402e1a7
+ * [new branch]            serge/fix/itf-859aa19d6515-c6922321 -> origin/serge/fix/itf-859aa19d6515-c6922321
+ * [new branch]            serge/fix/itf-8fa71a7b3d14-636f7c9d -> origin/serge/fix/itf-8fa71a7b3d14-636f7c9d
+ * [new branch]            serge/fix/itf-945b4daaf39c-08e435db -> origin/serge/fix/itf-945b4daaf39c-08e435db
+ * [new branch]            serge/fix/itf-97018fe2b86e-98005b7b -> origin/serge/fix/itf-97018fe2b86e-98005b7b
+ * [new branch]            serge/fix/itf-974b904857cd-f773368b -> origin/serge/fix/itf-974b904857cd-f773368b
+ * [new branch]            serge/fix/itf-9b2ead164e45-ef9ae909 -> origin/serge/fix/itf-9b2ead164e45-ef9ae909
+ * [new branch]            serge/fix/itf-9e041de2bb27-81a66ff5 -> origin/serge/fix/itf-9e041de2bb27-81a66ff5
+ * [new branch]            serge/fix/itf-aa1fcb5380a3-5e00c2dd -> origin/serge/fix/itf-aa1fcb5380a3-5e00c2dd
+ * [new branch]            serge/fix/itf-aa4efdb4f52e-1fea3b0c -> origin/serge/fix/itf-aa4efdb4f52e-1fea3b0c
+ * [new branch]            serge/fix/itf-b05c963d2c22-41805e88 -> origin/serge/fix/itf-b05c963d2c22-41805e88
+ * [new branch]            serge/fix/itf-b2cd50dcec56-94dc891e -> origin/serge/fix/itf-b2cd50dcec56-94dc891e
+ * [new branch]            serge/fix/itf-c256626f0880-299abc17 -> origin/serge/fix/itf-c256626f0880-299abc17
+ * [new branch]            serge/fix/itf-c256626f0880-e7a91ee2 -> origin/serge/fix/itf-c256626f0880-e7a91ee2
+ * [new branch]            serge/fix/itf-c797b2a6d2bf-cbe732ba -> origin/serge/fix/itf-c797b2a6d2bf-cbe732ba
+ * [new branch]            serge/fix/itf-cb0ec086dc28-45ff07c9 -> origin/serge/fix/itf-cb0ec086dc28-45ff07c9
+ * [new branch]            serge/fix/itf-cc95f4c5b61c-3b48742c -> origin/serge/fix/itf-cc95f4c5b61c-3b48742c
+ * [new branch]            serge/fix/itf-dcad4640523f-0efc4a37 -> origin/serge/fix/itf-dcad4640523f-0efc4a37
+ * [new branch]            serge/fix/itf-de0ff1d7816e-444c0151 -> origin/serge/fix/itf-de0ff1d7816e-444c0151
+ * [new branch]            serge/fix/itf-e3eef16dc21c-a3c816da -> origin/serge/fix/itf-e3eef16dc21c-a3c816da
+ * [new branch]            serge/fix/itf-e6e43048482f-0b9a1dbc -> origin/serge/fix/itf-e6e43048482f-0b9a1dbc
+ * [new branch]            serge/fix/itf-e6e43048482f-33526168 -> origin/serge/fix/itf-e6e43048482f-33526168
+ * [new branch]            serge/fix/itf-eeafa510c34c-3ce08576 -> origin/serge/fix/itf-eeafa510c34c-3ce08576
+ * [new branch]            serge/fix/itf-eeafa510c34c-95d451ff -> origin/serge/fix/itf-eeafa510c34c-95d451ff
+ * [new branch]            serge/fix/itf-f11997ffaf2b-2e8fc571 -> origin/serge/fix/itf-f11997ffaf2b-2e8fc571
+ * [new branch]            serge/fix/itf-f227d3ee015f-13de620b -> origin/serge/fix/itf-f227d3ee015f-13de620b
+ * [new branch]            serge/fix/itf-f7d1d92b14bc-d208ec74 -> origin/serge/fix/itf-f7d1d92b14bc-d208ec74
+ * [new branch]            serge/fix/itf-f87e290c2bd6-179ac082 -> origin/serge/fix/itf-f87e290c2bd6-179ac082
+ * [new branch]            serge/fix/itf-f8da0434e923-26c00b1f -> origin/serge/fix/itf-f8da0434e923-26c00b1f
+ * [new branch]            serge/fix/itf-f92dbb6ad177-d6538e71 -> origin/serge/fix/itf-f92dbb6ad177-d6538e71
+ * [new branch]            serge/fix/itf-f94c2f8bd26a-f96654c5 -> origin/serge/fix/itf-f94c2f8bd26a-f96654c5
+ * [new branch]            serge/fix/itf-fe59147ce4be-d0f1d457 -> origin/serge/fix/itf-fe59147ce4be-d0f1d457
+ * [new branch]            serge/fix/itf-ff8924c8568d-edd7a3ea -> origin/serge/fix/itf-ff8924c8568d-edd7a3ea
+ * [new branch]            serve_zerogpu               -> origin/serve_zerogpu
+ * [new branch]            set-supports-static-cache-false-on-moes -> origin/set-supports-static-cache-false-on-moes
+ * [new branch]            shieh-length_in_compile     -> origin/shieh-length_in_compile
+ * [new branch]            show-gdn-kwargs             -> origin/show-gdn-kwargs
+ * [new branch]            show_diff                   -> origin/show_diff
+ * [new branch]            show_failure                -> origin/show_failure
+ * [new branch]            simplify                    -> origin/simplify
+ * [new branch]            simplify-contributions-init -> origin/simplify-contributions-init
+ * [new branch]            simplify-contributions-inits -> origin/simplify-contributions-inits
+ * [new branch]            simplify-contributions-main-init -> origin/simplify-contributions-main-init
+ * [new branch]            simplify-contributions-model_init -> origin/simplify-contributions-model_init
+ * [new branch]            single-file-metadata        -> origin/single-file-metadata
+ * [new branch]            skeleton-modular            -> origin/skeleton-modular
+ * [new branch]            skip-and-track-hidden-failures -> origin/skip-and-track-hidden-failures
+ * [new branch]            skip-tokenizer-test         -> origin/skip-tokenizer-test
+ * [new branch]            skip_2_hub_tests            -> origin/skip_2_hub_tests
+ * [new branch]            skip_flaky_test             -> origin/skip_flaky_test
+ * [new branch]            skip_flaky_tests_double_check -> origin/skip_flaky_tests_double_check
+ * [new branch]            skip_idefics_doctest        -> origin/skip_idefics_doctest
+ * [new branch]            skip_internvl_tests         -> origin/skip_internvl_tests
+ * [new branch]            smangrul/fix-auto-batch-finder-trainer-issue -> origin/smangrul/fix-auto-batch-finder-trainer-issue
+ * [new branch]            smangrul/integrate-accelerate -> origin/smangrul/integrate-accelerate
+ * [new branch]            smangrul/starcoder-int4-ddp-flash-attn -> origin/smangrul/starcoder-int4-ddp-flash-attn
+ * [new branch]            smolvlm-video-processing    -> origin/smolvlm-video-processing
+ * [new branch]            sonicmoe-ep                 -> origin/sonicmoe-ep
+ * [new branch]            sonicmoe-handle             -> origin/sonicmoe-handle
+ * [new branch]            sp-fix                      -> origin/sp-fix
+ * [new branch]            sp-update                   -> origin/sp-update
+ * [new branch]            split/a-pr-3-dual-path-loading -> origin/split/a-pr-3-dual-path-loading
+ * [new branch]            split/a-pr-4-fsdp-orchestration -> origin/split/a-pr-4-fsdp-orchestration
+ * [new branch]            split/a-pr-6-tp-training-inference -> origin/split/a-pr-6-tp-training-inference
+ * [new branch]            split/b-pr-0-at-42edef62    -> origin/split/b-pr-0-at-42edef62
+ * [new branch]            split/b-pr-0-at-5f392ff     -> origin/split/b-pr-0-at-5f392ff
+ * [new branch]            split/b-pr-0-dual-path-tp   -> origin/split/b-pr-0-dual-path-tp
+ * [new branch]            split_daily_ci              -> origin/split_daily_ci
+ * [new branch]            spm_converter               -> origin/spm_converter
+ * [new branch]            spmconverter_user_symbols   -> origin/spmconverter_user_symbols
+ * [new branch]            ssh_new_cluster             -> origin/ssh_new_cluster
+ * [new branch]            stable-adamw                -> origin/stable-adamw
+ * [new branch]            starcoder-2-fix             -> origin/starcoder-2-fix
+ * [new branch]            stas00-patch-1              -> origin/stas00-patch-1
+ * [new branch]            state_spaces_call_for_contribution -> origin/state_spaces_call_for_contribution
+ * [new branch]            static_shape_generation     -> origin/static_shape_generation
+ * [new branch]            step_3_7_flash              -> origin/step_3_7_flash
+ * [new branch]            stop-ci-on-fail-doc         -> origin/stop-ci-on-fail-doc
+ * [new branch]            stop-throwing-cache-warning -> origin/stop-throwing-cache-warning
+ * [new branch]            stop_repeating_setup        -> origin/stop_repeating_setup
+ * [new branch]            streamer-in                 -> origin/streamer-in
+ * [new branch]            submodels-support-check     -> origin/submodels-support-check
+ * [new branch]            support-copy                -> origin/support-copy
+ * [new branch]            sync-table-question-answering -> origin/sync-table-question-answering
+ * [new branch]            sync_dqa_pipeline           -> origin/sync_dqa_pipeline
+ * [new branch]            sync_token_classification_and_zero_shot -> origin/sync_token_classification_and_zero_shot
+ * [new branch]            sync_vqa_pipeline           -> origin/sync_vqa_pipeline
+ * [new branch]            t5-fp16-no-nans             -> origin/t5-fp16-no-nans
+ * [new branch]            tarek-fix-collated-reports-missing-summary -> origin/tarek-fix-collated-reports-missing-summary
+ * [new branch]            tarek-loadweight-hotspot    -> origin/tarek-loadweight-hotspot
+ * [new branch]            tarek-mla-rule              -> origin/tarek-mla-rule
+ * [new branch]            tarek-normalization         -> origin/tarek-normalization
+ * [new branch]            tarek-test-grafana          -> origin/tarek-test-grafana
+ * [new branch]            tarekziade-cli-refacto      -> origin/tarekziade-cli-refacto
+ * [new branch]            tarekziade-generate-flaky-olmo -> origin/tarekziade-generate-flaky-olmo
+ * [new branch]            tarekziade-lazy-cli         -> origin/tarekziade-lazy-cli
+ * [new branch]            tarekziade-model-skill      -> origin/tarekziade-model-skill
+ * [new branch]            tarekziade-model-skill-2    -> origin/tarekziade-model-skill-2
+ * [new branch]            tarekziade-more-lazy-loading -> origin/tarekziade-more-lazy-loading
+ * [new branch]            tarekziade-optimize-imports -> origin/tarekziade-optimize-imports
+ * [new branch]            tarekziade-otel             -> origin/tarekziade-otel
+ * [new branch]            tarekziade-rule-3           -> origin/tarekziade-rule-3
+ * [new branch]            tarekziade-sec              -> origin/tarekziade-sec
+ * [new branch]            tarekziade-typing-cli       -> origin/tarekziade-typing-cli
+ * [new branch]            tarekziade-typing-root      -> origin/tarekziade-typing-root
+ * [new branch]            temp-disable-scheduled-amd-ci -> origin/temp-disable-scheduled-amd-ci
+ * [new branch]            temp-kosmos25               -> origin/temp-kosmos25
+ * [new branch]            temp123                     -> origin/temp123
+ * [new branch]            temp_get_new_failed_info    -> origin/temp_get_new_failed_info
+ * [new branch]            temporary_pin_torch_2       -> origin/temporary_pin_torch_2
+ * [new branch]            tensor-cache                -> origin/tensor-cache
+ * [new branch]            test                        -> origin/test
+ * [new branch]            test-bin-format             -> origin/test-bin-format
+ * [new branch]            test-build-ci-uv            -> origin/test-build-ci-uv
+ * [new branch]            test-datasets-2.14          -> origin/test-datasets-2.14
+ * [new branch]            test-datasets-2.21          -> origin/test-datasets-2.21
+ * [new branch]            test-datasets-3.0           -> origin/test-datasets-3.0
+ * [new branch]            test-datasets-main          -> origin/test-datasets-main
+ * [new branch]            test-datasets-pr            -> origin/test-datasets-pr
+ * [new branch]            test-deepseek-fp8           -> origin/test-deepseek-fp8
+ * [new branch]            test-doctests               -> origin/test-doctests
+ * [new branch]            test-eetq-dockerfile        -> origin/test-eetq-dockerfile
+ * [new branch]            test-fa2                    -> origin/test-fa2
+ * [new branch]            test-fused-moe              -> origin/test-fused-moe
+ * [new branch]            test-huggingface_hub-pre-release -> origin/test-huggingface_hub-pre-release
+ * [new branch]            test-mode/triage-max-groups -> origin/test-mode/triage-max-groups
+ * [new branch]            test-new-doc-builder-workflow -> origin/test-new-doc-builder-workflow
+ * [new branch]            test-seentok                -> origin/test-seentok
+ * [new branch]            test-tokenizer-release      -> origin/test-tokenizer-release
+ * [new branch]            test-tokenizers-main        -> origin/test-tokenizers-main
+ * [new branch]            test-tp-old-version         -> origin/test-tp-old-version
+ * [new branch]            test_bc_tokenizers          -> origin/test_bc_tokenizers
+ * [new branch]            test_ci                     -> origin/test_ci
+ * [new branch]            test_circleci_api           -> origin/test_circleci_api
+ * [new branch]            test_composition_2          -> origin/test_composition_2
+ * [new branch]            test_composition_lysandre   -> origin/test_composition_lysandre
+ * [new branch]            test_composition_remote_tool -> origin/test_composition_remote_tool
+ * [new branch]            test_doc                    -> origin/test_doc
+ * [new branch]            test_docker_run_quantization -> origin/test_docker_run_quantization
+ * [new branch]            test_fast_only_refactor     -> origin/test_fast_only_refactor
+ * [new branch]            test_if_token               -> origin/test_if_token
+ * [new branch]            test_release_candidates     -> origin/test_release_candidates
+ * [new branch]            test_run_scheduler_ci       -> origin/test_run_scheduler_ci
+ * [new branch]            test_safetensors            -> origin/test_safetensors
+ * [new branch]            test_safetensors_0.5.0      -> origin/test_safetensors_0.5.0
+ * [new branch]            test_safetensors_0.6.0      -> origin/test_safetensors_0.6.0
+ * [new branch]            test_safetensors_abi3       -> origin/test_safetensors_abi3
+ * [new branch]            test_safetensors_rc         -> origin/test_safetensors_rc
+ * [new branch]            test_tokenizers_0.19.0rc0   -> origin/test_tokenizers_0.19.0rc0
+ * [new branch]            test_tokenizers_abi3        -> origin/test_tokenizers_abi3
+ * [new branch]            tests-fetcher-test-all      -> origin/tests-fetcher-test-all
+ * [new branch]            text_generation_response_schema_fix -> origin/text_generation_response_schema_fix
+ * [new branch]            tf_forced_logits_xla_compatible -> origin/tf_forced_logits_xla_compatible
+ * [new branch]            tf_int64_tests              -> origin/tf_int64_tests
+ * [new branch]            tf_llama_port               -> origin/tf_llama_port
+ * [new branch]            tf_new_dummy_building       -> origin/tf_new_dummy_building
+ * [new branch]            tf_quicktour_fix            -> origin/tf_quicktour_fix
+ * [new branch]            tfconvnext                  -> origin/tfconvnext
+ * [new branch]            thomas/accelerate_gpt2      -> origin/thomas/accelerate_gpt2
+ * [new branch]            thomas/accelerate_gptj      -> origin/thomas/accelerate_gptj
+ * [new branch]            thomas/add_custom_kernels   -> origin/thomas/add_custom_kernels
+ * [new branch]            thomas/bloom_allow_fp32_lm_head -> origin/thomas/bloom_allow_fp32_lm_head
+ * [new branch]            thomas/dirty_bloom_tp       -> origin/thomas/dirty_bloom_tp
+ * [new branch]            thomas/fix_bloom            -> origin/thomas/fix_bloom
+ * [new branch]            thomas/improve_bloom_generation_speed -> origin/thomas/improve_bloom_generation_speed
+ * [new branch]            thomas/llama                -> origin/thomas/llama
+ * [new branch]            thomas/make_tp_bloom_generate_work -> origin/thomas/make_tp_bloom_generate_work
+ * [new branch]            thomas/make_tp_work_with_bloom -> origin/thomas/make_tp_work_with_bloom
+ * [new branch]            tied_weights_bother         -> origin/tied_weights_bother
+ * [new branch]            tied_weights_load           -> origin/tied_weights_load
+ * [new branch]            tied_weights_warning_check  -> origin/tied_weights_warning_check
+ * [new branch]            timm_wrapper_kwargs         -> origin/timm_wrapper_kwargs
+ * [new branch]            tiny-fixes-qwen2.5-vl       -> origin/tiny-fixes-qwen2.5-vl
+ * [new branch]            tok-update                  -> origin/tok-update
+ * [new branch]            tok_refactor                -> origin/tok_refactor
+ * [new branch]            tokenizer-release           -> origin/tokenizer-release
+ * [new branch]            tokenizer-validation        -> origin/tokenizer-validation
+ * [new branch]            tokenizer_loading_fix       -> origin/tokenizer_loading_fix
+ * [new branch]            tokenizers_prerelease       -> origin/tokenizers_prerelease
+ * [new branch]            tokenizers_rc1              -> origin/tokenizers_rc1
+ * [new branch]            tokenizers_tests_fix        -> origin/tokenizers_tests_fix
+ * [new branch]            tool-handling               -> origin/tool-handling
+ * [new branch]            tools-inference-endpoints   -> origin/tools-inference-endpoints
+ * [new branch]            torch-2.2-on-daily-ci       -> origin/torch-2.2-on-daily-ci
+ * [new branch]            torch_assert_close_not_fail_but_do_something -> origin/torch_assert_close_not_fail_but_do_something
+ * [new branch]            torch_versions              -> origin/torch_versions
+ * [new branch]            tp-cb                       -> origin/tp-cb
+ * [new branch]            tp-for-cb                   -> origin/tp-for-cb
+ * [new branch]            tp-support                  -> origin/tp-support
+ * [new branch]            tp-test                     -> origin/tp-test
+ * [new branch]            tp_apply_unify              -> origin/tp_apply_unify
+ * [new branch]            tp_inference                -> origin/tp_inference
+ * [new branch]            track_hub_requests_and_fix  -> origin/track_hub_requests_and_fix
+ * [new branch]            track_killed_jobs_2         -> origin/track_killed_jobs_2
+ * [new branch]            trackio-trainer             -> origin/trackio-trainer
+ * [new branch]            trad_fixes                  -> origin/trad_fixes
+ * [new branch]            trainer-hyperparameter-search-kwargs-docs-update -> origin/trainer-hyperparameter-search-kwargs-docs-update
+ * [new branch]            transformers-chat-serve-progress-2 -> origin/transformers-chat-serve-progress-2
+ * [new branch]            transformers-should-not-set-env-vars -> origin/transformers-should-not-set-env-vars
+ * [new branch]            transformers_nested_config  -> origin/transformers_nested_config
+ * [new branch]            trigger-amd-image-build     -> origin/trigger-amd-image-build
+ * [new branch]            trigger-ci-for-torch-2.10-final-rc-on-main-c0d2e26f -> origin/trigger-ci-for-torch-2.10-final-rc-on-main-c0d2e26f
+ * [new branch]            trigger-ci-for-torch-2.11-rc-on-main-ffbea2db927e -> origin/trigger-ci-for-torch-2.11-rc-on-main-ffbea2db927e
+ * [new branch]            trigger-ci-for-torch-2.12-rc1-on-main-bc4b330451d0 -> origin/trigger-ci-for-torch-2.12-rc1-on-main-bc4b330451d0
+ * [new branch]            trigger-ci-for-torch-2.13-rc1-on-main-effde20942e3 -> origin/trigger-ci-for-torch-2.13-rc1-on-main-effde20942e3
+ * [new branch]            trigger-remove-script-datasets-in-tests -> origin/trigger-remove-script-datasets-in-tests
+ * [new branch]            trigger_688f4707bfc5f6adc6f4f18c2081c5a66db590d1 -> origin/trigger_688f4707bfc5f6adc6f4f18c2081c5a66db590d1
+ * [new branch]            trigger_all                 -> origin/trigger_all
+ * [new branch]            trigger_all_2               -> origin/trigger_all_2
+ * [new branch]            trigger_build               -> origin/trigger_build
+ * [new branch]            trigger_ci_on_a10           -> origin/trigger_ci_on_a10
+ * [new branch]            trigger_ci_with_torch_2.8.0.rc_on_commit_6017f5e8 -> origin/trigger_ci_with_torch_2.8.0.rc_on_commit_6017f5e8
+ * [new branch]            trigger_ci_with_torch_2.8.0.rc_on_commit_6017f5e_temp -> origin/trigger_ci_with_torch_2.8.0.rc_on_commit_6017f5e_temp
+ * [new branch]            trigger_ci_with_torch_2.8.0.rc_on_commit_ccf2ca16 -> origin/trigger_ci_with_torch_2.8.0.rc_on_commit_ccf2ca16
+ * [new branch]            trigger_ci_with_torch_2.9.0.rc_1_on_commit_bb45d36 -> origin/trigger_ci_with_torch_2.9.0.rc_1_on_commit_bb45d36
+ * [new branch]            trigger_ci_with_torch_2.9.1_rc_commit_8012f80f722044fd0dda45b4034f89fffc2ff344 -> origin/trigger_ci_with_torch_2.9.1_rc_commit_8012f80f722044fd0dda45b4034f89fffc2ff344
+ * [new branch]            trigger_ci_with_torch_2_4   -> origin/trigger_ci_with_torch_2_4
+ * [new branch]            trigger_daily_ci            -> origin/trigger_daily_ci
+ * [new branch]            trigger_daily_ci_manually   -> origin/trigger_daily_ci_manually
+ * [new branch]            trigger_daily_run_on_0bc35541_against_d49affb3 -> origin/trigger_daily_run_on_0bc35541_against_d49affb3
+ * [new branch]            trigger_debug               -> origin/trigger_debug
+ * [new branch]            trigger_disable_multi_gpu   -> origin/trigger_disable_multi_gpu
+ * [new branch]            trigger_doc                 -> origin/trigger_doc
+ * [new branch]            trigger_for_pauline         -> origin/trigger_for_pauline
+ * [new branch]            trigger_hfc_amd300          -> origin/trigger_hfc_amd300
+ * [new branch]            trigger_pt_10_past_ci       -> origin/trigger_pt_10_past_ci
+ * [new branch]            trigger_run_amd_scheduled_ci_caller_deepspeed_test -> origin/trigger_run_amd_scheduled_ci_caller_deepspeed_test
+ * [new branch]            trigger_slow                -> origin/trigger_slow
+ * [new branch]            trigger_test_cached_model_has_minimum_calls_to_head -> origin/trigger_test_cached_model_has_minimum_calls_to_head
+ * [new branch]            trigger_upload_artifacts_3  -> origin/trigger_upload_artifacts_3
+ * [new branch]            trigger_via_api_backup      -> origin/trigger_via_api_backup
+ * [new branch]            try_comment_bot             -> origin/try_comment_bot
+ * [new branch]            try_cpu_offload             -> origin/try_cpu_offload
+ * [new branch]            try_fix_whisper_slow_test   -> origin/try_fix_whisper_slow_test
+ * [new branch]            try_matrix_fail             -> origin/try_matrix_fail
+ * [new branch]            try_more_secure             -> origin/try_more_secure
+ * [new branch]            try_my_own_actions          -> origin/try_my_own_actions
+ * [new branch]            try_new_natten              -> origin/try_new_natten
+ * [new branch]            try_new_natten_2            -> origin/try_new_natten_2
+ * [new branch]            try_pydantic_v2_build_images -> origin/try_pydantic_v2_build_images
+ * [new branch]            try_run_amd_push_ci_caller  -> origin/try_run_amd_push_ci_caller
+ * [new branch]            try_smaller_group           -> origin/try_smaller_group
+ * [new branch]            try_sub                     -> origin/try_sub
+ * [new branch]            untie_internvl              -> origin/untie_internvl
+ * [new branch]            update-add-new-model        -> origin/update-add-new-model
+ * [new branch]            update-aria                 -> origin/update-aria
+ * [new branch]            update-converter            -> origin/update-converter
+ * [new branch]            update-cooki                -> origin/update-cooki
+ * [new branch]            update-doc-gpu              -> origin/update-doc-gpu
+ * [new branch]            update-gguf                 -> origin/update-gguf
+ * [new branch]            update-kernels-install      -> origin/update-kernels-install
+ * [new branch]            update-min-safetensors      -> origin/update-min-safetensors
+ * [new branch]            update-one-tok              -> origin/update-one-tok
+ * [new branch]            update-quantization-docker  -> origin/update-quantization-docker
+ * [new branch]            update-recommended-reviewers -> origin/update-recommended-reviewers
+ * [new branch]            update-special-tokens       -> origin/update-special-tokens
+ * [new branch]            update-tokenizers-version   -> origin/update-tokenizers-version
+ * [new branch]            update-tp-nits              -> origin/update-tp-nits
+ * [new branch]            update-workflow             -> origin/update-workflow
+ * [new branch]            update_27265                -> origin/update_27265
+ * [new branch]            update_kosmos_2_file        -> origin/update_kosmos_2_file
+ * [new branch]            update_llama_template       -> origin/update_llama_template
+ * [new branch]            update_loss                 -> origin/update_loss
+ * [new branch]            update_siglip_tests         -> origin/update_siglip_tests
+ * [new branch]            update_special_tokens       -> origin/update_special_tokens
+ * [new branch]            update_ssh                  -> origin/update_ssh
+ * [new branch]            update_tiny                 -> origin/update_tiny
+ * [new branch]            upgrade_tokenizers2         -> origin/upgrade_tokenizers2
+ * [new branch]            upstream/main               -> origin/upstream/main
+ * [new branch]            use-hfh-loading-saving-state-dict-helpers -> origin/use-hfh-loading-saving-state-dict-helpers
+ * [new branch]            use-process-retry-on-amd-smi -> origin/use-process-retry-on-amd-smi
+ * [new branch]            use-safetensors-from-pr     -> origin/use-safetensors-from-pr
+ * [new branch]            use-uv-                     -> origin/use-uv-
+ * [new branch]            use_new_tips                -> origin/use_new_tips
+ * [new branch]            use_pt_25_image             -> origin/use_pt_25_image
+ * [new branch]            use_style_bot_action        -> origin/use_style_bot_action
+ * [new branch]            use_uv                      -> origin/use_uv
+ * [new branch]            utility_scripts             -> origin/utility_scripts
+ * [new branch]            utils/create_dummy_models.py -> origin/utils/create_dummy_models.py
+ * [new branch]            v3.5.1hotfix                -> origin/v3.5.1hotfix
+ * [new branch]            v4                          -> origin/v4
+ * [new branch]            v4.0.0-release              -> origin/v4.0.0-release
+ * [new branch]            v4.0.1-release              -> origin/v4.0.1-release
+ * [new branch]            v4.10.0                     -> origin/v4.10.0
+ * [new branch]            v4.10.0-release             -> origin/v4.10.0-release
+ * [new branch]            v4.10.1-release             -> origin/v4.10.1-release
+ * [new branch]            v4.10.2-release             -> origin/v4.10.2-release
+ * [new branch]            v4.10.3-release             -> origin/v4.10.3-release
+ * [new branch]            v4.12.1-release             -> origin/v4.12.1-release
+ * [new branch]            v4.12.2-release             -> origin/v4.12.2-release
+ * [new branch]            v4.12.3-release             -> origin/v4.12.3-release
+ * [new branch]            v4.12.4-release             -> origin/v4.12.4-release
+ * [new branch]            v4.12.5-release             -> origin/v4.12.5-release
+ * [new branch]            v4.14.1-release             -> origin/v4.14.1-release
+ * [new branch]            v4.16.1-release             -> origin/v4.16.1-release
+ * [new branch]            v4.16.2-release             -> origin/v4.16.2-release
+ * [new branch]            v4.17.0-release             -> origin/v4.17.0-release
+ * [new branch]            v4.18-release               -> origin/v4.18-release
+ * [new branch]            v4.19-release               -> origin/v4.19-release
+ * [new branch]            v4.2.1-patch                -> origin/v4.2.1-patch
+ * [new branch]            v4.2.2-patch                -> origin/v4.2.2-patch
+ * [new branch]            v4.20-release               -> origin/v4.20-release
+ * [new branch]            v4.21-release               -> origin/v4.21-release
+ * [new branch]            v4.22-release               -> origin/v4.22-release
+ * [new branch]            v4.23-release               -> origin/v4.23-release
+ * [new branch]            v4.24-release               -> origin/v4.24-release
+ * [new branch]            v4.25-release               -> origin/v4.25-release
+ * [new branch]            v4.26-release               -> origin/v4.26-release
+ * [new branch]            v4.27-release               -> origin/v4.27-release
+ * [new branch]            v4.28-release               -> origin/v4.28-release
+ * [new branch]            v4.29-release               -> origin/v4.29-release
+ * [new branch]            v4.3.0-release              -> origin/v4.3.0-release
+ * [new branch]            v4.3.1-release              -> origin/v4.3.1-release
+ * [new branch]            v4.3.2-release              -> origin/v4.3.2-release
+ * [new branch]            v4.3.3-release              -> origin/v4.3.3-release
+ * [new branch]            v4.30-release               -> origin/v4.30-release
+ * [new branch]            v4.31-release               -> origin/v4.31-release
+ * [new branch]            v4.32-release               -> origin/v4.32-release
+ * [new branch]            v4.33-release               -> origin/v4.33-release
+ * [new branch]            v4.34-release               -> origin/v4.34-release
+ * [new branch]            v4.35-release               -> origin/v4.35-release
+ * [new branch]            v4.36-release               -> origin/v4.36-release
+ * [new branch]            v4.37-release               -> origin/v4.37-release
+ * [new branch]            v4.38-release               -> origin/v4.38-release
+ * [new branch]            v4.39-release               -> origin/v4.39-release
+ * [new branch]            v4.4.2-release              -> origin/v4.4.2-release
+ * [new branch]            v4.40-release               -> origin/v4.40-release
+ * [new branch]            v4.41-release               -> origin/v4.41-release
+ * [new branch]            v4.42-release               -> origin/v4.42-release
+ * [new branch]            v4.43-release               -> origin/v4.43-release
+ * [new branch]            v4.44-release               -> origin/v4.44-release
+ * [new branch]            v4.45-release               -> origin/v4.45-release
+ * [new branch]            v4.46-release               -> origin/v4.46-release
+ * [new branch]            v4.47-release               -> origin/v4.47-release
+ * [new branch]            v4.48-release               -> origin/v4.48-release
+ * [new branch]            v4.49-release               -> origin/v4.49-release
+ * [new branch]            v4.49.0-AyaVision-release   -> origin/v4.49.0-AyaVision-release
+ * [new branch]            v4.49.0-Gemma-3-release     -> origin/v4.49.0-Gemma-3-release
+ * [new branch]            v4.49.0-Mistral-3-release   -> origin/v4.49.0-Mistral-3-release
+ * [new branch]            v4.49.0-SigLIP-2-release    -> origin/v4.49.0-SigLIP-2-release
+ * [new branch]            v4.49.0-SmolVLM-2-release   -> origin/v4.49.0-SmolVLM-2-release
+ * [new branch]            v4.5.0-release              -> origin/v4.5.0-release
+ * [new branch]            v4.5.1-release              -> origin/v4.5.1-release
+ * [new branch]            v4.50-release               -> origin/v4.50-release
+ * [new branch]            v4.50.3-DeepSeek-3-release  -> origin/v4.50.3-DeepSeek-3-release
+ * [new branch]            v4.51-release               -> origin/v4.51-release
+ * [new branch]            v4.51.3-BitNet-release      -> origin/v4.51.3-BitNet-release
+ * [new branch]            v4.51.3-CSM-release         -> origin/v4.51.3-CSM-release
+ * [new branch]            v4.51.3-D-FINE-release      -> origin/v4.51.3-D-FINE-release
+ * [new branch]            v4.51.3-GraniteMoeHybrid-release -> origin/v4.51.3-GraniteMoeHybrid-release
+ * [new branch]            v4.51.3-InternVL-release    -> origin/v4.51.3-InternVL-release
+ * [new branch]            v4.51.3-Janus-release       -> origin/v4.51.3-Janus-release
+ * [new branch]            v4.51.3-LlamaGuard-release  -> origin/v4.51.3-LlamaGuard-release
+ * [new branch]            v4.51.3-MLCD-release        -> origin/v4.51.3-MLCD-release
+ * [new branch]            v4.51.3-Qwen2.5-Omni-release -> origin/v4.51.3-Qwen2.5-Omni-release
+ * [new branch]            v4.51.3-SAM-HQ-release      -> origin/v4.51.3-SAM-HQ-release
+ * [new branch]            v4.51.3-TimesFM-release     -> origin/v4.51.3-TimesFM-release
+ * [new branch]            v4.52-release               -> origin/v4.52-release
+ * [new branch]            v4.52.4-ColQwen2-release    -> origin/v4.52.4-ColQwen2-release
+ * [new branch]            v4.52.4-Kyutai-STT-release  -> origin/v4.52.4-Kyutai-STT-release
+ * [new branch]            v4.52.4-VJEPA-2-release     -> origin/v4.52.4-VJEPA-2-release
+ * [new branch]            v4.53-release               -> origin/v4.53-release
+ * [new branch]            v4.53.2-Ernie-4.5-release   -> origin/v4.53.2-Ernie-4.5-release
+ * [new branch]            v4.53.2-modernbert-decoder-release -> origin/v4.53.2-modernbert-decoder-release
+ * [new branch]            v4.54-release               -> origin/v4.54-release
+ * [new branch]            v4.55-release               -> origin/v4.55-release
+ * [new branch]            v4.56-release               -> origin/v4.56-release
+ * [new branch]            v4.56.0-Embedding-Gemma-release -> origin/v4.56.0-Embedding-Gemma-release
+ * [new branch]            v4.56.1-Vault-Gemma-release -> origin/v4.56.1-Vault-Gemma-release
+ * [new branch]            v4.57-release               -> origin/v4.57-release
+ * [new branch]            v4.57.1-test_tensor_parallel -> origin/v4.57.1-test_tensor_parallel
+ * [new branch]            v4.6.0-release              -> origin/v4.6.0-release
+ * [new branch]            v4.8.0-release              -> origin/v4.8.0-release
+ * [new branch]            v4.8.2-release              -> origin/v4.8.2-release
+ * [new branch]            v4.9.1                      -> origin/v4.9.1
+ * [new branch]            v4.9.2-release              -> origin/v4.9.2-release
+ * [new branch]            v5                          -> origin/v5
+ * [new branch]            v5-distributed-training-ci  -> origin/v5-distributed-training-ci
+ * [new branch]            v5-tensor-parallel-dtensor  -> origin/v5-tensor-parallel-dtensor
+ * [new branch]            v5.0-release                -> origin/v5.0-release
+ * [new branch]            v5.0.0.rc1-release          -> origin/v5.0.0.rc1-release
+ * [new branch]            v5.0.0.rc2-release          -> origin/v5.0.0.rc2-release
+ * [new branch]            v5.0.0.rc3-release          -> origin/v5.0.0.rc3-release
+ * [new branch]            v5.1-release                -> origin/v5.1-release
+ * [new branch]            v5.10-release               -> origin/v5.10-release
+ * [new branch]            v5.11-release               -> origin/v5.11-release
+ * [new branch]            v5.12-release               -> origin/v5.12-release
+ * [new branch]            v5.13-release               -> origin/v5.13-release
+ * [new branch]            v5.14-release               -> origin/v5.14-release
+ * [new branch]            v5.2-release                -> origin/v5.2-release
+ * [new branch]            v5.3-release                -> origin/v5.3-release
+ * [new branch]            v5.4-release                -> origin/v5.4-release
+ * [new branch]            v5.5-release                -> origin/v5.5-release
+ * [new branch]            v5.6-release                -> origin/v5.6-release
+ * [new branch]            v5.7-release                -> origin/v5.7-release
+ * [new branch]            v5.8-release                -> origin/v5.8-release
+ * [new branch]            v5.9-release                -> origin/v5.9-release
+ * [new branch]            vb/add-baichuan             -> origin/vb/add-baichuan
+ * [new branch]            vb/dtypes                   -> origin/vb/dtypes
+ * [new branch]            vb/fix-arthur-skill-issue   -> origin/vb/fix-arthur-skill-issue
+ * [new branch]            vision_visualizer           -> origin/vision_visualizer
+ * [new branch]            vllm_ci                     -> origin/vllm_ci
+ * [new branch]            voxtral-realtime-perfs      -> origin/voxtral-realtime-perfs
+ * [new branch]            voxtral-vllm                -> origin/voxtral-vllm
+ * [new branch]            warn-pre-allocation         -> origin/warn-pre-allocation
+ * [new branch]            whisper-proc-specific-kwargs -> origin/whisper-proc-specific-kwargs
+ * [new branch]            whisper_chunking            -> origin/whisper_chunking
+ * [new branch]            who_crash                   -> origin/who_crash
+ * [new branch]            why_no_trigger              -> origin/why_no_trigger
+ * [new branch]            wider_float16_tols          -> origin/wider_float16_tols
+ * [new branch]            wip_test_safetensors_rc     -> origin/wip_test_safetensors_rc
+ * [new branch]            workflows-fix               -> origin/workflows-fix
+ * [new branch]            working                     -> origin/working
+ * [new branch]            working-version             -> origin/working-version
+ * [new branch]            worktree-fsdp-meta          -> origin/worktree-fsdp-meta
+ * [new branch]            worktree-tp-plan-removal-error -> origin/worktree-tp-plan-removal-error
+ * [new branch]            xla_concrete_fn_dynamic_shape_debug -> origin/xla_concrete_fn_dynamic_shape_debug
+ * [new branch]            yaml_safeload               -> origin/yaml_safeload
+ * [new branch]            ydshieh-add-record_expectations-decorator-to-integration-tests -> origin/ydshieh-add-record_expectations-decorator-to-integration-tests
+ * [new branch]            ydshieh-check-audioflamingo3 -> origin/ydshieh-check-audioflamingo3
+ * [new branch]            ydshieh-default-fast-image-proc-all-models -> origin/ydshieh-default-fast-image-proc-all-models
+ * [new branch]            ydshieh-default-fast-image-proc-all-models-full -> origin/ydshieh-default-fast-image-proc-all-models-full
+ * [new branch]            ydshieh-push-ci-image       -> origin/ydshieh-push-ci-image
+ * [new branch]            ydshieh_check_run_nightly_ci_test_new_runner -> origin/ydshieh_check_run_nightly_ci_test_new_runner
+ * [new branch]            yih-dar-try-compile_models  -> origin/yih-dar-try-compile_models
+ * [new branch]            younes-opt-350-m            -> origin/younes-opt-350-m
+ * [new branch]            younes-test-workflow        -> origin/younes-test-workflow
+ * [new branch]            younesbelkada-patch-1       -> origin/younesbelkada-patch-1
+ * [new branch]            zach-accelerate-integration -> origin/zach-accelerate-integration
+ * [new tag]               0.1.2                       -> 0.1.2
+ * [new tag]               0.5.0                       -> 0.5.0
+ * [new tag]               1.0                         -> 1.0
+ * [new tag]               1.1.0                       -> 1.1.0
+ * [new tag]               1.2.0                       -> 1.2.0
+ * [new tag]               3.0.1                       -> 3.0.1
+ * [new tag]               4.3.0.rc1                   -> 4.3.0.rc1
+ * [new tag]               4.54.1                      -> 4.54.1
+ * [new tag]               4.55.0-GLM-4.5V-preview     -> 4.55.0-GLM-4.5V-preview
+ * [new tag]               4.55.0-GLM-4.5V-preview-GLM-4.5V-preview -> 4.55.0-GLM-4.5V-preview-GLM-4.5V-preview
+ * [new tag]               backup-before-rebase        -> backup-before-rebase
+ * [new tag]               list                        -> list
+ * [new tag]               localattn1                  -> localattn1
+ * [new tag]               v0.1.2                      -> v0.1.2
+ * [new tag]               v0.2.0                      -> v0.2.0
+ * [new tag]               v0.3.0                      -> v0.3.0
+ * [new tag]               v0.4.0                      -> v0.4.0
+ * [new tag]               v0.5.0                      -> v0.5.0
+ * [new tag]               v0.5.1                      -> v0.5.1
+ * [new tag]               v0.6.0                      -> v0.6.0
+ * [new tag]               v0.6.1                      -> v0.6.1
+ * [new tag]               v0.6.2                      -> v0.6.2
+ * [new tag]               v1.0.0                      -> v1.0.0
+ * [new tag]               v2.0.0                      -> v2.0.0
+ * [new tag]               v2.1.0                      -> v2.1.0
+ * [new tag]               v2.1.1                      -> v2.1.1
+ * [new tag]               v2.10.0                     -> v2.10.0
+ * [new tag]               v2.11.0                     -> v2.11.0
+ * [new tag]               v2.2.0                      -> v2.2.0
+ * [new tag]               v2.2.1                      -> v2.2.1
+ * [new tag]               v2.2.2                      -> v2.2.2
+ * [new tag]               v2.3.0                      -> v2.3.0
+ * [new tag]               v2.4.0                      -> v2.4.0
+ * [new tag]               v2.4.1                      -> v2.4.1
+ * [new tag]               v2.5.0                      -> v2.5.0
+ * [new tag]               v2.5.1                      -> v2.5.1
+ * [new tag]               v2.6.0                      -> v2.6.0
+ * [new tag]               v2.7.0                      -> v2.7.0
+ * [new tag]               v2.8.0                      -> v2.8.0
+ * [new tag]               v2.9.0                      -> v2.9.0
+ * [new tag]               v2.9.1                      -> v2.9.1
+ * [new tag]               v3.0.0                      -> v3.0.0
+ * [new tag]               v3.0.1                      -> v3.0.1
+ * [new tag]               v3.0.2                      -> v3.0.2
+ * [new tag]               v3.1.0                      -> v3.1.0
+ * [new tag]               v3.2.0                      -> v3.2.0
+ * [new tag]               v3.3.0                      -> v3.3.0
+ * [new tag]               v3.3.1                      -> v3.3.1
+ * [new tag]               v3.4.0                      -> v3.4.0
+ * [new tag]               v3.5.0                      -> v3.5.0
+ * [new tag]               v3.5.1                      -> v3.5.1
+ * [new tag]               v4.0.0                      -> v4.0.0
+ * [new tag]               v4.0.0-rc-1                 -> v4.0.0-rc-1
+ * [new tag]               v4.0.1                      -> v4.0.1
+ * [new tag]               v4.1.0                      -> v4.1.0
+ * [new tag]               v4.1.1                      -> v4.1.1
+ * [new tag]               v4.10.0                     -> v4.10.0
+ * [new tag]               v4.10.1                     -> v4.10.1
+ * [new tag]               v4.10.2                     -> v4.10.2
+ * [new tag]               v4.10.3                     -> v4.10.3
+ * [new tag]               v4.11.0                     -> v4.11.0
+ * [new tag]               v4.11.1                     -> v4.11.1
+ * [new tag]               v4.11.2                     -> v4.11.2
+ * [new tag]               v4.11.3                     -> v4.11.3
+ * [new tag]               v4.12.0                     -> v4.12.0
+ * [new tag]               v4.12.1                     -> v4.12.1
+ * [new tag]               v4.12.2                     -> v4.12.2
+ * [new tag]               v4.12.3                     -> v4.12.3
+ * [new tag]               v4.12.4                     -> v4.12.4
+ * [new tag]               v4.12.5                     -> v4.12.5
+ * [new tag]               v4.13.0                     -> v4.13.0
+ * [new tag]               v4.14.0                     -> v4.14.0
+ * [new tag]               v4.14.1                     -> v4.14.1
+ * [new tag]               v4.15.0                     -> v4.15.0
+ * [new tag]               v4.16.0                     -> v4.16.0
+ * [new tag]               v4.16.1                     -> v4.16.1
+ * [new tag]               v4.16.2                     -> v4.16.2
+ * [new tag]               v4.17.0                     -> v4.17.0
+ * [new tag]               v4.18.0                     -> v4.18.0
+ * [new tag]               v4.19.0                     -> v4.19.0
+ * [new tag]               v4.19.1                     -> v4.19.1
+ * [new tag]               v4.19.2                     -> v4.19.2
+ * [new tag]               v4.19.3                     -> v4.19.3
+ * [new tag]               v4.19.4                     -> v4.19.4
+ * [new tag]               v4.2.0                      -> v4.2.0
+ * [new tag]               v4.2.1                      -> v4.2.1
+ * [new tag]               v4.2.2                      -> v4.2.2
+ * [new tag]               v4.20.0                     -> v4.20.0
+ * [new tag]               v4.20.1                     -> v4.20.1
+ * [new tag]               v4.21.0                     -> v4.21.0
+ * [new tag]               v4.21.1                     -> v4.21.1
+ * [new tag]               v4.21.2                     -> v4.21.2
+ * [new tag]               v4.21.3                     -> v4.21.3
+ * [new tag]               v4.22.0                     -> v4.22.0
+ * [new tag]               v4.22.1                     -> v4.22.1
+ * [new tag]               v4.22.2                     -> v4.22.2
+ * [new tag]               v4.23.0                     -> v4.23.0
+ * [new tag]               v4.23.1                     -> v4.23.1
+ * [new tag]               v4.24.0                     -> v4.24.0
+ * [new tag]               v4.25.1                     -> v4.25.1
+ * [new tag]               v4.26.0                     -> v4.26.0
+ * [new tag]               v4.26.1                     -> v4.26.1
+ * [new tag]               v4.27.0                     -> v4.27.0
+ * [new tag]               v4.27.1                     -> v4.27.1
+ * [new tag]               v4.27.2                     -> v4.27.2
+ * [new tag]               v4.27.3                     -> v4.27.3
+ * [new tag]               v4.27.4                     -> v4.27.4
+ * [new tag]               v4.28.0                     -> v4.28.0
+ * [new tag]               v4.28.1                     -> v4.28.1
+ * [new tag]               v4.29.0                     -> v4.29.0
+ * [new tag]               v4.29.1                     -> v4.29.1
+ * [new tag]               v4.29.2                     -> v4.29.2
+ * [new tag]               v4.3.0                      -> v4.3.0
+ * [new tag]               v4.3.0.rc1                  -> v4.3.0.rc1
+ * [new tag]               v4.3.1                      -> v4.3.1
+ * [new tag]               v4.3.2                      -> v4.3.2
+ * [new tag]               v4.3.3                      -> v4.3.3
+ * [new tag]               v4.30.0                     -> v4.30.0
+ * [new tag]               v4.30.1                     -> v4.30.1
+ * [new tag]               v4.30.2                     -> v4.30.2
+ * [new tag]               v4.31.0                     -> v4.31.0
+ * [new tag]               v4.32.0                     -> v4.32.0
+ * [new tag]               v4.32.1                     -> v4.32.1
+ * [new tag]               v4.33.0                     -> v4.33.0
+ * [new tag]               v4.33.1                     -> v4.33.1
+ * [new tag]               v4.33.2                     -> v4.33.2
+ * [new tag]               v4.33.3                     -> v4.33.3
+ * [new tag]               v4.34.0                     -> v4.34.0
+ * [new tag]               v4.34.1                     -> v4.34.1
+ * [new tag]               v4.35.0                     -> v4.35.0
+ * [new tag]               v4.35.1                     -> v4.35.1
+ * [new tag]               v4.35.2                     -> v4.35.2
+ * [new tag]               v4.36.0                     -> v4.36.0
+ * [new tag]               v4.36.1                     -> v4.36.1
+ * [new tag]               v4.36.2                     -> v4.36.2
+ * [new tag]               v4.37.0                     -> v4.37.0
+ * [new tag]               v4.37.1                     -> v4.37.1
+ * [new tag]               v4.37.2                     -> v4.37.2
+ * [new tag]               v4.38.0                     -> v4.38.0
+ * [new tag]               v4.38.1                     -> v4.38.1
+ * [new tag]               v4.38.2                     -> v4.38.2
+ * [new tag]               v4.39.0                     -> v4.39.0
+ * [new tag]               v4.39.1                     -> v4.39.1
+ * [new tag]               v4.39.2                     -> v4.39.2
+ * [new tag]               v4.39.3                     -> v4.39.3
+ * [new tag]               v4.4.0                      -> v4.4.0
+ * [new tag]               v4.4.1                      -> v4.4.1
+ * [new tag]               v4.4.2                      -> v4.4.2
+ * [new tag]               v4.40.0                     -> v4.40.0
+ * [new tag]               v4.40.1                     -> v4.40.1
+ * [new tag]               v4.40.2                     -> v4.40.2
+ * [new tag]               v4.41.0                     -> v4.41.0
+ * [new tag]               v4.41.1                     -> v4.41.1
+ * [new tag]               v4.41.2                     -> v4.41.2
+ * [new tag]               v4.42.0                     -> v4.42.0
+ * [new tag]               v4.42.1                     -> v4.42.1
+ * [new tag]               v4.42.2                     -> v4.42.2
+ * [new tag]               v4.42.3                     -> v4.42.3
+ * [new tag]               v4.42.4                     -> v4.42.4
+ * [new tag]               v4.43.0                     -> v4.43.0
+ * [new tag]               v4.43.1                     -> v4.43.1
+ * [new tag]               v4.43.2                     -> v4.43.2
+ * [new tag]               v4.43.3                     -> v4.43.3
+ * [new tag]               v4.43.4                     -> v4.43.4
+ * [new tag]               v4.44.0                     -> v4.44.0
+ * [new tag]               v4.44.1                     -> v4.44.1
+ * [new tag]               v4.44.2                     -> v4.44.2
+ * [new tag]               v4.45.0                     -> v4.45.0
+ * [new tag]               v4.45.1                     -> v4.45.1
+ * [new tag]               v4.45.2                     -> v4.45.2
+ * [new tag]               v4.46.0                     -> v4.46.0
+ * [new tag]               v4.46.1                     -> v4.46.1
+ * [new tag]               v4.46.2                     -> v4.46.2
+ * [new tag]               v4.46.3                     -> v4.46.3
+ * [new tag]               v4.47.0                     -> v4.47.0
+ * [new tag]               v4.47.1                     -> v4.47.1
+ * [new tag]               v4.48.0                     -> v4.48.0
+ * [new tag]               v4.48.1                     -> v4.48.1
+ * [new tag]               v4.48.2                     -> v4.48.2
+ * [new tag]               v4.48.3                     -> v4.48.3
+ * [new tag]               v4.49.0                     -> v4.49.0
+ * [new tag]               v4.49.0-AyaVision           -> v4.49.0-AyaVision
+ * [new tag]               v4.49.0-Gemma-3             -> v4.49.0-Gemma-3
+ * [new tag]               v4.49.0-Mistral-3           -> v4.49.0-Mistral-3
+ * [new tag]               v4.49.0-SigLIP-2            -> v4.49.0-SigLIP-2
+ * [new tag]               v4.49.0-SmolVLM-2           -> v4.49.0-SmolVLM-2
+ * [new tag]               v4.5.0                      -> v4.5.0
+ * [new tag]               v4.5.1                      -> v4.5.1
+ * [new tag]               v4.50.0                     -> v4.50.0
+ * [new tag]               v4.50.1                     -> v4.50.1
+ * [new tag]               v4.50.2                     -> v4.50.2
+ * [new tag]               v4.50.3                     -> v4.50.3
+ * [new tag]               v4.50.3-DeepSeek-3          -> v4.50.3-DeepSeek-3
+ * [new tag]               v4.50.r3                    -> v4.50.r3
+ * [new tag]               v4.50.r32                   -> v4.50.r32
+ * [new tag]               v4.51.0                     -> v4.51.0
+ * [new tag]               v4.51.1                     -> v4.51.1
+ * [new tag]               v4.51.2                     -> v4.51.2
+ * [new tag]               v4.51.3                     -> v4.51.3
+ * [new tag]               v4.51.3-BitNet-preview      -> v4.51.3-BitNet-preview
+ * [new tag]               v4.51.3-CSM-preview         -> v4.51.3-CSM-preview
+ * [new tag]               v4.51.3-D-FINE-preview      -> v4.51.3-D-FINE-preview
+ * [new tag]               v4.51.3-GraniteMoeHybrid-preview -> v4.51.3-GraniteMoeHybrid-preview
+ * [new tag]               v4.51.3-InternVL-preview    -> v4.51.3-InternVL-preview
+ * [new tag]               v4.51.3-Janus-preview       -> v4.51.3-Janus-preview
+ * [new tag]               v4.51.3-LlamaGuard-preview  -> v4.51.3-LlamaGuard-preview
+ * [new tag]               v4.51.3-MLCD-preview        -> v4.51.3-MLCD-preview
+ * [new tag]               v4.51.3-Qwen2.5-Omni-preview -> v4.51.3-Qwen2.5-Omni-preview
+ * [new tag]               v4.51.3-SAM-HQ-preview      -> v4.51.3-SAM-HQ-preview
+ * [new tag]               v4.51.3-TimesFM-preview     -> v4.51.3-TimesFM-preview
+ * [new tag]               v4.52.0                     -> v4.52.0
+ * [new tag]               v4.52.1                     -> v4.52.1
+ * [new tag]               v4.52.2                     -> v4.52.2
+ * [new tag]               v4.52.3                     -> v4.52.3
+ * [new tag]               v4.52.4                     -> v4.52.4
+ * [new tag]               v4.52.4-ColQwen2-preview    -> v4.52.4-ColQwen2-preview
+ * [new tag]               v4.52.4-Kyutai-STT-preview  -> v4.52.4-Kyutai-STT-preview
+ * [new tag]               v4.52.4-VJEPA-2-preview     -> v4.52.4-VJEPA-2-preview
+ * [new tag]               v4.53.0                     -> v4.53.0
+ * [new tag]               v4.53.1                     -> v4.53.1
+ * [new tag]               v4.53.2                     -> v4.53.2
+ * [new tag]               v4.53.2-Ernie-4.5-preview   -> v4.53.2-Ernie-4.5-preview
+ * [new tag]               v4.53.2-modernbert-decoder-preview -> v4.53.2-modernbert-decoder-preview
+ * [new tag]               v4.53.3                     -> v4.53.3
+ * [new tag]               v4.54-release               -> v4.54-release
+ * [new tag]               v4.54.0                     -> v4.54.0
+ * [new tag]               v4.55.0                     -> v4.55.0
+ * [new tag]               v4.55.1                     -> v4.55.1
+ * [new tag]               v4.55.2                     -> v4.55.2
+ * [new tag]               v4.55.3                     -> v4.55.3
+ * [new tag]               v4.55.4                     -> v4.55.4
+ * [new tag]               v4.56.0                     -> v4.56.0
+ * [new tag]               v4.56.0-Embedding-Gemma-preview -> v4.56.0-Embedding-Gemma-preview
+ * [new tag]               v4.56.1                     -> v4.56.1
+ * [new tag]               v4.56.1-Vault-Gemma-preview -> v4.56.1-Vault-Gemma-preview
+ * [new tag]               v4.56.2                     -> v4.56.2
+ * [new tag]               v4.57.0                     -> v4.57.0
+ * [new tag]               v4.57.1                     -> v4.57.1
+ * [new tag]               v4.57.2                     -> v4.57.2
+ * [new tag]               v4.57.3                     -> v4.57.3
+ * [new tag]               v4.57.4                     -> v4.57.4
+ * [new tag]               v4.57.5                     -> v4.57.5
+ * [new tag]               v4.57.6                     -> v4.57.6
+ * [new tag]               v4.6.0                      -> v4.6.0
+ * [new tag]               v4.6.1                      -> v4.6.1
+ * [new tag]               v4.7.0                      -> v4.7.0
+ * [new tag]               v4.8.0                      -> v4.8.0
+ * [new tag]               v4.8.1                      -> v4.8.1
+ * [new tag]               v4.8.2                      -> v4.8.2
+ * [new tag]               v4.9.0                      -> v4.9.0
+ * [new tag]               v4.9.1                      -> v4.9.1
+ * [new tag]               v4.9.2                      -> v4.9.2
+ * [new tag]               v5.0.0                      -> v5.0.0
+ * [new tag]               v5.0.0rc0                   -> v5.0.0rc0
+ * [new tag]               v5.0.0rc1                   -> v5.0.0rc1
+ * [new tag]               v5.0.0rc2                   -> v5.0.0rc2
+ * [new tag]               v5.0.0rc3                   -> v5.0.0rc3
+ * [new tag]               v5.1.0                      -> v5.1.0
+ * [new tag]               v5.10.0                     -> v5.10.0
+ * [new tag]               v5.10.1                     -> v5.10.1
+ * [new tag]               v5.10.2                     -> v5.10.2
+ * [new tag]               v5.10.3                     -> v5.10.3
+ * [new tag]               v5.11.0                     -> v5.11.0
+ * [new tag]               v5.12.0                     -> v5.12.0
+ * [new tag]               v5.12.1                     -> v5.12.1
+ * [new tag]               v5.13.0                     -> v5.13.0
+ * [new tag]               v5.13.1                     -> v5.13.1
+ * [new tag]               v5.14.0                     -> v5.14.0
+ * [new tag]               v5.14.1                     -> v5.14.1
+ * [new tag]               v5.2.0                      -> v5.2.0
+ * [new tag]               v5.3.0                      -> v5.3.0
+ * [new tag]               v5.4.0                      -> v5.4.0
+ * [new tag]               v5.5.0                      -> v5.5.0
+ * [new tag]               v5.5.1                      -> v5.5.1
+ * [new tag]               v5.5.2                      -> v5.5.2
+ * [new tag]               v5.5.3                      -> v5.5.3
+ * [new tag]               v5.5.4                      -> v5.5.4
+ * [new tag]               v5.6.0                      -> v5.6.0
+ * [new tag]               v5.6.1                      -> v5.6.1
+ * [new tag]               v5.6.2                      -> v5.6.2
+ * [new tag]               v5.7.0                      -> v5.7.0
+ * [new tag]               v5.8.0                      -> v5.8.0
+ * [new tag]               v5.8.1                      -> v5.8.1
+ * [new tag]               v5.9.0                      -> v5.9.0
+ * [new ref]               c58a4a1e0b5907f3752ea8970a64225bad3aa0b1 -> pull/47809/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/47809/merge
+Note: switching to 'refs/remotes/pull/47809/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at c58a4a1e0b Merge 730ba388ef5363e17e3dd69a2830ed0bcf7873a2 into 2eaaa20ac8aca4c7b0fa9bc36919a82a7d72449d
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+c58a4a1e0b5907f3752ea8970a64225bad3aa0b1
+##[group]Run git config --global --add safe.directory '*'
+git config --global --add safe.directory '*'
+shell: sh -e {0}
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_repository_consistency
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+##[group]Run git fetch origin main:main
+git fetch origin main:main
+shell: sh -e {0}
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_repository_consistency
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+From https://github.com/huggingface/transformers
+ * [new branch]            main       -> main
+##[group]Run apt-get update && apt-get install -y make
+apt-get update && apt-get install -y make
+shell: sh -e {0}
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_repository_consistency
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Get:1 http://deb.debian.org/debian trixie InRelease [140 kB]
+Get:2 http://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
+Get:3 http://deb.debian.org/debian-security trixie-security InRelease [43.4 kB]
+Get:4 http://deb.debian.org/debian trixie/main amd64 Packages [9673 kB]
+Get:5 http://deb.debian.org/debian trixie-updates/main amd64 Packages [4412 B]
+Get:6 http://deb.debian.org/debian-security trixie-security/main amd64 Packages [232 kB]
+Fetched 10.1 MB in 1s (16.1 MB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+make is already the newest version (4.4.1-2).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+##[group]Run uv pip install -e ".[quality]"
+uv pip install -e ".[quality]"
+shell: sh -e {0}
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_repository_consistency
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Using Python 3.10.20 environment at: /usr/local
+Resolved 58 packages in 1.81s
+   Building transformers @ file:///__w/transformers/transformers
+      Built transformers @ file:///__w/transformers/transformers
+Prepared 1 package in 1.05s
+Installed 1 package in 5ms
+ + transformers==5.15.0.dev0 (from file:///__w/transformers/transformers)
+##[group]Run uv pip install 'transformers-ci[otel] @ git+https://github.com/huggingface/transformers-ci@main'
+uv pip install 'transformers-ci[otel] @ git+https://github.com/huggingface/transformers-ci@main'
+shell: sh -e {0}
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_repository_consistency
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Using Python 3.10.20 environment at: /usr/local
+   Updating https://github.com/huggingface/transformers-ci (main)
+    Updated https://github.com/huggingface/transformers-ci (6058dcce73686c86389fa51690ce7562d66bac55)
+Resolved 34 packages in 374ms
+Checked 34 packages in 0.31ms
+##[group]Run pip freeze | tee installed.txt
+pip freeze | tee installed.txt
+shell: sh -e {0}
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_repository_consistency
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+absl-py==2.5.0
+accelerate==1.14.0
+aiohappyeyeballs==2.7.1
+aiohttp==3.14.3
+aiosignal==1.4.0
+annotated-doc==0.0.5
+annotated-types==0.8.0
+anyio==4.14.2
+async-timeout==5.0.1
+attrs==26.1.0
+backports.asyncio.runner==1.2.0
+beautifulsoup4==4.15.0
+black==26.5.1
+certifi==2026.7.22
+charset-normalizer==3.4.9
+click==8.4.2
+datasets==5.0.1
+dill==0.3.4
+distro==1.9.0
+emoji==2.15.0
+evaluate==0.4.6
+exceptiongroup==1.3.1
+execnet==2.1.2
+faiss-cpu==1.15.0
+fastapi==0.141.1
+fastjsonschema==2.22.1
+filelock==3.29.0
+frozenlist==1.8.0
+fsspec==2026.4.0
+gitdb==4.0.12
+GitPython==3.1.18
+googleapis-common-protos==1.75.0
+grpcio==1.83.0
+h11==0.16.0
+hf-doc-builder==0.5.0
+hf-xet==1.6.0
+httpcore==1.0.9
+httpx==0.28.1
+huggingface_hub==1.26.0
+idna==3.18
+iniconfig==2.3.0
+Jinja2==3.1.6
+jiter==0.16.0
+joblib==1.5.3
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+jupyter_core==5.9.1
+libcst==1.9.0
+Markdown==3.10.3
+markdown-it-py==4.2.0
+MarkupSafe==3.0.3
+mdurl==0.1.2
+mistral_common==1.11.7
+mpmath==1.3.0
+multidict==6.7.1
+multiprocess==0.70.12.2
+mypy_extensions==1.1.0
+nbformat==5.10.4
+networkx==3.4.2
+nltk==3.8.1
+numpy==2.2.6
+openai==2.53.0
+opencv-python-headless==5.0.0.93
+opentelemetry-api==1.44.0
+opentelemetry-container-distro==0.2.0
+opentelemetry-exporter-otlp==1.44.0
+opentelemetry-exporter-otlp-proto-common==1.44.0
+opentelemetry-exporter-otlp-proto-grpc==1.44.0
+opentelemetry-exporter-otlp-proto-http==1.44.0
+opentelemetry-instrumentation==0.65b0
+opentelemetry-proto==1.44.0
+opentelemetry-resourcedetector-docker==0.4.0
+opentelemetry-resourcedetector-kubernetes==0.3.0
+opentelemetry-resourcedetector-process==0.3.0
+opentelemetry-sdk==1.44.0
+opentelemetry-semantic-conventions==0.65b0
+packaging==26.3
+pandas==2.3.3
+parameterized==0.9.0
+pathspec==1.1.1
+pillow==12.2.0
+platformdirs==4.11.0
+pluggy==1.6.0
+portalocker==2.0.0
+propcache==0.5.2
+protobuf==7.35.1
+psutil==7.2.2
+pyarrow==25.0.0
+pycountry==26.2.16
+pydantic==2.13.4
+pydantic-extra-types==2.11.1
+pydantic_core==2.46.4
+Pygments==2.20.0
+pypi-kenlm==0.1.20220713
+pytest @ git+https://github.com/ydshieh/pytest.git@4b0a5b9e7b2323b8915d465decd2959e3690a9aa
+pytest-asyncio==1.4.0
+pytest-env==1.2.0
+pytest-opentelemetry==1.1.0
+pytest-order==1.5.0
+pytest-random-order==1.2.0
+pytest-rerunfailures==15.1
+pytest-rich==0.2.0
+pytest-timeout==2.4.0
+pytest-xdist==3.8.0
+python-dateutil==2.9.0.post0
+pytokens==0.4.1
+pytz==2026.3.post1
+PyYAML==6.0.3
+referencing==0.37.0
+regex==2026.7.19
+requests==2.34.2
+rich==15.0.0
+rjieba==0.2.1
+rouge_score==0.1.2
+rpds-py==0.30.0
+ruff==0.14.10
+sacrebleu==1.5.1
+sacremoses==0.1.1
+safetensors==0.8.0
+sentencepiece==0.2.2
+shellingham==1.5.4
+six==1.17.0
+smmap==5.0.3
+sniffio==1.3.1
+soupsieve==2.9.1
+starlette==1.4.1
+sympy==1.14.0
+tensorboard==2.21.0
+tensorboard-data-server==0.7.2
+tiktoken==0.13.0
+timeout-decorator==0.5.0
+tokenizers==0.22.2
+tomli==2.4.1
+torch==2.13.0+cpu
+torchaudio==2.11.0+cpu
+torchvision==0.28.0+cpu
+tqdm==4.70.0
+traitlets==5.16.1
+-e git+https://github.com/huggingface/transformers@c58a4a1e0b5907f3752ea8970a64225bad3aa0b1#egg=transformers
+transformers-ci @ git+https://github.com/huggingface/transformers-ci@6058dcce73686c86389fa51690ce7562d66bac55
+transformers-mlinter==0.1.2
+ty==0.0.20
+typer==0.27.1
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+tzdata==2026.3
+urllib3==1.26.20
+uv==0.12.2
+uvicorn==0.52.1
+Werkzeug==3.1.8
+wrapt==2.3.0
+xxhash==3.8.1
+yarl==1.24.5
+##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+with:
+  name: consistency-installed
+  path: installed.txt
+  retention-days: 3
+  if-no-files-found: warn
+  compression-level: 6
+  overwrite: false
+  include-hidden-files: false
+  archive: true
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_repository_consistency
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+With the provided path, there will be 1 file uploaded
+Artifact name is valid!
+Root directory input is valid!
+Uploading artifact: consistency-installed.zip
+Beginning upload of artifact content to blob storage
+Uploaded bytes 1723
+Finished uploading artifact content to blob storage!
+SHA256 digest of uploaded artifact is 7fc916e827f98320c4a293fa2a4470496fc0c5cd664baca6fd7b2752de70db83
+Finalizing artifact upload
+Artifact consistency-installed successfully finalized. Artifact ID 8958357101
+Artifact consistency-installed has been successfully uploaded! Final size is 1723 bytes. Artifact ID is 8958357101
+Artifact download URL: https://github.com/huggingface/transformers/actions/runs/31078170794/artifacts/8958357101
+##[group]Run # Mark the job started so it shows on the live dashboards before the
+# Mark the job started so it shows on the live dashboards before the
+# first checker span arrives. report-ci-start emits only a run-start
+# span (no checker span), so it is discoverable yet counts zero checks.
+configure-ci-otel \
+  --suite check_repository_consistency \
+  --service-name "pytest-observability" \
+  --protocol http \
+  --otlp-endpoint "$OTEL_EXPORTER_OTLP_ENDPOINT" \
+  --token "$OTEL_TOKEN" \
+  --staging-endpoint 10.90.52.50:5317 \
+  --staging-protocol grpc \
+  -- report-ci-start || echo "OTEL START WARNING report-ci-start is unavailable in this environment"
+
+configure-ci-otel \
+  --suite check_repository_consistency \
+  --service-name "pytest-observability" \
+  --protocol http \
+  --otlp-endpoint "$OTEL_EXPORTER_OTLP_ENDPOINT" \
+  --token "$OTEL_TOKEN" \
+  --staging-endpoint 10.90.52.50:5317 \
+  --staging-protocol grpc \
+  -- make check-repository-consistency
+shell: sh -e {0}
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_repository_consistency
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+OTEL TRACE START trace_id=21c8cbe4995d9b872407d3417b069005 service=pytest-observability job=check_repository_consistency exporter_version=0.1.0+g6058dcc command=report-ci-start
+report-ci-start: emitted run-start span for job 'check_repository_consistency'.
+OTEL TRACE END trace_id=21c8cbe4995d9b872407d3417b069005 service=pytest-observability job=check_repository_consistency exporter_version=0.1.0+g6058dcc exit_code=0
+OTEL TRACE START trace_id=eb04231141c47d75b5f466e96589b9d7 service=pytest-observability job=check_repository_consistency exporter_version=0.1.0+g6058dcc command=make check-repository-consistency
+Generate auto mappings
+$ python utils/check_auto.py
+OK (6.94s)
+
+Public imports
+$ python -c "from transformers import *"
+OK (15.39s)
+
+Import complexity
+$ python utils/check_import_complexity.py
+Import complexity OK: 587 modules (max 1000)
+OK (1.35s)
+
+Copied code consistency
+$ python utils/check_copies.py
+OK (4.69s)
+
+Modular file conversions
+$ python utils/check_modular_conversion.py
+OK (3.67s)
+
+Documentation table of contents
+$ python utils/check_doc_toc.py
+OK (0.19s)
+
+Modeling rules documentation
+$ python utils/check_modeling_rules_doc.py --rules-toml utils/rules.toml
+OK (0.27s)
+
+Docstring formatting
+$ python utils/check_docstrings.py
+Traceback (most recent call last):
+  File "/__w/transformers/transformers/utils/check_docstrings.py", line 2203, in <module>
+    check_docstrings(overwrite=args.fix_and_overwrite, check_all=args.check_all, cache=auto_docstring_cache)
+  File "/__w/transformers/transformers/utils/check_docstrings.py", line 2191, in check_docstrings
+    raise ValueError(error_message)
+ValueError: There was at least one problem when checking docstrings of public objects.
+The following objects docstrings do not match their signature. Run `make fix-repo` to fix this. In some cases, this error may be raised incorrectly by the docstring checker. If you think this is the case, you can manually check the docstrings and then add the object name to `OBJECTS_TO_IGNORE` in `utils/check_docstrings.py`.
+- ContinuousBatchingConfig
+FAILED (15.96s)
+
+make: *** [Makefile:54: check-repository-consistency] Error 1
+OTEL TRACE END trace_id=eb04231141c47d75b5f466e96589b9d7 service=pytest-observability job=check_repository_consistency exporter_version=0.1.0+g6058dcc exit_code=2
+##[error]Error: failed to run script step: command terminated with non-zero exit code: error executing command [sh -e /__w/_temp/0b13b720-9162-11f1-a272-553c754a2d6c.sh], exit code 2
+##[error]Process completed with exit code 1.
+##[error]Executing the custom container implementation failed. Please contact your self hosted runner administrator.
+Post job cleanup.
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+[command]/usr/bin/git version
+git version 2.47.3
+Copying '/root/.gitconfig' to '/__w/_temp/21f39999-36ee-4110-ab26-3d394245d9e6/.gitconfig'
+Temporarily overriding HOME='/__w/_temp/21f39999-36ee-4110-ab26-3d394245d9e6' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /__w/transformers/transformers
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/__w/transformers/transformers/.git.path
+includeif.gitdir:/__w/transformers/transformers/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/__w/transformers/transformers/.git.path
+/__w/_temp/git-credentials-f7c54501-8001-41e3-804f-be1db1220c7e.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/__w/transformers/transformers/.git.path \/__w\/_temp\/git\-credentials\-f7c54501\-8001\-41e3\-804f\-be1db1220c7e\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/__w/transformers/transformers/.git/worktrees/*.path
+/__w/_temp/git-credentials-f7c54501-8001-41e3-804f-be1db1220c7e.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/__w/transformers/transformers/.git/worktrees/*.path \/__w\/_temp\/git\-credentials\-f7c54501\-8001\-41e3\-804f\-be1db1220c7e\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-f7c54501-8001-41e3-804f-be1db1220c7e.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-f7c54501\-8001\-41e3\-804f\-be1db1220c7e\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-f7c54501-8001-41e3-804f-be1db1220c7e.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-f7c54501\-8001\-41e3\-804f\-be1db1220c7e\.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/__w/_temp/git-credentials-f7c54501-8001-41e3-804f-be1db1220c7e.config'
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Cleaning up orphan processes

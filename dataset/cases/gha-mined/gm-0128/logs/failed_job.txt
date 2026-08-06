@@ -1,0 +1,1763 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {7c75cd66-bc48-42fe-9d16-5e6b68983f6e}
+Azure Region: eastus
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260720.247.2
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0' (SHA:9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0)
+Download action repository 'astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9' (SHA:c771a70e6277c0a99b617c7a806ffedaca235ff9)
+Complete job name: Test typing-extensions (`main` branch) on Python 3.12
+##[group]Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+with:
+  persist-credentials: false
+  repository: pydantic/pydantic
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+##[endgroup]
+Syncing repository: pydantic/pydantic
+##[group]Getting Git version info
+Working directory is '/home/runner/work/pydantic/pydantic'
+[command]/usr/bin/git version
+git version 2.54.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/82962813-475b-45b2-ae49-1ac7fe09f972' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/pydantic/pydantic
+Deleting the contents of '/home/runner/work/pydantic/pydantic'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/pydantic/pydantic
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/pydantic/pydantic/.git/
+[command]/usr/bin/git remote add origin https://github.com/pydantic/pydantic
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/pydantic/pydantic/.git.path /home/runner/work/_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/pydantic/pydantic/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +bd42a2d108e04d05095d9af638de7f3db3864243:refs/remotes/pull/13583/merge
+From https://github.com/pydantic/pydantic
+ * [new ref]         bd42a2d108e04d05095d9af638de7f3db3864243 -> pull/13583/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/13583/merge
+Note: switching to 'refs/remotes/pull/13583/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at bd42a2d Merge 7d4f304f43d2087c6fc4455292f1080e55d5883c into 57d0ad870110765089b6037313e8c4f507b7c4de
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+bd42a2d108e04d05095d9af638de7f3db3864243
+##[group]Removing auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/home/runner/work/pydantic/pydantic/.git.path
+includeif.gitdir:/home/runner/work/pydantic/pydantic/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/pydantic/pydantic/.git.path
+/home/runner/work/_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/pydantic/pydantic/.git.path /home/runner/work/_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/pydantic/pydantic/.git/worktrees/*.path
+/home/runner/work/_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/pydantic/pydantic/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/home/runner/work/_temp/git-credentials-9c673ded-c67e-4f30-b871-7c9963acf8fa.config'
+##[endgroup]
+##[group]Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+with:
+  python-version: 3.12
+  enable-cache: true
+  activate-environment: false
+  no-project: false
+  working-directory: /home/runner/work/pydantic/pydantic
+  github-token: ***
+  cache-dependency-glob: **/*requirements*.txt
+**/*requirements*.in
+**/*constraints*.txt
+**/*constraints*.in
+**/pyproject.toml
+**/uv.lock
+**/*.py.lock
+
+  restore-cache: true
+  save-cache: true
+  prune-cache: false
+  cache-python: false
+  ignore-nothing-to-cache: false
+  ignore-empty-workdir: false
+  download-from-astral-mirror: true
+  add-problem-matchers: true
+  quiet: false
+  resolution-strategy: highest
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+##[endgroup]
+Trying to find version for uv in: /home/runner/work/pydantic/pydantic/uv.toml
+Could not find file: /home/runner/work/pydantic/pydantic/uv.toml
+Trying to find version for uv in: /home/runner/work/pydantic/pydantic/pyproject.toml
+Found version for uv in /home/runner/work/pydantic/pydantic/pyproject.toml: >=0.8.4
+Found minimum version specifier, using latest version
+Fetching manifest data from https://raw.githubusercontent.com/astral-sh/versions/main/v1/uv.ndjson ...
+Downloading uv from "https://releases.astral.sh/github/uv/releases/download/0.12.1/uv-x86_64-unknown-linux-gnu.tar.gz" ...
+[command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/45ae9f43-dbb5-41c9-b4a9-e70fc95e221d -f /home/runner/work/_temp/b9231f03-ecf6-4759-a3ee-d7cc3290cd90
+Added /home/runner/.local/bin to the path
+Added /opt/hostedtoolcache/uv/0.12.1/x86_64 to the path
+Set UV_PYTHON_INSTALL_DIR to /home/runner/work/_temp/uv-python-dir
+Added /home/runner/work/_temp/uv-python-dir to the path
+Set UV_PYTHON to 3.12
+Set UV_CACHE_DIR to /home/runner/work/_temp/setup-uv-cache
+Successfully installed uv version 0.12.1
+Searching files using cache dependency glob: /home/runner/work/pydantic/pydantic/**/*requirements*.txt,/home/runner/work/pydantic/pydantic/**/*requirements*.in,/home/runner/work/pydantic/pydantic/**/*constraints*.txt,/home/runner/work/pydantic/pydantic/**/*constraints*.in,/home/runner/work/pydantic/pydantic/**/pyproject.toml,/home/runner/work/pydantic/pydantic/**/uv.lock,/home/runner/work/pydantic/pydantic/**/*.py.lock
+/home/runner/work/pydantic/pydantic/.github/actions/people/requirements.in
+/home/runner/work/pydantic/pydantic/.github/pyodide/requirements.in
+/home/runner/work/pydantic/pydantic/pydantic-core/pyproject.toml
+/home/runner/work/pydantic/pydantic/pydantic-core/uv.lock
+/home/runner/work/pydantic/pydantic/pyproject.toml
+/home/runner/work/pydantic/pydantic/tests/plugin/pyproject.toml
+/home/runner/work/pydantic/pydantic/tests/typechecking/pyproject.toml
+/home/runner/work/pydantic/pydantic/uv.lock
+Found 8 files to hash.
+Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12-31aba6b272579f44710829ea6c3c04dbd14f9b832b1b37cdc76076f6b6dbb36c
+Cache hit for: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12-31aba6b272579f44710829ea6c3c04dbd14f9b832b1b37cdc76076f6b6dbb36c
+Received 29580637 of 29580637 (100.0%), 102.6 MBs/sec
+Cache Size: ~28 MB (29580637 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/2cc97cea-27eb-43d7-91df-736c983aba82/cache.tzst -P -C /home/runner/work/pydantic/pydantic --use-compress-program unzstd
+Cache restored successfully
+cache restored from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12-31aba6b272579f44710829ea6c3c04dbd14f9b832b1b37cdc76076f6b6dbb36c
+##[group]Run uv sync --all-packages --group testing-extra --all-extras
+uv sync --all-packages --group testing-extra --all-extras
+shell: /usr/bin/bash -e {0}
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.12
+  UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+##[endgroup]
+Using CPython 3.12.3 interpreter at: /usr/bin/python3.12
+Creating virtual environment at: .venv
+   Building pydantic @ file:///home/runner/work/pydantic/pydantic
+   Building pydantic-core @ file:///home/runner/work/pydantic/pydantic/pydantic-core
+Downloading memray (9.5MiB)
+Downloading pandas (11.8MiB)
+Downloading maturin (10.2MiB)
+Downloading sqlalchemy (3.1MiB)
+Downloading numpy (15.9MiB)
+      Built pydantic @ file:///home/runner/work/pydantic/pydantic
+ Downloaded maturin
+ Downloaded sqlalchemy
+ Downloaded memray
+ Downloaded numpy
+ Downloaded pandas
+      Built pydantic-core @ file:///home/runner/work/pydantic/pydantic/pydantic-core
+Prepared 28 packages in 37.69s
+Installed 67 packages in 81ms
+ + annotated-types==0.7.0
+ + ansi2html==1.9.2
+ + asttokens==2.4.1
+ + attrs==24.3.0
+ + black==26.5.1
+ + cffi==2.1.0
+ + click==8.1.8
+ + cloudpickle==3.1.2
+ + coverage==7.13.5
+ + devtools==0.12.2
+ + dirty-equals==0.9.0
+ + dnspython==2.7.0
+ + email-validator==2.2.0
+ + executing==2.2.0
+ + faker==35.0.0
+ + greenlet==3.1.1
+ + hypothesis==6.147.0
+ + idna==3.15
+ + iniconfig==2.0.0
+ + inline-snapshot==0.32.2
+ + jinja2==3.1.6
+ + jsonschema==4.26.0
+ + jsonschema-specifications==2024.10.1
+ + linkify-it-py==2.0.3
+ + markdown-it-py==3.0.0
+ + markupsafe==3.0.3
+ + maturin==1.13.3
+ + mdit-py-plugins==0.4.2
+ + mdurl==0.1.2
+ + memray==1.19.2
+ + mypy-extensions==1.0.0
+ + numpy==2.3.4
+ + packaging==24.2
+ + pandas==2.3.3
+ + pathspec==1.1.1
+ + platformdirs==4.3.6
+ + pluggy==1.5.0
+ + py-cpuinfo==9.0.0
+ + pycparser==2.22
+ + pydantic==2.14.0a1 (from file:///home/runner/work/pydantic/pydantic)
+ + pydantic-core==2.47.0 (from file:///home/runner/work/pydantic/pydantic/pydantic-core)
+ + pygments==2.19.1
+ + pytest==9.1.1
+ + pytest-benchmark==5.1.0
+ + pytest-codspeed==4.5.0
+ + pytest-examples==0.0.15
+ + pytest-memray==1.7.0
+ + pytest-mock==3.14.0
+ + pytest-pretty==1.2.0
+ + pytest-run-parallel==0.7.1
+ + pytest-timeout==2.4.0
+ + python-dateutil==2.9.0.post0
+ + pytokens==0.4.1
+ + pytz==2024.2
+ + referencing==0.36.1
+ + rich==13.9.4
+ + rpds-py==2026.6.3
+ + ruff==0.15.10
+ + six==1.17.0
+ + sortedcontainers==2.4.0
+ + sqlalchemy==2.0.37
+ + textual==1.0.0
+ + time-machine==3.3.0
+ + typing-extensions==4.15.0
+ + typing-inspection==0.4.2
+ + tzdata==2025.1
+ + uc-micro-py==1.0.3
+##[group]Run uv pip install 'typing-extensions @ git+https://github.com/python/typing_extensions.git'
+uv pip install 'typing-extensions @ git+https://github.com/python/typing_extensions.git'
+shell: /usr/bin/bash -e {0}
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.12
+  UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+##[endgroup]
+Resolved 1 package in 197ms
+   Updating https://github.com/python/typing_extensions.git (HEAD)
+    Updated https://github.com/python/typing_extensions.git (83400e979b8e3b0b647f9a6a57f0275230e5f19f)
+   Building typing-extensions @ git+https://github.com/python/typing_extensions.git@83400e979b8e3b0b647f9a6a57f0275230e5f19f
+      Built typing-extensions @ git+https://github.com/python/typing_extensions.git@83400e979b8e3b0b647f9a6a57f0275230e5f19f
+Prepared 1 package in 670ms
+Uninstalled 1 package in 0.33ms
+Installed 1 package in 0.80ms
+ - typing-extensions==4.15.0
+ + typing-extensions==4.16.1.dev0 (from git+https://github.com/python/typing_extensions.git@83400e979b8e3b0b647f9a6a57f0275230e5f19f)
+##[group]Run make test
+make test
+shell: /usr/bin/bash -e {0}
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.12
+  UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+##[endgroup]
+uv 0.12.1 (x86_64-unknown-linux-gnu)
+uv run coverage run -m pytest --durations=10 --parallel-threads 1
+Uninstalled 1 package in 0.39ms
+Installed 1 package in 1ms
+================================================================ test session starts =================================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.5.0
+codspeed: 4.5.0 (disabled, mode: walltime, callgraph: enabled, timer_resolution: 1.0ns)
+benchmark: 5.1.0 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=True warmup_iterations=100000)
+rootdir: /home/runner/work/pydantic/pydantic
+configfile: pyproject.toml
+testpaths: tests
+plugins: Faker-35.0.0, time-machine-3.3.0, memray-1.7.0, devtools-0.12.2, hypothesis-6.147.0, pretty-1.2.0, run-parallel-0.7.1, codspeed-4.5.0, inline-snapshot-0.32.2, timeout-2.4.0, examples-0.0.15, benchmark-5.1.0, mock-3.14.0
+collected 12822 items
+Collected 0 items to run in parallel
+
+tests/benchmarks/test_attribute_access.py ..                                                                                                   [  0%]
+tests/benchmarks/test_discriminated_unions.py ..                                                                                               [  0%]
+tests/benchmarks/test_fastapi_startup_generics.py .                                                                                            [  0%]
+tests/benchmarks/test_fastapi_startup_simple.py .                                                                                              [  0%]
+tests/benchmarks/test_imports.py ..                                                                                                            [  0%]
+tests/benchmarks/test_isinstance.py .                                                                                                          [  0%]
+tests/benchmarks/test_model_eq.py ...                                                                                                          [  0%]
+tests/benchmarks/test_model_schema_generation.py ..............sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss [  0%]
+sssssssssssssssssssssssssssss                                                                                                                  [  1%]
+tests/benchmarks/test_model_schema_generation_recursive.py ......                                                                              [  1%]
+tests/benchmarks/test_model_serialization.py .....                                                                                             [  1%]
+tests/benchmarks/test_model_validation.py ........                                                                                             [  1%]
+tests/benchmarks/test_north_star.py ........                                                                                                   [  1%]
+tests/benchmarks/test_regex.py .                                                                                                               [  1%]
+tests/benchmarks/test_validators_build.py .                                                                                                    [  1%]
+tests/mypy/test_mypy.py sssssssssssssssssssssssssssssssssssssssssssssssssssss                                                                  [  1%]
+tests/plugin/test_plugin.py s                                                                                                                  [  1%]
+tests/pydantic_core/benchmarks/test_complete_benchmark.py ............                                                                         [  1%]
+tests/pydantic_core/benchmarks/test_micro_benchmarks.py ...................................................................................... [  2%]
+...............................                                                                                                                [  2%]
+tests/pydantic_core/benchmarks/test_nested_benchmark.py ..                                                                                     [  2%]
+tests/pydantic_core/benchmarks/test_serialization_micro.py ..................................                                                  [  2%]
+tests/pydantic_core/serializers/test_any.py ...............................s.................................................................. [  3%]
+...                                                                                                                                            [  3%]
+tests/pydantic_core/serializers/test_bytes.py ................                                                                                 [  3%]
+tests/pydantic_core/serializers/test_complex.py ............                                                                                   [  3%]
+tests/pydantic_core/serializers/test_dataclasses.py .....x..........                                                                           [  4%]
+tests/pydantic_core/serializers/test_datetime.py .......................................                                                       [  4%]
+tests/pydantic_core/serializers/test_decimal.py .......                                                                                        [  4%]
+tests/pydantic_core/serializers/test_definitions.py .......                                                                                    [  4%]
+tests/pydantic_core/serializers/test_definitions_recursive.py .....                                                                            [  4%]
+tests/pydantic_core/serializers/test_dict.py ............................                                                                      [  4%]
+tests/pydantic_core/serializers/test_enum.py .....                                                                                             [  4%]
+tests/pydantic_core/serializers/test_format.py ...............                                                                                 [  4%]
+tests/pydantic_core/serializers/test_functions.py ................................                                                             [  5%]
+tests/pydantic_core/serializers/test_generator.py ......                                                                                       [  5%]
+tests/pydantic_core/serializers/test_infer.py ...                                                                                              [  5%]
+tests/pydantic_core/serializers/test_json.py ....                                                                                              [  5%]
+tests/pydantic_core/serializers/test_json_or_python.py ..                                                                                      [  5%]
+tests/pydantic_core/serializers/test_list_tuple.py ...............................................................                             [  5%]
+tests/pydantic_core/serializers/test_literal.py ......                                                                                         [  5%]
+tests/pydantic_core/serializers/test_model.py ...................................................................                              [  6%]
+tests/pydantic_core/serializers/test_model_root.py ........                                                                                    [  6%]
+tests/pydantic_core/serializers/test_none.py ............................                                                                      [  6%]
+tests/pydantic_core/serializers/test_nullable.py .                                                                                             [  6%]
+tests/pydantic_core/serializers/test_other.py .......                                                                                          [  6%]
+tests/pydantic_core/serializers/test_pickling.py ......                                                                                        [  6%]
+tests/pydantic_core/serializers/test_serialize_as_any.py ............                                                                          [  6%]
+tests/pydantic_core/serializers/test_set_frozenset.py .......                                                                                  [  6%]
+tests/pydantic_core/serializers/test_simple.py ........................................                                                        [  7%]
+tests/pydantic_core/serializers/test_string.py .....................                                                                           [  7%]
+tests/pydantic_core/serializers/test_timedelta.py ...................................................................................          [  8%]
+tests/pydantic_core/serializers/test_typed_dict.py .....................................                                                       [  8%]
+tests/pydantic_core/serializers/test_union.py ................................................................................................ [  9%]
+..........                                                                                                                                     [  9%]
+tests/pydantic_core/serializers/test_url.py ..........                                                                                         [  9%]
+tests/pydantic_core/serializers/test_uuid.py .......                                                                                           [  9%]
+tests/pydantic_core/test_build.py .........                                                                                                    [  9%]
+tests/pydantic_core/test_config.py ..............                                                                                              [  9%]
+tests/pydantic_core/test_custom_errors.py ....                                                                                                 [  9%]
+tests/pydantic_core/test_docstrings.py ...............................................................                                         [  9%]
+tests/pydantic_core/test_errors.py ........................................................................................................... [ 10%]
+............................................................s.......................s.......                                                   [ 11%]
+tests/pydantic_core/test_garbage_collection.py ...                                                                                             [ 11%]
+tests/pydantic_core/test_hypothesis.py ...........                                                                                             [ 11%]
+tests/pydantic_core/test_isinstance.py ...                                                                                                     [ 11%]
+tests/pydantic_core/test_json.py ...............                                                                                               [ 11%]
+tests/pydantic_core/test_misc.py .................                                                                                             [ 11%]
+tests/pydantic_core/test_prebuilt.py .........                                                                                                 [ 11%]
+tests/pydantic_core/test_schema_functions.py ...................................................................................               [ 12%]
+tests/pydantic_core/test_typing.py ..........                                                                                                  [ 12%]
+tests/pydantic_core/test_tzinfo.py ..........................................                                                                  [ 13%]
+tests/pydantic_core/validators/arguments_v3/test_alias.py .....sss.........sssss...s.s........................................................ [ 13%]
+........................s                                                                                                                      [ 13%]
+tests/pydantic_core/validators/arguments_v3/test_build_errors.py ......                                                                        [ 13%]
+tests/pydantic_core/validators/arguments_v3/test_extra.py ........ssss........ss..                                                             [ 14%]
+tests/pydantic_core/validators/arguments_v3/test_general.py ....s.ss......ssss...s...s.                                                        [ 14%]
+tests/pydantic_core/validators/arguments_v3/test_keyword_only.py ....ss....s...s.                                                              [ 14%]
+tests/pydantic_core/validators/arguments_v3/test_positional_only.py ....ss...s.s                                                               [ 14%]
+tests/pydantic_core/validators/arguments_v3/test_positional_or_keyword.py ......ssss.....ss...s.                                               [ 14%]
+tests/pydantic_core/validators/arguments_v3/test_var_args.py .....ss.......ss....                                                              [ 14%]
+tests/pydantic_core/validators/arguments_v3/test_var_kwargs_uniform.py ....ss......ss....                                                      [ 15%]
+tests/pydantic_core/validators/arguments_v3/test_var_kwargs_unpacked_typed_dict.py ...........sssss........                                    [ 15%]
+tests/pydantic_core/validators/test_allow_partial.py ..............                                                                            [ 15%]
+tests/pydantic_core/validators/test_arguments.py ..............s..s....s........s.ssssss........ssssss................ss......s..s............ [ 16%]
+.s...sss.....s...s......ssss......sss....ssss...sss.....sssss.s.s............................................................................. [ 17%]
+...........s                                                                                                                                   [ 17%]
+tests/pydantic_core/validators/test_bool.py .......................................                                                            [ 17%]
+tests/pydantic_core/validators/test_bytes.py ............................                                                                      [ 17%]
+tests/pydantic_core/validators/test_call.py ..........................                                                                         [ 17%]
+tests/pydantic_core/validators/test_callable.py ..............                                                                                 [ 18%]
+tests/pydantic_core/validators/test_chain.py ............                                                                                      [ 18%]
+tests/pydantic_core/validators/test_complex.py ....................................................                                            [ 18%]
+tests/pydantic_core/validators/test_custom_error.py .....                                                                                      [ 18%]
+tests/pydantic_core/validators/test_dataclasses.py .......s..sss........sssss......s.......................................................... [ 19%]
+.............................................................................................................................................. [ 20%]
+..............s.                                                                                                                               [ 20%]
+tests/pydantic_core/validators/test_date.py .................................................................................................. [ 21%]
+.......................                                                                                                                        [ 21%]
+tests/pydantic_core/validators/test_datetime.py .............................................................................................. [ 22%]
+...........................                                                                                                                    [ 22%]
+tests/pydantic_core/validators/test_decimal.py ............................................................................................... [ 23%]
+.............................................................................................................................................. [ 24%]
+....................................................................................................................................           [ 25%]
+tests/pydantic_core/validators/test_definitions.py ...........                                                                                 [ 25%]
+tests/pydantic_core/validators/test_definitions_recursive.py ....................................                                              [ 25%]
+tests/pydantic_core/validators/test_dict.py ....................................                                                               [ 25%]
+tests/pydantic_core/validators/test_enums.py .......................                                                                           [ 26%]
+tests/pydantic_core/validators/test_float.py ................................................................................................. [ 26%]
+.............................................................................................................................................. [ 28%]
+...................................................................................                                                            [ 28%]
+tests/pydantic_core/validators/test_frozenset.py .........................................................................                     [ 29%]
+tests/pydantic_core/validators/test_function.py ..........................................................                                     [ 29%]
+tests/pydantic_core/validators/test_generator.py ......................................                                                        [ 29%]
+tests/pydantic_core/validators/test_int.py ................................................................................................... [ 30%]
+............................................................................................................................................   [ 31%]
+tests/pydantic_core/validators/test_is_instance.py .................................                                                           [ 32%]
+tests/pydantic_core/validators/test_is_subclass.py ..............                                                                              [ 32%]
+tests/pydantic_core/validators/test_json.py .................................                                                                  [ 32%]
+tests/pydantic_core/validators/test_json_or_python.py .                                                                                        [ 32%]
+tests/pydantic_core/validators/test_lax_or_strict.py ..                                                                                        [ 32%]
+tests/pydantic_core/validators/test_list.py ................................................................................................   [ 33%]
+tests/pydantic_core/validators/test_literal.py ..............................................                                                  [ 33%]
+tests/pydantic_core/validators/test_model.py .............................................                                                     [ 33%]
+tests/pydantic_core/validators/test_model_fields.py .......................................................................................... [ 34%]
+.............................................................................................................................................. [ 35%]
+............................................................................s                                                                  [ 36%]
+tests/pydantic_core/validators/test_model_init.py ..............                                                                               [ 36%]
+tests/pydantic_core/validators/test_model_root.py .........                                                                                    [ 36%]
+tests/pydantic_core/validators/test_none.py ..                                                                                                 [ 36%]
+tests/pydantic_core/validators/test_nullable.py ...                                                                                            [ 36%]
+tests/pydantic_core/validators/test_pickling.py ....                                                                                           [ 36%]
+tests/pydantic_core/validators/test_set.py ............................................................................                        [ 37%]
+tests/pydantic_core/validators/test_string.py ................................................................................................ [ 37%]
+..............                                                                                                                                 [ 38%]
+tests/pydantic_core/validators/test_tagged_union.py ................................................                                           [ 38%]
+tests/pydantic_core/validators/test_time.py ...................................................................................                [ 39%]
+tests/pydantic_core/validators/test_timedelta.py ....................................................................................          [ 39%]
+tests/pydantic_core/validators/test_tuple.py .........................................................................................         [ 40%]
+tests/pydantic_core/validators/test_typed_dict.py ............................................................................................ [ 41%]
+.............................................................................................................................................. [ 42%]
+....................s                                                                                                                          [ 42%]
+tests/pydantic_core/validators/test_union.py .....................................................x..............................              [ 43%]
+tests/pydantic_core/validators/test_url.py ................................................................................................... [ 43%]
+.............................................................................................................................................. [ 44%]
+.............................................................................................................................xx..xxx.x........ [ 46%]
+                                                                                                                                               [ 46%]
+tests/pydantic_core/validators/test_uuid.py .................................................................................................  [ 46%]
+tests/pydantic_core/validators/test_with_default.py .......................................................................................... [ 47%]
+..................................                                                                                                             [ 47%]
+tests/test_abc.py ...                                                                                                                          [ 47%]
+tests/test_aliases.py ...................................................................s.....s..s.....ssssssssss..s.....s..s.....s..s.....s. [ 48%]
+.s.....s..s.....ssssssssss..........                                                                                                           [ 49%]
+tests/test_allow_partial.py ...................                                                                                                [ 49%]
+tests/test_annotated.py ....................................                                                                                   [ 49%]
+tests/test_assert_in_validators.py .                                                                                                           [ 49%]
+tests/test_callable.py ........                                                                                                                [ 49%]
+tests/test_color.py ..........................................................................................                                 [ 50%]
+tests/test_computed_fields.py ............................x...s...x                                                                            [ 50%]
+tests/test_config.py ....................................................................................                                      [ 51%]
+tests/test_construction.py .......................................................                                                             [ 51%]
+tests/test_create_model.py ............................                                                                                        [ 51%]
+tests/test_dataclasses.py .............................................x..........................................................s........... [ 52%]
+..........F                                                                                                                                    [ 52%]
+tests/test_dataclasses.py:2244 test_unparametrized_generic_dataclass[pydantic] - pydantic_core._pydantic_core.ValidationError: 1 validatio…
+tests/test_dataclasses.py F                                                                                                                    [ 52%]
+tests/test_dataclasses.py:2244 test_unparametrized_generic_dataclass[stdlib] - pydantic_core._pydantic_core.ValidationError: 1 validation …
+tests/test_dataclasses.py F                                                                                                                    [ 52%]
+tests/test_dataclasses.py:2244 test_unparametrized_generic_dataclass[combined] - pydantic_core._pydantic_core.ValidationError: 1 validatio…
+tests/test_dataclasses.py .................ss................................................................................................. [ 53%]
+.......................                                                                                                                        [ 53%]
+tests/test_datetime.py ....................................................................................................................... [ 54%]
+.................................................................................................................                              [ 55%]
+tests/test_decorators.py ...............................                                                                                       [ 55%]
+tests/test_deferred_annotations.py sssssssss                                                                                                   [ 56%]
+tests/test_deprecated.py ................................................                                                                      [ 56%]
+tests/test_deprecated_fields.py ............                                                                                                   [ 56%]
+tests/test_deprecated_validate_arguments.py .....................                                                                              [ 56%]
+tests/test_docs.py ............................................................s..s....s...............s.................................ss... [ 57%]
+ssssssssssssssssssss.........s.s...s.s......s..ssssssssss....ssssssssssss......s.............................................................. [ 58%]
+....................ss.......ss.s..........................s.......s..s.........................s.............F                                [ 59%]
+tests/test_docs.py:190 test_docs_examples[docs/concepts/dataclasses.md:78-93] - pydantic_core._pydantic_core.ValidationError: 1 validation…
+tests/test_docs.py F                                                                                                                           [ 59%]
+tests/test_docs.py:190 test_docs_examples[docs/concepts/dataclasses.md:101-112] - pydantic_core._pydantic_core.ValidationError: 1 validati…
+tests/test_docs.py .......................s......s...s....ss.................s..................F                                              [ 60%]
+tests/test_docs.py:190 test_docs_examples[docs/concepts/models.md:928-959] - Failed: Print output changed code:   --- before   +++ after  …
+tests/test_docs.py s.sF                                                                                                                        [ 60%]
+tests/test_docs.py:190 test_docs_examples[docs/concepts/models.md:1049-1081] - pydantic_core._pydantic_core.ValidationError: 1 validation …
+tests/test_docs.py ..F                                                                                                                         [ 60%]
+tests/test_docs.py:190 test_docs_examples[docs/concepts/models.md:1177-1205] - pydantic_core._pydantic_core.ValidationError: 1 validation …
+tests/test_docs.py ................s..ss..s.ss...s............................................................................................ [ 61%]
+.......s.........................................................ss............s.s.....s.ss............sss.ssssssss............                [ 62%]
+tests/test_docs_extraction.py ..........xx....                                                                                                 [ 62%]
+tests/test_dunder_all.py ..                                                                                                                    [ 62%]
+tests/test_edge_cases.py ..................................................................................................................... [ 63%]
+.....F                                                                                                                                         [ 63%]
+tests/test_edge_cases.py:1676 test_type_var_any - AssertionError: assert {'properties'...pe': 'object'} == {'properties'...pe': 'object'} …
+tests/test_edge_cases.py ...........................................................................                                           [ 63%]
+tests/test_errors.py ....                                                                                                                      [ 63%]
+tests/test_experimental_arguments_schema.py ..........                                                                                         [ 63%]
+tests/test_exports.py ........................................................................................................................ [ 64%]
+.....................................                                                                                                          [ 65%]
+tests/test_fields.py .......................................................................                                                   [ 65%]
+tests/test_forward_ref.py ................................................xx.........F                                                         [ 66%]
+tests/test_forward_ref.py:1427 test_type_adapter_uses_function_type_params_namespace - pydantic_core._pydantic_core.ValidationError: 1 val…
+tests/test_forward_ref.py x........x....                                                                                                       [ 66%]
+tests/test_generics.py ......................................F                                                                                 [ 66%]
+tests/test_generics.py:841 test_partial_specification_instantiation - pydantic_core._pydantic_core.ValidationError: 1 validation error for…
+tests/test_generics.py F                                                                                                                       [ 66%]
+tests/test_generics.py:866 test_partial_specification_instantiation_bounded - pydantic_core._pydantic_core.ValidationError: 1 validation e…
+tests/test_generics.py ........s......................F                                                                                        [ 66%]
+tests/test_generics.py:1692 test_generic_recursive_models - pydantic_core._pydantic_core.ValidationError: 2 validation errors for Model2 r…
+tests/test_generics.py ...x...................F                                                                                                [ 67%]
+tests/test_generics.py:2297 test_multi_inheritance_generic_defaults - pydantic_core._pydantic_core.ValidationError: 1 validation error for…
+tests/test_generics.py .sxF                                                                                                                    [ 67%]
+tests/test_generics.py:2436 test_double_typevar_substitution - pydantic_core._pydantic_core.ValidationError: 3 validation errors for Gener…
+tests/test_generics.py ......xx.....F                                                                                                          [ 67%]
+tests/test_generics.py:2835 test_reverse_order_generic_hashability - pydantic_core._pydantic_core.ValidationError: 1 validation error for …
+tests/test_generics.py ..........F                                                                                                             [ 67%]
+tests/test_generics.py:3191 test_revalidation_against_any - pydantic_core._pydantic_core.ValidationError: 1 validation error for ResponseM…
+tests/test_generics.py .F                                                                                                                      [ 67%]
+tests/test_generics.py:3242 test_revalidation_with_basic_inference - pydantic_core._pydantic_core.ValidationError: 1 validation error for …
+tests/test_generics.py ..                                                                                                                      [ 67%]
+tests/test_internal.py ...xx.......................                                                                                            [ 67%]
+tests/test_json.py ............................................................                                                                [ 68%]
+tests/test_json_schema.py .................................................................................................................... [ 68%]
+.............................................................................................................................................. [ 70%]
+...............ss.........................................x................................................................................... [ 71%]
+....s....................................................................................................................................      [ 72%]
+tests/test_main.py ..........................................................................................................sssssssssssssssss [ 73%]
+ssssssss...........................................x..............................F                                                            [ 73%]
+tests/test_main.py:2759 test_model_equality_generics - pydantic_core._pydantic_core.ValidationError: 1 validation error for GenericModel x…
+tests/test_main.py ..........................................................................s                                                 [ 74%]
+tests/test_meta.py x                                                                                                                           [ 74%]
+tests/test_migration.py ...................................................................................................................... [ 75%]
+...............................................................................................................                                [ 76%]
+tests/test_missing_sentinel.py ..x.....                                                                                                        [ 76%]
+tests/test_model_signature.py ...............                                                                                                  [ 76%]
+tests/test_model_validator.py .........                                                                                                        [ 76%]
+tests/test_networks.py ....................................................................s.................................................. [ 77%]
+..............................................................................x............................................................... [ 78%]
+.................................................                                                                                              [ 78%]
+tests/test_networks_ipaddress.py ............................................................................................................. [ 79%]
+................................................                                                                                               [ 80%]
+tests/test_parse.py ...........                                                                                                                [ 80%]
+tests/test_pickle.py ......................                                                                                                    [ 80%]
+tests/test_pipeline.py ...........................................................................................                             [ 81%]
+tests/test_plugin_loader.py .........                                                                                                          [ 81%]
+tests/test_plugins.py ..............                                                                                                           [ 81%]
+tests/test_private_attributes.py ...................................                                                                           [ 81%]
+tests/test_rich_repr.py ..                                                                                                                     [ 81%]
+tests/test_root_model.py ...........F                                                                                                          [ 81%]
+tests/test_root_model.py:100 test_root_model_repr - pydantic_core._pydantic_core.ValidationError: 1 validation error for SubRootModel   In…
+tests/test_root_model.py ...................................................................                                                   [ 82%]
+tests/test_serialize.py ...........................................................................................                            [ 82%]
+tests/test_serialize_as_any.py ..............                                                                                                  [ 82%]
+tests/test_strict.py ......                                                                                                                    [ 83%]
+tests/test_structural_pattern_matching.py .                                                                                                    [ 83%]
+tests/test_titles.py ....................................................................................................................      [ 83%]
+tests/test_tools.py .........                                                                                                                  [ 84%]
+tests/test_type_adapter.py .........................................................x......................................................... [ 84%]
+..........................................................................................................                                     [ 85%]
+tests/test_type_alias_type.py .........F                                                                                                       [ 85%]
+tests/test_type_alias_type.py:336 test_non_specified_generic_type_alias_type - AssertionError: assert {'items': {'t...ype': 'array'} == {'…
+tests/test_type_alias_type.py .........                                                                                                        [ 85%]
+tests/test_type_hints.py ......                                                                                                                [ 85%]
+tests/test_types.py ........s..........................x.......................ss............................................................. [ 86%]
+.............................................................................................................................................. [ 87%]
+....................                                                                                                                           [ 88%]
+tests/test_types_payment_card_number.py ..............................................                                                         [ 88%]
+tests/test_types_self.py .............                                                                                                         [ 88%]
+tests/test_types_typeddict.py ................................................................................                                 [ 89%]
+tests/test_types_zoneinfo.py ......                                                                                                            [ 89%]
+tests/test_typing.py ................                                                                                                          [ 89%]
+tests/test_utils.py .......................................................................................................................... [ 90%]
+......................................                                                                                                         [ 90%]
+tests/test_v1.py ...                                                                                                                           [ 90%]
+tests/test_validate_call.py .........................................................F                                                         [ 91%]
+tests/test_validate_call.py:1168 test_validate_call_with_pep_695_syntax - pydantic_core._pydantic_core.ValidationError: 1 validation error…
+tests/test_validate_call.py F                                                                                                                  [ 91%]
+tests/test_validate_call.py:1198 test_pep695_with_class - pydantic_core._pydantic_core.ValidationError: 1 validation error for A.f 1   Inp…
+tests/test_validate_call.py ....                                                                                                               [ 91%]
+tests/test_validation_context.py ....                                                                                                          [ 91%]
+tests/test_validators.py ..................................................................................................................... [ 92%]
+...................................................x.......x..                                                                                 [ 92%]
+tests/test_validators_dataclass.py ........                                                                                                    [ 92%]
+tests/test_version.py .......                                                                                                                  [ 92%]
+tests/test_warnings.py .....                                                                                                                   [ 92%]
+tests/types/test_bool.py ...........................................................                                                           [ 93%]
+tests/types/test_bytes.py ......................                                                                                               [ 93%]
+tests/types/test_complex.py ..                                                                                                                 [ 93%]
+tests/types/test_counter.py ..                                                                                                                 [ 93%]
+tests/types/test_date.py ................                                                                                                      [ 93%]
+tests/types/test_datetime.py ..............                                                                                                    [ 93%]
+tests/types/test_decimal.py .................................................................................................................. [ 94%]
+..........................................................                                                                                     [ 94%]
+tests/types/test_defaultdict.py ......                                                                                                         [ 95%]
+tests/types/test_deque.py ........................                                                                                             [ 95%]
+tests/types/test_dict.py ...                                                                                                                   [ 95%]
+tests/types/test_ellipsis.py .                                                                                                                 [ 95%]
+tests/types/test_enum.py ...................                                                                                                   [ 95%]
+tests/types/test_float.py ........................................                                                                             [ 95%]
+tests/types/test_fraction.py ......................................................................................                            [ 96%]
+tests/types/test_frozenset.py .................                                                                                                [ 96%]
+tests/types/test_int.py ......................................................                                                                 [ 96%]
+tests/types/test_iterable.py .........                                                                                                         [ 97%]
+tests/types/test_list.py .........................                                                                                             [ 97%]
+tests/types/test_literal.py ....                                                                                                               [ 97%]
+tests/types/test_mapping.py ...                                                                                                                [ 97%]
+tests/types/test_model.py ..................                                                                                                   [ 97%]
+tests/types/test_namedtuple.py ...........................                                                                                     [ 97%]
+tests/types/test_none.py .....                                                                                                                 [ 97%]
+tests/types/test_ordered_dict.py ......                                                                                                        [ 97%]
+tests/types/test_path.py ...............................                                                                                       [ 97%]
+tests/types/test_pattern.py ...............                                                                                                    [ 98%]
+tests/types/test_sequence.py .....................                                                                                             [ 98%]
+tests/types/test_set.py ..........................                                                                                             [ 98%]
+tests/types/test_str.py ................................................                                                                       [ 98%]
+tests/types/test_time.py ..............                                                                                                        [ 98%]
+tests/types/test_timedelta.py ...........                                                                                                      [ 98%]
+tests/types/test_tuple.py .....................                                                                                                [ 99%]
+tests/types/test_uuid.py ..........                                                                                                            [ 99%]
+tests/types/unions/test_discriminated_union.py ...........................................................x.........x...x..x.....              [ 99%]
+tests/types/unions/test_union.py .................                                                                                             [100%]
+
+══════════════════════════════════════════════════════════════════ inline-snapshot ═══════════════════════════════════════════════════════════════════
+INFO: CI run was detected because environment variable "CI" was defined. inline-snapshot runs with --inline-snapshot=disable by default in CI. This 
+means that tests with snapshots will continue to run, but snapshot(x) will only return x and inline-snapshot will not be able to fix snapshots or 
+generate reports. You can change this by using --inline-snapshot=report for example.
+
+
+
+====================================================================== FAILURES ======================================================================
+__________________________________________________ test_unparametrized_generic_dataclass[pydantic] ___________________________________________________
+
+dataclass_decorator = <function dataclass at 0x7fa6b1da2660>
+
+    @pytest.mark.parametrize('dataclass_decorator', **dataclass_decorators())
+    def test_unparametrized_generic_dataclass(dataclass_decorator):
+        T = TypeVar('T')
+    
+        @dataclass_decorator
+        class GenericDataclass(Generic[T]):
+            x: T
+    
+        # In principle we could call GenericDataclass(...) below, but this won't do validation
+        # for standard dataclasses, so we just use TypeAdapter to get validation for each.
+        validator = pydantic.TypeAdapter(GenericDataclass)
+    
+        assert validator.validate_python({'x': None}).x is None
+>       assert validator.validate_python({'x': 1}).x == 1
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_dataclasses.py:2258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = TypeAdapter(test_unparametrized_generic_dataclass.<locals>.GenericDataclass), object = {'x': 1}, strict = None, extra = None
+from_attributes = None, context = None, experimental_allow_partial = False, by_alias = None, by_name = None
+
+    def validate_python(
+        self,
+        object: Any,
+        /,
+        *,
+        strict: bool | None = None,
+        extra: ExtraValues | None = None,
+        from_attributes: bool | None = None,
+        context: Any | None = None,
+        experimental_allow_partial: bool | Literal['off', 'on', 'trailing-strings'] = False,
+        by_alias: bool | None = None,
+        by_name: bool | None = None,
+    ) -> T:
+        """Validate a Python object against the model.
+    
+        !!! tip "Logfire integration"
+            Instrumentation of validation errors are supported by [Logfire](../integrations/logfire.md).
+            See [Troubleshooting validation errors](../errors/troubleshooting.md) for more details.
+    
+        Args:
+            object: The Python object to validate against the model.
+            strict: Whether to strictly check types.
+            extra: Whether to ignore, allow, or forbid extra data during model validation.
+                See the [`extra` configuration value][pydantic.ConfigDict.extra] for details.
+            from_attributes: Whether to extract data from object attributes.
+            context: Additional context to pass to the validator.
+            experimental_allow_partial: **Experimental** whether to enable
+                [partial validation](../concepts/experimental.md#partial-validation), e.g. to process streams.
+                * False / 'off': Default behavior, no partial validation.
+                * True / 'on': Enable partial validation.
+                * 'trailing-strings': Enable partial validation and allow trailing strings in the input.
+            by_alias: Whether to use the field's alias when validating against the provided input data.
+            by_name: Whether to use the field's name when validating against the provided input data.
+    
+        !!! note
+            When using `TypeAdapter` with a Pydantic `dataclass`, the use of the `from_attributes`
+            argument is not supported.
+    
+        Returns:
+            The validated object.
+        """
+        if by_alias is False and by_name is not True:
+            raise PydanticUserError(
+                'At least one of `by_alias` or `by_name` must be set to True.',
+                code='validate-by-alias-and-name-false',
+            )
+    
+>       return self.validator.validate_python(
+            object,
+            strict=strict,
+            extra=extra,
+            from_attributes=from_attributes,
+            context=context,
+            allow_partial=experimental_allow_partial,
+            by_alias=by_alias,
+            by_name=by_name,
+        )
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for GenericDataclass
+E       x
+E         Input should be None [type=none_required, input_value=1, input_type=int]
+
+pydantic/type_adapter.py:450: ValidationError
+___________________________________________________ test_unparametrized_generic_dataclass[stdlib] ____________________________________________________
+
+dataclass_decorator = <function dataclass at 0x7fa6b79f6a20>
+
+    @pytest.mark.parametrize('dataclass_decorator', **dataclass_decorators())
+    def test_unparametrized_generic_dataclass(dataclass_decorator):
+        T = TypeVar('T')
+    
+        @dataclass_decorator
+        class GenericDataclass(Generic[T]):
+            x: T
+    
+        # In principle we could call GenericDataclass(...) below, but this won't do validation
+        # for standard dataclasses, so we just use TypeAdapter to get validation for each.
+        validator = pydantic.TypeAdapter(GenericDataclass)
+    
+        assert validator.validate_python({'x': None}).x is None
+>       assert validator.validate_python({'x': 1}).x == 1
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_dataclasses.py:2258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = TypeAdapter(test_unparametrized_generic_dataclass.<locals>.GenericDataclass), object = {'x': 1}, strict = None, extra = None
+from_attributes = None, context = None, experimental_allow_partial = False, by_alias = None, by_name = None
+
+    def validate_python(
+        self,
+        object: Any,
+        /,
+        *,
+        strict: bool | None = None,
+        extra: ExtraValues | None = None,
+        from_attributes: bool | None = None,
+        context: Any | None = None,
+        experimental_allow_partial: bool | Literal['off', 'on', 'trailing-strings'] = False,
+        by_alias: bool | None = None,
+        by_name: bool | None = None,
+    ) -> T:
+        """Validate a Python object against the model.
+    
+        !!! tip "Logfire integration"
+            Instrumentation of validation errors are supported by [Logfire](../integrations/logfire.md).
+            See [Troubleshooting validation errors](../errors/troubleshooting.md) for more details.
+    
+        Args:
+            object: The Python object to validate against the model.
+            strict: Whether to strictly check types.
+            extra: Whether to ignore, allow, or forbid extra data during model validation.
+                See the [`extra` configuration value][pydantic.ConfigDict.extra] for details.
+            from_attributes: Whether to extract data from object attributes.
+            context: Additional context to pass to the validator.
+            experimental_allow_partial: **Experimental** whether to enable
+                [partial validation](../concepts/experimental.md#partial-validation), e.g. to process streams.
+                * False / 'off': Default behavior, no partial validation.
+                * True / 'on': Enable partial validation.
+                * 'trailing-strings': Enable partial validation and allow trailing strings in the input.
+            by_alias: Whether to use the field's alias when validating against the provided input data.
+            by_name: Whether to use the field's name when validating against the provided input data.
+    
+        !!! note
+            When using `TypeAdapter` with a Pydantic `dataclass`, the use of the `from_attributes`
+            argument is not supported.
+    
+        Returns:
+            The validated object.
+        """
+        if by_alias is False and by_name is not True:
+            raise PydanticUserError(
+                'At least one of `by_alias` or `by_name` must be set to True.',
+                code='validate-by-alias-and-name-false',
+            )
+    
+>       return self.validator.validate_python(
+            object,
+            strict=strict,
+            extra=extra,
+            from_attributes=from_attributes,
+            context=context,
+            allow_partial=experimental_allow_partial,
+            by_alias=by_alias,
+            by_name=by_name,
+        )
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for GenericDataclass
+E       x
+E         Input should be None [type=none_required, input_value=1, input_type=int]
+
+pydantic/type_adapter.py:450: ValidationError
+__________________________________________________ test_unparametrized_generic_dataclass[combined] ___________________________________________________
+
+dataclass_decorator = <function dataclass_decorators.<locals>.combined_decorator at 0x7fa69e4b3560>
+
+    @pytest.mark.parametrize('dataclass_decorator', **dataclass_decorators())
+    def test_unparametrized_generic_dataclass(dataclass_decorator):
+        T = TypeVar('T')
+    
+        @dataclass_decorator
+        class GenericDataclass(Generic[T]):
+            x: T
+    
+        # In principle we could call GenericDataclass(...) below, but this won't do validation
+        # for standard dataclasses, so we just use TypeAdapter to get validation for each.
+        validator = pydantic.TypeAdapter(GenericDataclass)
+    
+        assert validator.validate_python({'x': None}).x is None
+>       assert validator.validate_python({'x': 1}).x == 1
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_dataclasses.py:2258: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = TypeAdapter(test_unparametrized_generic_dataclass.<locals>.GenericDataclass), object = {'x': 1}, strict = None, extra = None
+from_attributes = None, context = None, experimental_allow_partial = False, by_alias = None, by_name = None
+
+    def validate_python(
+        self,
+        object: Any,
+        /,
+        *,
+        strict: bool | None = None,
+        extra: ExtraValues | None = None,
+        from_attributes: bool | None = None,
+        context: Any | None = None,
+        experimental_allow_partial: bool | Literal['off', 'on', 'trailing-strings'] = False,
+        by_alias: bool | None = None,
+        by_name: bool | None = None,
+    ) -> T:
+        """Validate a Python object against the model.
+    
+        !!! tip "Logfire integration"
+            Instrumentation of validation errors are supported by [Logfire](../integrations/logfire.md).
+            See [Troubleshooting validation errors](../errors/troubleshooting.md) for more details.
+    
+        Args:
+            object: The Python object to validate against the model.
+            strict: Whether to strictly check types.
+            extra: Whether to ignore, allow, or forbid extra data during model validation.
+                See the [`extra` configuration value][pydantic.ConfigDict.extra] for details.
+            from_attributes: Whether to extract data from object attributes.
+            context: Additional context to pass to the validator.
+            experimental_allow_partial: **Experimental** whether to enable
+                [partial validation](../concepts/experimental.md#partial-validation), e.g. to process streams.
+                * False / 'off': Default behavior, no partial validation.
+                * True / 'on': Enable partial validation.
+                * 'trailing-strings': Enable partial validation and allow trailing strings in the input.
+            by_alias: Whether to use the field's alias when validating against the provided input data.
+            by_name: Whether to use the field's name when validating against the provided input data.
+    
+        !!! note
+            When using `TypeAdapter` with a Pydantic `dataclass`, the use of the `from_attributes`
+            argument is not supported.
+    
+        Returns:
+            The validated object.
+        """
+        if by_alias is False and by_name is not True:
+            raise PydanticUserError(
+                'At least one of `by_alias` or `by_name` must be set to True.',
+                code='validate-by-alias-and-name-false',
+            )
+    
+>       return self.validator.validate_python(
+            object,
+            strict=strict,
+            extra=extra,
+            from_attributes=from_attributes,
+            context=context,
+            allow_partial=experimental_allow_partial,
+            by_alias=by_alias,
+            by_name=by_name,
+        )
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for GenericDataclass
+E       x
+E         Input should be None [type=none_required, input_value=1, input_type=int]
+
+pydantic/type_adapter.py:450: ValidationError
+_______________________________________________ test_docs_examples[docs/concepts/dataclasses.md:78-93] _______________________________________________
+
+example = CodeExample(source="from typing import Generic, TypeVar\n\nfrom pydantic.dataclasses import dataclass\n\nT = TypeVar('...5f-384b-4965-8028-2096059d1712'), test_id='tests/test_docs.py::test_docs_examples[docs/concepts/dataclasses.md:78-93]')
+eval_example = <pytest_examples.eval_example.EvalExample object at 0x7fa69a9a4470>
+tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-0/test_docs_examples_docs_concep178')
+mocker = <pytest_mock.plugin.MockerFixture object at 0x7fa69af22540>
+
+    @pytest.mark.thread_unsafe
+    @pytest.mark.filterwarnings('ignore:(parse_obj_as|schema_json_of|schema_of) is deprecated.*:DeprecationWarning')
+    @pytest.mark.skipif(bool(skip_reason), reason=skip_reason or 'not skipping')
+    @pytest.mark.parametrize('example', list(find_examples(str(DOCS_ROOT), skip=sys.platform == 'win32')), ids=str)
+    def test_docs_examples(example: CodeExample, eval_example: EvalExample, tmp_path: Path, mocker):
+        global INDEX_MAIN
+        if example.path.name == 'index.md':
+            if INDEX_MAIN is None:
+                INDEX_MAIN = example.source
+            else:
+                (tmp_path / 'index_main.py').write_text(INDEX_MAIN)
+                sys.path.append(str(tmp_path))
+    
+        if example.path.name == 'devtools.md':
+            pytest.skip('tested below')
+    
+>       run_example(example, eval_example, mocker)
+
+tests/test_docs.py:207: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_docs.py:156: in run_example
+    d2 = eval_example.run_print_check(example, module_globals=d, rewrite_assertions=rewrite_assertions)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    from typing import Generic, TypeVar
+    
+    from pydantic.dataclasses import dataclass
+    
+    T = TypeVar('T')
+    
+    
+    @dataclass
+    class Foo(Generic[T]):
+        f: T
+    
+    
+>   Foo[int](f='not_an_int')  # (1)!
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for Foo
+E   f
+E     Input should be None [type=none_required, input_value='not_an_int', input_type=str]
+
+docs/concepts/dataclasses.md:91: ValidationError
+______________________________________________ test_docs_examples[docs/concepts/dataclasses.md:101-112] ______________________________________________
+
+example = CodeExample(source="from pydantic.dataclasses import dataclass\n\n\n@dataclass\nclass Foo[T]:\n    f: T\n\n\nFoo[int](...-384b-4965-8028-2096059d1712'), test_id='tests/test_docs.py::test_docs_examples[docs/concepts/dataclasses.md:101-112]')
+eval_example = <pytest_examples.eval_example.EvalExample object at 0x7fa69af22f30>
+tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-0/test_docs_examples_docs_concep179')
+mocker = <pytest_mock.plugin.MockerFixture object at 0x7fa69af22240>
+
+    @pytest.mark.thread_unsafe
+    @pytest.mark.filterwarnings('ignore:(parse_obj_as|schema_json_of|schema_of) is deprecated.*:DeprecationWarning')
+    @pytest.mark.skipif(bool(skip_reason), reason=skip_reason or 'not skipping')
+    @pytest.mark.parametrize('example', list(find_examples(str(DOCS_ROOT), skip=sys.platform == 'win32')), ids=str)
+    def test_docs_examples(example: CodeExample, eval_example: EvalExample, tmp_path: Path, mocker):
+        global INDEX_MAIN
+        if example.path.name == 'index.md':
+            if INDEX_MAIN is None:
+                INDEX_MAIN = example.source
+            else:
+                (tmp_path / 'index_main.py').write_text(INDEX_MAIN)
+                sys.path.append(str(tmp_path))
+    
+        if example.path.name == 'devtools.md':
+            pytest.skip('tested below')
+    
+>       run_example(example, eval_example, mocker)
+
+tests/test_docs.py:207: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_docs.py:156: in run_example
+    d2 = eval_example.run_print_check(example, module_globals=d, rewrite_assertions=rewrite_assertions)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    from pydantic.dataclasses import dataclass
+    
+    
+    @dataclass
+    class Foo[T]:
+        f: T
+    
+    
+>   Foo[int](f='not_an_int')  # (1)!
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for Foo
+E   f
+E     Input should be None [type=none_required, input_value='not_an_int', input_type=str]
+
+docs/concepts/dataclasses.md:110: ValidationError
+________________________________________________ test_docs_examples[docs/concepts/models.md:928-959] _________________________________________________
+Print output changed code:
+  --- before
+  +++ after
+  @@ -948,939 +948,937 @@
+   try:
+       print(OuterT[int](outer='a', nested=InnerT(inner='a')))  # (1)!
+   except ValidationError as e:
+       print(e)
+       """
+  -    2 validation errors for OuterT[int]
+  -    outer
+  -      Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='a', input_type=str]
+  -    nested.inner
+  -      Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='a', input_type=str]
+  +    1 validation error for InnerT
+  +    inner
+  +      Input should be None [type=none_required, input_value='a', input_type=str]
+       """
+
+_______________________________________________ test_docs_examples[docs/concepts/models.md:1049-1081] ________________________________________________
+
+example = CodeExample(source='from typing import Generic\n\nfrom typing_extensions import TypeVar\n\nfrom pydantic import BaseMo...dc9-0cc8-45dc-be00-47b12f54a68c'), test_id='tests/test_docs.py::test_docs_examples[docs/concepts/models.md:1049-1081]')
+eval_example = <pytest_examples.eval_example.EvalExample object at 0x7fa69b54d940>
+tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-0/test_docs_examples_docs_concep261')
+mocker = <pytest_mock.plugin.MockerFixture object at 0x7fa69b54e810>
+
+    @pytest.mark.thread_unsafe
+    @pytest.mark.filterwarnings('ignore:(parse_obj_as|schema_json_of|schema_of) is deprecated.*:DeprecationWarning')
+    @pytest.mark.skipif(bool(skip_reason), reason=skip_reason or 'not skipping')
+    @pytest.mark.parametrize('example', list(find_examples(str(DOCS_ROOT), skip=sys.platform == 'win32')), ids=str)
+    def test_docs_examples(example: CodeExample, eval_example: EvalExample, tmp_path: Path, mocker):
+        global INDEX_MAIN
+        if example.path.name == 'index.md':
+            if INDEX_MAIN is None:
+                INDEX_MAIN = example.source
+            else:
+                (tmp_path / 'index_main.py').write_text(INDEX_MAIN)
+                sys.path.append(str(tmp_path))
+    
+        if example.path.name == 'devtools.md':
+            pytest.skip('tested below')
+    
+>       run_example(example, eval_example, mocker)
+
+tests/test_docs.py:207: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_docs.py:156: in run_example
+    d2 = eval_example.run_print_check(example, module_globals=d, rewrite_assertions=rewrite_assertions)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    from typing import Generic
+    
+    from typing_extensions import TypeVar
+    
+    from pydantic import BaseModel, ValidationError
+    
+    T = TypeVar('T')
+    U = TypeVar('U', bound=int)
+    V = TypeVar('V', default=str)
+    
+    
+    class Model(BaseModel, Generic[T, U, V]):
+        t: T
+        u: U
+        v: V
+    
+    
+>   print(Model(t='t', u=1, v='v'))
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for Model
+E   t
+E     Input should be None [type=none_required, input_value='t', input_type=str]
+
+docs/concepts/models.md:1067: ValidationError
+_______________________________________________ test_docs_examples[docs/concepts/models.md:1177-1205] ________________________________________________
+
+example = CodeExample(source="from typing import Generic, TypeVar\n\nfrom pydantic import BaseModel\n\nTBound = TypeVar('TBound'...dc9-0cc8-45dc-be00-47b12f54a68c'), test_id='tests/test_docs.py::test_docs_examples[docs/concepts/models.md:1177-1205]')
+eval_example = <pytest_examples.eval_example.EvalExample object at 0x7fa69af36ff0>
+tmp_path = PosixPath('/tmp/pytest-of-runner/pytest-0/test_docs_examples_docs_concep264')
+mocker = <pytest_mock.plugin.MockerFixture object at 0x7fa69af37f50>
+
+    @pytest.mark.thread_unsafe
+    @pytest.mark.filterwarnings('ignore:(parse_obj_as|schema_json_of|schema_of) is deprecated.*:DeprecationWarning')
+    @pytest.mark.skipif(bool(skip_reason), reason=skip_reason or 'not skipping')
+    @pytest.mark.parametrize('example', list(find_examples(str(DOCS_ROOT), skip=sys.platform == 'win32')), ids=str)
+    def test_docs_examples(example: CodeExample, eval_example: EvalExample, tmp_path: Path, mocker):
+        global INDEX_MAIN
+        if example.path.name == 'index.md':
+            if INDEX_MAIN is None:
+                INDEX_MAIN = example.source
+            else:
+                (tmp_path / 'index_main.py').write_text(INDEX_MAIN)
+                sys.path.append(str(tmp_path))
+    
+        if example.path.name == 'devtools.md':
+            pytest.skip('tested below')
+    
+>       run_example(example, eval_example, mocker)
+
+tests/test_docs.py:207: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_docs.py:156: in run_example
+    d2 = eval_example.run_print_check(example, module_globals=d, rewrite_assertions=rewrite_assertions)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    from typing import Generic, TypeVar
+    
+    from pydantic import BaseModel
+    
+    TBound = TypeVar('TBound', bound=BaseModel)
+    TNoBound = TypeVar('TNoBound')
+    
+    
+    class IntValue(BaseModel):
+        value: int
+    
+    
+    class ItemBound(BaseModel, Generic[TBound]):
+        item: TBound
+    
+    
+    class ItemNoBound(BaseModel, Generic[TNoBound]):
+        item: TNoBound
+    
+    
+    item_bound_inferred = ItemBound(item=IntValue(value=3))
+    item_bound_explicit = ItemBound[IntValue](item=IntValue(value=3))
+>   item_no_bound_inferred = ItemNoBound(item=IntValue(value=3))
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   pydantic_core._pydantic_core.ValidationError: 1 validation error for ItemNoBound
+E   item
+E     Input should be None [type=none_required, input_value=IntValue(value=3), input_type=IntValue]
+
+docs/concepts/models.md:1200: ValidationError
+_________________________________________________________________ test_type_var_any __________________________________________________________________
+
+    def test_type_var_any():
+        Foobar = TypeVar('Foobar')
+    
+        class MyModel(BaseModel):
+            foo: Foobar
+    
+>       assert MyModel.model_json_schema() == {
+            'properties': {'foo': {'title': 'Foo'}},
+            'required': ['foo'],
+            'title': 'MyModel',
+            'type': 'object',
+        }
+E       AssertionError: assert {'properties'...pe': 'object'} == {'properties'...pe': 'object'}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'properties': {'foo': {'title': 'Foo', 'type': 'null'}}} != {'properties': {'foo': {'title': 'Foo'}}}
+E         
+E         Full diff:
+E           {
+E               'properties': {
+E                   'foo': {
+E                       'title': 'Foo',
+E         +             'type': 'null',
+E                   },
+E               },
+E               'required': [
+E                   'foo',
+E               ],
+E               'title': 'MyModel',
+E               'type': 'object',
+E           }
+
+tests/test_edge_cases.py:1683: AssertionError
+_______________________________________________ test_type_adapter_uses_function_type_params_namespace ________________________________________________
+
+create_module = <function create_module.<locals>.run at 0x7fa69a042840>
+
+    @pytest.mark.skipif(sys.version_info < (3, 12), reason='Test related to PEP 695 syntax.')
+    def test_type_adapter_uses_function_type_params_namespace(create_module):
+        """Relevant to https://github.com/pydantic/pydantic/issues/12165"""
+        module_1 = create_module(
+            """
+    Int = int
+    
+    def func[T](a: 'Int', b: 'T'):
+        return (a, b)
+            """
+        )
+    
+        module_2 = create_module(
+            f"""
+    from {module_1.__name__} import func
+    
+    from pydantic import TypeAdapter
+    
+    MyInt = int
+    
+    ta = TypeAdapter(func)
+            """
+        )
+    
+>       assert module_2.ta.validate_python({'a': '1', 'b': True}) == (1, True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_forward_ref.py:1452: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = TypeAdapter(func), object = {'a': '1', 'b': True}, strict = None, extra = None, from_attributes = None, context = None
+experimental_allow_partial = False, by_alias = None, by_name = None
+
+    def validate_python(
+        self,
+        object: Any,
+        /,
+        *,
+        strict: bool | None = None,
+        extra: ExtraValues | None = None,
+        from_attributes: bool | None = None,
+        context: Any | None = None,
+        experimental_allow_partial: bool | Literal['off', 'on', 'trailing-strings'] = False,
+        by_alias: bool | None = None,
+        by_name: bool | None = None,
+    ) -> T:
+        """Validate a Python object against the model.
+    
+        !!! tip "Logfire integration"
+            Instrumentation of validation errors are supported by [Logfire](../integrations/logfire.md).
+            See [Troubleshooting validation errors](../errors/troubleshooting.md) for more details.
+    
+        Args:
+            object: The Python object to validate against the model.
+            strict: Whether to strictly check types.
+            extra: Whether to ignore, allow, or forbid extra data during model validation.
+                See the [`extra` configuration value][pydantic.ConfigDict.extra] for details.
+            from_attributes: Whether to extract data from object attributes.
+            context: Additional context to pass to the validator.
+            experimental_allow_partial: **Experimental** whether to enable
+                [partial validation](../concepts/experimental.md#partial-validation), e.g. to process streams.
+                * False / 'off': Default behavior, no partial validation.
+                * True / 'on': Enable partial validation.
+                * 'trailing-strings': Enable partial validation and allow trailing strings in the input.
+            by_alias: Whether to use the field's alias when validating against the provided input data.
+            by_name: Whether to use the field's name when validating against the provided input data.
+    
+        !!! note
+            When using `TypeAdapter` with a Pydantic `dataclass`, the use of the `from_attributes`
+            argument is not supported.
+    
+        Returns:
+            The validated object.
+        """
+        if by_alias is False and by_name is not True:
+            raise PydanticUserError(
+                'At least one of `by_alias` or `by_name` must be set to True.',
+                code='validate-by-alias-and-name-false',
+            )
+    
+>       return self.validator.validate_python(
+            object,
+            strict=strict,
+            extra=extra,
+            from_attributes=from_attributes,
+            context=context,
+            allow_partial=experimental_allow_partial,
+            by_alias=by_alias,
+            by_name=by_name,
+        )
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for call[func]
+E       b
+E         Input should be None [type=none_required, input_value=True, input_type=bool]
+
+pydantic/type_adapter.py:450: ValidationError
+______________________________________________________ test_partial_specification_instantiation ______________________________________________________
+
+    def test_partial_specification_instantiation():
+        AT = TypeVar('AT')
+        BT = TypeVar('BT')
+    
+        class Model(BaseModel, Generic[AT, BT]):
+            a: AT
+            b: BT
+    
+        partial_model = Model[int, BT]
+>       partial_model(a=1, b=2)
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for Model[int, TypeVar]
+E       b
+E         Input should be None [type=none_required, input_value=2, input_type=int]
+
+tests/test_generics.py:851: ValidationError
+__________________________________________________ test_partial_specification_instantiation_bounded __________________________________________________
+
+    def test_partial_specification_instantiation_bounded():
+        AT = TypeVar('AT')
+        BT = TypeVar('BT', bound=int)
+    
+        class Model(BaseModel, Generic[AT, BT]):
+            a: AT
+            b: BT
+    
+>       Model(a=1, b=1)
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for Model
+E       a
+E         Input should be None [type=none_required, input_value=1, input_type=int]
+
+tests/test_generics.py:875: ValidationError
+___________________________________________________________ test_generic_recursive_models ____________________________________________________________
+
+create_module = <function create_module.<locals>.run at 0x7fa69b095260>
+
+    def test_generic_recursive_models(create_module):
+        @create_module
+        def module():
+            from typing import Generic, TypeVar
+    
+            from pydantic import BaseModel
+    
+            T = TypeVar('T')
+    
+            class Model1(BaseModel, Generic[T]):
+                ref: 'Model2[T]'
+    
+            class Model2(BaseModel, Generic[T]):
+                ref: T | Model1[T]
+    
+            Model1.model_rebuild()
+    
+        Model1 = module.Model1
+        Model2 = module.Model2
+    
+        with pytest.raises(ValidationError) as exc_info:
+            Model1[str].model_validate(dict(ref=dict(ref=dict(ref=dict(ref=123)))))
+        # insert_assert(exc_info.value.errors(include_url=False))
+        assert exc_info.value.errors(include_url=False) == [
+            {
+                'type': 'string_type',
+                'loc': ('ref', 'ref', 'str'),
+                'msg': 'Input should be a valid string',
+                'input': {'ref': {'ref': 123}},
+            },
+            {
+                'type': 'string_type',
+                'loc': ('ref', 'ref', 'Model1[str]', 'ref', 'ref', 'str'),
+                'msg': 'Input should be a valid string',
+                'input': 123,
+            },
+            {
+                'type': 'model_type',
+                'loc': ('ref', 'ref', 'Model1[str]', 'ref', 'ref', 'Model1[str]'),
+                'msg': 'Input should be a valid dictionary or instance of Model1[str]',
+                'input': 123,
+                'ctx': {'class_name': 'Model1[str]'},
+            },
+        ]
+>       result = Model1(ref=Model2(ref=Model1(ref=Model2(ref='123'))))
+                                                  ^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 2 validation errors for Model2
+E       ref.none
+E         Input should be None [type=none_required, input_value='123', input_type=str]
+E       ref.Model1
+E         Input should be a valid dictionary or instance of Model1 [type=model_type, input_value='123', input_type=str]
+
+tests/test_generics.py:1737: ValidationError
+______________________________________________________ test_multi_inheritance_generic_defaults _______________________________________________________
+
+    def test_multi_inheritance_generic_defaults():
+        T = TypeVar('T')
+    
+        class A(BaseModel, Generic[T]):
+            a: T
+            x: str = 'a'
+    
+        class B(A[int], Generic[T]):
+            b: T | None = None
+            y: str = 'b'
+    
+        class C(B[str], Generic[T]):
+            c: T
+            z: str = 'c'
+    
+>       assert C(a=1, c=...).model_dump() == {'a': 1, 'b': None, 'c': ..., 'x': 'a', 'y': 'b', 'z': 'c'}
+               ^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for C
+E       c
+E         Input should be None [type=none_required, input_value=Ellipsis, input_type=ellipsis]
+
+tests/test_generics.py:2313: ValidationError
+__________________________________________________________ test_double_typevar_substitution __________________________________________________________
+
+    def test_double_typevar_substitution() -> None:
+        T = TypeVar('T')
+    
+        class GenericPydanticModel(BaseModel, Generic[T]):
+            x: T = []
+    
+>       assert GenericPydanticModel[list[T]](x=[1, 2, 3]).model_dump() == {'x': [1, 2, 3]}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 3 validation errors for GenericPydanticModel[list[TypeVar]]
+E       x.0
+E         Input should be a valid list [type=list_type, input_value=1, input_type=int]
+E       x.1
+E         Input should be a valid list [type=list_type, input_value=2, input_type=int]
+E       x.2
+E         Input should be a valid list [type=list_type, input_value=3, input_type=int]
+
+tests/test_generics.py:2443: ValidationError
+_______________________________________________________ test_reverse_order_generic_hashability _______________________________________________________
+
+    def test_reverse_order_generic_hashability():
+        T = TypeVar('T')
+    
+        with pytest.warns(
+            GenericBeforeBaseModelWarning,
+            match='Classes should inherit from `BaseModel` before generic classes',
+        ):
+    
+            class Model(Generic[T], BaseModel):
+                x: T
+                model_config = dict(frozen=True)
+    
+>       m1 = Model[int](x=1)
+             ^^^^^^^^^^^^^^^
+
+tests/test_generics.py:2848: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = tests.test_generics.test_reverse_order_generic_hashability.<locals>.Model[int], args = (), kwargs = {'x': 1}
+
+    def __call__(self, *args, **kwargs):
+        if not self._inst:
+            raise TypeError(f"Type {self._name} cannot be instantiated; "
+                            f"use {self.__origin__.__name__}() instead")
+>       result = self.__origin__(*args, **kwargs)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for Model
+E       x
+E         Input should be None [type=none_required, input_value=1, input_type=int]
+
+/usr/lib/python3.12/typing.py:1157: ValidationError
+___________________________________________________________ test_revalidation_against_any ____________________________________________________________
+
+    def test_revalidation_against_any() -> None:
+        T = TypeVar('T')
+    
+        class ResponseModel(BaseModel, Generic[T]):
+            content: T
+    
+        class Product(BaseModel):
+            name: str
+            price: float
+    
+        class Order(BaseModel):
+            id: int
+            product: ResponseModel[Any]
+    
+        product = Product(name='Apple', price=0.5)
+        response1: ResponseModel[Any] = ResponseModel[Any](content=product)
+>       response2: ResponseModel[Any] = ResponseModel(content=product)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for ResponseModel
+E       content
+E         Input should be None [type=none_required, input_value=Product(name='Apple', price=0.5), input_type=test_revalidation_against_any.<locals>.Product]
+
+tests/test_generics.py:3208: ValidationError
+_______________________________________________________ test_revalidation_with_basic_inference _______________________________________________________
+
+    def test_revalidation_with_basic_inference() -> None:
+        T = TypeVar('T')
+    
+        class Inner(BaseModel, Generic[T]):
+            inner: T
+    
+        class Holder(BaseModel, Generic[T]):
+            inner: Inner[T]
+    
+        holder1 = Holder[int](inner=Inner[int](inner=1))
+>       holder2 = Holder(inner=Inner(inner=1))
+                               ^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for Inner
+E       inner
+E         Input should be None [type=none_required, input_value=1, input_type=int]
+
+tests/test_generics.py:3253: ValidationError
+____________________________________________________________ test_model_equality_generics ____________________________________________________________
+
+    def test_model_equality_generics():
+        T = TypeVar('T')
+    
+        class GenericModel(BaseModel, Generic[T], frozen=True):
+            x: T
+    
+        class ConcreteModel(BaseModel):
+            x: int
+    
+>       assert ConcreteModel(x=1) != GenericModel(x=1)
+                                     ^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for GenericModel
+E       x
+E         Input should be None [type=none_required, input_value=1, input_type=int]
+
+tests/test_main.py:2769: ValidationError
+________________________________________________________________ test_root_model_repr ________________________________________________________________
+
+    def test_root_model_repr():
+        SpecializedRootModel = RootModel[int]
+    
+        class SubRootModel(RootModel):
+            pass
+    
+        class SpecializedSubRootModel(RootModel[int]):
+            pass
+    
+        assert repr(SpecializedRootModel(1)) == 'RootModel[int](root=1)'
+>       assert repr(SubRootModel(1)) == 'SubRootModel(root=1)'
+                    ^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for SubRootModel
+E         Input should be None [type=none_required, input_value=1, input_type=int]
+
+tests/test_root_model.py:111: ValidationError
+_____________________________________________________ test_non_specified_generic_type_alias_type _____________________________________________________
+
+    def test_non_specified_generic_type_alias_type() -> None:
+>       assert TypeAdapter(MyList).json_schema() == {'items': {}, 'type': 'array'}
+E       AssertionError: assert {'items': {'t...ype': 'array'} == {'items': {}, 'type': 'array'}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'items': {'type': 'null'}} != {'items': {}}
+E         
+E         Full diff:
+E           {
+E         -     'items': {},
+E         ?               --
+E         +     'items': {
+E         +         'type': 'null',
+E         +     },
+E               'type': 'array',
+E           }
+
+tests/test_type_alias_type.py:338: AssertionError
+_______________________________________________________ test_validate_call_with_pep_695_syntax _______________________________________________________
+
+create_module = <function create_module.<locals>.run at 0x7fa69a365b20>
+
+    @pytest.mark.skipif(sys.version_info < (3, 12), reason='requires Python 3.12+ for PEP 695 syntax with generics')
+    def test_validate_call_with_pep_695_syntax(create_module) -> None:
+        """Note: validate_call still doesn't work properly with generics, see https://github.com/pydantic/pydantic/issues/7796.
+    
+        This test is just to ensure that the syntax is accepted and doesn't raise a NameError."""
+    
+        module = create_module(
+            """
+    from typing import Iterable
+    from pydantic import validate_call
+    
+    @validate_call
+    def find_max_no_validate_return[T](args: 'Iterable[T]') -> T:
+        return sorted(args, reverse=True)[0]
+    
+    @validate_call(validate_return=True)
+    def find_max_validate_return[T](args: 'Iterable[T]') -> T:
+        return sorted(args, reverse=True)[0]
+            """
+        )
+    
+        functions = [module.find_max_no_validate_return, module.find_max_validate_return]
+        for find_max in functions:
+            assert len(find_max.__type_params__) == 1
+>           assert find_max([1, 2, 10, 5]) == 10
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_validate_call.py:1193: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pydantic/_internal/_validate_call.py:40: in wrapper_function
+    return wrapper(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic/_internal/_validate_call.py:142: in __call__
+    res = self.__pydantic_validator__.validate_python(pydantic_core.ArgsKwargs(args, kwargs))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ValidatorIterator(index=1, schema=Some(None(NoneValidator)))
+
+    @validate_call
+    def find_max_no_validate_return[T](args: 'Iterable[T]') -> T:
+>       return sorted(args, reverse=True)[0]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for ValidatorIterator
+E       0
+E         Input should be None [type=none_required, input_value=1, input_type=int]
+
+/tmp/pytest-of-runner/pytest-0/test_validate_call_with_pep_690/test_validate_call_with_pep_695_syntax_74020caafa.py:7: ValidationError
+_______________________________________________________________ test_pep695_with_class _______________________________________________________________
+
+create_module = <function create_module.<locals>.run at 0x7fa69a4084a0>
+
+    @pytest.mark.skipif(sys.version_info < (3, 12), reason='requires Python 3.12+ for PEP 695 syntax with generics')
+    def test_pep695_with_class(create_module):
+        """Primarily to ensure that the syntax is accepted and doesn't raise a `NameError` with `T`.
+        The validation is not expected to work properly when parameterized at this point."""
+    
+        for import_annotations in ('from __future__ import annotations', ''):
+            module = create_module(
+                f"""
+    {import_annotations}
+    from pydantic import validate_call
+    
+    class A[T]:
+        @validate_call(validate_return=True)
+        def f(self, a: T) -> T:
+            return str(a)
+                """
+            )
+            A = module.A
+            a = A[int]()
+            # these two are undesired behavior, but it's what happens now
+>           assert a.f(1) == '1'
+                   ^^^^^^
+
+tests/test_validate_call.py:1219: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pydantic/_internal/_validate_call.py:40: in wrapper_function
+    return wrapper(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <pydantic._internal._validate_call.ValidateCallWrapper object at 0x7fa69a3db300>
+args = (<test_pep695_with_class_e2df6ce245.A object at 0x7fa69a31b290>, 1), kwargs = {}
+
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
+        if not self.__pydantic_complete__:
+            self._create_validators()
+    
+>       res = self.__pydantic_validator__.validate_python(pydantic_core.ArgsKwargs(args, kwargs))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for A.f
+E       1
+E         Input should be None [type=none_required, input_value=1, input_type=int]
+
+pydantic/_internal/_validate_call.py:142: ValidationError
+================================================================ slowest 10 durations ================================================================
+2.88s call     tests/benchmarks/test_model_schema_generation.py::test_lots_of_models_with_lots_of_fields
+2.51s call     tests/pydantic_core/test_hypothesis.py::test_urls_text
+1.46s call     tests/test_generics.py::test_generics_work_with_many_parametrized_base_models
+1.25s call     tests/pydantic_core/test_hypothesis.py::test_datetime_datetime
+0.74s call     tests/test_json_schema.py::test_multiple_parametrization_of_generic_model
+0.71s call     tests/pydantic_core/test_garbage_collection.py::test_gc_schema_serializer
+0.70s setup    tests/benchmarks/test_north_star.py::test_north_star_validate_json
+0.67s call     tests/pydantic_core/test_garbage_collection.py::test_gc_schema_validator
+0.65s call     tests/test_pickle.py::test_pickle_pydantic_weakref
+0.61s call     tests/test_generics.py::test_caches_get_cleaned_up_with_aliased_parametrized_bases
+                                                                 Summary of Failures                                                                 
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓
+┃  File                           ┃  Function                                                  ┃  Function Line  ┃  Error Line  ┃  Error            ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━┩
+│  tests/test_dataclasses.py      │  test_unparametrized_generic_dataclass[pydantic]           │  2245           │  2258        │  ValidationError  │
+│  tests/test_dataclasses.py      │  test_unparametrized_generic_dataclass[stdlib]             │  2245           │  2258        │  ValidationError  │
+│  tests/test_dataclasses.py      │  test_unparametrized_generic_dataclass[combined]           │  2245           │  2258        │  ValidationError  │
+│  tests/test_docs.py             │  test_docs_examples[docs/concepts/dataclasses.md:78-93]    │  191            │  207         │  ValidationError  │
+│  tests/test_docs.py             │  test_docs_examples[docs/concepts/dataclasses.md:101-112]  │  191            │  207         │  ValidationError  │
+│  tests/test_docs.py             │  test_docs_examples[docs/concepts/models.md:928-959]       │  191            │              │                   │
+│  tests/test_docs.py             │  test_docs_examples[docs/concepts/models.md:1049-1081]     │  191            │  207         │  ValidationError  │
+│  tests/test_docs.py             │  test_docs_examples[docs/concepts/models.md:1177-1205]     │  191            │  207         │  ValidationError  │
+│  tests/test_edge_cases.py       │  test_type_var_any                                         │  1677           │  1683        │  AssertionError   │
+│  tests/test_forward_ref.py      │  test_type_adapter_uses_function_type_params_namespace     │  1428           │  1452        │  ValidationError  │
+│  tests/test_generics.py         │  test_partial_specification_instantiation                  │  842            │  851         │  ValidationError  │
+│  tests/test_generics.py         │  test_partial_specification_instantiation_bounded          │  867            │  875         │  ValidationError  │
+│  tests/test_generics.py         │  test_generic_recursive_models                             │  1693           │  1737        │  ValidationError  │
+│  tests/test_generics.py         │  test_multi_inheritance_generic_defaults                   │  2298           │  2313        │  ValidationError  │
+│  tests/test_generics.py         │  test_double_typevar_substitution                          │  2437           │  2443        │  ValidationError  │
+│  tests/test_generics.py         │  test_reverse_order_generic_hashability                    │  2836           │  2848        │  ValidationError  │
+│  tests/test_generics.py         │  test_revalidation_against_any                             │  3192           │  3208        │  ValidationError  │
+│  tests/test_generics.py         │  test_revalidation_with_basic_inference                    │  3243           │  3253        │  ValidationError  │
+│  tests/test_main.py             │  test_model_equality_generics                              │  2760           │  2769        │  ValidationError  │
+│  tests/test_root_model.py       │  test_root_model_repr                                      │  101            │  111         │  ValidationError  │
+│  tests/test_type_alias_type.py  │  test_non_specified_generic_type_alias_type                │  337            │  338         │  AssertionError   │
+│  tests/test_validate_call.py    │  test_validate_call_with_pep_695_syntax                    │  1169           │  1193        │  ValidationError  │
+│  tests/test_validate_call.py    │  test_pep695_with_class                                    │  1199           │  1219        │  ValidationError  │
+└─────────────────────────────────┴────────────────────────────────────────────────────────────┴─────────────────┴──────────────┴───────────────────┘
+Results (107.60s):
+        23 failed
+     12306 passed
+       457 skipped
+        36 xfailed
+make: *** [Makefile:75: test] Error 1
+##[error]Process completed with exit code 2.
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/28573460-115b-4291-9915-1402557b5100' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/pydantic/pydantic
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Cleaning up orphan processes

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0134",
+  "title": "scikit-learn/scikit-learn A reviewer will let you know if it is required or can be bypassed",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "scikit-learn/scikit-learn",
+    "run_id": 31044403490,
+    "run_attempt": 1,
+    "head_sha": "8300319372ed478b90047768448c7bbcdbdbef0a",
+    "pr_number": null,
+    "failed_job_name": "A reviewer will let you know if it is required or can be bypassed",
+    "failed_step_name": "Check changelog entry",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "policy_gate",
+    "related_to_diff": null,
+    "culprit_files": [],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/scikit-learn/scikit-learn/actions/runs/31044403490",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/policy_gate. Lowest confidence of the two was 0.90. Decisive evidence: No changelog file was added in the correct directories for PR 34659, looked in 45 directories:",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

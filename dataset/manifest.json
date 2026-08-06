@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "dataset_hash": "4fc2dde0c4ff",
-  "case_count": 6,
+  "dataset_hash": "2251deb9cc07",
+  "case_count": 42,
   "cases": [
     {
       "case_id": "gm-0001",
@@ -57,6 +57,222 @@
         "smoke-test",
         "smoke"
       ]
+    },
+    {
+      "case_id": "gm-0100",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0101",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0102",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0103",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0104",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0105",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0106",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0107",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0108",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0109",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0110",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0111",
+      "failure_class": "flaky_test",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0112",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0113",
+      "failure_class": "flaky_test",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0114",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0115",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0116",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0117",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0118",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0119",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0120",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0121",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0122",
+      "failure_class": "pipeline_config",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0123",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0124",
+      "failure_class": "flaky_test",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0125",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0126",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0127",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0128",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0129",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0130",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0131",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0132",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0133",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0134",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0135",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
     },
     {
       "case_id": "sy-0001",

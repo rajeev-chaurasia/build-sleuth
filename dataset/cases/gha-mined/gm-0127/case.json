@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0127",
+  "title": "pola-rs/polars type-check (3.14)",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "pola-rs/polars",
+    "run_id": 31074223708,
+    "run_attempt": 1,
+    "head_sha": "390c7f6d0f3c21ba6f95b07a34f537508ef9ed05",
+    "pr_number": 28063,
+    "failed_job_name": "type-check (3.14)",
+    "failed_step_name": "Run mypy",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": "diff.patch",
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "type_check",
+    "related_to_diff": true,
+    "culprit_files": [
+      "py-polars/src/polars/io/parquet/functions.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/pola-rs/polars/actions/runs/31074223708",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/type_check. Lowest confidence of the two was 0.90. Decisive evidence: src/polars/io/parquet/functions.py:254: error: Argument \"rechunk\" to \"_read_parquet_with_pyarrow\" has incompatible type \"bool | None\"; expected \"bool\"",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

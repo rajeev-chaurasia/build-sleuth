@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0121",
+  "title": "pandas-dev/pandas Linux-32-bit",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "pandas-dev/pandas",
+    "run_id": 30992786692,
+    "run_attempt": 1,
+    "head_sha": "7563264027e5eb451ec07b5e40ac23bf221cc1fa",
+    "pr_number": null,
+    "failed_job_name": "Linux-32-bit",
+    "failed_step_name": "Run Tests",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "test_assertion",
+    "related_to_diff": null,
+    "culprit_files": [
+      "pandas/core/internals/blocks.py",
+      "pandas/tests/frame/indexing/test_indexing.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/pandas-dev/pandas/actions/runs/30992786692",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/test_assertion. Lowest confidence of the two was 0.70. Decisive evidence: NotImplementedError: This should not be reached. Please report a bug at github.com/pandas-dev/pandas/",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

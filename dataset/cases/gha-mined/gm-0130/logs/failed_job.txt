@@ -1,0 +1,723 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {fb519492-92e0-4936-98cf-9e2984c668f2}
+Azure Region: eastus
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260720.247.2
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0' (SHA:9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0)
+Download action repository 'astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9' (SHA:c771a70e6277c0a99b617c7a806ffedaca235ff9)
+Download action repository 'pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd' (SHA:2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd)
+Getting action download info
+Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+Complete job name: Lint 3.10
+##[group]Run actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+with:
+  persist-credentials: false
+  repository: pydantic/pydantic
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+##[endgroup]
+Syncing repository: pydantic/pydantic
+##[group]Getting Git version info
+Working directory is '/home/runner/work/pydantic/pydantic'
+[command]/usr/bin/git version
+git version 2.54.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/170a0ae4-9dc4-4b26-9c7c-e69c83a34166' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/pydantic/pydantic
+Deleting the contents of '/home/runner/work/pydantic/pydantic'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/pydantic/pydantic
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/pydantic/pydantic/.git/
+[command]/usr/bin/git remote add origin https://github.com/pydantic/pydantic
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/pydantic/pydantic/.git.path /home/runner/work/_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/pydantic/pydantic/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e594dd41d32910e4b1a7e1fe7002cc18a9053e00:refs/remotes/pull/13583/merge
+From https://github.com/pydantic/pydantic
+ * [new ref]         e594dd41d32910e4b1a7e1fe7002cc18a9053e00 -> pull/13583/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/13583/merge
+Note: switching to 'refs/remotes/pull/13583/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at e594dd4 Merge de568c17e6c9f987f39cbcf220c3716f3ffa5a83 into 57d0ad870110765089b6037313e8c4f507b7c4de
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+e594dd41d32910e4b1a7e1fe7002cc18a9053e00
+##[group]Removing auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/home/runner/work/pydantic/pydantic/.git.path
+includeif.gitdir:/home/runner/work/pydantic/pydantic/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/pydantic/pydantic/.git.path
+/home/runner/work/_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/pydantic/pydantic/.git.path /home/runner/work/_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/pydantic/pydantic/.git/worktrees/*.path
+/home/runner/work/_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/pydantic/pydantic/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/home/runner/work/_temp/git-credentials-19f4f765-41c5-4b57-aad0-651142ece872.config'
+##[endgroup]
+##[group]Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+with:
+  python-version: 3.10
+  enable-cache: true
+  activate-environment: false
+  no-project: false
+  working-directory: /home/runner/work/pydantic/pydantic
+  github-token: ***
+  cache-dependency-glob: **/*requirements*.txt
+**/*requirements*.in
+**/*constraints*.txt
+**/*constraints*.in
+**/pyproject.toml
+**/uv.lock
+**/*.py.lock
+
+  restore-cache: true
+  save-cache: true
+  prune-cache: false
+  cache-python: false
+  ignore-nothing-to-cache: false
+  ignore-empty-workdir: false
+  download-from-astral-mirror: true
+  add-problem-matchers: true
+  quiet: false
+  resolution-strategy: highest
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+##[endgroup]
+Trying to find version for uv in: /home/runner/work/pydantic/pydantic/uv.toml
+Could not find file: /home/runner/work/pydantic/pydantic/uv.toml
+Trying to find version for uv in: /home/runner/work/pydantic/pydantic/pyproject.toml
+Found version for uv in /home/runner/work/pydantic/pydantic/pyproject.toml: >=0.8.4
+Found minimum version specifier, using latest version
+Fetching manifest data from https://raw.githubusercontent.com/astral-sh/versions/main/v1/uv.ndjson ...
+Downloading uv from "https://releases.astral.sh/github/uv/releases/download/0.12.1/uv-x86_64-unknown-linux-gnu.tar.gz" ...
+[command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/048911b2-7046-4988-9b26-27da5065aef0 -f /home/runner/work/_temp/9b6070c3-0ed9-4df9-b40a-5e2f79a08003
+Added /home/runner/.local/bin to the path
+Added /opt/hostedtoolcache/uv/0.12.1/x86_64 to the path
+Set UV_PYTHON_INSTALL_DIR to /home/runner/work/_temp/uv-python-dir
+Added /home/runner/work/_temp/uv-python-dir to the path
+Set UV_PYTHON to 3.10
+Set UV_CACHE_DIR to /home/runner/work/_temp/setup-uv-cache
+Successfully installed uv version 0.12.1
+Searching files using cache dependency glob: /home/runner/work/pydantic/pydantic/**/*requirements*.txt,/home/runner/work/pydantic/pydantic/**/*requirements*.in,/home/runner/work/pydantic/pydantic/**/*constraints*.txt,/home/runner/work/pydantic/pydantic/**/*constraints*.in,/home/runner/work/pydantic/pydantic/**/pyproject.toml,/home/runner/work/pydantic/pydantic/**/uv.lock,/home/runner/work/pydantic/pydantic/**/*.py.lock
+/home/runner/work/pydantic/pydantic/.github/actions/people/requirements.in
+/home/runner/work/pydantic/pydantic/.github/pyodide/requirements.in
+/home/runner/work/pydantic/pydantic/pydantic-core/pyproject.toml
+/home/runner/work/pydantic/pydantic/pydantic-core/uv.lock
+/home/runner/work/pydantic/pydantic/pyproject.toml
+/home/runner/work/pydantic/pydantic/tests/plugin/pyproject.toml
+/home/runner/work/pydantic/pydantic/tests/typechecking/pyproject.toml
+/home/runner/work/pydantic/pydantic/uv.lock
+Found 8 files to hash.
+Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.10-31aba6b272579f44710829ea6c3c04dbd14f9b832b1b37cdc76076f6b6dbb36c
+Cache hit for: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.10-31aba6b272579f44710829ea6c3c04dbd14f9b832b1b37cdc76076f6b6dbb36c
+Received 80371106 of 80371106 (100.0%), 222.8 MBs/sec
+Cache Size: ~77 MB (80371106 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/e12150fd-2341-41fd-a7b3-265f9d1da295/cache.tzst -P -C /home/runner/work/pydantic/pydantic --use-compress-program unzstd
+Cache restored successfully
+cache restored from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.10-31aba6b272579f44710829ea6c3c04dbd14f9b832b1b37cdc76076f6b6dbb36c
+##[group]Run uv sync --all-packages --group linting --all-extras
+uv sync --all-packages --group linting --all-extras
+uv pip install pip
+shell: /usr/bin/bash -e {0}
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.10
+  UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+##[endgroup]
+Downloading cpython-3.10.20-linux-x86_64-gnu (download) (28.1MiB)
+ Downloaded cpython-3.10.20-linux-x86_64-gnu (download)
+Using CPython 3.10.20
+Creating virtual environment at: .venv
+   Building pydantic @ file:///home/runner/work/pydantic/pydantic
+   Building pydantic-core @ file:///home/runner/work/pydantic/pydantic/pydantic-core
+Downloading ast-serialize (1.2MiB)
+Downloading pyright (5.9MiB)
+Downloading virtualenv (5.7MiB)
+Downloading mypy (14.5MiB)
+ Downloaded ast-serialize
+ Downloaded virtualenv
+ Downloaded mypy
+      Built pydantic @ file:///home/runner/work/pydantic/pydantic
+ Downloaded pyright
+      Built pydantic-core @ file:///home/runner/work/pydantic/pydantic/pydantic-core
+Prepared 16 packages in 33.98s
+Installed 61 packages in 162ms
+ + annotated-types==0.7.0
+ + ast-serialize==0.6.0
+ + attrs==24.3.0
+ + black==26.5.1
+ + cffi==2.1.0
+ + cfgv==3.4.0
+ + click==8.1.8
+ + colorama==0.4.6
+ + coverage==7.13.5
+ + dirty-equals==0.9.0
+ + distlib==0.4.0
+ + dnspython==2.7.0
+ + email-validator==2.2.0
+ + exceptiongroup==1.2.2
+ + faker==35.0.0
+ + filelock==3.20.3
+ + griffe==1.5.5
+ + identify==2.6.15
+ + idna==3.15
+ + iniconfig==2.0.0
+ + jsonschema==4.26.0
+ + jsonschema-specifications==2024.10.1
+ + librt==0.13.0
+ + markdown-it-py==3.0.0
+ + maturin==1.13.3
+ + mdurl==0.1.2
+ + mypy==2.3.0
+ + mypy-extensions==1.0.0
+ + nodeenv==1.9.1
+ + packaging==24.2
+ + pathspec==1.1.1
+ + platformdirs==4.3.6
+ + pluggy==1.5.0
+ + pre-commit==4.4.0
+ + py-cpuinfo==9.0.0
+ + pycparser==2.22
+ + pydantic==2.14.0a1 (from file:///home/runner/work/pydantic/pydantic)
+ + pydantic-core==2.47.0 (from file:///home/runner/work/pydantic/pydantic/pydantic-core)
+ + pygments==2.19.1
+ + pyright==1.1.411
+ + pytest==9.1.1
+ + pytest-benchmark==5.1.0
+ + pytest-codspeed==4.5.0
+ + pytest-examples==0.0.15
+ + pytest-mock==3.14.0
+ + pytest-pretty==1.2.0
+ + pytest-run-parallel==0.7.1
+ + python-dateutil==2.9.0.post0
+ + pytokens==0.4.1
+ + pytz==2024.2
+ + pyyaml==6.0.3
+ + referencing==0.36.1
+ + rich==13.9.4
+ + rpds-py==0.30.0
+ + ruff==0.15.10
+ + six==1.17.0
+ + time-machine==3.3.0
+ + tomli==2.2.1
+ + typing-extensions==4.15.0
+ + typing-inspection==0.4.2
+ + virtualenv==20.36.1
+Resolved 1 package in 71ms
+Downloading pip (1.7MiB)
+ Downloaded pip
+Prepared 1 package in 70ms
+Installed 1 package in 11ms
+ + pip==26.2.1
+##[group]Run pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd
+with:
+  extra_args: --all-files --verbose
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.10
+  UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+  SKIP: no-commit-to-branch
+  UV_NO_PROGRESS: 1
+##[endgroup]
+##[start-action display=Run python -m pip install pre-commit;id=__pre-commit_action.__run]
+##[group]Run python -m pip install pre-commit
+python -m pip install pre-commit
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.10
+  UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+  SKIP: no-commit-to-branch
+  UV_NO_PROGRESS: 1
+##[endgroup]
+Defaulting to user installation because normal site-packages is not writeable
+Collecting pre-commit
+  Downloading pre_commit-4.6.1-py2.py3-none-any.whl.metadata (1.2 kB)
+Collecting cfgv>=2.0.0 (from pre-commit)
+  Downloading cfgv-3.5.0-py2.py3-none-any.whl.metadata (8.9 kB)
+Collecting identify>=1.0.0 (from pre-commit)
+  Downloading identify-2.6.19-py2.py3-none-any.whl.metadata (4.4 kB)
+Collecting nodeenv>=0.11.1 (from pre-commit)
+  Downloading nodeenv-1.10.0-py2.py3-none-any.whl.metadata (24 kB)
+Requirement already satisfied: pyyaml>=5.1 in /usr/lib/python3/dist-packages (from pre-commit) (6.0.1)
+Collecting virtualenv>=20.10.0 (from pre-commit)
+  Downloading virtualenv-21.7.1-py3-none-any.whl.metadata (3.5 kB)
+Collecting distlib<1,>=0.3.7 (from virtualenv>=20.10.0->pre-commit)
+  Downloading distlib-0.4.3-py2.py3-none-any.whl.metadata (5.3 kB)
+Requirement already satisfied: filelock<4,>=3.24.2 in /usr/local/lib/python3.12/dist-packages (from virtualenv>=20.10.0->pre-commit) (3.31.1)
+Requirement already satisfied: platformdirs<5,>=3.9.1 in /usr/local/lib/python3.12/dist-packages (from virtualenv>=20.10.0->pre-commit) (4.10.1)
+Collecting python-discovery>=1.4.2 (from virtualenv>=20.10.0->pre-commit)
+  Downloading python_discovery-1.5.1-py3-none-any.whl.metadata (5.0 kB)
+Downloading pre_commit-4.6.1-py2.py3-none-any.whl (226 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/226.2 kB ? eta -:--:--
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.2/226.2 kB 37.1 MB/s eta 0:00:00
+Downloading cfgv-3.5.0-py2.py3-none-any.whl (7.4 kB)
+Downloading identify-2.6.19-py2.py3-none-any.whl (99 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/99.4 kB ? eta -:--:--
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.4/99.4 kB 39.4 MB/s eta 0:00:00
+Downloading nodeenv-1.10.0-py2.py3-none-any.whl (23 kB)
+Downloading virtualenv-21.7.1-py3-none-any.whl (5.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/5.5 MB ? eta -:--:--
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸ 5.5/5.5 MB 203.1 MB/s eta 0:00:01
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.5/5.5 MB 153.6 MB/s eta 0:00:00
+Downloading distlib-0.4.3-py2.py3-none-any.whl (470 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 0.0/470.6 kB ? eta -:--:--
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 470.6/470.6 kB 108.8 MB/s eta 0:00:00
+Downloading python_discovery-1.5.1-py3-none-any.whl (35 kB)
+Installing collected packages: distlib, python-discovery, nodeenv, identify, cfgv, virtualenv, pre-commit
+Successfully installed cfgv-3.5.0 distlib-0.4.3 identify-2.6.19 nodeenv-1.10.0 pre-commit-4.6.1 python-discovery-1.5.1 virtualenv-21.7.1
+##[end-action id=__pre-commit_action.__run;outcome=success;conclusion=success;duration_ms=2898]
+##[start-action display=Run python -m pip freeze --local;id=__pre-commit_action.__run_2]
+##[group]Run python -m pip freeze --local
+python -m pip freeze --local
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.10
+  UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+  SKIP: no-commit-to-branch
+  UV_NO_PROGRESS: 1
+##[endgroup]
+argcomplete==3.7.0
+attrs==23.2.0
+Automat==22.10.0
+Babel==2.10.3
+bcc==0.29.1
+bcrypt==3.2.2
+blinker==1.7.0
+boto3==1.34.46
+botocore==1.34.46
+certifi==2023.11.17
+cfgv==3.5.0
+chardet==5.2.0
+click==8.1.6
+cloud-init==26.1
+colorama==0.4.6
+command-not-found==0.3
+configobj==5.0.8
+constantly==23.10.4
+cryptography==41.0.7
+dbus-python==1.3.2
+distlib==0.4.3
+distro==1.9.0
+distro-info==1.7+build1
+filelock==3.31.1
+httplib2==0.20.4
+hyperlink==21.0.0
+identify==2.6.19
+idna==3.6
+incremental==22.10.0
+Jinja2==3.1.2
+jmespath==1.0.1
+jsonpatch==1.32
+jsonpointer==2.0
+jsonschema==4.10.3
+launchpadlib==1.11.0
+lazr.restfulclient==0.14.6
+lazr.uri==1.0.6
+markdown-it-py==3.0.0
+MarkupSafe==2.1.5
+mdurl==0.1.2
+mercurial==6.7.2
+netaddr==0.8.0
+netifaces==0.11.0
+nodeenv==1.10.0
+oauthlib==3.2.2
+packaging==24.0
+passlib==1.7.4
+pexpect==4.9.0
+pipx==1.16.0
+platformdirs==4.10.1
+pre_commit==4.6.1
+ptyprocess==0.7.0
+pyasn1==0.4.8
+pyasn1-modules==0.2.8
+Pygments==2.17.2
+PyGObject==3.48.2
+PyHamcrest==2.1.0
+PyJWT==2.7.0
+pyOpenSSL==23.2.0
+pyparsing==3.1.1
+pyparted==3.12.0
+pyrsistent==0.20.0
+pyserial==3.5
+python-apt==2.7.7+ubuntu5.2
+python-dateutil==2.8.2
+python-debian==0.1.49+ubuntu2
+python-discovery==1.5.1
+python-magic==0.4.27
+pytz==2024.1
+PyYAML==6.0.1
+requests==2.31.0
+rich==13.7.1
+s3transfer==0.10.1
+service-identity==24.1.0
+setuptools==68.1.2
+six==1.16.0
+sos==4.10.2
+ssh-import-id==5.11
+systemd-python==235
+Twisted==24.3.0
+typing_extensions==4.10.0
+ubuntu-pro-client==8001
+ufw==0.36.2
+urllib3==2.0.7
+userpath==1.9.2
+virtualenv==21.7.1
+wadllib==1.3.6
+WALinuxAgent==2.15.0.1
+wheel==0.42.0
+zope.interface==6.1
+zstandard==0.22.0
+##[end-action id=__pre-commit_action.__run_2;outcome=success;conclusion=success;duration_ms=425]
+##[start-action display=Run actions/cache@v4;id=__pre-commit_action.__actions_cache]
+Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+##[group]Run actions/cache@v4
+with:
+  path: ~/.cache/pre-commit
+  key: pre-commit-3||1a7fd8748909686d5f62a96ef7123379527b003f3fea1bdee4b462dd6c02572a
+  enableCrossOsArchive: false
+  fail-on-cache-miss: false
+  lookup-only: false
+  save-always: false
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.10
+  UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+  SKIP: no-commit-to-branch
+  UV_NO_PROGRESS: 1
+##[endgroup]
+(node:4145) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Cache hit for: pre-commit-3||1a7fd8748909686d5f62a96ef7123379527b003f3fea1bdee4b462dd6c02572a
+(node:4145) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Received 27169817 of 27169817 (100.0%), 146.4 MBs/sec
+Cache Size: ~26 MB (27169817 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/7ec92b37-529b-46b6-91ca-b4e607371953/cache.tzst -P -C /home/runner/work/pydantic/pydantic --use-compress-program unzstd
+Cache restored successfully
+Cache restored from key: pre-commit-3||1a7fd8748909686d5f62a96ef7123379527b003f3fea1bdee4b462dd6c02572a
+##[end-action id=__pre-commit_action.__actions_cache;outcome=success;conclusion=success;duration_ms=909]
+##[start-action display=Run pre-commit run --show-diff-on-failure --color=always --all-files --verbose;id=__pre-commit_action.__run_3]
+##[group]Run pre-commit run --show-diff-on-failure --color=always --all-files --verbose
+pre-commit run --show-diff-on-failure --color=always --all-files --verbose
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.10
+  UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+  SKIP: no-commit-to-branch
+  UV_NO_PROGRESS: 1
+##[endgroup]
+don't commit to branch..................................................Skipped
+- hook id: no-commit-to-branch
+check yaml...............................................................Passed
+- hook id: check-yaml
+- duration: 0.18s
+check toml...............................................................Passed
+- hook id: check-toml
+- duration: 0.16s
+fix end of files.........................................................Passed
+- hook id: end-of-file-fixer
+- duration: 0.05s
+trim trailing whitespace.................................................Passed
+- hook id: trailing-whitespace
+- duration: 0.08s
+codespell................................................................Passed
+- hook id: codespell
+- duration: 0.6s
+markdownlint-cli2........................................................Passed
+- hook id: markdownlint-cli2
+- duration: 2.2s
+
+markdownlint-cli2 v0.18.1 (markdownlint v0.38.0)
+Finding: docs/errors/usage_errors.md docs/api/json_schema.md docs/integrations/datamodel_code_generator.md docs/install.md release/README.md docs/concepts/json_schema.md docs/api/validate_call.md docs/concepts/fields.md docs/integrations/devtools.md docs/why.md docs/concepts/validation_decorator.md docs/contributing.md docs/api/pydantic_extra_types_coordinate.md docs/api/functional_serializers.md docs/examples/files.md docs/help_with_pydantic.md tests/mypy/README.md docs/api/pydantic_extra_types_phone_numbers.md docs/integrations/visual_studio_code.md docs/version-policy.md docs/internals/architecture.md docs/api/dataclasses.md docs/api/pydantic_extra_types_currency_code.md docs/concepts/unions.md HISTORY.md
+Linting: 25 file(s)
+Summary: 0 error(s)
+markdownlint-cli2 v0.18.1 (markdownlint v0.38.0)
+Finding: docs/api/types.md docs/migration.md docs/api/pydantic_extra_types_routing_numbers.md docs/api/pydantic_extra_types_color.md docs/errors/validation_errors.md docs/internals/resolving_annotations.md docs/integrations/hypothesis.md docs/examples/custom_validators.md docs/api/pydantic_core_schema.md docs/api/pydantic_extra_types_mac_address.md docs/concepts/dataclasses.md docs/integrations/logfire.md tests/typechecking/README.md docs/integrations/aws_lambda.md .github/PULL_REQUEST_TEMPLATE.md docs/concepts/json.md docs/api/type_adapter.md docs/api/standard_library_types.md docs/api/pydantic_extra_types_country.md docs/api/pydantic_settings.md pydantic-core/README.md docs/api/networks.md docs/concepts/types.md docs/examples/dynamic_models.md docs/concepts/serialization.md
+Linting: 25 file(s)
+Summary: 0 error(s)
+markdownlint-cli2 v0.18.1 (markdownlint v0.38.0)
+Finding: docs/api/pydantic_extra_types_isbn.md docs/api/pydantic_extra_types_language_code.md README.md docs/integrations/rich.md docs/api/functional_validators.md docs/examples/orms.md .agents/skills/pydantic/SKILL.md docs/concepts/strict_mode.md docs/integrations/llms.md docs/examples/requests.md docs/api/fields.md docs/concepts/validators.md docs/api/pydantic_extra_types_timezone_name.md docs/api/pydantic_extra_types_pendulum_dt.md docs/api/base_model.md .hyperlint/style_guide_test.md docs/api/root_model.md docs/api/annotated_handlers.md docs/examples/queues.md docs/api/aliases.md docs/concepts/experimental.md docs/api/pydantic_extra_types_semantic_version.md docs/pydantic_people.md docs/concepts/models.md docs/concepts/alias.md
+Linting: 25 file(s)
+Summary: 0 error(s)
+markdownlint-cli2 v0.18.1 (markdownlint v0.38.0)
+Finding: docs/integrations/pyrefly.md docs/concepts/forward_annotations.md docs/api/config.md docs/concepts/conversion_table.md docs/concepts/performance.md docs/api/pydantic_extra_types_ulid.md docs/integrations/pycharm.md pydantic-core/wasm-preview/README.md docs/concepts/type_adapter.md docs/api/errors.md docs/api/experimental.md docs/concepts/pydantic_settings.md docs/integrations/linting.md docs/api/pydantic_core.md docs/examples/pydantic_ai.md docs/api/pydantic_extra_types_script_code.md docs/errors/troubleshooting.md docs/integrations/mypy.md docs/concepts/config.md docs/api/version.md docs/api/pydantic_extra_types_payment.md docs/integrations/documentation.md docs/errors/errors.md docs/index.md
+Linting: 24 file(s)
+Summary: 0 error(s)
+
+yamlfmt..................................................................Passed
+- hook id: yamlfmt
+- duration: 0.02s
+zizmor...................................................................Passed
+- hook id: zizmor
+- duration: 0.09s
+
+🌈 zizmor v1.23.1
+ INFO audit: zizmor: 🌈 completed .github/actions/core-build-pgo-wheel/action.yml
+ INFO audit: zizmor: 🌈 completed .github/actions/people/action.yml
+ INFO audit: zizmor: 🌈 completed .github/dependabot.yml
+ INFO audit: zizmor: 🌈 completed .github/workflows/ci.yml
+ INFO audit: zizmor: 🌈 completed .github/workflows/codspeed.yml
+ INFO audit: zizmor: 🌈 completed .github/workflows/coverage.yml
+ INFO audit: zizmor: 🌈 completed .github/workflows/dependencies-check.yml
+ INFO audit: zizmor: 🌈 completed .github/workflows/docs-update.yml
+ INFO audit: zizmor: 🌈 completed .github/workflows/enforce-issue-assignment.yml
+ INFO audit: zizmor: 🌈 completed .github/workflows/integration.yml
+ INFO audit: zizmor: 🌈 completed .github/workflows/third-party.yml
+ INFO audit: zizmor: 🌈 completed .github/workflows/update-pydantic-people.yml
+ INFO audit: zizmor: 🌈 completed .github/workflows/upload-previews.yml
+No findings to report. Good job! (26 ignored, 83 suppressed)
+
+Lint.....................................................................Passed
+- hook id: lint
+- duration: 0.31s
+
+uv 0.12.1 (x86_64-unknown-linux-gnu)
+uv run ruff check pydantic tests docs/plugins release pydantic-core/python pydantic-core/tests pydantic-core/wasm-preview/run_tests.py
+All checks passed!
+uv run ruff format --check pydantic tests docs/plugins release pydantic-core/python pydantic-core/tests pydantic-core/wasm-preview/run_tests.py
+347 files already formatted
+
+Lint Rust................................................................Passed
+- hook id: lint rust
+- duration: 19.14s
+
+/usr/bin/make -C pydantic-core lint-rust
+make[1]: Entering directory '/home/runner/work/pydantic/pydantic/pydantic-core'
+cargo fmt --version
+rustfmt 1.9.0-stable (8bab26f4f6 2026-07-14)
+cargo fmt --all -- --check
+cargo clippy --version
+clippy 0.1.97 (8bab26f4f6 2026-07-14)
+cargo clippy --tests -- -D warnings
+    Checking stable_deref_trait v1.2.0
+    Checking writeable v0.5.5
+    Checking zerofrom v0.1.4
+    Checking litemap v0.7.3
+   Compiling pyo3-ffi v0.29.0
+    Checking yoke v0.7.4
+    Checking icu_locid_transform_data v1.5.0
+    Checking smallvec v1.15.2
+    Checking libc v0.2.185
+   Compiling pyo3 v0.29.0
+    Checking zerovec v0.10.4
+    Checking icu_properties_data v1.5.0
+    Checking static_assertions v1.1.0
+    Checking lexical-util v1.0.6
+    Checking num-traits v0.2.19
+    Checking tinystr v0.7.6
+    Checking icu_collections v1.5.0
+    Checking memchr v2.7.4
+    Checking icu_locid v1.5.0
+    Checking icu_normalizer_data v1.5.0
+    Checking write16 v1.0.0
+    Checking utf8_iter v1.0.4
+    Checking utf16_iter v1.0.5
+    Checking lexical-parse-integer v1.0.5
+    Checking num-integer v0.1.46
+    Checking tap v1.0.1
+    Checking cfg-if v1.0.0
+    Checking once_cell v1.21.3
+    Checking wyz v0.5.1
+    Checking num-bigint v0.4.6
+    Checking icu_provider v1.5.0
+    Checking getrandom v0.3.3
+    Checking aho-corasick v1.1.3
+    Checking lexical-parse-float v1.0.5
+    Checking icu_locid_transform v1.5.0
+    Checking zerocopy v0.8.25
+    Checking icu_properties v1.5.1
+    Checking radium v0.7.0
+    Checking serde_core v1.0.228
+    Checking percent-encoding v2.3.2
+    Checking regex-syntax v0.8.11
+    Checking foldhash v0.2.0
+    Checking allocator-api2 v0.2.21
+    Checking equivalent v1.0.2
+    Checking funty v2.0.0
+    Checking icu_normalizer v1.5.0
+    Checking bitvec v1.0.1
+    Checking idna_adapter v1.2.0
+    Checking idna v1.1.0
+    Checking hashbrown v0.17.1
+    Checking ahash v0.8.12
+    Checking regex-automata v0.4.13
+    Checking form_urlencoded v1.2.2
+   Compiling jiter v0.16.0
+    Checking strum v0.27.2
+    Checking zmij v1.0.6
+   Compiling pydantic-core v2.47.0 (/home/runner/work/pydantic/pydantic/pydantic-core)
+    Checking itoa v1.0.11
+    Checking serde_json v1.0.150
+   Compiling enum_dispatch v0.3.13
+    Checking serde v1.0.228
+    Checking regex v1.12.4
+    Checking lru v0.18.0
+    Checking speedate v0.17.0
+    Checking url v2.5.8
+    Checking uuid v1.23.4
+    Checking base64 v0.22.1
+    Checking hex v0.4.3
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 18.01s
+make[1]: Leaving directory '/home/runner/work/pydantic/pydantic/pydantic-core'
+
+Typecheck................................................................Failed
+- hook id: typecheck
+- duration: 13.07s
+- exit code: 1
+
+/home/runner/work/pydantic/pydantic/pydantic/_internal/_typing_extra.py
+  /home/runner/work/pydantic/pydantic/pydantic/_internal/_typing_extra.py:465:24 - error: "__getitem__" method not defined on type "type" (reportIndexIssue)
+1 error, 0 warnings, 0 informations
+
+##[error]Process completed with exit code 1.
+##[end-action id=__pre-commit_action.__run_3;outcome=failure;conclusion=failure;duration_ms=36668]
+Post job cleanup.
+##[start-action display=Run actions/cache@v4;id=__5bbdd541-d62b-48d6-aeb3-91109d5d46ef.__actions_cache]
+##[end-action id=__5bbdd541-d62b-48d6-aeb3-91109d5d46ef.__actions_cache;outcome=skipped;conclusion=skipped;duration_ms=0]
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/24147fe9-461f-4c01-8746-40e10213e001' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/pydantic/pydantic
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Cleaning up orphan processes
+##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/cache@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

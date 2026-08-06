@@ -26,6 +26,25 @@ def pick_failed_job(jobs: list[Job]) -> Job:
     raise NoFailedJobError("no failed, timed out, or cancelled job in this run")
 
 
+def _diff_at_failure(
+    provider: CIProvider, repo: str, pr_number: int | None, head_sha: str
+) -> str | None:
+    """Diff as it stood at the failing commit, not as the branch stands today.
+
+    A pull request diff follows the branch tip, so by the time a run is
+    curated it can show code that did not exist when the log was written. That
+    makes the diff disagree with the log it is paired with.
+    """
+    if pr_number is None:
+        return None
+
+    at_sha = getattr(provider, "get_diff_at", None)
+    if at_sha is None:
+        return provider.get_diff(repo, pr_number)
+    diff: str = at_sha(repo, pr_number, head_sha)
+    return diff
+
+
 def ingest(url: str, provider: CIProvider) -> RunSnapshot:
     ref = provider.parse_run_url(url)
     run = provider.get_run(ref)
@@ -43,7 +62,7 @@ def ingest(url: str, provider: CIProvider) -> RunSnapshot:
         prior_attempt_log = clean_log(raw) if raw is not None else None
 
     pr_number = provider.get_pr_for_commit(ref.repo, run.head_sha)
-    diff_text = provider.get_diff(ref.repo, pr_number) if pr_number is not None else None
+    diff_text = _diff_at_failure(provider, ref.repo, pr_number, run.head_sha)
 
     return RunSnapshot(
         run=run,

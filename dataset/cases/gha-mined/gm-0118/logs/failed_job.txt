@@ -1,0 +1,439 @@
+Current runner version: '2.335.1'
+Runner name: 'aws-m8i-l-cache-use1-public-80-26kmn-runner-5sd45'
+Runner group name: 'aws-m8i-l-cache'
+Machine name: 'aws-m8i-l-cache-use1-public-80-26kmn-runner-5sd45'
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+Uses: huggingface/transformers-ci/.github/workflows/pr-ci_dynamic_caller_example.yml@refs/heads/main (6058dcce73686c86389fa51690ce7562d66bac55)
+Complete job name: pr-ci / Check code quality
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+with:
+  repository: huggingface/transformers
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  persist-credentials: true
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_code_quality
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Syncing repository: huggingface/transformers
+##[group]Getting Git version info
+Working directory is '/__w/transformers/transformers'
+[command]/usr/bin/git version
+git version 2.47.3
+##[endgroup]
+Temporarily overriding HOME='/__w/_temp/093a0f07-68c1-4b71-8c6d-17304a15c130' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /__w/transformers/transformers
+Deleting the contents of '/__w/transformers/transformers'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]/usr/bin/git init /__w/transformers/transformers
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+Initialized empty Git repository in /__w/transformers/transformers/.git/
+[command]/usr/bin/git remote add origin https://github.com/huggingface/transformers
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /__w/_temp/git-credentials-78c3c2ec-0a43-496b-8396-510e2bbe4b41.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/__w/transformers/transformers/.git.path /__w/_temp/git-credentials-78c3c2ec-0a43-496b-8396-510e2bbe4b41.config
+[command]/usr/bin/git config --local includeIf.gitdir:/__w/transformers/transformers/.git/worktrees/*.path /__w/_temp/git-credentials-78c3c2ec-0a43-496b-8396-510e2bbe4b41.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-78c3c2ec-0a43-496b-8396-510e2bbe4b41.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-78c3c2ec-0a43-496b-8396-510e2bbe4b41.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ad40b114ed939cb29d44e7c51377debfcd6c8933:refs/remotes/pull/47809/merge
+From https://github.com/huggingface/transformers
+ * [new ref]         ad40b114ed939cb29d44e7c51377debfcd6c8933 -> pull/47809/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/47809/merge
+Note: switching to 'refs/remotes/pull/47809/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at ad40b11 Merge 30eb11aa5377667fc907b908124d263b91686a87 into 2eaaa20ac8aca4c7b0fa9bc36919a82a7d72449d
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+ad40b114ed939cb29d44e7c51377debfcd6c8933
+##[group]Run git config --global --add safe.directory '*'
+git config --global --add safe.directory '*'
+shell: sh -e {0}
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_code_quality
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+##[group]Run uv pip install -e ".[quality]"
+uv pip install -e ".[quality]"
+shell: sh -e {0}
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_code_quality
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Using Python 3.10.20 environment at: /usr/local
+Resolved 58 packages in 1.95s
+   Building transformers @ file:///__w/transformers/transformers
+      Built transformers @ file:///__w/transformers/transformers
+Prepared 1 package in 1.05s
+Uninstalled 1 package in 159ms
+Installed 1 package in 8ms
+ - transformers==5.15.0.dev0 (from git+https://github.com/huggingface/transformers.git@838763bf4372a5d0e5643fbd76f88294fb66277f)
+ + transformers==5.15.0.dev0 (from file:///__w/transformers/transformers)
+##[group]Run uv pip install 'transformers-ci[otel] @ git+https://github.com/huggingface/transformers-ci@main'
+uv pip install 'transformers-ci[otel] @ git+https://github.com/huggingface/transformers-ci@main'
+shell: sh -e {0}
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_code_quality
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Using Python 3.10.20 environment at: /usr/local
+   Updating https://github.com/huggingface/transformers-ci (main)
+    Updated https://github.com/huggingface/transformers-ci (6058dcce73686c86389fa51690ce7562d66bac55)
+Resolved 34 packages in 373ms
+Checked 34 packages in 0.28ms
+##[group]Run pip freeze | tee installed.txt
+pip freeze | tee installed.txt
+shell: sh -e {0}
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_code_quality
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+aiohappyeyeballs==2.7.1
+aiohttp==3.14.3
+aiosignal==1.4.0
+annotated-doc==0.0.5
+anyio==4.14.2
+async-timeout==5.0.1
+attrs==26.1.0
+certifi==2026.7.22
+charset-normalizer==3.4.9
+click==8.4.2
+datasets==5.0.1
+dill==0.4.1
+emoji==2.15.0
+exceptiongroup==1.3.1
+filelock==3.32.2
+frozenlist==1.8.0
+fsspec==2026.6.0
+gitdb==4.0.12
+GitPython==3.1.18
+googleapis-common-protos==1.75.0
+grpcio==1.83.0
+h11==0.16.0
+hf-xet==1.6.0
+httpcore==1.0.9
+httpx==0.28.1
+huggingface_hub==1.26.0
+idna==3.18
+iniconfig==2.3.0
+libcst==1.9.0
+markdown-it-py==4.2.0
+mdurl==0.1.2
+multidict==6.7.1
+multiprocess==0.70.19
+numpy==2.2.6
+opentelemetry-api==1.44.0
+opentelemetry-container-distro==0.2.0
+opentelemetry-exporter-otlp==1.44.0
+opentelemetry-exporter-otlp-proto-common==1.44.0
+opentelemetry-exporter-otlp-proto-grpc==1.44.0
+opentelemetry-exporter-otlp-proto-http==1.44.0
+opentelemetry-instrumentation==0.65b0
+opentelemetry-proto==1.44.0
+opentelemetry-resourcedetector-docker==0.4.0
+opentelemetry-resourcedetector-kubernetes==0.3.0
+opentelemetry-resourcedetector-process==0.3.0
+opentelemetry-sdk==1.44.0
+opentelemetry-semantic-conventions==0.65b0
+packaging==26.3
+pandas==2.3.3
+pluggy==1.6.0
+propcache==0.5.2
+protobuf==7.35.1
+psutil==7.2.2
+pyarrow==25.0.0
+Pygments==2.20.0
+pytest==9.1.1
+pytest-opentelemetry==1.1.0
+python-dateutil==2.9.0.post0
+pytz==2026.3.post1
+PyYAML==6.0.3
+regex==2026.7.19
+requests==2.34.2
+rich==15.0.0
+ruff==0.14.10
+safetensors==0.8.0
+shellingham==1.5.4
+six==1.17.0
+smmap==5.0.3
+tokenizers==0.22.2
+tomli==2.4.1
+tqdm==4.70.0
+-e git+https://github.com/huggingface/transformers@ad40b114ed939cb29d44e7c51377debfcd6c8933#egg=transformers
+transformers-ci @ git+https://github.com/huggingface/transformers-ci@6058dcce73686c86389fa51690ce7562d66bac55
+transformers-mlinter==0.1.2
+ty==0.0.20
+typer==0.27.1
+typing_extensions==4.16.0
+tzdata==2026.3
+urllib3==1.26.20
+uv==0.12.2
+wrapt==2.3.0
+xxhash==3.8.1
+yarl==1.24.5
+##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+with:
+  name: quality-installed
+  path: installed.txt
+  retention-days: 3
+  if-no-files-found: warn
+  compression-level: 6
+  overwrite: false
+  include-hidden-files: false
+  archive: true
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_code_quality
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+With the provided path, there will be 1 file uploaded
+Artifact name is valid!
+Root directory input is valid!
+Uploading artifact: quality-installed.zip
+Beginning upload of artifact content to blob storage
+Uploaded bytes 1061
+Finished uploading artifact content to blob storage!
+SHA256 digest of uploaded artifact is 53b61ccbcfeb35f72f7a6f328ee3e46a747c65184f8e19bc59f2a018469e97e8
+Finalizing artifact upload
+Artifact quality-installed successfully finalized. Artifact ID 8958262594
+Artifact quality-installed has been successfully uploaded! Final size is 1061 bytes. Artifact ID is 8958262594
+Artifact download URL: https://github.com/huggingface/transformers/actions/runs/31077932435/artifacts/8958262594
+##[group]Run # Mark the job started so it shows on the live dashboards before the
+# Mark the job started so it shows on the live dashboards before the
+# first checker span arrives. report-ci-start emits only a run-start
+# span (no checker span), so it is discoverable yet counts zero checks.
+configure-ci-otel \
+  --suite check_code_quality \
+  --service-name "pytest-observability" \
+  --protocol http \
+  --otlp-endpoint "$OTEL_EXPORTER_OTLP_ENDPOINT" \
+  --token "$OTEL_TOKEN" \
+  --staging-endpoint 10.90.52.50:5317 \
+  --staging-protocol grpc \
+  -- report-ci-start || echo "OTEL START WARNING report-ci-start is unavailable in this environment"
+
+configure-ci-otel \
+  --suite check_code_quality \
+  --service-name "pytest-observability" \
+  --protocol http \
+  --otlp-endpoint "$OTEL_EXPORTER_OTLP_ENDPOINT" \
+  --token "$OTEL_TOKEN" \
+  --staging-endpoint 10.90.52.50:5317 \
+  --staging-protocol grpc \
+  -- make check-code-quality
+shell: sh -e {0}
+env:
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47809
+  TRANSFORMERS_TEST_OTEL_SUITE: check_code_quality
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+OTEL TRACE START trace_id=3c9108afb38a824b791d604bb19885e7 service=pytest-observability job=check_code_quality exporter_version=0.1.0+g6058dcc command=report-ci-start
+report-ci-start: emitted run-start span for job 'check_code_quality'.
+OTEL TRACE END trace_id=3c9108afb38a824b791d604bb19885e7 service=pytest-observability job=check_code_quality exporter_version=0.1.0+g6058dcc exit_code=0
+OTEL TRACE START trace_id=abb7d565b3b7487979eac6fd0b19d6a0 service=pytest-observability job=check_code_quality exporter_version=0.1.0+g6058dcc command=make check-code-quality
+Type annotations
+$ python utils/check_types.py src/transformers/_typing.py src/transformers/cli src/transformers/modeling_utils.py src/transformers/utils src/transformers/generation src/transformers/pipelines/__init__.py src/transformers/pipelines/feature_extraction.py src/transformers/pipelines/image_feature_extraction.py src/transformers/pipelines/video_classification.py src/transformers/quantizers .circleci/create_circleci_config.py src/transformers/dependency_versions_table.py src/transformers/dependency_versions_check.py src/transformers/conversion_mapping.py src/transformers/time_series_utils.py src/transformers/debug_utils.py src/transformers/hyperparameter_search.py src/transformers/pytorch_utils.py src/transformers/file_utils.py src/transformers/trainer_jit_checkpoint.py src/transformers/trainer_optimizer.py
+Running ty check on: src/transformers/_typing.py, src/transformers/cli, src/transformers/modeling_utils.py, src/transformers/utils, src/transformers/generation, src/transformers/pipelines/__init__.py, src/transformers/pipelines/feature_extraction.py, src/transformers/pipelines/image_feature_extraction.py, src/transformers/pipelines/video_classification.py, src/transformers/quantizers, .circleci/create_circleci_config.py, src/transformers/dependency_versions_table.py, src/transformers/dependency_versions_check.py, src/transformers/conversion_mapping.py, src/transformers/time_series_utils.py, src/transformers/debug_utils.py, src/transformers/hyperparameter_search.py, src/transformers/pytorch_utils.py, src/transformers/file_utils.py, src/transformers/trainer_jit_checkpoint.py, src/transformers/trainer_optimizer.py
+error[unknown-argument]: Argument `tp_plan` does not match any known parameter of bound method `__init__`
+   --> src/transformers/generation/continuous_batching/continuous_api.py:594:13
+    |
+592 |             device_mesh=getattr(self.model, "_device_mesh", None),
+593 |             cpu_group_timeout=continuous_batching_config.cpu_group_timeout,
+594 |             tp_plan=getattr(self.model, "tp_plan", {}),
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+595 |         )
+596 |         self.is_tp_driver = self.distributed_helper.is_tp_driver
+    |
+info: Method signature here
+  --> src/transformers/generation/continuous_batching/distributed.py:42:9
+   |
+40 |     """A helper class to handle distributed-related operations. Notably, it does not crash when distributed is off."""
+41 |
+42 |     def __init__(self, device_mesh: DeviceMesh | None, cpu_group_timeout: float | None) -> None:
+   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+43 |         self.dist_on = _is_torch_distributed_initialized()
+44 |         self.device_mesh = device_mesh
+   |
+info: rule `unknown-argument` is enabled by default
+
+error[unresolved-attribute]: Object of type `Self@are_kv_heads_tp_ed` has no attribute `tp_plan`
+   --> src/transformers/generation/continuous_batching/distributed.py:189:28
+    |
+187 |         kv_is_tp = True
+188 |         for key in ["layers.*.self_attn.k_proj", "layers.*.self_attn.v_proj"]:
+189 |             if not (key in self.tp_plan or "model." + key in self.tp_plan):
+    |                            ^^^^^^^^^^^^
+190 |                 kv_is_tp = False
+191 |                 break
+    |
+info: rule `unresolved-attribute` is enabled by default
+
+error[unresolved-attribute]: Object of type `Self@are_kv_heads_tp_ed` has no attribute `tp_plan`
+   --> src/transformers/generation/continuous_batching/distributed.py:189:62
+    |
+187 |         kv_is_tp = True
+188 |         for key in ["layers.*.self_attn.k_proj", "layers.*.self_attn.v_proj"]:
+189 |             if not (key in self.tp_plan or "model." + key in self.tp_plan):
+    |                                                              ^^^^^^^^^^^^
+190 |                 kv_is_tp = False
+191 |                 break
+    |
+info: rule `unresolved-attribute` is enabled by default
+
+Found 3 diagnostics
+FAILED (1.83s)
+
+make: *** [Makefile:50: check-code-quality] Error 1
+OTEL TRACE END trace_id=abb7d565b3b7487979eac6fd0b19d6a0 service=pytest-observability job=check_code_quality exporter_version=0.1.0+g6058dcc exit_code=2
+##[error]Error: failed to run script step: command terminated with non-zero exit code: error executing command [sh -e /__w/_temp/6b2729e0-9161-11f1-b3f4-6985c4ca45d7.sh], exit code 2
+##[error]Process completed with exit code 1.
+##[error]Executing the custom container implementation failed. Please contact your self hosted runner administrator.
+Post job cleanup.
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+[command]/usr/bin/git version
+git version 2.47.3
+Copying '/root/.gitconfig' to '/__w/_temp/9533a0e2-8a83-4fd5-bd7c-b9735abfb8a4/.gitconfig'
+Temporarily overriding HOME='/__w/_temp/9533a0e2-8a83-4fd5-bd7c-b9735abfb8a4' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /__w/transformers/transformers
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/__w/transformers/transformers/.git.path
+includeif.gitdir:/__w/transformers/transformers/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/__w/transformers/transformers/.git.path
+/__w/_temp/git-credentials-78c3c2ec-0a43-496b-8396-510e2bbe4b41.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/__w/transformers/transformers/.git.path \/__w\/_temp\/git\-credentials\-78c3c2ec\-0a43\-496b\-8396\-510e2bbe4b41\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/__w/transformers/transformers/.git/worktrees/*.path
+/__w/_temp/git-credentials-78c3c2ec-0a43-496b-8396-510e2bbe4b41.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/__w/transformers/transformers/.git/worktrees/*.path \/__w\/_temp\/git\-credentials\-78c3c2ec\-0a43\-496b\-8396\-510e2bbe4b41\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-78c3c2ec-0a43-496b-8396-510e2bbe4b41.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-78c3c2ec\-0a43\-496b\-8396\-510e2bbe4b41\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-78c3c2ec-0a43-496b-8396-510e2bbe4b41.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-78c3c2ec\-0a43\-496b\-8396\-510e2bbe4b41\.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/__w/_temp/git-credentials-78c3c2ec-0a43-496b-8396-510e2bbe4b41.config'
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Cleaning up orphan processes

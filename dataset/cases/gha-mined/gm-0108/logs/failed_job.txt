@@ -1,0 +1,423 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {2f723b67-7bd6-4a0b-9ddd-a844f8c1b90c}
+Azure Region: westus2
+##[endgroup]
+##[group]Operating System
+Microsoft Windows Server 2025
+10.0.26100
+Datacenter
+##[endgroup]
+##[group]Runner Image
+Image: windows-2025-vs2026
+Version: 20260728.188.1
+Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20260728.188/images/windows/Windows2025-VS2026-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20260728.188
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Download action repository 'Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4' (SHA:c19371144df3bb44fab255c43d04cbc2ab54d1c4)
+Download action repository 'taiki-e/install-action@a6b2e2dcd845ddd7f509ce4f3ed3d922b80cc5d9' (SHA:a6b2e2dcd845ddd7f509ce4f3ed3d922b80cc5d9)
+Uses: astral-sh/uv/.github/workflows/test-windows-trampolines.yml@refs/pull/20933/merge (f9c2b8eb790525b6bccaa3224ee62eb34271a377)
+##[group] Inputs
+  trampoline-build: false
+##[endgroup]
+Complete job name: test-windows-trampolines / check on x86_64
+##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+with:
+  persist-credentials: false
+  repository: astral-sh/uv
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  CARGO_TERM_COLOR: always
+  RUSTUP_MAX_RETRIES: 10
+##[endgroup]
+Syncing repository: astral-sh/uv
+##[group]Getting Git version info
+Working directory is 'D:\a\uv\uv'
+[command]"C:\Program Files\Git\bin\git.exe" version
+git version 2.55.0.windows.3
+##[endgroup]
+Temporarily overriding HOME='D:\a\_temp\c0c9d563-1d2c-4eea-8d9e-1929c7c84f38' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\uv\uv
+Deleting the contents of 'D:\a\uv\uv'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]"C:\Program Files\Git\bin\git.exe" init D:\a\uv\uv
+Initialized empty Git repository in D:/a/uv/uv/.git/
+[command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/astral-sh/uv
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Removing HTTP extra header
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Removing includeIf entries pointing to credentials config files
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+[command]"C:\Program Files\Git\bin\git.exe" config --file D:\a\_temp\git-credentials-8322b946-185d-413b-a88c-c147b9c0278b.config http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+[command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/uv/uv/.git.path D:\a\_temp\git-credentials-8322b946-185d-413b-a88c-c147b9c0278b.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:D:/a/uv/uv/.git/worktrees/*.path D:\a\_temp\git-credentials-8322b946-185d-413b-a88c-c147b9c0278b.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-8322b946-185d-413b-a88c-c147b9c0278b.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-8322b946-185d-413b-a88c-c147b9c0278b.config
+##[endgroup]
+##[group]Fetching the repository
+[command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +f9c2b8eb790525b6bccaa3224ee62eb34271a377:refs/remotes/pull/20933/merge
+From https://github.com/astral-sh/uv
+ * [new ref]         f9c2b8eb790525b6bccaa3224ee62eb34271a377 -> pull/20933/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+[command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/20933/merge
+Note: switching to 'refs/remotes/pull/20933/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at f9c2b8e Merge 7732526d320fc49be5feb66c6ba3da195f0ab934 into 46ead609859e3c8f8572ca44e766fa003fbec43a
+##[endgroup]
+[command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+f9c2b8eb790525b6bccaa3224ee62eb34271a377
+##[group]Removing auth
+Removing SSH command configuration
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Removing HTTP extra header
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Removing includeIf entries pointing to credentials config files
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:D:/a/uv/uv/.git.path
+includeif.gitdir:D:/a/uv/uv/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/uv/uv/.git.path
+D:\a\_temp\git-credentials-8322b946-185d-413b-a88c-c147b9c0278b.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/uv/uv/.git.path D\:\\a\\_temp\\git\-credentials\-8322b946\-185d\-413b\-a88c\-c147b9c0278b\.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:D:/a/uv/uv/.git/worktrees/*.path
+D:\a\_temp\git-credentials-8322b946-185d-413b-a88c-c147b9c0278b.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:D:/a/uv/uv/.git/worktrees/*.path D\:\\a\\_temp\\git\-credentials\-8322b946\-185d\-413b\-a88c\-c147b9c0278b\.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-8322b946-185d-413b-a88c-c147b9c0278b.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-8322b946\-185d\-413b\-a88c\-c147b9c0278b\.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-8322b946-185d-413b-a88c-c147b9c0278b.config
+[command]"C:\Program Files\Git\bin\git.exe" config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-8322b946\-185d\-413b\-a88c\-c147b9c0278b\.config
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+Removing credentials config 'D:\a\_temp\git-credentials-8322b946-185d-413b-a88c-c147b9c0278b.config'
+##[endgroup]
+##[group]Run D:\a\uv\uv/.github/workflows/setup-dev-drive.ps1
+D:\a\uv\uv/.github/workflows/setup-dev-drive.ps1
+shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  CARGO_TERM_COLOR: always
+  RUSTUP_MAX_RETRIES: 10
+##[endgroup]
+Using existing drive at D:
+
+    Directory: D:\
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----            8/5/2026  7:00 PM                uv-tmp
+
+    Directory: D:\.cargo
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----            8/5/2026  7:00 PM                bin
+
+##[group]Run Copy-Item -Path "D:\a\uv\uv" -Destination "$Env:UV_WORKSPACE" -Recurse
+Copy-Item -Path "D:\a\uv\uv" -Destination "$Env:UV_WORKSPACE" -Recurse
+shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  CARGO_TERM_COLOR: always
+  RUSTUP_MAX_RETRIES: 10
+  DEV_DRIVE: D:
+  TMP: D:\uv-tmp
+  TEMP: D:\uv-tmp
+  RUSTUP_HOME: D:/.rustup
+  CARGO_HOME: D:/.cargo
+  UV_WORKSPACE: D:/uv
+  PATH: D:/.cargo/bin;C:\Program Files\PowerShell\7;C:\Program Files\MongoDB\Server\7.0\bin;C:\vcpkg;C:\tools\zstd;C:\hostedtoolcache\windows\stack\3.11.1\x64;C:\cabal\bin;C:\\ghcup\bin;C:\mingw64\bin;C:\Program Files\dotnet;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\R\R-4.6.1\bin\x64;C:\SeleniumWebDrivers\GeckoDriver;C:\SeleniumWebDrivers\EdgeDriver\;C:\SeleniumWebDrivers\ChromeDriver;C:\Program Files (x86)\sbt\bin;C:\Program Files (x86)\GitHub CLI;C:\Program Files\Git\bin;C:\Program Files (x86)\pipx_bin;C:\npm\prefix;C:\hostedtoolcache\windows\go\1.24.13\x64\bin;C:\hostedtoolcache\windows\Python\3.12.10\x64\Scripts;C:\hostedtoolcache\windows\Python\3.12.10\x64;C:\hostedtoolcache\windows\Ruby\3.3.12\x64\bin;C:\Program Files\OpenSSL\bin;C:\tools\kotlinc\bin;C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.19-10\x64\bin;C:\Program Files\ImageMagick-7.1.2-Q16-HDRI;C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin;C:\ProgramData\kind;C:\ProgramData\Chocolatey\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\PowerShell\7\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\WiX Toolset v3.14\bin;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files\Microsoft SQL Server\170\DTS\Binn\;C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.9.16\bin;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\GitHub CLI\;c:\tools\php;C:\Program Files (x86)\sbt\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Amazon\SessionManagerPlugin\bin\;C:\Program Files\Amazon\AWSSAMCLI\bin\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\mongosh\;C:\Program Files\LLVM\bin;C:\Program Files (x86)\LLVM\bin;C:\Users\runneradmin\.dotnet\tools;C:\Users\runneradmin\.cargo\bin;C:\Users\runneradmin\AppData\Local\Microsoft\WindowsApps
+##[endgroup]
+##[group]Run Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4
+with:
+  workspaces: D:/uv/crates/uv-trampoline
+  prefix-key: v0-rust
+  add-job-id-key: true
+  add-rust-environment-hash-key: true
+  cache-targets: true
+  cache-all-crates: false
+  cache-workspace-crates: false
+  save-if: true
+  cache-provider: github
+  cache-bin: true
+  lookup-only: false
+  cmd-format: {0}
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  CARGO_TERM_COLOR: always
+  RUSTUP_MAX_RETRIES: 10
+  DEV_DRIVE: D:
+  TMP: D:\uv-tmp
+  TEMP: D:\uv-tmp
+  RUSTUP_HOME: D:/.rustup
+  CARGO_HOME: D:/.cargo
+  UV_WORKSPACE: D:/uv
+  PATH: D:/.cargo/bin;C:\Program Files\PowerShell\7;C:\Program Files\MongoDB\Server\7.0\bin;C:\vcpkg;C:\tools\zstd;C:\hostedtoolcache\windows\stack\3.11.1\x64;C:\cabal\bin;C:\\ghcup\bin;C:\mingw64\bin;C:\Program Files\dotnet;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\R\R-4.6.1\bin\x64;C:\SeleniumWebDrivers\GeckoDriver;C:\SeleniumWebDrivers\EdgeDriver\;C:\SeleniumWebDrivers\ChromeDriver;C:\Program Files (x86)\sbt\bin;C:\Program Files (x86)\GitHub CLI;C:\Program Files\Git\bin;C:\Program Files (x86)\pipx_bin;C:\npm\prefix;C:\hostedtoolcache\windows\go\1.24.13\x64\bin;C:\hostedtoolcache\windows\Python\3.12.10\x64\Scripts;C:\hostedtoolcache\windows\Python\3.12.10\x64;C:\hostedtoolcache\windows\Ruby\3.3.12\x64\bin;C:\Program Files\OpenSSL\bin;C:\tools\kotlinc\bin;C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.19-10\x64\bin;C:\Program Files\ImageMagick-7.1.2-Q16-HDRI;C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin;C:\ProgramData\kind;C:\ProgramData\Chocolatey\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\PowerShell\7\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\WiX Toolset v3.14\bin;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files\Microsoft SQL Server\170\DTS\Binn\;C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.9.16\bin;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\GitHub CLI\;c:\tools\php;C:\Program Files (x86)\sbt\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Amazon\SessionManagerPlugin\bin\;C:\Program Files\Amazon\AWSSAMCLI\bin\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\mongosh\;C:\Program Files\LLVM\bin;C:\Program Files (x86)\LLVM\bin;C:\Users\runneradmin\.dotnet\tools;C:\Users\runneradmin\.cargo\bin;C:\Users\runneradmin\AppData\Local\Microsoft\WindowsApps
+##[endgroup]
+(node:8900) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+##[group]Cache Configuration
+Cache Provider:
+    github
+Workspaces:
+    D:\uv\crates\uv-trampoline
+Cache Paths:
+    D:\.cargo\bin
+    D:\.cargo\.crates.toml
+    D:\.cargo\.crates2.json
+    D:\.cargo\registry
+    D:\.cargo\git
+    D:\uv\crates\uv-trampoline\target
+Restore Key:
+    v0-rust-windows-trampoline-check-Windows_NT-x64-e44ab704
+Cache Key:
+    v0-rust-windows-trampoline-check-Windows_NT-x64-e44ab704-4d36ac52
+.. Prefix:
+  - v0-rust-windows-trampoline-check-Windows_NT-x64
+.. Environment considered:
+  - Rust Versions:
+    - 1.97.1 x86_64-pc-windows-msvc 8bab26f4f68e0e26f0bb7960be334d5b520ea452
+    - 1.97.1 x86_64-pc-windows-msvc 8bab26f4f68e0e26f0bb7960be334d5b520ea452
+  - CARGO_HOME
+  - CARGO_INCREMENTAL
+  - CARGO_NET_RETRY
+  - CARGO_TERM_COLOR
+  - RUSTUP_HOME
+  - RUSTUP_MAX_RETRIES
+.. Lockfiles considered:
+  - D:\a\uv\uv\.cargo\config.toml
+  - D:\a\uv\uv\rust-toolchain.toml
+  - D:\uv\crates\uv-trampoline\.cargo\config.toml
+  - D:\uv\crates\uv-trampoline\Cargo.lock
+  - D:\uv\crates\uv-trampoline\Cargo.toml
+  - D:\uv\crates\uv-trampoline\rust-toolchain.toml
+##[endgroup]
+
+... Restoring cache ...
+Cache hit for: v0-rust-windows-trampoline-check-Windows_NT-x64-e44ab704-4d36ac52
+Received 25165824 of 116938145 (21.5%), 23.9 MBs/sec
+Received 116938145 of 116938145 (100.0%), 59.9 MBs/sec
+Cache Size: ~112 MB (116938145 B)
+[command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/a1a10547-f97e-478c-a423-c7a1a8911f0b/cache.tzst -P -C D:/a/uv/uv --force-local --use-compress-program "zstd -d"
+Cache restored successfully
+Restored from cache key "v0-rust-windows-trampoline-check-Windows_NT-x64-e44ab704-4d36ac52" full match: true.
+##[group]Run rustup target add x86_64-pc-windows-msvc
+rustup target add x86_64-pc-windows-msvc
+rustup component add rust-src --target x86_64-pc-windows-msvc
+shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  CARGO_TERM_COLOR: always
+  RUSTUP_MAX_RETRIES: 10
+  DEV_DRIVE: D:
+  TMP: D:\uv-tmp
+  TEMP: D:\uv-tmp
+  RUSTUP_HOME: D:/.rustup
+  CARGO_HOME: D:/.cargo
+  UV_WORKSPACE: D:/uv
+  PATH: D:/.cargo/bin;C:\Program Files\PowerShell\7;C:\Program Files\MongoDB\Server\7.0\bin;C:\vcpkg;C:\tools\zstd;C:\hostedtoolcache\windows\stack\3.11.1\x64;C:\cabal\bin;C:\\ghcup\bin;C:\mingw64\bin;C:\Program Files\dotnet;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\R\R-4.6.1\bin\x64;C:\SeleniumWebDrivers\GeckoDriver;C:\SeleniumWebDrivers\EdgeDriver\;C:\SeleniumWebDrivers\ChromeDriver;C:\Program Files (x86)\sbt\bin;C:\Program Files (x86)\GitHub CLI;C:\Program Files\Git\bin;C:\Program Files (x86)\pipx_bin;C:\npm\prefix;C:\hostedtoolcache\windows\go\1.24.13\x64\bin;C:\hostedtoolcache\windows\Python\3.12.10\x64\Scripts;C:\hostedtoolcache\windows\Python\3.12.10\x64;C:\hostedtoolcache\windows\Ruby\3.3.12\x64\bin;C:\Program Files\OpenSSL\bin;C:\tools\kotlinc\bin;C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.19-10\x64\bin;C:\Program Files\ImageMagick-7.1.2-Q16-HDRI;C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin;C:\ProgramData\kind;C:\ProgramData\Chocolatey\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\PowerShell\7\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\WiX Toolset v3.14\bin;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files\Microsoft SQL Server\170\DTS\Binn\;C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.9.16\bin;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\GitHub CLI\;c:\tools\php;C:\Program Files (x86)\sbt\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Amazon\SessionManagerPlugin\bin\;C:\Program Files\Amazon\AWSSAMCLI\bin\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\mongosh\;C:\Program Files\LLVM\bin;C:\Program Files (x86)\LLVM\bin;C:\Users\runneradmin\.dotnet\tools;C:\Users\runneradmin\.cargo\bin;C:\Users\runneradmin\AppData\Local\Microsoft\WindowsApps
+  CACHE_ON_FAILURE: false
+##[endgroup]
+info: component rust-std is up to date
+info: downloading component rust-src
+##[group]Run taiki-e/install-action@a6b2e2dcd845ddd7f509ce4f3ed3d922b80cc5d9
+with:
+  tool: cargo-bloat
+  checksum: true
+  fallback: cargo-binstall
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  CARGO_TERM_COLOR: always
+  RUSTUP_MAX_RETRIES: 10
+  DEV_DRIVE: D:
+  TMP: D:\uv-tmp
+  TEMP: D:\uv-tmp
+  RUSTUP_HOME: D:/.rustup
+  CARGO_HOME: D:/.cargo
+  UV_WORKSPACE: D:/uv
+  PATH: D:/.cargo/bin;C:\Program Files\PowerShell\7;C:\Program Files\MongoDB\Server\7.0\bin;C:\vcpkg;C:\tools\zstd;C:\hostedtoolcache\windows\stack\3.11.1\x64;C:\cabal\bin;C:\\ghcup\bin;C:\mingw64\bin;C:\Program Files\dotnet;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\R\R-4.6.1\bin\x64;C:\SeleniumWebDrivers\GeckoDriver;C:\SeleniumWebDrivers\EdgeDriver\;C:\SeleniumWebDrivers\ChromeDriver;C:\Program Files (x86)\sbt\bin;C:\Program Files (x86)\GitHub CLI;C:\Program Files\Git\bin;C:\Program Files (x86)\pipx_bin;C:\npm\prefix;C:\hostedtoolcache\windows\go\1.24.13\x64\bin;C:\hostedtoolcache\windows\Python\3.12.10\x64\Scripts;C:\hostedtoolcache\windows\Python\3.12.10\x64;C:\hostedtoolcache\windows\Ruby\3.3.12\x64\bin;C:\Program Files\OpenSSL\bin;C:\tools\kotlinc\bin;C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.19-10\x64\bin;C:\Program Files\ImageMagick-7.1.2-Q16-HDRI;C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin;C:\ProgramData\kind;C:\ProgramData\Chocolatey\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\PowerShell\7\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\WiX Toolset v3.14\bin;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files\Microsoft SQL Server\170\DTS\Binn\;C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.9.16\bin;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\GitHub CLI\;c:\tools\php;C:\Program Files (x86)\sbt\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Amazon\SessionManagerPlugin\bin\;C:\Program Files\Amazon\AWSSAMCLI\bin\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\mongosh\;C:\Program Files\LLVM\bin;C:\Program Files (x86)\LLVM\bin;C:\Users\runneradmin\.dotnet\tools;C:\Users\runneradmin\.cargo\bin;C:\Users\runneradmin\AppData\Local\Microsoft\WindowsApps
+  CACHE_ON_FAILURE: false
+##[endgroup]
+##[start-action display=Run bail() {;id=__taiki-e_install-action.__run]
+##[end-action id=__taiki-e_install-action.__run;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Run Set-StrictMode -Version Latest;id=__taiki-e_install-action.__run_2]
+##[group]Run Set-StrictMode -Version Latest
+Set-StrictMode -Version Latest
+$remove_env = @('ENV','BASH_ENV','CDPATH','SHELLOPTS','BASHOPTS','BASH_FUNC_*')
+foreach ($name in $remove_env) {
+  if (Test-Path "Env:$name") { Remove-Item "Env:\$name" }
+}
+for ($i=1; $i -le 10; $i++) {
+  $prev_err_action = $ErrorActionPreference
+  $ErrorActionPreference = "Continue"
+  & bash --noprofile --norc "$env:GITHUB_ACTION_PATH\main.sh"
+  $code = $LASTEXITCODE
+  $ErrorActionPreference = "$prev_err_action"
+  if (Test-Path "$env:USERPROFILE\.install-action\init") {
+    # If bash started successfully, main.sh creates init file.
+    Remove-Item "$env:USERPROFILE\.install-action\init" -Force
+    exit $code
+  }
+  if ($i -lt 10) {
+    Write-Output "::warning::install-action: installation failed due to bash startup failure (<https://github.com/actions/partner-runner-images/issues/169>); retrying..."
+  }
+}
+Write-Output "::error::install-action: installation failed due to bash startup failure (<https://github.com/actions/partner-runner-images/issues/169>); this maybe resolved by re-running job"
+exit 1
+shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  CARGO_TERM_COLOR: always
+  RUSTUP_MAX_RETRIES: 10
+  DEV_DRIVE: D:
+  TMP: D:\uv-tmp
+  TEMP: D:\uv-tmp
+  RUSTUP_HOME: D:/.rustup
+  CARGO_HOME: D:/.cargo
+  UV_WORKSPACE: D:/uv
+  PATH: D:/.cargo/bin;C:\Program Files\PowerShell\7;C:\Program Files\MongoDB\Server\7.0\bin;C:\vcpkg;C:\tools\zstd;C:\hostedtoolcache\windows\stack\3.11.1\x64;C:\cabal\bin;C:\\ghcup\bin;C:\mingw64\bin;C:\Program Files\dotnet;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\R\R-4.6.1\bin\x64;C:\SeleniumWebDrivers\GeckoDriver;C:\SeleniumWebDrivers\EdgeDriver\;C:\SeleniumWebDrivers\ChromeDriver;C:\Program Files (x86)\sbt\bin;C:\Program Files (x86)\GitHub CLI;C:\Program Files\Git\bin;C:\Program Files (x86)\pipx_bin;C:\npm\prefix;C:\hostedtoolcache\windows\go\1.24.13\x64\bin;C:\hostedtoolcache\windows\Python\3.12.10\x64\Scripts;C:\hostedtoolcache\windows\Python\3.12.10\x64;C:\hostedtoolcache\windows\Ruby\3.3.12\x64\bin;C:\Program Files\OpenSSL\bin;C:\tools\kotlinc\bin;C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.19-10\x64\bin;C:\Program Files\ImageMagick-7.1.2-Q16-HDRI;C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin;C:\ProgramData\kind;C:\ProgramData\Chocolatey\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\PowerShell\7\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\WiX Toolset v3.14\bin;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files\Microsoft SQL Server\170\DTS\Binn\;C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.9.16\bin;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\GitHub CLI\;c:\tools\php;C:\Program Files (x86)\sbt\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Amazon\SessionManagerPlugin\bin\;C:\Program Files\Amazon\AWSSAMCLI\bin\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\mongosh\;C:\Program Files\LLVM\bin;C:\Program Files (x86)\LLVM\bin;C:\Users\runneradmin\.dotnet\tools;C:\Users\runneradmin\.cargo\bin;C:\Users\runneradmin\AppData\Local\Microsoft\WindowsApps
+  CACHE_ON_FAILURE: false
+  INPUT_TOOL: cargo-bloat
+  INPUT_CHECKSUM: true
+  INPUT_FALLBACK: cargo-binstall
+  DEFAULT_GITHUB_TOKEN: ***
+  ACTION_USER_AGENT: taiki-e/install-action (a6b2e2dcd845ddd7f509ce4f3ed3d922b80cc5d9)
+  RUNNER_OS: Windows
+  RUNNER_ARCH: X64
+##[endgroup]
+info: host platform: x86_64_windows
+info: cargo is located at /d/.cargo/bin/cargo
+info: install-action does not support cargo-bloat (updating install-action might resolve this); fallback to cargo-binstall
+info: installing cargo-binstall@latest (1.21.0)
+info: downloading https://github.com/cargo-bins/cargo-binstall/releases/download/v1.21.0/cargo-binstall-x86_64-pc-windows-msvc.zip
+info: verifying sha256 checksum for cargo-binstall-x86_64-pc-windows-msvc.zip
+info: cargo-binstall installed at /d/.cargo/bin/cargo-binstall.exe
++ cargo-binstall.exe binstall -V
+1.21.0
+ INFO resolve: Resolving package: 'cargo-bloat'
+ INFO resolve: Verified signature for package 'cargo-bloat-0.12.1-x86_64-pc-windows-msvc': timestamp:1756628889	file:cargo-bloat-0.12.1-x86_64-pc-windows-msvc.tar.gz	hashed
+ WARN The package cargo-bloat v0.12.1 (x86_64-pc-windows-msvc) has been downloaded from third-party source QuickInstall
+ INFO This will install the following binaries:
+ INFO   - cargo-bloat.exe => D:/.cargo\bin\cargo-bloat.exe
+ INFO Installing binaries...
+ INFO Done in 2.6389841s
+##[end-action id=__taiki-e_install-action.__run_2;outcome=success;conclusion=success;duration_ms=5671]
+##[group]Run cargo fmt --check
+cargo fmt --check
+shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  CARGO_TERM_COLOR: always
+  RUSTUP_MAX_RETRIES: 10
+  DEV_DRIVE: D:
+  TMP: D:\uv-tmp
+  TEMP: D:\uv-tmp
+  RUSTUP_HOME: D:/.rustup
+  CARGO_HOME: D:/.cargo
+  UV_WORKSPACE: D:/uv
+  PATH: D:/.cargo/bin;C:\Program Files\PowerShell\7;C:\Program Files\MongoDB\Server\7.0\bin;C:\vcpkg;C:\tools\zstd;C:\hostedtoolcache\windows\stack\3.11.1\x64;C:\cabal\bin;C:\\ghcup\bin;C:\mingw64\bin;C:\Program Files\dotnet;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\R\R-4.6.1\bin\x64;C:\SeleniumWebDrivers\GeckoDriver;C:\SeleniumWebDrivers\EdgeDriver\;C:\SeleniumWebDrivers\ChromeDriver;C:\Program Files (x86)\sbt\bin;C:\Program Files (x86)\GitHub CLI;C:\Program Files\Git\bin;C:\Program Files (x86)\pipx_bin;C:\npm\prefix;C:\hostedtoolcache\windows\go\1.24.13\x64\bin;C:\hostedtoolcache\windows\Python\3.12.10\x64\Scripts;C:\hostedtoolcache\windows\Python\3.12.10\x64;C:\hostedtoolcache\windows\Ruby\3.3.12\x64\bin;C:\Program Files\OpenSSL\bin;C:\tools\kotlinc\bin;C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.19-10\x64\bin;C:\Program Files\ImageMagick-7.1.2-Q16-HDRI;C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin;C:\ProgramData\kind;C:\ProgramData\Chocolatey\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\PowerShell\7\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\WiX Toolset v3.14\bin;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files\Microsoft SQL Server\170\DTS\Binn\;C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.9.16\bin;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\GitHub CLI\;c:\tools\php;C:\Program Files (x86)\sbt\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Amazon\SessionManagerPlugin\bin\;C:\Program Files\Amazon\AWSSAMCLI\bin\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\mongosh\;C:\Program Files\LLVM\bin;C:\Program Files (x86)\LLVM\bin;C:\Users\runneradmin\.dotnet\tools;C:\Users\runneradmin\.cargo\bin;C:\Users\runneradmin\AppData\Local\Microsoft\WindowsApps
+  CACHE_ON_FAILURE: false
+##[endgroup]
+##[group]Run cargo clippy --all-features --locked --target x86_64-pc-windows-msvc --tests -- -D warnings
+cargo clippy --all-features --locked --target x86_64-pc-windows-msvc --tests -- -D warnings
+shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+env:
+  CARGO_INCREMENTAL: 0
+  CARGO_NET_RETRY: 10
+  CARGO_TERM_COLOR: always
+  RUSTUP_MAX_RETRIES: 10
+  DEV_DRIVE: D:
+  TMP: D:\uv-tmp
+  TEMP: D:\uv-tmp
+  RUSTUP_HOME: D:/.rustup
+  CARGO_HOME: D:/.cargo
+  UV_WORKSPACE: D:/uv
+  PATH: D:/.cargo/bin;C:\Program Files\PowerShell\7;C:\Program Files\MongoDB\Server\7.0\bin;C:\vcpkg;C:\tools\zstd;C:\hostedtoolcache\windows\stack\3.11.1\x64;C:\cabal\bin;C:\\ghcup\bin;C:\mingw64\bin;C:\Program Files\dotnet;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\R\R-4.6.1\bin\x64;C:\SeleniumWebDrivers\GeckoDriver;C:\SeleniumWebDrivers\EdgeDriver\;C:\SeleniumWebDrivers\ChromeDriver;C:\Program Files (x86)\sbt\bin;C:\Program Files (x86)\GitHub CLI;C:\Program Files\Git\bin;C:\Program Files (x86)\pipx_bin;C:\npm\prefix;C:\hostedtoolcache\windows\go\1.24.13\x64\bin;C:\hostedtoolcache\windows\Python\3.12.10\x64\Scripts;C:\hostedtoolcache\windows\Python\3.12.10\x64;C:\hostedtoolcache\windows\Ruby\3.3.12\x64\bin;C:\Program Files\OpenSSL\bin;C:\tools\kotlinc\bin;C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.19-10\x64\bin;C:\Program Files\ImageMagick-7.1.2-Q16-HDRI;C:\Program Files\Microsoft SDKs\Azure\CLI2\wbin;C:\ProgramData\kind;C:\ProgramData\Chocolatey\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\PowerShell\7\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files (x86)\WiX Toolset v3.14\bin;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;C:\Program Files\Microsoft SQL Server\170\DTS\Binn\;C:\ProgramData\chocolatey\lib\pulumi\tools\Pulumi\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.9.16\bin;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\GitHub CLI\;c:\tools\php;C:\Program Files (x86)\sbt\bin;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Amazon\SessionManagerPlugin\bin\;C:\Program Files\Amazon\AWSSAMCLI\bin\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\mongosh\;C:\Program Files\LLVM\bin;C:\Program Files (x86)\LLVM\bin;C:\Users\runneradmin\.dotnet\tools;C:\Users\runneradmin\.cargo\bin;C:\Users\runneradmin\AppData\Local\Microsoft\WindowsApps
+  CACHE_ON_FAILURE: false
+##[endgroup]
+error: cannot update the lock file D:\uv\crates\uv-trampoline\Cargo.lock because --locked was passed to prevent this
+help: to generate the lock file without accessing the network, remove the --locked flag and use --offline instead.
+##[error]Process completed with exit code 1.
+Post job cleanup.
+[command]"C:\Program Files\Git\bin\git.exe" version
+git version 2.55.0.windows.3
+Temporarily overriding HOME='D:\a\_temp\0d0d3294-36ee-4c9e-96da-6c638221dbb3' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\uv\uv
+Removing SSH command configuration
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Removing HTTP extra header
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Removing includeIf entries pointing to credentials config files
+[command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+Cleaning up orphan processes

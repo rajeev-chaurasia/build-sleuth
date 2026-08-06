@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0124",
+  "title": "pola-rs/polars test-python (ubuntu-latest, 3.12, 100000, false)",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "pola-rs/polars",
+    "run_id": 31020682761,
+    "run_attempt": 1,
+    "head_sha": "4974f731b39b26bdf454ffb7c2cfdd20b9a06993",
+    "pr_number": null,
+    "failed_job_name": "test-python (ubuntu-latest, 3.12, 100000, false)",
+    "failed_step_name": "Run tests",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "flaky_test",
+    "subcategory": "concurrency",
+    "related_to_diff": false,
+    "culprit_files": [],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/pola-rs/polars/actions/runs/31020682761",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on flaky_test/concurrency. Lowest confidence of the two was 0.60. Decisive evidence: a CredentialProviderAWS log line was spliced into the captured output mid-token",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

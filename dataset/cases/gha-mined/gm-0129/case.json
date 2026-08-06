@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0129",
+  "title": "pydantic/pydantic core / Test with debug build (3.13)",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "pydantic/pydantic",
+    "run_id": 31026453005,
+    "run_attempt": 1,
+    "head_sha": "fc649e933a99074f6cb35103cf86efc1a4b9269d",
+    "pr_number": 13583,
+    "failed_job_name": "core / Test with debug build (3.13)",
+    "failed_step_name": "Run uv run pytest",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": "diff.patch",
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "test_assertion",
+    "related_to_diff": true,
+    "culprit_files": [
+      "pydantic/_internal/_generate_schema.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/pydantic/pydantic/actions/runs/31026453005",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/test_assertion. Lowest confidence of the two was 0.75. Decisive evidence: ValidationError: 3 validation errors for GenericPydanticModel[list[TypeVar]]",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0106",
+  "title": "apache/airflow CI image checks / Static checks",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "apache/airflow",
+    "run_id": 31076965317,
+    "run_attempt": 1,
+    "head_sha": "9d1b55f3e05a82ce9972b21bc43bad3cd055d813",
+    "pr_number": null,
+    "failed_job_name": "CI image checks / Static checks",
+    "failed_step_name": "Static checks",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "lint_or_format",
+    "related_to_diff": null,
+    "culprit_files": [
+      "providers/google/src/airflow/providers/google/cloud/operators/dataproc.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/apache/airflow/actions/runs/31076965317",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/lint_or_format. Lowest confidence of the two was 0.75. Decisive evidence: DataprocCreateClusterOperator's constructor contains invalid assignments to instance members",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

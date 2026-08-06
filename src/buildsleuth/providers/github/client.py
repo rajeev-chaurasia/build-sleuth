@@ -123,9 +123,23 @@ class GitHubClient:
         data: list[JsonDict] = self._get(f"/repos/{repo}/commits/{sha}/pulls").json()
         return data
 
+    def get_pr(self, repo: str, number: int) -> JsonDict:
+        """Fetch a pull request's metadata, including its base commit."""
+        data: JsonDict = self._get(f"/repos/{repo}/pulls/{number}").json()
+        return data
+
     def get_pr_diff(self, repo: str, number: int) -> str:
-        """Fetch a pull request as a unified diff."""
+        """Fetch a pull request as a unified diff, as the branch stands now."""
         return self._get(f"/repos/{repo}/pulls/{number}", accept=ACCEPT_DIFF).text
+
+    def get_compare_diff(self, repo: str, base: str, head: str) -> str:
+        """Diff between two commits.
+
+        A pull request diff always reflects the branch tip, which drifts as
+        the author pushes. Comparing against the exact commit that failed is
+        the only way to see the code the log was actually produced from.
+        """
+        return self._get(f"/repos/{repo}/compare/{base}...{head}", accept=ACCEPT_DIFF).text
 
     def get_file_content(self, repo: str, path: str, ref: str) -> str | None:
         """Fetch a file's raw content at a ref, or None when it does not exist."""

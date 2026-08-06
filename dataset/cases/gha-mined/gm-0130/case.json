@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0130",
+  "title": "pydantic/pydantic Lint 3.10",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "pydantic/pydantic",
+    "run_id": 31029315522,
+    "run_attempt": 1,
+    "head_sha": "de568c17e6c9f987f39cbcf220c3716f3ffa5a83",
+    "pr_number": null,
+    "failed_job_name": "Lint 3.10",
+    "failed_step_name": "Run pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "type_check",
+    "related_to_diff": null,
+    "culprit_files": [
+      "pydantic/_internal/_typing_extra.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/pydantic/pydantic/actions/runs/31029315522",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/type_check. Lowest confidence of the two was 0.85. Decisive evidence: pydantic/_internal/_typing_extra.py:465:24 - error: \"__getitem__\" method not defined on type \"type\"",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

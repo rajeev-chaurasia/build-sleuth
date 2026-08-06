@@ -1,0 +1,726 @@
+Current runner version: '2.334.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260213.493
+Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Build Date: 2026-02-13T00:28:41Z
+Worker ID: {f2597081-e637-4cb8-a3af-a1754f064434}
+Azure Region: westus3
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260513.135.3
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260513.135/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260513.135
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Actions: read
+ArtifactMetadata: read
+Attestations: read
+Checks: read
+CodeQuality: read
+Contents: read
+Deployments: read
+Discussions: read
+Issues: read
+Metadata: read
+Models: read
+Packages: read
+Pages: read
+PullRequests: read
+RepositoryProjects: read
+SecurityEvents: read
+Statuses: read
+VulnerabilityAlerts: read
+##[endgroup]
+Secret source: None
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+Download action repository 'actions/setup-python@v6' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+Complete job name: Python 3.12
+##[group]Run actions/checkout@v4
+with:
+  repository: encode/httpx
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  persist-credentials: true
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+##[endgroup]
+Syncing repository: encode/httpx
+##[group]Getting Git version info
+Working directory is '/home/runner/work/httpx/httpx'
+[command]/usr/bin/git version
+git version 2.54.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/359d85f2-f6da-4801-9113-473da88f6ecf' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/httpx/httpx
+Deleting the contents of '/home/runner/work/httpx/httpx'
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/httpx/httpx
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/httpx/httpx/.git/
+[command]/usr/bin/git remote add origin https://github.com/encode/httpx
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +c4e360cfa52f0dee6a574845d3c9e4ab24881c5b:refs/remotes/pull/3656/merge
+From https://github.com/encode/httpx
+ * [new ref]         c4e360cfa52f0dee6a574845d3c9e4ab24881c5b -> pull/3656/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/3656/merge
+Note: switching to 'refs/remotes/pull/3656/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at c4e360c Merge 86eb33fe9d4f4ed3bca9e407c1d72ceefda4ff81 into b5addb64f0161ff6bfe94c124ef76f6a1fba5254
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+c4e360cfa52f0dee6a574845d3c9e4ab24881c5b
+##[group]Run actions/setup-python@v6
+with:
+  python-version: 3.12
+  allow-prereleases: true
+  check-latest: false
+  token: ***
+  update-environment: true
+  freethreaded: false
+##[endgroup]
+##[group]Installed versions
+Successfully set up CPython (3.12.13)
+##[endgroup]
+##[group]Run scripts/install
+scripts/install
+shell: /usr/bin/bash -e {0}
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+##[endgroup]
++ [ -z true ]
++ PIP=pip
++ pip install -U pip
+Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages (26.1.1)
++ pip install -r requirements.txt
+Obtaining file:///home/runner/work/httpx/httpx
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Collecting chardet==5.2.0 (from -r requirements.txt (line 9))
+  Downloading chardet-5.2.0-py3-none-any.whl.metadata (3.4 kB)
+Collecting mkdocs==1.6.1 (from -r requirements.txt (line 12))
+  Downloading mkdocs-1.6.1-py3-none-any.whl.metadata (6.0 kB)
+Collecting mkautodoc==0.2.0 (from -r requirements.txt (line 13))
+  Downloading mkautodoc-0.2.0.tar.gz (4.8 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting mkdocs-material==9.6.18 (from -r requirements.txt (line 14))
+  Downloading mkdocs_material-9.6.18-py3-none-any.whl.metadata (19 kB)
+Collecting build==1.3.0 (from -r requirements.txt (line 17))
+  Downloading build-1.3.0-py3-none-any.whl.metadata (5.6 kB)
+Collecting twine==6.1.0 (from -r requirements.txt (line 18))
+  Downloading twine-6.1.0-py3-none-any.whl.metadata (3.7 kB)
+Collecting coverage==7.10.6 (from coverage[toml]==7.10.6->-r requirements.txt (line 21))
+  Downloading coverage-7.10.6-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (8.9 kB)
+Collecting cryptography==45.0.7 (from -r requirements.txt (line 22))
+  Downloading cryptography-45.0.7-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (5.7 kB)
+Collecting mypy==1.17.1 (from -r requirements.txt (line 23))
+  Downloading mypy-1.17.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.2 kB)
+Collecting pytest==8.4.1 (from -r requirements.txt (line 24))
+  Downloading pytest-8.4.1-py3-none-any.whl.metadata (7.7 kB)
+Collecting ruff==0.12.11 (from -r requirements.txt (line 25))
+  Downloading ruff-0.12.11-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (25 kB)
+Collecting trio==0.31.0 (from -r requirements.txt (line 26))
+  Downloading trio-0.31.0-py3-none-any.whl.metadata (8.5 kB)
+Collecting trio-typing==0.10.0 (from -r requirements.txt (line 27))
+  Downloading trio_typing-0.10.0-py3-none-any.whl.metadata (10 kB)
+Collecting trustme==1.2.1 (from -r requirements.txt (line 28))
+  Downloading trustme-1.2.1-py3-none-any.whl.metadata (5.7 kB)
+Collecting uvicorn==0.35.0 (from -r requirements.txt (line 29))
+  Downloading uvicorn-0.35.0-py3-none-any.whl.metadata (6.5 kB)
+Collecting anyio (from httpx==0.28.1)
+  Downloading anyio-4.13.0-py3-none-any.whl.metadata (4.5 kB)
+Collecting certifi (from httpx==0.28.1)
+  Downloading certifi-2026.5.20-py3-none-any.whl.metadata (2.5 kB)
+Collecting httpcore==1.* (from httpx==0.28.1)
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting idna (from httpx==0.28.1)
+  Downloading idna-3.15-py3-none-any.whl.metadata (7.7 kB)
+Collecting brotli (from httpx==0.28.1)
+  Downloading brotli-1.2.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (6.1 kB)
+Collecting click==8.* (from httpx==0.28.1)
+  Downloading click-8.4.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting pygments==2.* (from httpx==0.28.1)
+  Downloading pygments-2.20.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting rich<15,>=10 (from httpx==0.28.1)
+  Downloading rich-14.3.4-py3-none-any.whl.metadata (18 kB)
+Collecting h2<5,>=3 (from httpx==0.28.1)
+  Downloading h2-4.3.0-py3-none-any.whl.metadata (5.1 kB)
+Collecting socksio==1.* (from httpx==0.28.1)
+  Downloading socksio-1.0.0-py3-none-any.whl.metadata (6.1 kB)
+Collecting zstandard>=0.18.0 (from httpx==0.28.1)
+  Downloading zstandard-0.25.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (3.3 kB)
+Collecting ghp-import>=1.0 (from mkdocs==1.6.1->-r requirements.txt (line 12))
+  Downloading ghp_import-2.1.0-py3-none-any.whl.metadata (7.2 kB)
+Collecting jinja2>=2.11.1 (from mkdocs==1.6.1->-r requirements.txt (line 12))
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting markdown>=3.3.6 (from mkdocs==1.6.1->-r requirements.txt (line 12))
+  Downloading markdown-3.10.2-py3-none-any.whl.metadata (5.1 kB)
+Collecting markupsafe>=2.0.1 (from mkdocs==1.6.1->-r requirements.txt (line 12))
+  Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+Collecting mergedeep>=1.3.4 (from mkdocs==1.6.1->-r requirements.txt (line 12))
+  Downloading mergedeep-1.3.4-py3-none-any.whl.metadata (4.3 kB)
+Collecting mkdocs-get-deps>=0.2.0 (from mkdocs==1.6.1->-r requirements.txt (line 12))
+  Downloading mkdocs_get_deps-0.2.2-py3-none-any.whl.metadata (4.0 kB)
+Collecting packaging>=20.5 (from mkdocs==1.6.1->-r requirements.txt (line 12))
+  Using cached packaging-26.2-py3-none-any.whl.metadata (3.5 kB)
+Collecting pathspec>=0.11.1 (from mkdocs==1.6.1->-r requirements.txt (line 12))
+  Using cached pathspec-1.1.1-py3-none-any.whl.metadata (14 kB)
+Collecting pyyaml-env-tag>=0.1 (from mkdocs==1.6.1->-r requirements.txt (line 12))
+  Downloading pyyaml_env_tag-1.1-py3-none-any.whl.metadata (5.5 kB)
+Collecting pyyaml>=5.1 (from mkdocs==1.6.1->-r requirements.txt (line 12))
+  Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+Collecting watchdog>=2.0 (from mkdocs==1.6.1->-r requirements.txt (line 12))
+  Downloading watchdog-6.0.0-py3-none-manylinux2014_x86_64.whl.metadata (44 kB)
+Collecting babel~=2.10 (from mkdocs-material==9.6.18->-r requirements.txt (line 14))
+  Downloading babel-2.18.0-py3-none-any.whl.metadata (2.2 kB)
+Collecting backrefs~=5.7.post1 (from mkdocs-material==9.6.18->-r requirements.txt (line 14))
+  Downloading backrefs-5.9-py312-none-any.whl.metadata (3.2 kB)
+Collecting click==8.* (from httpx==0.28.1)
+  Downloading click-8.2.1-py3-none-any.whl.metadata (2.5 kB)
+Collecting colorama~=0.4 (from mkdocs-material==9.6.18->-r requirements.txt (line 14))
+  Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Collecting mkdocs-material-extensions~=1.3 (from mkdocs-material==9.6.18->-r requirements.txt (line 14))
+  Downloading mkdocs_material_extensions-1.3.1-py3-none-any.whl.metadata (6.9 kB)
+Collecting paginate~=0.5 (from mkdocs-material==9.6.18->-r requirements.txt (line 14))
+  Downloading paginate-0.5.7-py2.py3-none-any.whl.metadata (11 kB)
+Collecting pymdown-extensions~=10.2 (from mkdocs-material==9.6.18->-r requirements.txt (line 14))
+  Downloading pymdown_extensions-10.21.3-py3-none-any.whl.metadata (3.1 kB)
+Collecting requests~=2.26 (from mkdocs-material==9.6.18->-r requirements.txt (line 14))
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting pyproject_hooks (from build==1.3.0->-r requirements.txt (line 17))
+  Downloading pyproject_hooks-1.2.0-py3-none-any.whl.metadata (1.3 kB)
+Collecting readme-renderer>=35.0 (from twine==6.1.0->-r requirements.txt (line 18))
+  Downloading readme_renderer-44.0-py3-none-any.whl.metadata (2.8 kB)
+Collecting requests-toolbelt!=0.9.0,>=0.8.0 (from twine==6.1.0->-r requirements.txt (line 18))
+  Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl.metadata (14 kB)
+Collecting urllib3>=1.26.0 (from twine==6.1.0->-r requirements.txt (line 18))
+  Downloading urllib3-2.7.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting keyring>=15.1 (from twine==6.1.0->-r requirements.txt (line 18))
+  Downloading keyring-25.7.0-py3-none-any.whl.metadata (21 kB)
+Collecting rfc3986>=1.4.0 (from twine==6.1.0->-r requirements.txt (line 18))
+  Downloading rfc3986-2.0.0-py2.py3-none-any.whl.metadata (6.6 kB)
+Collecting id (from twine==6.1.0->-r requirements.txt (line 18))
+  Downloading id-1.6.1-py3-none-any.whl.metadata (5.1 kB)
+Collecting cffi>=1.14 (from cryptography==45.0.7->-r requirements.txt (line 22))
+  Downloading cffi-2.0.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.6 kB)
+Collecting typing_extensions>=4.6.0 (from mypy==1.17.1->-r requirements.txt (line 23))
+  Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting mypy_extensions>=1.0.0 (from mypy==1.17.1->-r requirements.txt (line 23))
+  Downloading mypy_extensions-1.1.0-py3-none-any.whl.metadata (1.1 kB)
+Collecting iniconfig>=1 (from pytest==8.4.1->-r requirements.txt (line 24))
+  Downloading iniconfig-2.3.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting pluggy<2,>=1.5 (from pytest==8.4.1->-r requirements.txt (line 24))
+  Using cached pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting attrs>=23.2.0 (from trio==0.31.0->-r requirements.txt (line 26))
+  Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting sortedcontainers (from trio==0.31.0->-r requirements.txt (line 26))
+  Downloading sortedcontainers-2.4.0-py2.py3-none-any.whl.metadata (10 kB)
+Collecting outcome (from trio==0.31.0->-r requirements.txt (line 26))
+  Downloading outcome-1.3.0.post0-py2.py3-none-any.whl.metadata (2.6 kB)
+Collecting sniffio>=1.3.0 (from trio==0.31.0->-r requirements.txt (line 26))
+  Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting async-generator (from trio-typing==0.10.0->-r requirements.txt (line 27))
+  Downloading async_generator-1.10-py3-none-any.whl.metadata (4.9 kB)
+Collecting importlib-metadata (from trio-typing==0.10.0->-r requirements.txt (line 27))
+  Downloading importlib_metadata-9.0.0-py3-none-any.whl.metadata (4.5 kB)
+Collecting h11>=0.8 (from uvicorn==0.35.0->-r requirements.txt (line 29))
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting hyperframe<7,>=6.1 (from h2<5,>=3->httpx==0.28.1)
+  Downloading hyperframe-6.1.0-py3-none-any.whl.metadata (4.3 kB)
+Collecting hpack<5,>=4.1 (from h2<5,>=3->httpx==0.28.1)
+  Downloading hpack-4.1.0-py3-none-any.whl.metadata (4.6 kB)
+Collecting charset_normalizer<4,>=2 (from requests~=2.26->mkdocs-material==9.6.18->-r requirements.txt (line 14))
+  Downloading charset_normalizer-3.4.7-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)
+Collecting markdown-it-py>=2.2.0 (from rich<15,>=10->httpx==0.28.1)
+  Downloading markdown_it_py-4.2.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting pycparser (from cffi>=1.14->cryptography==45.0.7->-r requirements.txt (line 22))
+  Downloading pycparser-3.0-py3-none-any.whl.metadata (8.2 kB)
+Collecting python-dateutil>=2.8.1 (from ghp-import>=1.0->mkdocs==1.6.1->-r requirements.txt (line 12))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting SecretStorage>=3.2 (from keyring>=15.1->twine==6.1.0->-r requirements.txt (line 18))
+  Downloading secretstorage-3.5.0-py3-none-any.whl.metadata (4.0 kB)
+Collecting jeepney>=0.4.2 (from keyring>=15.1->twine==6.1.0->-r requirements.txt (line 18))
+  Downloading jeepney-0.9.0-py3-none-any.whl.metadata (1.2 kB)
+Collecting jaraco.classes (from keyring>=15.1->twine==6.1.0->-r requirements.txt (line 18))
+  Downloading jaraco.classes-3.4.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting jaraco.functools (from keyring>=15.1->twine==6.1.0->-r requirements.txt (line 18))
+  Downloading jaraco_functools-4.5.0-py3-none-any.whl.metadata (2.9 kB)
+Collecting jaraco.context (from keyring>=15.1->twine==6.1.0->-r requirements.txt (line 18))
+  Downloading jaraco_context-6.1.2-py3-none-any.whl.metadata (4.2 kB)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich<15,>=10->httpx==0.28.1)
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting platformdirs>=2.2.0 (from mkdocs-get-deps>=0.2.0->mkdocs==1.6.1->-r requirements.txt (line 12))
+  Downloading platformdirs-4.9.6-py3-none-any.whl.metadata (4.7 kB)
+Collecting six>=1.5 (from python-dateutil>=2.8.1->ghp-import>=1.0->mkdocs==1.6.1->-r requirements.txt (line 12))
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting nh3>=0.2.14 (from readme-renderer>=35.0->twine==6.1.0->-r requirements.txt (line 18))
+  Downloading nh3-0.3.5-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.0 kB)
+Collecting docutils>=0.21.2 (from readme-renderer>=35.0->twine==6.1.0->-r requirements.txt (line 18))
+  Downloading docutils-0.22.4-py3-none-any.whl.metadata (15 kB)
+Collecting zipp>=3.20 (from importlib-metadata->trio-typing==0.10.0->-r requirements.txt (line 27))
+  Downloading zipp-4.1.0-py3-none-any.whl.metadata (3.6 kB)
+Collecting more-itertools (from jaraco.classes->keyring>=15.1->twine==6.1.0->-r requirements.txt (line 18))
+  Downloading more_itertools-11.0.2-py3-none-any.whl.metadata (41 kB)
+Downloading chardet-5.2.0-py3-none-any.whl (199 kB)
+Downloading mkdocs-1.6.1-py3-none-any.whl (3.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.9/3.9 MB 72.6 MB/s  0:00:00
+Downloading mkdocs_material-9.6.18-py3-none-any.whl (9.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.2/9.2 MB 164.6 MB/s  0:00:00
+Downloading build-1.3.0-py3-none-any.whl (23 kB)
+Downloading twine-6.1.0-py3-none-any.whl (40 kB)
+Downloading coverage-7.10.6-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (251 kB)
+Downloading cryptography-45.0.7-cp311-abi3-manylinux_2_34_x86_64.whl (4.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 310.9 MB/s  0:00:00
+Downloading mypy-1.17.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (12.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.7/12.7 MB 282.2 MB/s  0:00:00
+Downloading pytest-8.4.1-py3-none-any.whl (365 kB)
+Downloading ruff-0.12.11-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (13.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 13.2/13.2 MB 343.4 MB/s  0:00:00
+Downloading trio-0.31.0-py3-none-any.whl (512 kB)
+Downloading trio_typing-0.10.0-py3-none-any.whl (42 kB)
+Downloading trustme-1.2.1-py3-none-any.whl (16 kB)
+Downloading uvicorn-0.35.0-py3-none-any.whl (66 kB)
+Downloading babel-2.18.0-py3-none-any.whl (10.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.2/10.2 MB 332.3 MB/s  0:00:00
+Downloading backrefs-5.9-py312-none-any.whl (397 kB)
+Downloading click-8.2.1-py3-none-any.whl (102 kB)
+Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Downloading h2-4.3.0-py3-none-any.whl (61 kB)
+Downloading hpack-4.1.0-py3-none-any.whl (34 kB)
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+Downloading hyperframe-6.1.0-py3-none-any.whl (13 kB)
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading markdown-3.10.2-py3-none-any.whl (108 kB)
+Downloading mkdocs_material_extensions-1.3.1-py3-none-any.whl (8.7 kB)
+Downloading paginate-0.5.7-py2.py3-none-any.whl (13 kB)
+Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+Downloading pygments-2.20.0-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 230.9 MB/s  0:00:00
+Downloading pymdown_extensions-10.21.3-py3-none-any.whl (269 kB)
+Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+Downloading charset_normalizer-3.4.7-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (216 kB)
+Downloading idna-3.15-py3-none-any.whl (72 kB)
+Downloading rich-14.3.4-py3-none-any.whl (310 kB)
+Downloading socksio-1.0.0-py3-none-any.whl (12 kB)
+Downloading urllib3-2.7.0-py3-none-any.whl (131 kB)
+Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+Downloading certifi-2026.5.20-py3-none-any.whl (134 kB)
+Downloading cffi-2.0.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (219 kB)
+Downloading ghp_import-2.1.0-py3-none-any.whl (11 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+Downloading keyring-25.7.0-py3-none-any.whl (39 kB)
+Downloading jeepney-0.9.0-py3-none-any.whl (49 kB)
+Downloading markdown_it_py-4.2.0-py3-none-any.whl (91 kB)
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+Downloading mergedeep-1.3.4-py3-none-any.whl (6.4 kB)
+Downloading mkdocs_get_deps-0.2.2-py3-none-any.whl (9.6 kB)
+Downloading mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+Using cached packaging-26.2-py3-none-any.whl (100 kB)
+Using cached pathspec-1.1.1-py3-none-any.whl (57 kB)
+Downloading platformdirs-4.9.6-py3-none-any.whl (21 kB)
+Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 163.2 MB/s  0:00:00
+Downloading pyyaml_env_tag-1.1-py3-none-any.whl (4.7 kB)
+Downloading readme_renderer-44.0-py3-none-any.whl (13 kB)
+Downloading docutils-0.22.4-py3-none-any.whl (633 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 633.2/633.2 kB 121.0 MB/s  0:00:00
+Downloading nh3-0.3.5-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (806 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.0/807.0 kB 130.4 MB/s  0:00:00
+Downloading requests_toolbelt-1.0.0-py2.py3-none-any.whl (54 kB)
+Downloading rfc3986-2.0.0-py2.py3-none-any.whl (31 kB)
+Downloading secretstorage-3.5.0-py3-none-any.whl (15 kB)
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Downloading watchdog-6.0.0-py3-none-manylinux2014_x86_64.whl (79 kB)
+Downloading zstandard-0.25.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.5/5.5 MB 316.2 MB/s  0:00:00
+Downloading anyio-4.13.0-py3-none-any.whl (114 kB)
+Downloading async_generator-1.10-py3-none-any.whl (18 kB)
+Downloading brotli-1.2.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.4/1.4 MB 169.8 MB/s  0:00:00
+Downloading id-1.6.1-py3-none-any.whl (14 kB)
+Downloading importlib_metadata-9.0.0-py3-none-any.whl (27 kB)
+Downloading zipp-4.1.0-py3-none-any.whl (10 kB)
+Downloading jaraco.classes-3.4.0-py3-none-any.whl (6.8 kB)
+Downloading jaraco_context-6.1.2-py3-none-any.whl (7.9 kB)
+Downloading jaraco_functools-4.5.0-py3-none-any.whl (10 kB)
+Downloading more_itertools-11.0.2-py3-none-any.whl (71 kB)
+Downloading outcome-1.3.0.post0-py2.py3-none-any.whl (10 kB)
+Downloading pycparser-3.0-py3-none-any.whl (48 kB)
+Downloading pyproject_hooks-1.2.0-py3-none-any.whl (10 kB)
+Downloading sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+Building wheels for collected packages: httpx, mkautodoc
+  Building editable for httpx (pyproject.toml): started
+  Building editable for httpx (pyproject.toml): finished with status 'done'
+  Created wheel for httpx: filename=httpx-0.28.1-py3-none-any.whl size=4848 sha256=222f404fd229be4db4aecd85e5b7d52888e0429905af0a9578b273744b7e7503
+  Stored in directory: /tmp/pip-ephem-wheel-cache-lq_p66ct/wheels/dc/ae/ba/d0cfd88b58d1a5e96017f62db52ba43151325756caeb0902ae
+  Building wheel for mkautodoc (pyproject.toml): started
+  Building wheel for mkautodoc (pyproject.toml): finished with status 'done'
+  Created wheel for mkautodoc: filename=mkautodoc-0.2.0-py3-none-any.whl size=4347 sha256=3da184cfe504024caa0f0a33acad89b615f1bb6c4744105063bcb34b357e1495
+  Stored in directory: /home/runner/.cache/pip/wheels/ba/01/03/8bee86e15ec7515a9d5f9895a71d3c472297fec279f6736515
+Successfully built httpx mkautodoc
+Installing collected packages: sortedcontainers, paginate, brotli, zstandard, zipp, watchdog, urllib3, typing_extensions, socksio, sniffio, six, ruff, rfc3986, pyyaml, pyproject_hooks, pygments, pycparser, pluggy, platformdirs, pathspec, packaging, nh3, mypy_extensions, more-itertools, mkdocs-material-extensions, mergedeep, mdurl, markupsafe, markdown, jeepney, jaraco.context, iniconfig, idna, hyperframe, hpack, h11, docutils, coverage, colorama, click, charset_normalizer, chardet, certifi, backrefs, babel, attrs, async-generator, uvicorn, requests, readme-renderer, pyyaml-env-tag, python-dateutil, pytest, pymdown-extensions, outcome, mypy, mkdocs-get-deps, mkautodoc, markdown-it-py, jinja2, jaraco.functools, jaraco.classes, importlib-metadata, id, httpcore, h2, cffi, build, anyio, trio, rich, requests-toolbelt, httpx, ghp-import, cryptography, trustme, trio-typing, SecretStorage, mkdocs, mkdocs-material, keyring, twine
+
+Successfully installed SecretStorage-3.5.0 anyio-4.13.0 async-generator-1.10 attrs-26.1.0 babel-2.18.0 backrefs-5.9 brotli-1.2.0 build-1.3.0 certifi-2026.5.20 cffi-2.0.0 chardet-5.2.0 charset_normalizer-3.4.7 click-8.2.1 colorama-0.4.6 coverage-7.10.6 cryptography-45.0.7 docutils-0.22.4 ghp-import-2.1.0 h11-0.16.0 h2-4.3.0 hpack-4.1.0 httpcore-1.0.9 httpx-0.28.1 hyperframe-6.1.0 id-1.6.1 idna-3.15 importlib-metadata-9.0.0 iniconfig-2.3.0 jaraco.classes-3.4.0 jaraco.context-6.1.2 jaraco.functools-4.5.0 jeepney-0.9.0 jinja2-3.1.6 keyring-25.7.0 markdown-3.10.2 markdown-it-py-4.2.0 markupsafe-3.0.3 mdurl-0.1.2 mergedeep-1.3.4 mkautodoc-0.2.0 mkdocs-1.6.1 mkdocs-get-deps-0.2.2 mkdocs-material-9.6.18 mkdocs-material-extensions-1.3.1 more-itertools-11.0.2 mypy-1.17.1 mypy_extensions-1.1.0 nh3-0.3.5 outcome-1.3.0.post0 packaging-26.2 paginate-0.5.7 pathspec-1.1.1 platformdirs-4.9.6 pluggy-1.6.0 pycparser-3.0 pygments-2.20.0 pymdown-extensions-10.21.3 pyproject_hooks-1.2.0 pytest-8.4.1 python-dateutil-2.9.0.post0 pyyaml-6.0.3 pyyaml-env-tag-1.1 readme-renderer-44.0 requests-2.34.2 requests-toolbelt-1.0.0 rfc3986-2.0.0 rich-14.3.4 ruff-0.12.11 six-1.17.0 sniffio-1.3.1 socksio-1.0.0 sortedcontainers-2.4.0 trio-0.31.0 trio-typing-0.10.0 trustme-1.2.1 twine-6.1.0 typing_extensions-4.15.0 urllib3-2.7.0 uvicorn-0.35.0 watchdog-6.0.0 zipp-4.1.0 zstandard-0.25.0
+##[group]Run scripts/check
+scripts/check
+shell: /usr/bin/bash -e {0}
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+##[endgroup]
++ ./scripts/sync-version
+grep: warning: ? at start of expression
+grep: warning: ? at start of expression
+grep: warning: ? at start of expression
+grep: warning: ? at start of expression
+grep: warning: ? at start of expression
+grep: warning: ? at start of expression
+CHANGELOG_VERSION: 0.28.1
+VERSION: 0.28.1
++ ruff format httpx tests --diff
+60 files already formatted
++ mypy httpx tests
+Success: no issues found in 60 source files
++ ruff check httpx tests
+warning: Invalid `# noqa` directive on httpx/_transports/asgi.py:171: expected a comma-separated list of codes (e.g., `# noqa: F401, F841`).
+All checks passed!
+##[group]Run scripts/build
+scripts/build
+shell: /usr/bin/bash -e {0}
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+##[endgroup]
++ python -m build
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - hatch-fancy-pypi-readme
+  - hatchling
+* Getting build dependencies for sdist...
+* Building sdist...
+* Building wheel from sdist
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - hatch-fancy-pypi-readme
+  - hatchling
+* Getting build dependencies for wheel...
+* Building wheel...
+Successfully built httpx-0.28.1.tar.gz and httpx-0.28.1-py3-none-any.whl
++ twine check dist/httpx-0.28.1-py3-none-any.whl dist/httpx-0.28.1.tar.gz
+Checking dist/httpx-0.28.1-py3-none-any.whl: PASSED
+Checking dist/httpx-0.28.1.tar.gz: PASSED
++ mkdocs build
+INFO    -  Cleaning site directory
+INFO    -  Building documentation to directory: /home/runner/work/httpx/httpx/site
+INFO    -  Doc file 'async.md' contains an unrecognized relative link '../advanced/transports#asgitransport', it was left as is. Did you mean 'advanced/transports.md#asgitransport'?
+INFO    -  Doc file 'compatibility.md' contains a link 'advanced/clients.md#client-instances', but the doc 'advanced/clients.md' does not contain an anchor '#client-instances'.
+INFO    -  Doc file 'environment_variables.md' contains a link 'advanced/proxies.md#http-proxying', but the doc 'advanced/proxies.md' does not contain an anchor '#http-proxying'.
+INFO    -  Doc file 'third_party_packages.md' contains a link 'advanced/authentication.md#customizing-authentication', but the doc 'advanced/authentication.md' does not contain an anchor '#customizing-authentication'.
+INFO    -  Doc file 'advanced/clients.md' contains a link '#client-instances', but there is no such anchor on this page.
+INFO    -  Doc file 'advanced/clients.md' contains a link '#merging-of-parameters', but there is no such anchor on this page.
+INFO    -  Doc file 'advanced/proxies.md' contains a link '#routing', but there is no such anchor on this page.
+INFO    -  Documentation built in 1.22 seconds
+##[group]Run scripts/test
+scripts/test
+shell: /usr/bin/bash -e {0}
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+##[endgroup]
++ [ -z true ]
++ coverage run -m pytest
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-8.4.1, pluggy-1.6.0
+rootdir: /home/runner/work/httpx/httpx
+configfile: pyproject.toml
+plugins: anyio-4.13.0
+collected 1418 items
+
+tests/client/test_async_client.py ...................................... [  2%]
+..............                                                           [  3%]
+tests/client/test_auth.py .............................................. [  6%]
+..........................s.......                                       [  9%]
+tests/client/test_client.py ...................................          [ 11%]
+tests/client/test_cookies.py .......                                     [ 12%]
+tests/client/test_event_hooks.py .........                               [ 12%]
+tests/client/test_headers.py .................                           [ 14%]
+tests/client/test_properties.py ........                                 [ 14%]
+tests/client/test_proxies.py ........................................... [ 17%]
+..........................                                               [ 19%]
+tests/client/test_queryparams.py ...                                     [ 19%]
+tests/client/test_redirects.py ...............................           [ 21%]
+tests/models/test_cookies.py .......                                     [ 22%]
+tests/models/test_headers.py ...........................                 [ 24%]
+tests/models/test_queryparams.py ..............                          [ 25%]
+tests/models/test_requests.py ........................                   [ 27%]
+tests/models/test_responses.py ......................................... [ 29%]
+.................................................................        [ 34%]
+tests/models/test_url.py ............................................... [ 37%]
+...........................................                              [ 40%]
+tests/models/test_whatwg.py ............................................ [ 43%]
+........................................................................ [ 49%]
+........................................................................ [ 54%]
+........................................................................ [ 59%]
+........................................................................ [ 64%]
+........................................................................ [ 69%]
+........................................................................ [ 74%]
+........................................................................ [ 79%]
+...............                                                          [ 80%]
+tests/test_api.py ............                                           [ 81%]
+tests/test_asgi.py ........................                              [ 83%]
+tests/test_auth.py ........                                              [ 83%]
+tests/test_config.py ............................                        [ 85%]
+tests/test_content.py ...........................................        [ 88%]
+tests/test_decoders.py ........................................          [ 91%]
+tests/test_exceptions.py ...                                             [ 91%]
+tests/test_exported_members.py .                                         [ 91%]
+tests/test_main.py ...........                                           [ 92%]
+tests/test_multipart.py ......................................           [ 95%]
+tests/test_status_codes.py ......                                        [ 95%]
+tests/test_timeouts.py ......F...                                        [ 96%]
+tests/test_utils.py ........................................             [ 99%]
+tests/test_wsgi.py ............                                          [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_write_timeout[trio] ___________________________
+
+agen = <async_generator object ByteStream.__aiter__ at 0x7f87f0901840>
+
+    @_core.enable_ki_protection
+    def finalizer(agen: AsyncGeneratorType[object, NoReturn]) -> None:
+        try:
+            self.foreign.remove(id(agen))
+        except KeyError:
+            is_ours = True
+        else:
+            is_ours = False
+    
+        agen_name = name_asyncgen(agen)
+        if is_ours:
+            runner.entry_queue.run_sync_soon(
+                finalize_in_trio_context,
+                agen,
+                agen_name,
+            )
+    
+            # Do this last, because it might raise an exception
+            # depending on the user's warnings filter. (That
+            # exception will be printed to the terminal and
+            # ignored, since we're running in GC context.)
+>           warnings.warn(
+                f"Async generator {agen_name!r} was garbage collected before it "
+                "had been exhausted. Surround its use in 'async with "
+                "aclosing(...):' to ensure that it gets cleaned up as soon as "
+                "you're done using it.",
+                ResourceWarning,
+                stacklevel=2,
+                source=agen,
+            )
+E           ResourceWarning: Async generator 'httpx._content.ByteStream.__aiter__' was garbage collected before it had been exhausted. Surround its use in 'async with aclosing(...):' to ensure that it gets cleaned up as soon as you're done using it.
+
+/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/trio/_core/_asyncgens.py:122: ResourceWarning
+
+The above exception was the direct cause of the following exception:
+
+cls = <class '_pytest.runner.CallInfo'>
+func = <function call_and_report.<locals>.<lambda> at 0x7f87f0677100>
+when = 'call'
+reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: Callable[[], TResult],
+        when: Literal["collect", "setup", "call", "teardown"],
+        reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+    ) -> CallInfo[TResult]:
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :type func: Callable[[], _pytest.runner.TResult]
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        instant = timing.Instant()
+        try:
+>           result: TResult | None = func()
+                                     ^^^^^^
+
+/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/_pytest/runner.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/_pytest/runner.py:246: in <lambda>
+    lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/pluggy/_hooks.py:512: in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/pluggy/_manager.py:120: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/_pytest/logging.py:850: in pytest_runtest_call
+    yield
+/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/_pytest/capture.py:900: in pytest_runtest_call
+    return (yield)
+            ^^^^^
+/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/_pytest/skipping.py:263: in pytest_runtest_call
+    return (yield)
+            ^^^^^
+/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/_pytest/unraisableexception.py:158: in pytest_runtest_call
+    collect_unraisable(item.config)
+/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/_pytest/unraisableexception.py:79: in collect_unraisable
+    raise errors[0]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+config = <_pytest.config.Config object at 0x7f87f5445a30>
+
+    def collect_unraisable(config: Config) -> None:
+        pop_unraisable = config.stash[unraisable_exceptions].pop
+        errors: list[pytest.PytestUnraisableExceptionWarning | RuntimeError] = []
+        meta = None
+        hook_error = None
+        try:
+            while True:
+                try:
+                    meta = pop_unraisable()
+                except IndexError:
+                    break
+    
+                if isinstance(meta, BaseException):
+                    hook_error = RuntimeError("Failed to process unraisable exception")
+                    hook_error.__cause__ = meta
+                    errors.append(hook_error)
+                    continue
+    
+                msg = meta.msg
+                try:
+>                   warnings.warn(pytest.PytestUnraisableExceptionWarning(msg))
+E                   pytest.PytestUnraisableExceptionWarning: Exception ignored in: <async_generator object ByteStream.__aiter__ at 0x7f87f0901840>
+E                   Enable tracemalloc to get traceback where the object was allocated.
+E                   See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/site-packages/_pytest/unraisableexception.py:67: PytestUnraisableExceptionWarning
+----------------------------- Captured stdout call -----------------------------
+INFO:     127.0.0.1:33640 - "PUT /slow_response HTTP/1.1" 200 OK
+=========================== short test summary info ============================
+SKIPPED [1] tests/client/test_auth.py:273: netrc files without a password are valid from Python >= 3.11
+================== 1 failed, 1416 passed, 1 skipped in 18.37s ==================
+##[error]Process completed with exit code 1.
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/7544704c-6903-4bbc-a38a-dfad36efc9ce' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/httpx/httpx
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+http.https://github.com/.extraheader
+[command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Cleaning up orphan processes
+##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

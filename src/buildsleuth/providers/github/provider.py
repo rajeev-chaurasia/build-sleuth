@@ -61,8 +61,20 @@ class GitHubProvider:
         return int(pulls[0]["number"])
 
     def get_diff(self, repo: str, pr_number: int) -> str:
-        """Fetch a pull request's unified diff."""
+        """Fetch a pull request's unified diff, as the branch stands now."""
         return self._client.get_pr_diff(repo, pr_number)
+
+    def get_diff_at(self, repo: str, pr_number: int, head_sha: str) -> str:
+        """Diff of a pull request as it stood at one commit.
+
+        Falls back to the current pull request diff when the base cannot be
+        resolved, since a slightly stale diff beats no diff at all.
+        """
+        try:
+            base_sha = str(self._client.get_pr(repo, pr_number)["base"]["sha"])
+        except (KeyError, TypeError):
+            return self.get_diff(repo, pr_number)
+        return self._client.get_compare_diff(repo, base_sha, head_sha)
 
     def get_file(self, repo: str, path: str, ref: str) -> str | None:
         """Fetch a file's content at a ref, or None when it does not exist."""

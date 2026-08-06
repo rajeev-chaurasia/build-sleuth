@@ -1,0 +1,504 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {20ef93e4-d302-45f3-8e53-6705dfadd1c0}
+Azure Region: westus
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260720.247.2
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: None
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Download action repository 'j178/prek-action@5337cb91e0fa35a7ff31b9ca345126d8bbbcdf16' (SHA:5337cb91e0fa35a7ff31b9ca345126d8bbbcdf16)
+Complete job name: Run prek checks
+##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+with:
+  persist-credentials: false
+  repository: home-assistant/core
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+##[endgroup]
+Syncing repository: home-assistant/core
+##[group]Getting Git version info
+Working directory is '/home/runner/work/core/core'
+[command]/usr/bin/git version
+git version 2.54.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/0e7a1a3b-e559-45bc-8759-dca84eee61a6' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/core/core
+Deleting the contents of '/home/runner/work/core/core'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/core/core
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/core/core/.git/
+[command]/usr/bin/git remote add origin https://github.com/home-assistant/core
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-dce9ff07-e53b-479e-9621-ff4f1632be81.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/core/core/.git.path /home/runner/work/_temp/git-credentials-dce9ff07-e53b-479e-9621-ff4f1632be81.config
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/core/core/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-dce9ff07-e53b-479e-9621-ff4f1632be81.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-dce9ff07-e53b-479e-9621-ff4f1632be81.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-dce9ff07-e53b-479e-9621-ff4f1632be81.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b73b84d13c2a60dd6ba7f5326709edb8f35a73a5:refs/remotes/pull/167872/merge
+From https://github.com/home-assistant/core
+ * [new ref]           b73b84d13c2a60dd6ba7f5326709edb8f35a73a5 -> pull/167872/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/167872/merge
+Updating files:  67% (18230/27012)
+Updating files:  68% (18369/27012)
+Updating files:  69% (18639/27012)
+Updating files:  70% (18909/27012)
+Updating files:  71% (19179/27012)
+Updating files:  72% (19449/27012)
+Updating files:  73% (19719/27012)
+Updating files:  74% (19989/27012)
+Updating files:  75% (20259/27012)
+Updating files:  76% (20530/27012)
+Updating files:  77% (20800/27012)
+Updating files:  78% (21070/27012)
+Updating files:  79% (21340/27012)
+Updating files:  80% (21610/27012)
+Updating files:  81% (21880/27012)
+Updating files:  82% (22150/27012)
+Updating files:  83% (22420/27012)
+Updating files:  84% (22691/27012)
+Updating files:  85% (22961/27012)
+Updating files:  86% (23231/27012)
+Updating files:  87% (23501/27012)
+Updating files:  88% (23771/27012)
+Updating files:  89% (24041/27012)
+Updating files:  90% (24311/27012)
+Updating files:  91% (24581/27012)
+Updating files:  92% (24852/27012)
+Updating files:  93% (25122/27012)
+Updating files:  94% (25392/27012)
+Updating files:  95% (25662/27012)
+Updating files:  96% (25932/27012)
+Updating files:  97% (26202/27012)
+Updating files:  98% (26472/27012)
+Updating files:  99% (26742/27012)
+Updating files: 100% (27012/27012)
+Updating files: 100% (27012/27012), done.
+Note: switching to 'refs/remotes/pull/167872/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at b73b84d1 Merge 047c8da7c3a836aa744c93c0dc51cf86eaddb4f1 into a2fa2b7858e2bf03fe6b047e8a8a077d47ac618f
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+b73b84d13c2a60dd6ba7f5326709edb8f35a73a5
+##[group]Removing auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/home/runner/work/core/core/.git.path
+includeif.gitdir:/home/runner/work/core/core/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/core/core/.git.path
+/home/runner/work/_temp/git-credentials-dce9ff07-e53b-479e-9621-ff4f1632be81.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/core/core/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-dce9ff07\-e53b\-479e\-9621\-ff4f1632be81\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/core/core/.git/worktrees/*.path
+/home/runner/work/_temp/git-credentials-dce9ff07-e53b-479e-9621-ff4f1632be81.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/core/core/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-dce9ff07\-e53b\-479e\-9621\-ff4f1632be81\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-dce9ff07-e53b-479e-9621-ff4f1632be81.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-dce9ff07\-e53b\-479e\-9621\-ff4f1632be81\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-dce9ff07-e53b-479e-9621-ff4f1632be81.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-dce9ff07\-e53b\-479e\-9621\-ff4f1632be81\.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/home/runner/work/_temp/git-credentials-dce9ff07-e53b-479e-9621-ff4f1632be81.config'
+##[endgroup]
+##[group]Run echo "::add-matcher::.github/workflows/matchers/yamllint.json"
+echo "::add-matcher::.github/workflows/matchers/yamllint.json"
+echo "::add-matcher::.github/workflows/matchers/check-json.json"
+echo "::add-matcher::.github/workflows/matchers/check-executables-have-shebangs.json"
+echo "::add-matcher::.github/workflows/matchers/codespell.json"
+shell: /usr/bin/bash -e {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+##[endgroup]
+##[group]Run j178/prek-action@5337cb91e0fa35a7ff31b9ca345126d8bbbcdf16
+with:
+  extra-args: --all-files
+  cache: true
+  install-only: false
+  prek-version: latest
+  show-verbose-logs: true
+  working-directory: .
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  PREK_SKIP: no-commit-to-branch,mypy,pylint,gen_requirements_all,hassfest,hassfest-metadata,hassfest-mypy-config,zizmor
+  RUFF_OUTPUT_FORMAT: github
+##[endgroup]
+##[group]Resolving prek version
+Downloading version manifest from https://raw.githubusercontent.com/j178/prek-action/main/version-manifest.json
+Resolving prek version from input "latest"
+Resolved "latest" to latest stable release 0.4.12
+Using prek 0.4.12
+##[endgroup]
+##[group]Installing prek 0.4.12
+Selected release asset prek-x86_64-unknown-linux-gnu.tar.gz for runner linux/x64 (tool-cache arch x64)
+Looking up asset prek-x86_64-unknown-linux-gnu.tar.gz for 0.4.12
+Downloading prek from https://github.com/j178/prek/releases/download/v0.4.12/prek-x86_64-unknown-linux-gnu.tar.gz
+Downloaded archive to /home/runner/work/_temp/fb8ba3b5-0781-42fc-a093-768551c4ab77
+[command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/763134a8-c246-41fe-b0dd-564794a2bf9c -f /home/runner/work/_temp/fb8ba3b5-0781-42fc-a093-768551c4ab77
+Extracted tar.gz archive to /home/runner/work/_temp/763134a8-c246-41fe-b0dd-564794a2bf9c
+Resolved binary path to /home/runner/work/_temp/763134a8-c246-41fe-b0dd-564794a2bf9c/prek-x86_64-unknown-linux-gnu/prek
+Cached prek binary at /opt/hostedtoolcache/prek/0.4.12/x64
+##[endgroup]
+##[group]Restore prek cache
+Using prek cache dir /home/runner/.cache/prek
+Cache hit for: prek-v1|Linux|X64||f449054a9adda15e4bb47ce578fe03e138a30da6d38bb4fa13dfde64c3574073
+Received 4194304 of 35301942 (11.9%), 4.0 MBs/sec
+Received 35301942 of 35301942 (100.0%), 27.8 MBs/sec
+Cache Size: ~34 MB (35301942 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/ce42882d-a290-4fb9-8ddc-1bc949fa93bf/cache.tzst -P -C /home/runner/work/core/core --use-compress-program unzstd
+Cache restored successfully
+Restored prek cache with key prek-v1|Linux|X64||f449054a9adda15e4bb47ce578fe03e138a30da6d38bb4fa13dfde64c3574073
+##[endgroup]
+[command]/opt/hostedtoolcache/prek/0.4.12/x64/prek run --show-diff-on-failure --color=always --all-files
+ruff check...............................................................Passed
+ruff format..............................................................Failed
+- hook id: ruff-format
+- files were modified by this hook
+codespell................................................................Passed
+check json...............................................................Passed
+yamllint.................................................................Passed
+prettier.................................................................Passed
+gen_copilot_instructions.................................................Passed
+
+hint: Some hooks made changes to the files.
+If you are seeing this message in CI, reproduce locally with: `prek run --all-files`
+To run prek as part of Git workflow, use `prek install` to set up Git shims.
+
+All changes made by hooks:
+diff --git a/homeassistant/components/grandstream_home/coordinator.py b/homeassistant/components/grandstream_home/coordinator.py
+index 9092e5e0..c640c1de 100755
+--- a/homeassistant/components/grandstream_home/coordinator.py
++++ b/homeassistant/components/grandstream_home/coordinator.py
+@@ -69,7 +69,6 @@ class GrandstreamCoordinator(DataUpdateCoordinator[str]):
+             device_registry.async_update_device(device.id, sw_version=version)
+             _LOGGER.debug("Updated firmware version to %s", version)
+ 
+-
+     @override
+     async def _async_update_data(self) -> str:
+         """Fetch data from API endpoint (polling)."""
+diff --git a/homeassistant/components/grandstream_home/sensor.py b/homeassistant/components/grandstream_home/sensor.py
+index 953e9c88..421b10bd 100755
+--- a/homeassistant/components/grandstream_home/sensor.py
++++ b/homeassistant/components/grandstream_home/sensor.py
+@@ -96,7 +96,6 @@ class GrandstreamDeviceSensor(CoordinatorEntity[GrandstreamCoordinator], SensorE
+         self.entity_description = description
+         self._attr_unique_id = f"{coordinator.config_entry.unique_id}_{description.key}"
+ 
+-
+     @override
+     @property
+     def native_value(self) -> StateType:
+##[group]Prek verbose logs
+Using prek cache dir /home/runner/.cache/prek
+2026-08-06T07:17:27.443756Z DEBUG prek: 0.4.12
+2026-08-06T07:17:27.443775Z DEBUG Args: ["/opt/hostedtoolcache/prek/0.4.12/x64/prek", "run", "--show-diff-on-failure", "--color=always", "--all-files"]
+2026-08-06T07:17:27.445124Z TRACE root: close time.busy=1.33ms time.idle=2.62µs
+2026-08-06T07:17:27.445149Z DEBUG Git root: /home/runner/work/core/core
+2026-08-06T07:17:27.445175Z DEBUG Found workspace root at `/home/runner/work/core/core`
+2026-08-06T07:17:27.445179Z TRACE Include selectors: ``
+2026-08-06T07:17:27.445192Z TRACE Skip selectors: `no-commit-to-branch, mypy, pylint, gen_requirements_all, hassfest, hassfest-metadata, hassfest-mypy-config, zizmor`
+2026-08-06T07:17:27.445230Z DEBUG discover{root="/home/runner/work/core/core" config=None refresh=false}: Cache is too old (602278s > 3600s), invalidating
+2026-08-06T07:17:27.445267Z DEBUG discover{root="/home/runner/work/core/core" config=None refresh=false}: Performing fresh workspace discovery
+2026-08-06T07:17:27.445288Z TRACE discover{root="/home/runner/work/core/core" config=None refresh=false}:list_submodules{git_root="/home/runner/work/core/core"}: close time.busy=5.91µs time.idle=490ns
+2026-08-06T07:17:27.446680Z DEBUG Loading project configuration path=.pre-commit-config.yaml
+2026-08-06T07:17:27.493461Z TRACE discover{root="/home/runner/work/core/core" config=None refresh=false}: close time.busy=48.3ms time.idle=902ns
+2026-08-06T07:17:27.493587Z TRACE Checking lock resource="store" path=/home/runner/.cache/prek/.lock
+2026-08-06T07:17:27.493598Z DEBUG Acquired lock resource="store"
+2026-08-06T07:17:27.495482Z TRACE No requires-python found in pyproject.toml hook=ruff-check
+2026-08-06T07:17:27.495563Z TRACE No requires-python found in pyproject.toml hook=ruff-format
+2026-08-06T07:17:27.495678Z TRACE Using pyproject.toml-derived language_version hook=codespell version=>=3.9
+2026-08-06T07:17:27.495737Z TRACE No requires-python found in pyproject.toml hook=check-executables-have-shebangs
+2026-08-06T07:17:27.495787Z TRACE No requires-python found in pyproject.toml hook=check-json
+2026-08-06T07:17:27.495856Z TRACE No requires-python found in pyproject.toml hook=no-commit-to-branch
+2026-08-06T07:17:27.495957Z TRACE Using pyproject.toml-derived language_version hook=yamllint version=>=3.10
+2026-08-06T07:17:27.496058Z TRACE Using pyproject.toml-derived language_version hook=python-typing-update version=>=3.8
+2026-08-06T07:17:27.496101Z TRACE Released lock path=/home/runner/.cache/prek/.lock
+2026-08-06T07:17:27.496114Z DEBUG Hooks going to run: ["ruff-check", "ruff-format", "codespell", "check-json", "yamllint", "prettier", "gen_copilot_instructions"]
+2026-08-06T07:17:27.496130Z TRACE ls_files{cwd="/home/runner/work/core/core"}: Executing `cd /home/runner/work/core/core && /usr/bin/git -c core.useBuiltinFSMonitor=false --literal-pathspecs ls-files -z -- /home/runner/work/core/core`
+2026-08-06T07:17:27.504550Z TRACE ls_files{cwd="/home/runner/work/core/core"}: close time.busy=3.91ms time.idle=4.52ms
+2026-08-06T07:17:27.504566Z DEBUG All files in the workspace: 27012
+2026-08-06T07:17:27.531896Z TRACE Checking lock resource="store" path=/home/runner/.cache/prek/.lock
+2026-08-06T07:17:27.531916Z DEBUG Acquired lock resource="store"
+2026-08-06T07:17:27.536927Z TRACE Found compatible managed uv uv=/home/runner/.cache/prek/tools/uv/uv
+2026-08-06T07:17:27.536996Z DEBUG Installing environment hook=ruff-check target=/home/runner/.cache/prek/hooks/python-jzWEM3DXrVoq5s2TBnwj
+2026-08-06T07:17:27.537008Z TRACE Executing `/home/runner/.cache/prek/tools/uv/uv venv /home/runner/.cache/prek/hooks/python-jzWEM3DXrVoq5s2TBnwj --no-project --project / --python-preference only-managed --no-python-downloads`
+2026-08-06T07:17:27.541430Z TRACE Found compatible managed uv uv=/home/runner/.cache/prek/tools/uv/uv
+2026-08-06T07:17:27.541499Z DEBUG Installing environment hook=codespell target=/home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL
+2026-08-06T07:17:27.541511Z TRACE Executing `/home/runner/.cache/prek/tools/uv/uv venv /home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL --no-project --project / --python-preference only-managed --no-python-downloads --python >=3.9`
+2026-08-06T07:17:27.545870Z TRACE Found compatible managed uv uv=/home/runner/.cache/prek/tools/uv/uv
+2026-08-06T07:17:27.545937Z DEBUG Installing environment hook=check-json target=/home/runner/.cache/prek/hooks/python-6mFzMt7laQD9XGWl7j2A
+2026-08-06T07:17:27.545948Z TRACE Executing `/home/runner/.cache/prek/tools/uv/uv venv /home/runner/.cache/prek/hooks/python-6mFzMt7laQD9XGWl7j2A --no-project --project / --python-preference only-managed --no-python-downloads`
+2026-08-06T07:17:27.551554Z TRACE Found compatible managed uv uv=/home/runner/.cache/prek/tools/uv/uv
+2026-08-06T07:17:27.551658Z DEBUG Installing environment hook=yamllint target=/home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG
+2026-08-06T07:17:27.551677Z TRACE Executing `/home/runner/.cache/prek/tools/uv/uv venv /home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG --no-project --project / --python-preference only-managed --no-python-downloads --python >=3.10`
+2026-08-06T07:17:27.618074Z TRACE Executing `/home/runner/.cache/prek/tools/uv/uv venv /home/runner/.cache/prek/hooks/python-jzWEM3DXrVoq5s2TBnwj --no-project --project / --no-python-downloads`
+2026-08-06T07:17:27.620270Z TRACE Executing `/home/runner/.cache/prek/tools/uv/uv venv /home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL --no-project --project / --no-python-downloads --python >=3.9`
+2026-08-06T07:17:27.627183Z TRACE Executing `/home/runner/.cache/prek/tools/uv/uv venv /home/runner/.cache/prek/hooks/python-6mFzMt7laQD9XGWl7j2A --no-project --project / --no-python-downloads`
+2026-08-06T07:17:27.635375Z TRACE Executing `/home/runner/.cache/prek/tools/uv/uv venv /home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG --no-project --project / --no-python-downloads --python >=3.10`
+2026-08-06T07:17:27.640268Z DEBUG Venv created with Python discovered outside prek's managed store: `/home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL`
+2026-08-06T07:17:27.640339Z TRACE Installing dependencies from repo path: /home/runner/.cache/prek/repos/acc57484f9af19df
+2026-08-06T07:17:27.640348Z TRACE Executing `/home/runner/.cache/prek/tools/uv/uv pip install --project / --directory /home/runner/.cache/prek/repos/acc57484f9af19df .`
+2026-08-06T07:17:27.659052Z DEBUG Venv created with Python discovered outside prek's managed store: `/home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG`
+2026-08-06T07:17:27.659081Z TRACE Installing dependencies from repo path: /home/runner/.cache/prek/repos/e608809ebabc942d
+2026-08-06T07:17:27.659090Z TRACE Executing `/home/runner/.cache/prek/tools/uv/uv pip install --project / --directory /home/runner/.cache/prek/repos/e608809ebabc942d .`
+2026-08-06T07:17:27.696401Z DEBUG Venv created with Python discovered outside prek's managed store: `/home/runner/.cache/prek/hooks/python-jzWEM3DXrVoq5s2TBnwj`
+2026-08-06T07:17:27.696430Z TRACE Installing dependencies from repo path: /home/runner/.cache/prek/repos/d888304095f567a6
+2026-08-06T07:17:27.696440Z TRACE Executing `/home/runner/.cache/prek/tools/uv/uv pip install --project / --directory /home/runner/.cache/prek/repos/d888304095f567a6 .`
+2026-08-06T07:17:27.706928Z DEBUG Venv created with Python discovered outside prek's managed store: `/home/runner/.cache/prek/hooks/python-6mFzMt7laQD9XGWl7j2A`
+2026-08-06T07:17:27.706958Z TRACE Installing dependencies from repo path: /home/runner/.cache/prek/repos/0321a11f464e05f4
+2026-08-06T07:17:27.706968Z TRACE Executing `/home/runner/.cache/prek/tools/uv/uv pip install --project / --directory /home/runner/.cache/prek/repos/0321a11f464e05f4 .`
+2026-08-06T07:17:28.867376Z TRACE Executing `/home/runner/.cache/prek/hooks/python-6mFzMt7laQD9XGWl7j2A/bin/python -I -c import sys, json
+info = {
+    "version": ".".join(map(str, sys.version_info[:3])),
+    "base_exec_prefix": sys.base_exec_prefix,
+}
+print(json.dumps(info))
+`
+2026-08-06T07:17:28.898144Z DEBUG Installed hook `check-json` in `/home/runner/.cache/prek/hooks/python-6mFzMt7laQD9XGWl7j2A`
+2026-08-06T07:17:28.898348Z TRACE Checking lock resource="node" path=/home/runner/.cache/prek/tools/node/.lock
+2026-08-06T07:17:28.898369Z DEBUG Acquired lock resource="node"
+2026-08-06T07:17:28.898518Z TRACE Found npm in same directory as node node=/usr/local/bin/node npm=/usr/local/bin/npm
+2026-08-06T07:17:28.898533Z TRACE Executing `/usr/local/bin/node -p JSON.stringify({version: process.version, lts: process.release.lts || false})`
+2026-08-06T07:17:28.924032Z TRACE Executing `/home/runner/.cache/prek/hooks/python-jzWEM3DXrVoq5s2TBnwj/bin/python -I -c import sys, json
+info = {
+    "version": ".".join(map(str, sys.version_info[:3])),
+    "base_exec_prefix": sys.base_exec_prefix,
+}
+print(json.dumps(info))
+`
+2026-08-06T07:17:28.948811Z DEBUG Installed hook `ruff-check` in `/home/runner/.cache/prek/hooks/python-jzWEM3DXrVoq5s2TBnwj`
+2026-08-06T07:17:28.948825Z DEBUG Found installed environment for hook `ruff-format` at `/home/runner/.cache/prek/hooks/python-jzWEM3DXrVoq5s2TBnwj`
+2026-08-06T07:17:29.076302Z TRACE Found a matching system node node_result=/usr/local/bin/node@22.23.1-Jod
+2026-08-06T07:17:29.076324Z TRACE Using system node node_result=/usr/local/bin/node@22.23.1-Jod
+2026-08-06T07:17:29.076333Z TRACE Released lock path=/home/runner/.cache/prek/tools/node/.lock
+2026-08-06T07:17:29.076589Z TRACE Executing `/usr/local/bin/npm --version`
+2026-08-06T07:17:29.130451Z TRACE Executing `/home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG/bin/python -I -c import sys, json
+info = {
+    "version": ".".join(map(str, sys.version_info[:3])),
+    "base_exec_prefix": sys.base_exec_prefix,
+}
+print(json.dumps(info))
+`
+2026-08-06T07:17:29.153709Z DEBUG Installed hook `yamllint` in `/home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG`
+2026-08-06T07:17:29.852397Z TRACE Executing `/usr/local/bin/npm install -g --no-progress --no-save --no-fund --no-audit git+file:///home/runner/.cache/prek/repos/d1a9adbed9d259d8 prettier@3.6.2 prettier-plugin-sort-json@4.2.0`
+2026-08-06T07:17:30.930473Z TRACE Executing `/home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL/bin/python -I -c import sys, json
+info = {
+    "version": ".".join(map(str, sys.version_info[:3])),
+    "base_exec_prefix": sys.base_exec_prefix,
+}
+print(json.dumps(info))
+`
+2026-08-06T07:17:30.952052Z DEBUG Installed hook `codespell` in `/home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL`
+2026-08-06T07:17:32.244994Z DEBUG Installed hook `prettier` in `/home/runner/.cache/prek/hooks/node-Rl8NOh6xYpwWlF3VJLp0`
+2026-08-06T07:17:32.245070Z TRACE Released lock path=/home/runner/.cache/prek/.lock
+2026-08-06T07:17:32.245217Z TRACE Files for project `.` after filtered: 27012
+2026-08-06T07:17:32.245233Z TRACE diff_worktree{path="/home/runner/work/core/core"}: Executing `/usr/bin/git -c core.useBuiltinFSMonitor=false diff --full-index --no-ext-diff --no-textconv --ignore-submodules -- /home/runner/work/core/core`
+2026-08-06T07:17:32.504988Z TRACE diff_worktree{path="/home/runner/work/core/core"}: close time.busy=301µs time.idle=259ms
+2026-08-06T07:17:32.505013Z DEBUG Running priority group with priority 0: ["ruff-check"]
+2026-08-06T07:17:32.505564Z TRACE matching_filenames{hook="ruff-check"}: close time.busy=533µs time.idle=551ns
+2026-08-06T07:17:32.505574Z TRACE Files for hook `ruff-check` after filtering matched=true filenames=18162
+2026-08-06T07:17:32.505709Z TRACE run{hook_id=ruff-check language=python}: Running ruff-check total_files=18162 concurrency=1
+2026-08-06T07:17:32.508218Z TRACE run{hook_id=ruff-check language=python}: Executing `cd /home/runner/work/core/core && /home/runner/.cache/prek/hooks/python-jzWEM3DXrVoq5s2TBnwj/bin/ruff check --force-exclude --fix`
+2026-08-06T07:17:36.525629Z  INFO run{hook_id=ruff-check language=python}: close time.busy=7.71ms time.idle=4.01s
+2026-08-06T07:17:36.525671Z TRACE diff_worktree{path="/home/runner/work/core/core"}: Executing `/usr/bin/git -c core.useBuiltinFSMonitor=false diff --full-index --no-ext-diff --no-textconv --ignore-submodules -- /home/runner/work/core/core`
+2026-08-06T07:17:36.778251Z TRACE diff_worktree{path="/home/runner/work/core/core"}: close time.busy=346µs time.idle=252ms
+2026-08-06T07:17:36.778313Z DEBUG Running priority group with priority 1: ["ruff-format"]
+2026-08-06T07:17:36.782108Z TRACE matching_filenames{hook="ruff-format"}: close time.busy=3.78ms time.idle=632ns
+2026-08-06T07:17:36.782124Z TRACE Files for hook `ruff-format` after filtering matched=true filenames=18159
+2026-08-06T07:17:36.782242Z TRACE run{hook_id=ruff-format language=python}: Running ruff-format total_files=18159 concurrency=1
+2026-08-06T07:17:36.783920Z TRACE run{hook_id=ruff-format language=python}: Executing `cd /home/runner/work/core/core && /home/runner/.cache/prek/hooks/python-jzWEM3DXrVoq5s2TBnwj/bin/ruff format --force-exclude`
+2026-08-06T07:17:38.977559Z  INFO run{hook_id=ruff-format language=python}: close time.busy=6.93ms time.idle=2.19s
+2026-08-06T07:17:38.977602Z TRACE diff_worktree{path="/home/runner/work/core/core"}: Executing `/usr/bin/git -c core.useBuiltinFSMonitor=false diff --full-index --no-ext-diff --no-textconv --ignore-submodules -- /home/runner/work/core/core`
+2026-08-06T07:17:39.228521Z TRACE diff_worktree{path="/home/runner/work/core/core"}: close time.busy=362µs time.idle=251ms
+2026-08-06T07:17:39.228567Z DEBUG Running priority group with priority 2: ["codespell"]
+2026-08-06T07:17:39.231970Z TRACE matching_filenames{hook="codespell"}: close time.busy=3.39ms time.idle=531ns
+2026-08-06T07:17:39.231987Z TRACE Files for hook `codespell` after filtering matched=true filenames=19258
+2026-08-06T07:17:39.232076Z TRACE run{hook_id=codespell language=python}: Found shebang: ["/home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL/bin/python3"]
+2026-08-06T07:17:39.232191Z TRACE run{hook_id=codespell language=python}: Running codespell total_files=19258 concurrency=4
+2026-08-06T07:17:39.232769Z TRACE run{hook_id=codespell language=python}: Executing `cd /home/runner/work/core/core && /home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL/bin/python3 /home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL/bin/codespell --ignore-words-list=aiport,astroid,checkin,currenty,hass,iif,incomfort,lookin,nam,NotIn --skip="./.*,*.csv,*.json,*.ambr" --quiet-level=2`
+2026-08-06T07:17:39.235063Z TRACE run{hook_id=codespell language=python}: Executing `cd /home/runner/work/core/core && /home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL/bin/python3 /home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL/bin/codespell --ignore-words-list=aiport,astroid,checkin,currenty,hass,iif,incomfort,lookin,nam,NotIn --skip="./.*,*.csv,*.json,*.ambr" --quiet-level=2`
+2026-08-06T07:17:39.237275Z TRACE run{hook_id=codespell language=python}: Executing `cd /home/runner/work/core/core && /home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL/bin/python3 /home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL/bin/codespell --ignore-words-list=aiport,astroid,checkin,currenty,hass,iif,incomfort,lookin,nam,NotIn --skip="./.*,*.csv,*.json,*.ambr" --quiet-level=2`
+2026-08-06T07:17:39.239917Z TRACE run{hook_id=codespell language=python}: Executing `cd /home/runner/work/core/core && /home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL/bin/python3 /home/runner/.cache/prek/hooks/python-vDiqZ9hvO7Egiu1CbBOL/bin/codespell --ignore-words-list=aiport,astroid,checkin,currenty,hass,iif,incomfort,lookin,nam,NotIn --skip="./.*,*.csv,*.json,*.ambr" --quiet-level=2`
+2026-08-06T07:17:43.873246Z  INFO run{hook_id=codespell language=python}: close time.busy=10.7ms time.idle=4.63s
+2026-08-06T07:17:43.873304Z TRACE diff_worktree{path="/home/runner/work/core/core"}: Executing `/usr/bin/git -c core.useBuiltinFSMonitor=false diff --full-index --no-ext-diff --no-textconv --ignore-submodules -- /home/runner/work/core/core`
+2026-08-06T07:17:44.127262Z TRACE diff_worktree{path="/home/runner/work/core/core"}: close time.busy=375µs time.idle=254ms
+2026-08-06T07:17:44.127309Z DEBUG Running priority group with priority 4: ["check-json"]
+2026-08-06T07:17:44.130529Z TRACE matching_filenames{hook="check-json"}: close time.busy=3.21ms time.idle=421ns
+2026-08-06T07:17:44.130542Z TRACE Files for hook `check-json` after filtering matched=true filenames=5813
+2026-08-06T07:17:44.130583Z DEBUG run{hook_id=check-json language=python}: Running hook `check-json` in fast path
+2026-08-06T07:17:44.312908Z  INFO run{hook_id=check-json language=python}: close time.busy=140ms time.idle=42.0ms
+2026-08-06T07:17:44.312953Z DEBUG Running priority group with priority 6: ["yamllint"]
+2026-08-06T07:17:44.313118Z TRACE matching_filenames{hook="yamllint"}: close time.busy=155µs time.idle=512ns
+2026-08-06T07:17:44.313128Z TRACE Files for hook `yamllint` after filtering matched=true filenames=927
+2026-08-06T07:17:44.313185Z TRACE run{hook_id=yamllint language=python}: Found shebang: ["/home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG/bin/python3"]
+2026-08-06T07:17:44.313230Z TRACE run{hook_id=yamllint language=python}: Running yamllint total_files=927 concurrency=4
+2026-08-06T07:17:44.313356Z TRACE run{hook_id=yamllint language=python}: Executing `cd /home/runner/work/core/core && /home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG/bin/python3 /home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG/bin/yamllint`
+2026-08-06T07:17:44.313891Z TRACE run{hook_id=yamllint language=python}: Executing `cd /home/runner/work/core/core && /home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG/bin/python3 /home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG/bin/yamllint`
+2026-08-06T07:17:44.314373Z TRACE run{hook_id=yamllint language=python}: Executing `cd /home/runner/work/core/core && /home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG/bin/python3 /home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG/bin/yamllint`
+2026-08-06T07:17:44.314929Z TRACE run{hook_id=yamllint language=python}: Executing `cd /home/runner/work/core/core && /home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG/bin/python3 /home/runner/.cache/prek/hooks/python-0sVxHN9jFdPQr9gWo1TG/bin/yamllint`
+2026-08-06T07:17:47.848102Z  INFO run{hook_id=yamllint language=python}: close time.busy=4.99ms time.idle=3.53s
+2026-08-06T07:17:47.848158Z TRACE diff_worktree{path="/home/runner/work/core/core"}: Executing `/usr/bin/git -c core.useBuiltinFSMonitor=false diff --full-index --no-ext-diff --no-textconv --ignore-submodules -- /home/runner/work/core/core`
+2026-08-06T07:17:48.098974Z TRACE diff_worktree{path="/home/runner/work/core/core"}: close time.busy=476µs time.idle=250ms
+2026-08-06T07:17:48.099022Z DEBUG Running priority group with priority 7: ["prettier"]
+2026-08-06T07:17:48.100669Z TRACE matching_filenames{hook="prettier"}: close time.busy=1.64ms time.idle=520ns
+2026-08-06T07:17:48.100683Z TRACE Files for hook `prettier` after filtering matched=true filenames=26952
+2026-08-06T07:17:48.100812Z TRACE run{hook_id=prettier language=node}: Found shebang: ["node"]
+2026-08-06T07:17:48.100873Z TRACE run{hook_id=prettier language=node}: Running prettier total_files=26952 concurrency=4
+2026-08-06T07:17:48.101261Z TRACE run{hook_id=prettier language=node}: Executing `cd /home/runner/work/core/core && /usr/local/bin/node /home/runner/.cache/prek/hooks/node-Rl8NOh6xYpwWlF3VJLp0/bin/prettier --write --ignore-unknown`
+2026-08-06T07:17:48.103603Z TRACE run{hook_id=prettier language=node}: Executing `cd /home/runner/work/core/core && /usr/local/bin/node /home/runner/.cache/prek/hooks/node-Rl8NOh6xYpwWlF3VJLp0/bin/prettier --write --ignore-unknown`
+2026-08-06T07:17:48.106329Z TRACE run{hook_id=prettier language=node}: Executing `cd /home/runner/work/core/core && /usr/local/bin/node /home/runner/.cache/prek/hooks/node-Rl8NOh6xYpwWlF3VJLp0/bin/prettier --write --ignore-unknown`
+2026-08-06T07:17:48.109625Z TRACE run{hook_id=prettier language=node}: Executing `cd /home/runner/work/core/core && /usr/local/bin/node /home/runner/.cache/prek/hooks/node-Rl8NOh6xYpwWlF3VJLp0/bin/prettier --write --ignore-unknown`
+2026-08-06T07:18:41.691391Z  INFO run{hook_id=prettier language=node}: close time.busy=163ms time.idle=53.4s
+2026-08-06T07:18:41.691448Z TRACE diff_worktree{path="/home/runner/work/core/core"}: Executing `/usr/bin/git -c core.useBuiltinFSMonitor=false diff --full-index --no-ext-diff --no-textconv --ignore-submodules -- /home/runner/work/core/core`
+2026-08-06T07:18:41.940987Z TRACE diff_worktree{path="/home/runner/work/core/core"}: close time.busy=345µs time.idle=249ms
+2026-08-06T07:18:41.941036Z DEBUG Running priority group with priority 12: ["gen_copilot_instructions"]
+2026-08-06T07:18:41.941057Z TRACE Files for hook `gen_copilot_instructions` after filtering matched=true filenames=0
+2026-08-06T07:18:41.941109Z TRACE run{hook_id=gen_copilot_instructions language=script}: Found shebang: ["sh"]
+2026-08-06T07:18:41.941217Z TRACE run{hook_id=gen_copilot_instructions language=script}: Running gen_copilot_instructions total_files=0 concurrency=4
+2026-08-06T07:18:41.941301Z TRACE run{hook_id=gen_copilot_instructions language=script}: Executing `cd /home/runner/work/core/core && /usr/bin/sh /home/runner/work/core/core/script/run-in-env.sh python3 -m script.gen_copilot_instructions`
+2026-08-06T07:18:41.972803Z  INFO run{hook_id=gen_copilot_instructions language=script}: close time.busy=615µs time.idle=31.1ms
+2026-08-06T07:18:41.972833Z TRACE diff_worktree{path="/home/runner/work/core/core"}: Executing `/usr/bin/git -c core.useBuiltinFSMonitor=false diff --full-index --no-ext-diff --no-textconv --ignore-submodules -- /home/runner/work/core/core`
+2026-08-06T07:18:42.480280Z TRACE diff_worktree{path="/home/runner/work/core/core"}: close time.busy=289µs time.idle=507ms
+2026-08-06T07:18:42.480452Z TRACE Executing `/usr/bin/git -c core.useBuiltinFSMonitor=false --no-pager diff --no-ext-diff --color=always -- /home/runner/work/core/core`
+##[endgroup]
+##[error]prek exited with code 1
+Post job cleanup.
+Cache hit occurred on the primary key prek-v1|Linux|X64||f449054a9adda15e4bb47ce578fe03e138a30da6d38bb4fa13dfde64c3574073, not saving cache.
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/622a7ba5-03b7-4467-ae77-553c27354f2f' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/core/core
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Cleaning up orphan processes

@@ -1,0 +1,464 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {c6e2b49c-1beb-4b13-a03e-f93c9b8f71fe}
+Azure Region: eastus2
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260720.247.2
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Actions: write
+ArtifactMetadata: write
+Attestations: write
+Checks: write
+CodeQuality: write
+Contents: write
+CopilotRequests: write
+Deployments: write
+Discussions: write
+Drives: write
+Issues: write
+Metadata: read
+Models: read
+Packages: write
+Pages: write
+PullRequests: write
+RepositoryProjects: write
+SecurityEvents: write
+Statuses: write
+VulnerabilityAlerts: read
+##[endgroup]
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Download action repository 'actions/setup-python@v6' (SHA:ece7cb06caefa5fff74198d8649806c4678c61a1)
+Complete job name: type-check (3.14)
+##[group]Run actions/checkout@v7
+with:
+  repository: pola-rs/polars
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  persist-credentials: true
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+##[endgroup]
+Syncing repository: pola-rs/polars
+##[group]Getting Git version info
+Working directory is '/home/runner/work/polars/polars'
+[command]/usr/bin/git version
+git version 2.54.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/f57e31ee-3bfb-4661-a2bb-5cf1fe10fdfa' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/polars/polars
+Deleting the contents of '/home/runner/work/polars/polars'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/polars/polars
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/polars/polars/.git/
+[command]/usr/bin/git remote add origin https://github.com/pola-rs/polars
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-12756be6-f96a-4a39-9ec6-219f1cd2b284.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/polars/polars/.git.path /home/runner/work/_temp/git-credentials-12756be6-f96a-4a39-9ec6-219f1cd2b284.config
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/polars/polars/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-12756be6-f96a-4a39-9ec6-219f1cd2b284.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-12756be6-f96a-4a39-9ec6-219f1cd2b284.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-12756be6-f96a-4a39-9ec6-219f1cd2b284.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +dd04cc08e9eba2215418a93b82813d80284f41de:refs/remotes/pull/28063/merge
+From https://github.com/pola-rs/polars
+ * [new ref]         dd04cc08e9eba2215418a93b82813d80284f41de -> pull/28063/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/28063/merge
+Note: switching to 'refs/remotes/pull/28063/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at dd04cc0 Merge 390c7f6d0f3c21ba6f95b07a34f537508ef9ed05 into 7cb1174e34d008486aae01873cbcf1d01b9e877c
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+dd04cc08e9eba2215418a93b82813d80284f41de
+##[group]Run actions/setup-python@v6
+with:
+  python-version: 3.14
+  check-latest: false
+  token: ***
+  update-environment: true
+  allow-prereleases: false
+  freethreaded: false
+##[endgroup]
+##[group]Installed versions
+Successfully set up CPython (3.14.6)
+##[endgroup]
+##[group]Run curl -LsSf https://astral.sh/uv/install.sh | sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv venv
+echo "$GITHUB_WORKSPACE/.venv/bin" >> $GITHUB_PATH
+echo "VIRTUAL_ENV=$GITHUB_WORKSPACE/.venv" >> $GITHUB_ENV
+shell: /usr/bin/bash -e {0}
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.14.6/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.6/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.6/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.6/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.6/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.6/x64/lib
+##[endgroup]
+downloading uv 0.12.2 x86_64-unknown-linux-gnu
+installing to /home/runner/.local/bin
+  uv
+  uvx
+everything's installed!
+Using CPython 3.14.6 interpreter at: /opt/hostedtoolcache/Python/3.14.6/x64/bin/python
+Creating virtual environment at: .venv
+Activate with: .venv/bin/activate
+##[group]Run uv pip install -r requirements-dev.txt -r requirements-lint.txt
+uv pip install -r requirements-dev.txt -r requirements-lint.txt
+shell: /usr/bin/bash -e {0}
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.14.6/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.6/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.6/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.6/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.6/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.6/x64/lib
+  VIRTUAL_ENV: /home/runner/work/polars/polars/.venv
+##[endgroup]
+Using Python 3.14.6 environment at: /home/runner/work/polars/polars/.venv
+Resolved 139 packages in 1.22s
+Downloading pygments (1.2MiB)
+Downloading pip (1.7MiB)
+Downloading pandas (10.5MiB)
+Downloading pydantic-core (2.0MiB)
+Downloading arro3-core (3.0MiB)
+Downloading adbc-driver-sqlite (1.5MiB)
+Downloading pillow (6.6MiB)
+Downloading ruff (11.0MiB)
+Downloading sqlalchemy (3.1MiB)
+Downloading fonttools (4.7MiB)
+Downloading babel (9.7MiB)
+Downloading ast-serialize (1.2MiB)
+Downloading maturin (9.8MiB)
+Downloading kiwisolver (1.4MiB)
+Downloading matplotlib (10.6MiB)
+Downloading grpcio (6.7MiB)
+Downloading numpy (15.9MiB)
+Downloading botocore (14.7MiB)
+Downloading aiohttp (1.7MiB)
+Downloading deltalake (47.3MiB)
+Downloading pyarrow (47.8MiB)
+Downloading pyrefly (13.3MiB)
+Downloading great-tables (1.4MiB)
+Downloading mypy (14.5MiB)
+Downloading polars-runtime-64 (54.5MiB)
+Downloading cryptography (4.5MiB)
+Downloading polars-runtime-32 (54.6MiB)
+Downloading gevent (2.0MiB)
+Downloading zstandard (5.3MiB)
+Downloading typos (7.4MiB)
+Downloading moto (3.5MiB)
+Downloading polars-cloud (5.5MiB)
+Downloading hypothesis (1.1MiB)
+Downloading connectorx (41.7MiB)
+Downloading llvmlite (57.1MiB)
+Downloading pyiceberg-core (13.4MiB)
+Downloading fastexcel (3.6MiB)
+Downloading adbc-driver-manager (4.5MiB)
+Downloading numba (3.7MiB)
+ Downloaded ast-serialize
+ Downloaded hypothesis
+ Downloaded adbc-driver-sqlite
+ Downloaded kiwisolver
+ Downloaded great-tables
+ Downloaded aiohttp
+ Downloaded pydantic-core
+ Downloaded pygments
+ Downloaded gevent
+ Downloaded pip
+ Downloaded arro3-core
+ Downloaded sqlalchemy
+ Downloaded fastexcel
+   Building multimark==0.2.0
+ Downloaded adbc-driver-manager
+ Downloaded fonttools
+ Downloaded cryptography
+ Downloaded zstandard
+ Downloaded polars-cloud
+ Downloaded numba
+ Downloaded pillow
+ Downloaded grpcio
+ Downloaded typos
+ Downloaded maturin
+ Downloaded babel
+ Downloaded moto
+ Downloaded ruff
+ Downloaded matplotlib
+ Downloaded pyiceberg-core
+ Downloaded pyrefly
+ Downloaded numpy
+ Downloaded connectorx
+ Downloaded deltalake
+ Downloaded botocore
+ Downloaded pandas
+ Downloaded polars-runtime-64
+ Downloaded polars-runtime-32
+ Downloaded llvmlite
+ Downloaded pyarrow
+ Downloaded mypy
+      Built multimark==0.2.0
+Prepared 139 packages in 13.39s
+Installed 139 packages in 154ms
+ + adbc-driver-manager==1.12.0
+ + adbc-driver-sqlite==1.12.0
+ + aiobotocore==3.9.0
+ + aiohappyeyeballs==2.7.1
+ + aiohttp==3.14.3
+ + aioitertools==0.13.0
+ + aiosignal==1.4.0
+ + aiosqlite==0.22.1
+ + altair==6.2.2
+ + annotated-types==0.8.0
+ + arro3-core==0.8.1
+ + ast-serialize==0.6.0
+ + attrs==26.1.0
+ + azure-core==1.41.0
+ + azure-identity==1.25.3
+ + babel==2.18.0
+ + blinker==1.9.0
+ + boto3==1.43.56
+ + boto3-stubs==1.43.65
+ + botocore==1.43.56
+ + botocore-stubs==1.43.14
+ + certifi==2026.7.22
+ + cffi==2.1.1
+ + charset-normalizer==3.4.9
+ + click==8.4.2
+ + cloudpickle==3.1.2
+ + connectorx==0.4.5
+ + contourpy==1.3.3
+ + coverage==7.15.3
+ + cryptography==50.0.0
+ + cycler==0.12.1
+ + deltalake==1.6.2
+ + deprecated==1.3.1
+ + et-xmlfile==2.0.0
+ + execnet==2.1.2
+ + faicons==0.2.2
+ + fastexcel==0.20.2
+ + flask==3.1.3
+ + flask-cors==6.0.5
+ + fonttools==4.63.0
+ + frozenlist==1.8.0
+ + fsspec==2026.7.0
+ + gevent==26.7.0
+ + google-auth==2.56.2
+ + google-auth-stubs==0.3.0
+ + great-tables==0.23.0
+ + greenlet==3.5.4
+ + grpc-stubs==1.53.0.6
+ + grpcio==1.83.0
+ + htmltools==0.7.0
+ + hypothesis==6.165.2
+ + idna==3.18
+ + importlib-metadata==9.0.0
+ + importlib-resources==7.1.0
+ + iniconfig==2.3.0
+ + itsdangerous==2.2.0
+ + jinja2==3.1.6
+ + jmespath==1.1.0
+ + jsonschema==4.26.0
+ + jsonschema-specifications==2025.9.1
+ + kiwisolver==1.5.0
+ + librt==0.13.0
+ + llvmlite==0.48.0
+ + markupsafe==3.0.3
+ + matplotlib==3.11.1
+ + maturin==1.12.4
+ + moto==5.0.9
+ + msal==1.37.0
+ + msal-extensions==1.3.1
+ + multidict==6.7.1
+ + multimark==0.2.0
+ + mypy==2.3.0
+ + mypy-extensions==1.1.0
+ + narwhals==2.24.0
+ + nokap==0.1.0
+ + numba==0.66.0
+ + numpy==2.4.6
+ + openpyxl==3.1.5
+ + orjson==3.11.9
+ + packaging==26.3
+ + pandas==3.0.5
+ + pandas-stubs==3.0.5.260730
+ + patchelf==0.17.2.4
+ + pathspec==1.1.1
+ + pillow==12.3.0
+ + pip==26.2.1
+ + pluggy==1.6.0
+ + polars==1.43.2
+ + polars-cloud==0.10.0
+ + polars-runtime-32==1.43.2
+ + polars-runtime-64==1.43.2
+ + propcache==0.5.2
+ + py-partiql-parser==0.5.5
+ + pyarrow==25.0.0
+ + pyasn1==0.6.4
+ + pyasn1-modules==0.4.2
+ + pycparser==3.0
+ + pydantic==2.13.4
+ + pydantic-core==2.46.4
+ + pygments==2.20.0
+ + pyiceberg-core==0.10.1
+ + pyjwt==2.13.0
+ + pyparsing==3.3.2
+ + pyrefly==1.1.1
+ + pytest==9.0.3
+ + pytest-cov==7.1.0
+ + pytest-xdist==3.8.0
+ + python-dateutil==2.9.0.post0
+ + pytz==2026.3.post1
+ + pyyaml==6.0.3
+ + referencing==0.37.0
+ + requests==2.34.2
+ + responses==0.26.2
+ + rpds-py==2026.6.3
+ + ruff==0.15.21
+ + s3fs==2026.7.0
+ + s3transfer==0.19.2
+ + six==1.17.0
+ + sortedcontainers==2.4.0
+ + sqlalchemy==2.0.51
+ + tomlkit==0.15.1
+ + types-awscrt==0.34.1
+ + types-requests==2.33.0.20260712
+ + types-s3transfer==0.16.0
+ + typing-extensions==4.16.0
+ + typing-inspection==0.4.2
+ + typos==1.48.0
+ + urllib3==2.7.0
+ + websockets==17.0.1
+ + werkzeug==3.1.8
+ + wrapt==2.3.0
+ + xlsx2csv==0.8.6
+ + xlsxwriter==3.2.9
+ + xmltodict==1.0.4
+ + yarl==1.24.5
+ + zipp==4.1.0
+ + zope-event==6.2
+ + zope-interface==8.5
+ + zstandard==0.25.0
+##[group]Run mypy
+mypy
+shell: /usr/bin/bash -e {0}
+env:
+  pythonLocation: /opt/hostedtoolcache/Python/3.14.6/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.6/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.6/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.6/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.6/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.6/x64/lib
+  VIRTUAL_ENV: /home/runner/work/polars/polars/.venv
+##[endgroup]
+src/polars/io/parquet/functions.py:254: error: Argument "rechunk" to "_read_parquet_with_pyarrow" has incompatible type "bool | None"; expected "bool"  [arg-type]
+Found 1 error in 1 file (checked 662 source files)
+##[error]Process completed with exit code 1.
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/1595d463-6704-4be4-af17-c832ce0b1264' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/polars/polars
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/home/runner/work/polars/polars/.git.path
+includeif.gitdir:/home/runner/work/polars/polars/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/polars/polars/.git.path
+/home/runner/work/_temp/git-credentials-12756be6-f96a-4a39-9ec6-219f1cd2b284.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/polars/polars/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-12756be6\-f96a\-4a39\-9ec6\-219f1cd2b284\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/polars/polars/.git/worktrees/*.path
+/home/runner/work/_temp/git-credentials-12756be6-f96a-4a39-9ec6-219f1cd2b284.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/polars/polars/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-12756be6\-f96a\-4a39\-9ec6\-219f1cd2b284\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-12756be6-f96a-4a39-9ec6-219f1cd2b284.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-12756be6\-f96a\-4a39\-9ec6\-219f1cd2b284\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-12756be6-f96a-4a39-9ec6-219f1cd2b284.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-12756be6\-f96a\-4a39\-9ec6\-219f1cd2b284\.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/home/runner/work/_temp/git-credentials-12756be6-f96a-4a39-9ec6-219f1cd2b284.config'
+Cleaning up orphan processes

@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0131",
+  "title": "pydantic/pydantic Test windows-latest / 3.12",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "pydantic/pydantic",
+    "run_id": 31079515880,
+    "run_attempt": 1,
+    "head_sha": "d0b6ebbf0a465e392a3d65dcd7859aa32426f8c2",
+    "pr_number": 13583,
+    "failed_job_name": "Test windows-latest / 3.12",
+    "failed_step_name": "Run pytest",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": "diff.patch",
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "test_assertion",
+    "related_to_diff": true,
+    "culprit_files": [
+      "tests/test_forward_ref.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/pydantic/pydantic/actions/runs/31079515880",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/test_assertion. Lowest confidence of the two was 0.65. Decisive evidence: AssertionError: Regex pattern did not match.",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

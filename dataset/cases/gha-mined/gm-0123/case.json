@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0123",
+  "title": "pandas-dev/pandas Linux-32-bit",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "pandas-dev/pandas",
+    "run_id": 31040158401,
+    "run_attempt": 1,
+    "head_sha": "8c6df0294893e6f74c64c52f5cdfd028b794177d",
+    "pr_number": null,
+    "failed_job_name": "Linux-32-bit",
+    "failed_step_name": "Run Tests",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "test_assertion",
+    "related_to_diff": null,
+    "culprit_files": [
+      "pandas/core/arrays/masked.py",
+      "pandas/tests/io/parser/dtypes/test_dtypes_basic.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/pandas-dev/pandas/actions/runs/31040158401",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/test_assertion. Lowest confidence of the two was 0.75. Decisive evidence: OverflowError: Python int too large to convert to C long",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

@@ -1,0 +1,332 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {d018bdfd-5c3c-479e-9386-8ee81d413b06}
+Azure Region: westus3
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260720.247.2
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Actions: write
+ArtifactMetadata: write
+Attestations: write
+Checks: write
+CodeQuality: write
+Contents: write
+CopilotRequests: write
+Deployments: write
+Discussions: write
+Drives: write
+Issues: write
+Metadata: read
+Models: read
+Packages: write
+Pages: write
+PullRequests: write
+RepositoryProjects: write
+SecurityEvents: write
+Statuses: write
+VulnerabilityAlerts: read
+##[endgroup]
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Download action repository 'astral-sh/setup-uv@v7' (SHA:37802adc94f370d6bfd71619e3f0bf239e1f3b78)
+Complete job name: Run Tests for prefect-aws on Python 3.10
+##[group]Run echo '{
+echo '{
+  "package": "prefect-aws",
+  "python-version": "3.10",
+  "dependency-override": ""
+}'
+shell: /usr/bin/bash -e {0}
+##[endgroup]
+{
+  "package": "prefect-aws",
+  "python-version": "3.10",
+  "dependency-override": ""
+}
+##[group]Run actions/checkout@v7
+with:
+  persist-credentials: false
+  repository: PrefectHQ/prefect
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+##[endgroup]
+Syncing repository: PrefectHQ/prefect
+##[group]Getting Git version info
+Working directory is '/home/runner/work/prefect/prefect'
+[command]/usr/bin/git version
+git version 2.54.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/92713942-7f3b-4c2b-b292-ac062c46dd93' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/prefect/prefect
+Deleting the contents of '/home/runner/work/prefect/prefect'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/prefect/prefect
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/prefect/prefect/.git/
+[command]/usr/bin/git remote add origin https://github.com/PrefectHQ/prefect
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-9d91e620-ce73-4a13-acdf-68f01541ed4b.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/prefect/prefect/.git.path /home/runner/work/_temp/git-credentials-9d91e620-ce73-4a13-acdf-68f01541ed4b.config
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/prefect/prefect/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-9d91e620-ce73-4a13-acdf-68f01541ed4b.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-9d91e620-ce73-4a13-acdf-68f01541ed4b.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-9d91e620-ce73-4a13-acdf-68f01541ed4b.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +5e8412b28441e6c0e1a552420de3c2f46cfc27be:refs/remotes/pull/22730/merge
+From https://github.com/PrefectHQ/prefect
+ * [new ref]         5e8412b28441e6c0e1a552420de3c2f46cfc27be -> pull/22730/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/22730/merge
+Note: switching to 'refs/remotes/pull/22730/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 5e8412b Merge 3ba8208cd7d54b0338fff3955da0460ecfc87790 into 3a42f2f6ed2da190b044eecb871bc0724a1c6bda
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+5e8412b28441e6c0e1a552420de3c2f46cfc27be
+##[group]Removing auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/home/runner/work/prefect/prefect/.git.path
+includeif.gitdir:/home/runner/work/prefect/prefect/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/prefect/prefect/.git.path
+/home/runner/work/_temp/git-credentials-9d91e620-ce73-4a13-acdf-68f01541ed4b.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/prefect/prefect/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-9d91e620\-ce73\-4a13\-acdf\-68f01541ed4b\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/prefect/prefect/.git/worktrees/*.path
+/home/runner/work/_temp/git-credentials-9d91e620-ce73-4a13-acdf-68f01541ed4b.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/prefect/prefect/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-9d91e620\-ce73\-4a13\-acdf\-68f01541ed4b\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-9d91e620-ce73-4a13-acdf-68f01541ed4b.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-9d91e620\-ce73\-4a13\-acdf\-68f01541ed4b\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-9d91e620-ce73-4a13-acdf-68f01541ed4b.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-9d91e620\-ce73\-4a13\-acdf\-68f01541ed4b\.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/home/runner/work/_temp/git-credentials-9d91e620-ce73-4a13-acdf-68f01541ed4b.config'
+##[endgroup]
+##[group]Run astral-sh/setup-uv@v7
+with:
+  version: latest
+  enable-cache: true
+  python-version: 3.10
+  cache-dependency-glob:  src/integrations/prefect-aws/pyproject.toml
+  activate-environment: false
+  working-directory: /home/runner/work/prefect/prefect
+  github-token: ***
+  restore-cache: true
+  save-cache: true
+  prune-cache: true
+  cache-python: false
+  ignore-nothing-to-cache: false
+  ignore-empty-workdir: false
+  add-problem-matchers: true
+  resolution-strategy: highest
+##[endgroup]
+Fetching version data from https://raw.githubusercontent.com/astral-sh/versions/main/v1/uv.ndjson ...
+Downloading uv from "https://releases.astral.sh/github/uv/releases/download/0.12.1/uv-x86_64-unknown-linux-gnu.tar.gz" ...
+[command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/950c105d-c394-4900-9a27-40f9d227ae10 -f /home/runner/work/_temp/3de64539-d7c5-412d-9714-1abad88da966
+Added /home/runner/.local/bin to the path
+Added /opt/hostedtoolcache/uv/0.12.1/x86_64 to the path
+Set UV_PYTHON_INSTALL_DIR to /home/runner/work/_temp/uv-python-dir
+Added /home/runner/work/_temp/uv-python-dir to the path
+Set UV_PYTHON to 3.10
+Set UV_CACHE_DIR to /home/runner/work/_temp/setup-uv-cache
+Successfully installed uv version 0.12.1
+Searching files using cache dependency glob: /home/runner/work/prefect/prefect/src/integrations/prefect-aws/pyproject.toml
+/home/runner/work/prefect/prefect/src/integrations/prefect-aws/pyproject.toml
+Found 1 files to hash.
+Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.10-pruned-ab8bb8673dd6f4a8423745eefce3f1e66066a50842bdff582d339f08c6c57540
+Cache hit for: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.10-pruned-ab8bb8673dd6f4a8423745eefce3f1e66066a50842bdff582d339f08c6c57540
+Received 17975619 of 17975619 (100.0%), 18.4 MBs/sec
+Cache Size: ~17 MB (17975619 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/e4545ba3-b32d-401a-953e-9660fa3c1f53/cache.tzst -P -C /home/runner/work/prefect/prefect --use-compress-program unzstd
+Cache restored successfully
+cache restored from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.10-pruned-ab8bb8673dd6f4a8423745eefce3f1e66066a50842bdff582d339f08c6c57540
+##[group]Run uv run  pytest -m "not integration" --numprocesses auto --maxprocesses 4 --dist worksteal
+uv run  pytest -m "not integration" --numprocesses auto --maxprocesses 4 --dist worksteal
+shell: /usr/bin/bash -e {0}
+env:
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.10
+  UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+  PREFECT_API_DATABASE_CONNECTION_URL: sqlite+aiosqlite:///./orion-tests.db
+##[endgroup]
+Downloading cpython-3.10.20-linux-x86_64-gnu (download) (28.1MiB)
+ Downloaded cpython-3.10.20-linux-x86_64-gnu (download)
+Using CPython 3.10.20
+Creating virtual environment at: .venv
+   Building prefect-aws @ file:///home/runner/work/prefect/prefect/src/integrations/prefect-aws
+   Building prefect @ file:///home/runner/work/prefect/prefect
+Downloading pygments (1.2MiB)
+Downloading burner-redis (1.3MiB)
+Downloading beartype (1.3MiB)
+Downloading networkx (1.6MiB)
+Downloading aws-cdk-asset-awscli-v1 (19.8MiB)
+Downloading apprise (1.7MiB)
+Downloading ast-serialize (1.2MiB)
+Downloading pydantic-core (2.0MiB)
+Downloading ruff (10.9MiB)
+Downloading aiohttp (1.6MiB)
+Downloading boto3-stubs-full (13.0MiB)
+Downloading pillow (6.6MiB)
+Downloading sqlalchemy (3.1MiB)
+Downloading sympy (6.0MiB)
+Downloading mkdocs-material (8.9MiB)
+Downloading cryptography (4.5MiB)
+Downloading mkdocs (3.7MiB)
+Downloading botocore (14.7MiB)
+Downloading babel (9.7MiB)
+Downloading mypy (14.5MiB)
+Downloading moto (6.4MiB)
+Downloading cfn-lint (4.9MiB)
+Downloading asyncpg (2.7MiB)
+Downloading aws-cdk-asset-node-proxy-agent-v6 (1.5MiB)
+Downloading aws-cdk-lib (53.2MiB)
+      Built prefect-aws @ file:///home/runner/work/prefect/prefect/src/integrations/prefect-aws
+      Built prefect @ file:///home/runner/work/prefect/prefect
+ Downloaded ast-serialize
+ Downloaded burner-redis
+ Downloaded pygments
+ Downloaded aws-cdk-asset-node-proxy-agent-v6
+ Downloaded apprise
+ Downloaded aiohttp
+ Downloaded pydantic-core
+ Downloaded beartype
+ Downloaded networkx
+ Downloaded asyncpg
+ Downloaded sqlalchemy
+ Downloaded mkdocs
+ Downloaded cryptography
+ Downloaded sympy
+ Downloaded pillow
+ Downloaded moto
+ Downloaded cfn-lint
+ Downloaded babel
+ Downloaded ruff
+ Downloaded botocore
+ Downloaded mypy
+ Downloaded aws-cdk-asset-awscli-v1
+ Downloaded boto3-stubs-full
+ Downloaded aws-cdk-lib
+ Downloaded mkdocs-material
+Installed 206 packages in 662ms
+16:06:32.970 | DEBUG   | prefect.profiles - Using profile 'ephemeral'
+ImportError while loading conftest '/home/runner/work/prefect/prefect/src/integrations/prefect-aws/tests/conftest.py'.
+tests/conftest.py:9: in <module>
+    from prefect.testing.utilities import prefect_test_harness
+.venv/lib/python3.10/site-packages/prefect/testing/utilities.py:34: in <module>
+    from prefect.server.api.server import SubprocessASGIServer
+.venv/lib/python3.10/site-packages/prefect/server/api/server.py:57: in <module>
+    from prefect.server.api.background_workers import background_worker
+.venv/lib/python3.10/site-packages/prefect/server/api/background_workers.py:9: in <module>
+    from prefect.server.api.flow_runs import delete_flow_run_logs
+.venv/lib/python3.10/site-packages/prefect/server/api/flow_runs.py:31: in <module>
+    import prefect.server.models as models
+.venv/lib/python3.10/site-packages/prefect/server/models/__init__.py:1: in <module>
+    from . import (
+.venv/lib/python3.10/site-packages/prefect/server/models/flow_runs.py:35: in <module>
+    from prefect.server.orchestration.core_policy import MinimalFlowPolicy
+.venv/lib/python3.10/site-packages/prefect/server/orchestration/core_policy.py:55: in <module>
+    from prefect.server.task_queue import TaskQueuePriority, create_task_queue_publisher
+.venv/lib/python3.10/site-packages/prefect/server/task_queue/__init__.py:10: in <module>
+    from typing import Any, Protocol, Self, runtime_checkable
+E   ImportError: cannot import name 'Self' from 'typing' (/home/runner/work/_temp/uv-python-dir/cpython-3.10-linux-x86_64-gnu/lib/python3.10/typing.py)
+##[error]Process completed with exit code 4.
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/362bf27b-cbb7-4cf8-87c9-f2bc3ac1edb9' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/prefect/prefect
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Cleaning up orphan processes

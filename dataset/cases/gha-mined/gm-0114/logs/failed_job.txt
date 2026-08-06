@@ -1,0 +1,1026 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {f16ca94c-204a-4aa4-9256-0e5605bfe516}
+Azure Region: westus
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260720.247.2
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: None
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Complete job name: Check hassfest
+##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+with:
+  persist-credentials: false
+  repository: home-assistant/core
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+##[endgroup]
+Syncing repository: home-assistant/core
+##[group]Getting Git version info
+Working directory is '/home/runner/work/core/core'
+[command]/usr/bin/git version
+git version 2.54.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/2b2794e5-cfcf-4790-9594-2b18655ab060' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/core/core
+Deleting the contents of '/home/runner/work/core/core'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/core/core
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/core/core/.git/
+[command]/usr/bin/git remote add origin https://github.com/home-assistant/core
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-853fe7af-06a6-48f5-8c99-da969c6d3f06.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/core/core/.git.path /home/runner/work/_temp/git-credentials-853fe7af-06a6-48f5-8c99-da969c6d3f06.config
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/core/core/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-853fe7af-06a6-48f5-8c99-da969c6d3f06.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-853fe7af-06a6-48f5-8c99-da969c6d3f06.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-853fe7af-06a6-48f5-8c99-da969c6d3f06.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +949cad36c4f68e0e500f53dbf035c75a1e621680:refs/remotes/pull/167872/merge
+From https://github.com/home-assistant/core
+ * [new ref]           949cad36c4f68e0e500f53dbf035c75a1e621680 -> pull/167872/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/167872/merge
+Updating files:  78% (21217/27012)
+Updating files:  79% (21340/27012)
+Updating files:  80% (21610/27012)
+Updating files:  81% (21880/27012)
+Updating files:  82% (22150/27012)
+Updating files:  83% (22420/27012)
+Updating files:  84% (22691/27012)
+Updating files:  85% (22961/27012)
+Updating files:  86% (23231/27012)
+Updating files:  87% (23501/27012)
+Updating files:  88% (23771/27012)
+Updating files:  89% (24041/27012)
+Updating files:  90% (24311/27012)
+Updating files:  91% (24581/27012)
+Updating files:  92% (24852/27012)
+Updating files:  93% (25122/27012)
+Updating files:  94% (25392/27012)
+Updating files:  95% (25662/27012)
+Updating files:  96% (25932/27012)
+Updating files:  97% (26202/27012)
+Updating files:  98% (26472/27012)
+Updating files:  99% (26742/27012)
+Updating files: 100% (27012/27012)
+Updating files: 100% (27012/27012), done.
+Note: switching to 'refs/remotes/pull/167872/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 949cad36 Merge 8999aed403b6157d2762d3e2236167bf0a31e472 into a2fa2b7858e2bf03fe6b047e8a8a077d47ac618f
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+949cad36c4f68e0e500f53dbf035c75a1e621680
+##[group]Removing auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/home/runner/work/core/core/.git.path
+includeif.gitdir:/home/runner/work/core/core/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/core/core/.git.path
+/home/runner/work/_temp/git-credentials-853fe7af-06a6-48f5-8c99-da969c6d3f06.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/core/core/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-853fe7af\-06a6\-48f5\-8c99\-da969c6d3f06\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/core/core/.git/worktrees/*.path
+/home/runner/work/_temp/git-credentials-853fe7af-06a6-48f5-8c99-da969c6d3f06.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/core/core/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-853fe7af\-06a6\-48f5\-8c99\-da969c6d3f06\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-853fe7af-06a6-48f5-8c99-da969c6d3f06.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-853fe7af\-06a6\-48f5\-8c99\-da969c6d3f06\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-853fe7af-06a6-48f5-8c99-da969c6d3f06.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-853fe7af\-06a6\-48f5\-8c99\-da969c6d3f06\.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/home/runner/work/_temp/git-credentials-853fe7af-06a6-48f5-8c99-da969c6d3f06.config'
+##[endgroup]
+Prepare all required actions
+Getting action download info
+Download action repository 'awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05' (SHA:acb598e5ddbc6f68a970c5da0688d2f3a9f04d05)
+Getting action download info
+Download action repository 'actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+##[group]Run ./.github/actions/cache-apt-packages
+with:
+  packages: libturbojpeg
+  version: 1
+  execute_install_scripts: false
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+##[endgroup]
+##[start-action display=Remove conflicting Microsoft apt source;id=__self.__run]
+##[group]Run sudo rm -f /etc/apt/sources.list.d/microsoft-prod.list
+sudo rm -f /etc/apt/sources.list.d/microsoft-prod.list
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+##[endgroup]
+##[end-action id=__self.__run;outcome=success;conclusion=success;duration_ms=23]
+##[start-action display=Install apt packages via cache;id=__self.__awalsh128_cache-apt-pkgs-action]
+##[group]Run awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05
+with:
+  packages: libturbojpeg
+  version: 1
+  execute_install_scripts: false
+  empty_packages_behavior: error
+  debug: false
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+##[endgroup]
+##[start-action display=Run ${GITHUB_ACTION_PATH}/pre_cache_action.sh \;id=__self.__awalsh128_cache-apt-pkgs-action.pre-cache]
+##[group]Run ${GITHUB_ACTION_PATH}/pre_cache_action.sh \
+${GITHUB_ACTION_PATH}/pre_cache_action.sh \
+  ~/cache-apt-pkgs \
+  "$VERSION" \
+  "$EXEC_INSTALL_SCRIPTS" \
+  "$DEBUG" \
+  "$ADD_REPOSITORY" \
+  "$PACKAGES"
+if [ -f ~/cache-apt-pkgs/cache_key.md5 ]; then
+  echo "CACHE_KEY=$(cat ~/cache-apt-pkgs/cache_key.md5)" >> $GITHUB_ENV
+else
+  echo "CACHE_KEY=" >> $GITHUB_ENV
+fi
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  VERSION: 1
+  EXEC_INSTALL_SCRIPTS: false
+  EMPTY_PACKAGES_BEHAVIOR: error
+  DEBUG: false
+  ADD_REPOSITORY: 
+  PACKAGES: libturbojpeg
+##[endgroup]
+Normalizing package list...
+done
+Validating action arguments (version='1', packages='libturbojpeg=1:2.1.5-2ubuntu2')...
+done
+
+Creating cache key...
+- CPU architecture is 'x86_64'.
+- Value to hash is 'libturbojpeg=1:2.1.5-2ubuntu2 @ 1 3'.
+- Value hashed as 'e855789f009d70cecbcbcf1602f497dd'.
+done
+Hash value written to /home/runner/cache-apt-pkgs/cache_key.md5
+##[end-action id=__self.__awalsh128_cache-apt-pkgs-action.pre-cache;outcome=success;conclusion=success;duration_ms=1032]
+##[start-action display=Run actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830;id=__self.__awalsh128_cache-apt-pkgs-action.load-cache]
+Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+##[group]Run actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830
+with:
+  path: ~/cache-apt-pkgs
+  key: cache-apt-pkgs_e855789f009d70cecbcbcf1602f497dd
+  enableCrossOsArchive: false
+  fail-on-cache-miss: false
+  lookup-only: false
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  CACHE_KEY: e855789f009d70cecbcbcf1602f497dd
+##[endgroup]
+(node:2207) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Cache hit for: cache-apt-pkgs_e855789f009d70cecbcbcf1602f497dd
+(node:2207) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Received 222562 of 222562 (100.0%), 0.6 MBs/sec
+Cache Size: ~0 MB (222562 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/e4b1a54c-86ae-42ad-ac70-dfa9e39c849f/cache.tzst -P -C /home/runner/work/core/core --use-compress-program unzstd
+Cache restored successfully
+Cache restored from key: cache-apt-pkgs_e855789f009d70cecbcbcf1602f497dd
+##[end-action id=__self.__awalsh128_cache-apt-pkgs-action.load-cache;outcome=success;conclusion=success;duration_ms=1013]
+##[start-action display=Run ${GITHUB_ACTION_PATH}/post_cache_action.sh \;id=__self.__awalsh128_cache-apt-pkgs-action.post-cache]
+##[group]Run ${GITHUB_ACTION_PATH}/post_cache_action.sh \
+${GITHUB_ACTION_PATH}/post_cache_action.sh \
+  ~/cache-apt-pkgs \
+  / \
+  "$CACHE_HIT" \
+  "$EXEC_INSTALL_SCRIPTS" \
+  "$DEBUG" \
+  "$ADD_REPOSITORY" \
+  "$PACKAGES"
+function create_list { local list=$(cat ~/cache-apt-pkgs/manifest_${1}.log | tr '\n' ','); echo ${list:0:-1}; };
+echo "package-version-list=$(create_list main)" >> $GITHUB_OUTPUT
+echo "all-package-version-list=$(create_list all)" >> $GITHUB_OUTPUT
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  CACHE_KEY: e855789f009d70cecbcbcf1602f497dd
+  CACHE_HIT: true
+  EXEC_INSTALL_SCRIPTS: false
+  DEBUG: false
+  ADD_REPOSITORY: 
+  PACKAGES: libturbojpeg
+##[endgroup]
+Found 5 files in the cache.
+- cache_key.md5
+- install.log
+- libturbojpeg=1:2.1.5-2ubuntu2.tar
+- manifest_all.log
+- manifest_main.log
+
+Reading from main requested packages manifest...
+- libturbojpeg=1 2.1.5-2ubuntu2
+done
+
+Restoring 1 packages from cache...
+- libturbojpeg=1:2.1.5-2ubuntu2.tar restoring...
+  done
+done
+
+##[end-action id=__self.__awalsh128_cache-apt-pkgs-action.post-cache;outcome=success;conclusion=success;duration_ms=47]
+##[start-action display=Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02;id=__self.__awalsh128_cache-apt-pkgs-action.upload-logs]
+##[end-action id=__self.__awalsh128_cache-apt-pkgs-action.upload-logs;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Run actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830;id=__self.__awalsh128_cache-apt-pkgs-action.save-cache]
+##[end-action id=__self.__awalsh128_cache-apt-pkgs-action.save-cache;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Run rm -rf ~/cache-apt-pkgs;id=__self.__awalsh128_cache-apt-pkgs-action.clean-cache]
+##[group]Run rm -rf ~/cache-apt-pkgs
+rm -rf ~/cache-apt-pkgs
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  CACHE_KEY: e855789f009d70cecbcbcf1602f497dd
+##[endgroup]
+##[end-action id=__self.__awalsh128_cache-apt-pkgs-action.clean-cache;outcome=success;conclusion=success;duration_ms=12]
+##[end-action id=__self.__awalsh128_cache-apt-pkgs-action;outcome=success;conclusion=success;duration_ms=2123]
+##[start-action display=Refresh dynamic linker cache;id=__self.__run_2]
+##[group]Run # awalsh128/cache-apt-pkgs-action does not run postinst scripts on
+# awalsh128/cache-apt-pkgs-action does not run postinst scripts on
+# cache restore, so update-alternatives symlinks (eg the one libblas
+# creates at /usr/lib/<multiarch>/libblas.so.3) are never produced.
+# Add every /usr/lib/<multiarch> subdirectory that holds shared
+# libraries to the ldconfig search path so the dynamic linker still
+# finds them.  Use dpkg-architecture to derive the host's multiarch
+# tuple so this works on non-x86_64 runners too.
+multiarch="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
+find "/usr/lib/${multiarch}" -mindepth 2 -maxdepth 2 \
+  -name '*.so.*' -printf '%h\n' \
+  | sort -u \
+  | sudo tee /etc/ld.so.conf.d/zzz-cache-apt-extras.conf > /dev/null
+sudo ldconfig
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  CACHE_KEY: e855789f009d70cecbcbcf1602f497dd
+##[endgroup]
+##[end-action id=__self.__run_2;outcome=success;conclusion=success;duration_ms=13555]
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9' (SHA:55cc8345863c7cc4c66a329aec7e433d2d1c52a9)
+##[group]Run ./.github/actions/restore-or-build-venv
+with:
+  uv-version: 0.12.0
+  python-version: 3.14.5
+  python-cache-key: venv-4-2026.9-95ca936402f00b2878372c5eb1c73fd9a19e9d9c7e8964c32316718b1cc0d66d-d29917a3b898170024e30172d18a618c0354f62d068436ef6e160ad338a68413-2720fea778bf6ced332954b31551d498957f7f15f6298e0ae264766282d316c1-080b996bfe97f5f2b8c1035fff27585220bf8ff68c9f38f38d620136028ae6f0-32a32750abe4dee93427b521fc1ceaa6dbe997ad54bbebec6c308177abc526ea
+  uv-cache-dir: /tmp/uv-cache
+  apt-cache-version: 1
+  save: false
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  CACHE_KEY: e855789f009d70cecbcbcf1602f497dd
+##[endgroup]
+##[start-action display=Set up uv and managed Python;id=python.python]
+Prepare all required actions
+Getting action download info
+Download action repository 'astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39' (SHA:fac544c07dec837d0ccb6301d7b5580bf5edae39)
+##[group]Run ./.github/actions/setup-uv-python
+with:
+  uv-version: 0.12.0
+  python-version: 3.14.5
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  CACHE_KEY: e855789f009d70cecbcbcf1602f497dd
+##[endgroup]
+##[start-action display=Set up uv;id=python.python.uv]
+##[group]Run astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39
+with:
+  version: 0.12.0
+  python-version: 3.14.5
+  cache-python: true
+  ignore-nothing-to-cache: true
+  activate-environment: false
+  no-project: false
+  working-directory: /home/runner/work/core/core
+  github-token: ***
+  enable-cache: auto
+  cache-dependency-glob: **/*requirements*.txt
+**/*requirements*.in
+**/*constraints*.txt
+**/*constraints*.in
+**/pyproject.toml
+**/uv.lock
+**/*.py.lock
+
+  restore-cache: true
+  save-cache: true
+  prune-cache: true
+  ignore-empty-workdir: false
+  download-from-astral-mirror: true
+  add-problem-matchers: true
+  quiet: false
+  resolution-strategy: highest
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  CACHE_KEY: e855789f009d70cecbcbcf1602f497dd
+##[endgroup]
+UV_CACHE_DIR is already set to /tmp/uv-cache
+Fetching manifest data from https://raw.githubusercontent.com/astral-sh/versions/main/v1/uv.ndjson ...
+Downloading uv from "https://releases.astral.sh/github/uv/releases/download/0.12.0/uv-x86_64-unknown-linux-gnu.tar.gz" ...
+[command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/7a5e091f-7c82-4c89-a40a-78d0299ce46e -f /home/runner/work/_temp/57fa6888-bea1-4f88-a959-e7486279b2d5
+Added /home/runner/.local/bin to the path
+Added /opt/hostedtoolcache/uv/0.12.0/x86_64 to the path
+Set UV_PYTHON_INSTALL_DIR to /home/runner/work/_temp/uv-python-dir
+Added /home/runner/work/_temp/uv-python-dir to the path
+Set UV_PYTHON to 3.14.5
+Set UV_CACHE_DIR to /tmp/uv-cache
+Successfully installed uv version 0.12.0
+Searching files using cache dependency glob: /home/runner/work/core/core/**/*requirements*.txt,/home/runner/work/core/core/**/*requirements*.in,/home/runner/work/core/core/**/*constraints*.txt,/home/runner/work/core/core/**/*constraints*.in,/home/runner/work/core/core/**/pyproject.toml,/home/runner/work/core/core/**/uv.lock,/home/runner/work/core/core/**/*.py.lock
+/home/runner/work/core/core/homeassistant/package_constraints.txt
+/home/runner/work/core/core/pylint/plugins/pyproject.toml
+/home/runner/work/core/core/pyproject.toml
+/home/runner/work/core/core/requirements.txt
+/home/runner/work/core/core/requirements_all.txt
+/home/runner/work/core/core/requirements_test.txt
+/home/runner/work/core/core/requirements_test_pre_commit.txt
+/home/runner/work/core/core/script/check_requirements/requirements.txt
+Found 8 files to hash.
+Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.14.5-pruned-py-cfe6b044e1368e678079a161fcbf92fa56626c97443d5154099d34c02612c8b8
+Cache hit for: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.14.5-pruned-py-cfe6b044e1368e678079a161fcbf92fa56626c97443d5154099d34c02612c8b8
+Received 1099 of 1099 (100.0%), 0.0 MBs/sec
+Cache Size: ~0 MB (1099 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/88238976-14db-498e-8c94-9be539bd3a4e/cache.tzst -P -C /home/runner/work/core/core --use-compress-program unzstd
+Cache restored successfully
+cache restored from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.14.5-pruned-py-cfe6b044e1368e678079a161fcbf92fa56626c97443d5154099d34c02612c8b8
+Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.14.5-pruned-py-cfe6b044e1368e678079a161fcbf92fa56626c97443d5154099d34c02612c8b8-python
+Cache hit for: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.14.5-pruned-py-cfe6b044e1368e678079a161fcbf92fa56626c97443d5154099d34c02612c8b8-python
+Received 0 of 35081261 (0.0%), 0.0 MBs/sec
+Received 35081261 of 35081261 (100.0%), 22.9 MBs/sec
+Cache Size: ~33 MB (35081261 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/254b58f5-7e65-4b97-9b2b-5d8575b21ead/cache.tzst -P -C /home/runner/work/core/core --use-compress-program unzstd
+Cache restored successfully
+cache restored from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.14.5-pruned-py-cfe6b044e1368e678079a161fcbf92fa56626c97443d5154099d34c02612c8b8-python
+##[end-action id=python.python.uv;outcome=success;conclusion=success;duration_ms=6139]
+##[start-action display=Install Python interpreter;id=python.python.__run]
+##[group]Run uv python install "${PYTHON_VERSION}"
+uv python install "${PYTHON_VERSION}"
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  CACHE_KEY: e855789f009d70cecbcbcf1602f497dd
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+  PYTHON_VERSION: 3.14.5
+##[endgroup]
+Installed Python 3.14.5 in 257ms
+ + cpython-3.14.5-linux-x86_64-gnu (python3.14)
+##[end-action id=python.python.__run;outcome=success;conclusion=success;duration_ms=283]
+##[end-action id=python.python;outcome=success;conclusion=success;duration_ms=7077]
+##[start-action display=Restore full Python virtual environment;id=python.cache-venv]
+##[group]Run actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+with:
+  path: venv
+  key: Linux-X64-3.14.5-venv-4-2026.9-95ca936402f00b2878372c5eb1c73fd9a19e9d9c7e8964c32316718b1cc0d66d-d29917a3b898170024e30172d18a618c0354f62d068436ef6e160ad338a68413-2720fea778bf6ced332954b31551d498957f7f15f6298e0ae264766282d316c1-080b996bfe97f5f2b8c1035fff27585220bf8ff68c9f38f38d620136028ae6f0-32a32750abe4dee93427b521fc1ceaa6dbe997ad54bbebec6c308177abc526ea
+  enableCrossOsArchive: false
+  fail-on-cache-miss: false
+  lookup-only: false
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  CACHE_KEY: e855789f009d70cecbcbcf1602f497dd
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+##[endgroup]
+Cache hit for: Linux-X64-3.14.5-venv-4-2026.9-95ca936402f00b2878372c5eb1c73fd9a19e9d9c7e8964c32316718b1cc0d66d-d29917a3b898170024e30172d18a618c0354f62d068436ef6e160ad338a68413-2720fea778bf6ced332954b31551d498957f7f15f6298e0ae264766282d316c1-080b996bfe97f5f2b8c1035fff27585220bf8ff68c9f38f38d620136028ae6f0-32a32750abe4dee93427b521fc1ceaa6dbe997ad54bbebec6c308177abc526ea
+Received 0 of 568499112 (0.0%), 0.0 MBs/sec
+Received 134217728 of 568499112 (23.6%), 64.0 MBs/sec
+Received 289406976 of 568499112 (50.9%), 92.0 MBs/sec
+Received 444596224 of 568499112 (78.2%), 105.9 MBs/sec
+Received 568499112 of 568499112 (100.0%), 115.6 MBs/sec
+Cache Size: ~542 MB (568499112 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/043bac30-ab7e-4960-a49f-bd92c39a9b3e/cache.tzst -P -C /home/runner/work/core/core --use-compress-program unzstd
+Cache restored successfully
+Cache restored from key: Linux-X64-3.14.5-venv-4-2026.9-95ca936402f00b2878372c5eb1c73fd9a19e9d9c7e8964c32316718b1cc0d66d-d29917a3b898170024e30172d18a618c0354f62d068436ef6e160ad338a68413-2720fea778bf6ced332954b31551d498957f7f15f6298e0ae264766282d316c1-080b996bfe97f5f2b8c1035fff27585220bf8ff68c9f38f38d620136028ae6f0-32a32750abe4dee93427b521fc1ceaa6dbe997ad54bbebec6c308177abc526ea
+##[end-action id=python.cache-venv;outcome=success;conclusion=success;duration_ms=11670]
+##[start-action display=Generate partial uv restore key;id=python.generate-uv-key]
+##[end-action id=python.generate-uv-key;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Restore uv wheel cache;id=python.__actions_cache]
+##[end-action id=python.__actions_cache;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Install additional OS dependencies;id=python.__self]
+##[end-action id=python.__self;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Create Python virtual environment;id=python.create-venv]
+##[end-action id=python.create-venv;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Prune uv cache;id=python.__run]
+##[end-action id=python.__run;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Save uv wheel cache;id=python.__actions_cache_2]
+##[end-action id=python.__actions_cache_2;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Save full Python virtual environment;id=python.__actions_cache_3]
+##[end-action id=python.__actions_cache_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[group]Run . venv/bin/activate
+. venv/bin/activate
+python -m script.hassfest --requirements --action validate
+shell: /usr/bin/bash -e {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  CACHE_KEY: e855789f009d70cecbcbcf1602f497dd
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+##[endgroup]
+Validating application_credentials... done in 0.02s
+Validating bluetooth... done in 0.01s
+Validating codeowners... done in 0.01s
+Validating conditions... done in 0.16s
+Validating config_schema... done in 1.16s
+Validating dependencies... done in 5.58s
+Validating dhcp... done in 0.01s
+Validating icons... done in 0.36s
+Validating integration_info... done in 0.01s
+Validating integration_type... done in 0.00s
+Validating json... done in 0.00s
+Validating labs... done in 0.01s
+Validating manifest... done in 0.03s
+Validating mqtt... done in 0.01s
+Validating quality_scale... done in 2.93s
+Validating requirements...
+ done in 4.13s
+/home/runner/work/core/core/venv/lib/python3.14/site-packages/rich/segment.py:547: SyntaxWarning: 'return' in a 'finally' block
+  return
+Validating services... done in 2.83s
+Validating ssdp... done in 0.01s
+Validating translations... done in 11.62s
+Validating triggers... done in 0.09s
+Validating usb... done in 0.01s
+Validating zeroconf... done in 0.01s
+Validating config_flow... done in 0.05s
+Validating core_files... done in 0.00s
+Validating docker... done in 0.00s
+Validating mdi_icons... done in 0.02s
+Validating mypy_config... done in 0.02s
+Validating metadata... done in 0.00s
+Validating sensor... done in 0.00s
+
+Integrations: 1483
+Invalid integrations: 1
+
+Integration abode:
+* [WARNING] [REQUIREMENTS] Package jaraco-net has a forbidden top level directory 'tests' in jaraco-abode
+* [WARNING] [REQUIREMENTS] Package jaraco-net has a forbidden top level directory 'docs' in jaraco-abode
+
+Integration adax:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in adax
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in adax-local
+
+Integration airthings:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in airthings-cloud
+
+Integration altruist:
+* [WARNING] [REQUIREMENTS] Version restrictions for zeroconf are too strict (>=0.143.0,<1.0.0) in altruistclient
+
+Integration apache_kafka:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in aiokafka
+
+Integration aseko_pool_live:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in gql
+
+Integration azure_data_explorer:
+* [WARNING] [REQUIREMENTS] Package azure-kusto-ingest has a forbidden file 'azure_kusto_ingest-4.5.1-py3.7-nspkg.pth' in homeassistant
+* [WARNING] [REQUIREMENTS] Package azure-kusto-data has a forbidden file 'azure_kusto_data-4.5.1-py3.7-nspkg.pth' in azure-kusto-ingest
+
+Integration blackbird:
+* [WARNING] [REQUIREMENTS] Package pyserial-asyncio should be replaced by pyserial-asyncio-fast in pyblackbird
+
+Integration cmus:
+* [WARNING] [REQUIREMENTS] Package setuptools should not be a runtime dependency in pbr
+* [WARNING] [REQUIREMENTS] Package setuptools has a forbidden file 'distutils-precedence.pth' in pbr
+
+Integration coinbase:
+* [WARNING] [REQUIREMENTS] Package coinbase-advanced-py has a forbidden top level directory 'tests' in homeassistant
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in coinbase-advanced-py
+
+Integration control4:
+* [WARNING] [REQUIREMENTS] Package pycontrol4 has a forbidden top level directory 'tests' in homeassistant
+
+Integration delijn:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in pydelijn
+
+Integration dsmr:
+* [WARNING] [REQUIREMENTS] Package dlms-cosem has a forbidden top level directory 'tests' in dsmr-parser
+
+Integration efergy:
+* [WARNING] [REQUIREMENTS] Package codecov should not be a runtime dependency in pyefergy
+* [WARNING] [REQUIREMENTS] Package types-pytz should not be a runtime dependency in pyefergy
+* [WARNING] [REQUIREMENTS] Package coverage has a forbidden file 'a1_coverage.pth' in codecov
+
+Integration emulated_kasa:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in sense-energy
+
+Integration energyid:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in energyid-webhooks
+
+Integration entur_public_transport:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in enturclient
+
+Integration escea:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in pescea
+
+Integration evil_genius_labs:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in pyevilgenius
+
+Integration familyhub:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in python-family-hub-local
+
+Integration ffmpeg:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in ha-ffmpeg
+
+Integration fitbit:
+* [WARNING] [REQUIREMENTS] Package setuptools should not be a runtime dependency in fitbit
+* [WARNING] [REQUIREMENTS] Package setuptools has a forbidden file 'distutils-precedence.pth' in fitbit
+
+Integration flume:
+* [WARNING] [REQUIREMENTS] Package pyflume has a forbidden top level directory 'tests' in homeassistant
+
+Integration flux_led:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in flux-led
+
+Integration foobot:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in foobot-async
+
+Integration fortios:
+* [WARNING] [REQUIREMENTS] Package fortiosapi has a forbidden top level directory 'tests' in homeassistant
+
+Integration geniushub:
+* [WARNING] [REQUIREMENTS] Package geniushub-client has a forbidden top level directory 'tests' in homeassistant
+
+Integration geocaching:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in geocachingapi
+* [WARNING] [REQUIREMENTS] Version restrictions for numpy are too strict (>=2.0.0,<2.8) in scipy
+
+Integration github:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in aiogithubapi
+
+Integration google_maps:
+* [WARNING] [REQUIREMENTS] Package coloredlogs should be replaced with colorlog in locationsharinglib
+* [WARNING] [REQUIREMENTS] Package coloredlogs has a forbidden file 'coloredlogs.pth' in locationsharinglib
+
+Integration grandstream_home:
+* [ERROR] [QUALITY_SCALE] Invalid /home/runner/work/core/core/homeassistant/components/grandstream_home/quality_scale.yaml: required key not provided @ data['rules']['docs-conditions']. Got None
+required key not provided @ data['rules']['docs-triggers']. Got None
+* [ERROR] [QUALITY_SCALE] Quality scale tier bronze requires quality scale rules to be met:
+  docs-conditions: todo
+  docs-triggers: todo
+
+Integration harmony:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in aioharmony
+
+Integration here_travel_time:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in here-routing
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in here-transit
+
+Integration homeassistant_hardware:
+* [WARNING] [REQUIREMENTS] Package coloredlogs should be replaced with colorlog in universal-silabs-flasher
+* [WARNING] [REQUIREMENTS] Package coloredlogs has a forbidden file 'coloredlogs.pth' in universal-silabs-flasher
+
+Integration homewizard:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in python-homewizard-energy
+
+Integration hydrawise:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in gql
+
+Integration imeon_inverter:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in imeon-inverter-api
+
+Integration ipp:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in pyipp
+
+Integration iqvia:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in pyiqvia
+
+Integration kef:
+* [WARNING] [REQUIREMENTS] Package aiokef has a forbidden top level directory 'tests' in homeassistant
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in aiokef
+
+Integration kodi:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in jsonrpc-websocket
+
+Integration lacrosse:
+* [WARNING] [REQUIREMENTS] Package pylacrosse has a forbidden top level directory 'tests' in homeassistant
+
+Integration lametric:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in demetriek
+
+Integration ld2410_ble:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in ld2410-ble
+
+Integration led_ble:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in flux-led
+
+Integration lektrico:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in lektricowifi
+
+Integration lifx:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in aiolifx
+
+Integration linkplay:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in python-linkplay
+
+Integration linode:
+* [WARNING] [REQUIREMENTS] Package linode-api has a forbidden top level directory 'test' in homeassistant
+
+Integration loqed:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in loqedapi
+
+Integration mediaroom:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in pymediaroom
+
+Integration met:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in pymetno
+
+Integration met_eireann:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in pymeteireann
+
+Integration microbees:
+* [WARNING] [REQUIREMENTS] Package microbeespy has a forbidden top level directory 'tests' in homeassistant
+* [WARNING] [REQUIREMENTS] Package setuptools should not be a runtime dependency in microbeespy
+* [WARNING] [REQUIREMENTS] Package setuptools has a forbidden file 'distutils-precedence.pth' in microbeespy
+
+Integration mill:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in mill-local
+
+Integration mochad:
+* [WARNING] [REQUIREMENTS] Package setuptools should not be a runtime dependency in pbr
+* [WARNING] [REQUIREMENTS] Package setuptools has a forbidden file 'distutils-precedence.pth' in pbr
+
+Integration modern_forms:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in aiomodernforms
+
+Integration monarch_money:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in gql
+
+Integration nibe_heatpump:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in nibe
+
+Integration noaa_tides:
+* [WARNING] [REQUIREMENTS] Version restrictions for pandas are too strict (>=2.2.2,<3.0.0) in noaa-coops
+
+Integration norway_air:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in pymetno
+
+Integration obihai:
+* [WARNING] [REQUIREMENTS] Package pyobihai has a forbidden top level directory 'tests' in homeassistant
+
+Integration opengarage:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in open-garage
+
+Integration overkiz:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in pyoverkiz
+
+Integration prosegur:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in pyprosegur
+
+Integration pterodactyl:
+* [WARNING] [REQUIREMENTS] Package py-dactyl has a forbidden top level directory 'tests' in homeassistant
+
+Integration python_script:
+* [WARNING] [REQUIREMENTS] Version restrictions for Python are too strict (>=3.9, <3.15) in restrictedpython
+
+Integration radio_browser:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in radios
+
+Integration remote_rpi_gpio:
+* [WARNING] [REQUIREMENTS] Package setuptools should not be a runtime dependency in colorzero
+* [WARNING] [REQUIREMENTS] Package setuptools has a forbidden file 'distutils-precedence.pth' in colorzero
+
+Integration ring:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in ring-doorbell
+
+Integration rmvtransport:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in pyrmvtransport
+
+Integration roku:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in rokuecp
+
+Integration screenlogic:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in screenlogicpy
+
+Integration sense:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in sense-energy
+
+Integration sensorpush_cloud:
+* [WARNING] [REQUIREMENTS] Package sensorpush-api has a forbidden top level directory 'test' in sensorpush-ha
+
+Integration simplisafe:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in simplisafe-python
+
+Integration slimproto:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in aioslimproto
+
+Integration smappee:
+* [WARNING] [REQUIREMENTS] Package pysmappee has a forbidden top level directory 'test' in homeassistant
+
+Integration smarty:
+* [WARNING] [REQUIREMENTS] Version restrictions for pymodbus are too strict (>=3.11.0,<4.0.0) in pysmarty2
+
+Integration stiebel_eltron:
+* [WARNING] [REQUIREMENTS] Version restrictions for pymodbus are too strict (>=3.10.0,<4) in pystiebeleltron
+
+Integration surepetcare:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in surepy
+
+Integration tailwind:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in gotailwind
+
+Integration technove:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in python-technove
+
+Integration telegram_bot:
+* [WARNING] [REQUIREMENTS] Version restrictions for httpx are too strict (>=0.27,<0.29) in python-telegram-bot
+
+Integration tibber:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in gql
+
+Integration toon:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in toonapi
+
+Integration travisci:
+* [WARNING] [REQUIREMENTS] Package pytest should not be a runtime dependency in travispy
+* [WARNING] [REQUIREMENTS] Package pytest should not be a runtime dependency in pytest-rerunfailures
+
+Integration velbus:
+* [WARNING] [REQUIREMENTS] Package backoff should be replaced with python-backoff (it will break in Python 3.16) in velbus-aio
+
+Integration volkszaehler:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in volkszaehler
+
+Integration watergate:
+* [WARNING] [REQUIREMENTS] Package watergate-local-api has a forbidden top level directory 'tests' in homeassistant
+
+Integration whirlpool:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in whirlpool-sixth-sense
+
+Integration xiaomi_miio:
+* [WARNING] [REQUIREMENTS] Version restrictions for zeroconf are too strict (>=0,<1) in python-miio
+
+Integration xs1:
+* [WARNING] [REQUIREMENTS] Package xs1-api-client has a forbidden top level directory 'tests' in homeassistant
+
+Integration zamg:
+* [WARNING] [REQUIREMENTS] Package async-timeout should be replaced by asyncio.timeout (Python 3.11+) in zamg
+
+Integration zha:
+* [WARNING] [REQUIREMENTS] Package coloredlogs should be replaced with colorlog in zigpy-znp
+* [WARNING] [REQUIREMENTS] Package coloredlogs has a forbidden file 'coloredlogs.pth' in zigpy-znp
+* [WARNING] [REQUIREMENTS] Package setuptools should not be a runtime dependency in colorzero
+* [WARNING] [REQUIREMENTS] Package setuptools has a forbidden file 'distutils-precedence.pth' in colorzero
+
+##[error]Process completed with exit code 1.
+Post job cleanup.
+##[start-action display=Set up uv;id=__97295563-3954-4672-bae9-f679ffb2393e.uv]
+##[end-action id=__97295563-3954-4672-bae9-f679ffb2393e.uv;outcome=skipped;conclusion=skipped;duration_ms=0]
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/bd7938f9-a156-4fad-bca9-11ac891f1424' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/core/core
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Cleaning up orphan processes
+##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

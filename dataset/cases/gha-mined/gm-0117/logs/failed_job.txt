@@ -1,0 +1,1837 @@
+Current runner version: '2.335.1'
+Runner name: 'aws-m8i-l-cache-use1-public-80-26kmn-runner-nn7wp'
+Runner group name: 'aws-m8i-l-cache'
+Machine name: 'aws-m8i-l-cache-use1-public-80-26kmn-runner-nn7wp'
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Download action repository 'actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c' (SHA:3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c)
+Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+Uses: huggingface/transformers-ci/.github/workflows/pr-ci_reusable_test_job.yml@refs/heads/main (6058dcce73686c86389fa51690ce7562d66bac55)
+##[group] Inputs
+  job_name: tests_peft_integration
+  report_name: 
+  docker_image: huggingface/transformers-torch-light
+  parallelism: 8
+  pytest_num_workers: 8
+  marker: 
+  install_steps: uv pip install . && uv pip install peft
+  pytest_extra_options: 
+  command_timeout: 0
+  run_pipeline_tests: false
+  run_custom_tokenizers: false
+  run_training_tests: false
+  run_tensor_parallel_tests: false
+  run_fsdp_tests: false
+  omp_num_threads: 1
+  transformers_verbosity: 
+  datasets_verbosity: 
+  skip_cuda_doctest: false
+  is_nightly: false
+  use_dev_image: false
+##[endgroup]
+Complete job name: pr-ci / tests_peft_integration / tests_peft_integration [shard 0/1]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+##[group]Run echo "OMP_NUM_THREADS=$OMP_NUM_THREADS"
+echo "OMP_NUM_THREADS=$OMP_NUM_THREADS"
+echo "TRANSFORMERS_IS_CI=$TRANSFORMERS_IS_CI"
+echo "PYTEST_TIMEOUT=$PYTEST_TIMEOUT"
+echo "RUN_PIPELINE_TESTS=$RUN_PIPELINE_TESTS"
+echo "RUN_FLAKY=$RUN_FLAKY"
+echo "DISABLE_SAFETENSORS_CONVERSION=$DISABLE_SAFETENSORS_CONVERSION"
+echo "RUN_CUSTOM_TOKENIZERS=$RUN_CUSTOM_TOKENIZERS"
+echo "RUN_TRAINING_TESTS=$RUN_TRAINING_TESTS"
+echo "RUN_TENSOR_PARALLEL_TESTS=$RUN_TENSOR_PARALLEL_TESTS"
+echo "RUN_FSDP_TESTS=$RUN_FSDP_TESTS"
+echo "TRANSFORMERS_VERBOSITY=$TRANSFORMERS_VERBOSITY"
+echo "DATASETS_VERBOSITY=$DATASETS_VERBOSITY"
+echo "SKIP_CUDA_DOCTEST=$SKIP_CUDA_DOCTEST"
+if [ -n "$OTEL_EXPORTER_OTLP_ENDPOINT" ]; then
+  echo "OTEL_EXPORTER_OTLP_ENDPOINT is set"
+else
+  echo "OTEL_EXPORTER_OTLP_ENDPOINT is not set"
+fi
+if [ -n "$OTEL_TOKEN" ]; then
+  echo "OTEL_TOKEN is set"
+else
+  echo "OTEL_TOKEN is not set"
+fi
+# Staging mirror is hardcoded to the staging box (10.90.52.50:5317,
+# grpc, unauthenticated ingest) in the test run step below.
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+OMP_NUM_THREADS=1
+TRANSFORMERS_IS_CI=true
+PYTEST_TIMEOUT=120
+RUN_PIPELINE_TESTS=false
+RUN_FLAKY=false
+DISABLE_SAFETENSORS_CONVERSION=true
+RUN_CUSTOM_TOKENIZERS=false
+RUN_TRAINING_TESTS=false
+RUN_TENSOR_PARALLEL_TESTS=false
+RUN_FSDP_TESTS=false
+TRANSFORMERS_VERBOSITY=
+DATASETS_VERBOSITY=
+SKIP_CUDA_DOCTEST=0
+OTEL_EXPORTER_OTLP_ENDPOINT is set
+OTEL_TOKEN is set
+##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+with:
+  repository: huggingface/transformers
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  persist-credentials: true
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Syncing repository: huggingface/transformers
+##[group]Getting Git version info
+Working directory is '/__w/transformers/transformers'
+[command]/usr/bin/git version
+git version 2.47.3
+##[endgroup]
+Temporarily overriding HOME='/__w/_temp/0d58bbc9-60f5-4ccc-b421-abadfdeb1915' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /__w/transformers/transformers
+Deleting the contents of '/__w/transformers/transformers'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]/usr/bin/git init /__w/transformers/transformers
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+Initialized empty Git repository in /__w/transformers/transformers/.git/
+[command]/usr/bin/git remote add origin https://github.com/huggingface/transformers
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /__w/_temp/git-credentials-85241384-51ee-4fcc-9bbe-3124f8f2a9c1.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/__w/transformers/transformers/.git.path /__w/_temp/git-credentials-85241384-51ee-4fcc-9bbe-3124f8f2a9c1.config
+[command]/usr/bin/git config --local includeIf.gitdir:/__w/transformers/transformers/.git/worktrees/*.path /__w/_temp/git-credentials-85241384-51ee-4fcc-9bbe-3124f8f2a9c1.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-85241384-51ee-4fcc-9bbe-3124f8f2a9c1.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-85241384-51ee-4fcc-9bbe-3124f8f2a9c1.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b1042dfb85232ff09afed5c5745127a20e38a67c:refs/remotes/pull/47579/merge
+From https://github.com/huggingface/transformers
+ * [new ref]         b1042dfb85232ff09afed5c5745127a20e38a67c -> pull/47579/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/47579/merge
+Note: switching to 'refs/remotes/pull/47579/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at b1042df Merge 2af1175696aa93964425c265e373356538137b72 into 2eaaa20ac8aca4c7b0fa9bc36919a82a7d72449d
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+b1042dfb85232ff09afed5c5745127a20e38a67c
+##[group]Run git config --global --add safe.directory '*'
+git config --global --add safe.directory '*'
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+##[group]Run actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+with:
+  name: test-preparation
+  path: test_preparation/
+  merge-multiple: false
+  repository: huggingface/transformers
+  run-id: 31077067781
+  skip-decompress: false
+  digest-mismatch: error
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Downloading single artifact
+Preparing to download the following artifacts:
+- test-preparation (ID: 8957945923, Size: 28559, Expected Digest: sha256:f76c48795bb4fe43acb2ec9be130ac50caee069ff9efa8a7260e019330c923ae)
+Redirecting to blob download url: https://productionresultssa15.blob.core.windows.net/actions-results/f4c80687-c44f-48c0-b2b4-c782a48d3e15/workflow-job-run-1809c008-71a3-5a75-a78e-8772d60358e5/artifacts/0181ff6987a0bdab3de9a1dbab82d79b2f599bb53063ccd5d95652513e3d59a2.zip
+Starting download of artifact to: /__w/transformers/transformers/test_preparation
+(node:174) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+SHA256 digest of downloaded artifact is f76c48795bb4fe43acb2ec9be130ac50caee069ff9efa8a7260e019330c923ae
+Artifact download completed successfully.
+Total of 1 artifact(s) downloaded
+Download artifact has finished successfully
+##[group]Run apt-get update && apt-get install -y curl
+apt-get update && apt-get install -y curl
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Hit:1 http://deb.debian.org/debian trixie InRelease
+Get:2 http://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
+Hit:3 http://deb.debian.org/debian-security trixie-security InRelease
+Fetched 47.3 kB in 0s (513 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+curl is already the newest version (8.14.1-2+deb13u4).
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+##[group]Run eval "$INSTALL_STEPS"
+eval "$INSTALL_STEPS"
+uv pip install 'transformers-ci[otel] @ git+https://github.com/huggingface/transformers-ci@main'
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+  INSTALL_STEPS: uv pip install . && uv pip install peft
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Using Python 3.10.20 environment at: /usr/local
+Resolved 28 packages in 10.90s
+   Building transformers @ file:///__w/transformers/transformers
+      Built transformers @ file:///__w/transformers/transformers
+Prepared 1 package in 3.82s
+Installed 1 package in 1m 30s
+ + transformers==5.15.0.dev0 (from file:///__w/transformers/transformers)
+Using Python 3.10.20 environment at: /usr/local
+Resolved 38 packages in 92ms
+Prepared 1 package in 21ms
+Installed 1 package in 6.39s
+ + peft==0.20.0
+Using Python 3.10.20 environment at: /usr/local
+   Updating https://github.com/huggingface/transformers-ci (main)
+    Updated https://github.com/huggingface/transformers-ci (6058dcce73686c86389fa51690ce7562d66bac55)
+Resolved 34 packages in 780ms
+Checked 34 packages in 0.34ms
+##[group]Run du -h -d 1 "$(pip -V | cut -d ' ' -f 4 | sed 's/pip//g')" \
+du -h -d 1 "$(pip -V | cut -d ' ' -f 4 | sed 's/pip//g')" \
+  | grep -vE "dist-info|_distutils_hack|__pycache__" \
+  | sort -h | tee installed.txt || true
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+4.0K	/usr/local/lib/python3.10/site-packages/_multiprocess
+4.0K	/usr/local/lib/python3.10/site-packages/_yaml
+4.0K	/usr/local/lib/python3.10/site-packages/aiosignal
+4.0K	/usr/local/lib/python3.10/site-packages/licensing
+4.0K	/usr/local/lib/python3.10/site-packages/opentelemetry_container_distro
+4.0K	/usr/local/lib/python3.10/site-packages/opentelemetry_resourcedetector_docker
+4.0K	/usr/local/lib/python3.10/site-packages/opentelemetry_resourcedetector_process
+4.0K	/usr/local/lib/python3.10/site-packages/ruff
+8.0K	/usr/local/lib/python3.10/site-packages/annotated_doc
+8.0K	/usr/local/lib/python3.10/site-packages/opentelemetry_resourcedetector_kubernetes
+8.0K	/usr/local/lib/python3.10/site-packages/tiktoken_ext
+12K	/usr/local/lib/python3.10/site-packages/lazy_loader
+12K	/usr/local/lib/python3.10/site-packages/pytest
+12K	/usr/local/lib/python3.10/site-packages/pytest_env
+12K	/usr/local/lib/python3.10/site-packages/timeout_decorator
+16K	/usr/local/lib/python3.10/site-packages/async_timeout
+16K	/usr/local/lib/python3.10/site-packages/sniffio
+16K	/usr/local/lib/python3.10/site-packages/ty
+24K	/usr/local/lib/python3.10/site-packages/annotated_types
+24K	/usr/local/lib/python3.10/site-packages/blackd
+24K	/usr/local/lib/python3.10/site-packages/decorator
+24K	/usr/local/lib/python3.10/site-packages/iniconfig
+24K	/usr/local/lib/python3.10/site-packages/uv
+28K	/usr/local/lib/python3.10/site-packages/pytest_opentelemetry
+28K	/usr/local/lib/python3.10/site-packages/random_order
+28K	/usr/local/lib/python3.10/site-packages/wrapt-stubs
+32K	/usr/local/lib/python3.10/site-packages/aiohappyeyeballs
+32K	/usr/local/lib/python3.10/site-packages/backports
+32K	/usr/local/lib/python3.10/site-packages/shellingham
+36K	/usr/local/lib/python3.10/site-packages/attrs
+36K	/usr/local/lib/python3.10/site-packages/mdurl
+36K	/usr/local/lib/python3.10/site-packages/portalocker
+40K	/usr/local/lib/python3.10/site-packages/pytest_rich
+44K	/usr/local/lib/python3.10/site-packages/pytest_asyncio
+44K	/usr/local/lib/python3.10/site-packages/tomli
+56K	/usr/local/lib/python3.10/site-packages/exceptiongroup
+56K	/usr/local/lib/python3.10/site-packages/parameterized
+56K	/usr/local/lib/python3.10/site-packages/pytest_order
+56K	/usr/local/lib/python3.10/site-packages/typing_inspection
+60K	/usr/local/lib/python3.10/site-packages/distro
+64K	/usr/local/lib/python3.10/site-packages/audioread
+68K	/usr/local/lib/python3.10/site-packages/markupsafe
+76K	/usr/local/lib/python3.10/site-packages/pluggy
+76K	/usr/local/lib/python3.10/site-packages/smmap
+104K	/usr/local/lib/python3.10/site-packages/jsonschema_specifications
+104K	/usr/local/lib/python3.10/site-packages/jupyter_core
+104K	/usr/local/lib/python3.10/site-packages/rouge_score
+112K	/usr/local/lib/python3.10/site-packages/pytokens
+128K	/usr/local/lib/python3.10/site-packages/fastjsonschema
+132K	/usr/local/lib/python3.10/site-packages/platformdirs
+140K	/usr/local/lib/python3.10/site-packages/h11
+140K	/usr/local/lib/python3.10/site-packages/referencing
+140K	/usr/local/lib/python3.10/site-packages/wheel
+148K	/usr/local/lib/python3.10/site-packages/soupsieve
+168K	/usr/local/lib/python3.10/site-packages/execnet
+168K	/usr/local/lib/python3.10/site-packages/filelock
+168K	/usr/local/lib/python3.10/site-packages/scikit_learn.libs
+172K	/usr/local/lib/python3.10/site-packages/mlinter
+172K	/usr/local/lib/python3.10/site-packages/propcache
+196K	/usr/local/lib/python3.10/site-packages/xdist
+208K	/usr/local/lib/python3.10/site-packages/functorch
+208K	/usr/local/lib/python3.10/site-packages/pycparser
+216K	/usr/local/lib/python3.10/site-packages/pathspec
+220K	/usr/local/lib/python3.10/site-packages/doc_builder
+228K	/usr/local/lib/python3.10/site-packages/gitdb
+244K	/usr/local/lib/python3.10/site-packages/sacrebleu
+248K	/usr/local/lib/python3.10/site-packages/charset_normalizer
+252K	/usr/local/lib/python3.10/site-packages/certifi
+264K	/usr/local/lib/python3.10/site-packages/tqdm
+264K	/usr/local/lib/python3.10/site-packages/yarl
+276K	/usr/local/lib/python3.10/site-packages/attr
+276K	/usr/local/lib/python3.10/site-packages/requests
+312K	/usr/local/lib/python3.10/site-packages/blobfile
+320K	/usr/local/lib/python3.10/site-packages/blib2to3
+336K	/usr/local/lib/python3.10/site-packages/dill
+340K	/usr/local/lib/python3.10/site-packages/evaluate
+340K	/usr/local/lib/python3.10/site-packages/httpcore
+344K	/usr/local/lib/python3.10/site-packages/httpx
+352K	/usr/local/lib/python3.10/site-packages/starlette
+352K	/usr/local/lib/python3.10/site-packages/uvicorn
+356K	/usr/local/lib/python3.10/site-packages/idna
+360K	/usr/local/lib/python3.10/site-packages/pydantic_extra_types
+368K	/usr/local/lib/python3.10/site-packages/traitlets
+408K	/usr/local/lib/python3.10/site-packages/nbformat
+416K	/usr/local/lib/python3.10/site-packages/pooch
+432K	/usr/local/lib/python3.10/site-packages/bs4
+432K	/usr/local/lib/python3.10/site-packages/markdown
+432K	/usr/local/lib/python3.10/site-packages/markdown_it
+436K	/usr/local/lib/python3.10/site-packages/cffi
+464K	/usr/local/lib/python3.10/site-packages/click
+472K	/usr/local/lib/python3.10/site-packages/dateutil
+500K	/usr/local/lib/python3.10/site-packages/urllib3
+516K	/usr/local/lib/python3.10/site-packages/absl
+516K	/usr/local/lib/python3.10/site-packages/psutil
+520K	/usr/local/lib/python3.10/site-packages/soxr
+528K	/usr/local/lib/python3.10/site-packages/packaging
+548K	/usr/local/lib/python3.10/site-packages/jinja2
+556K	/usr/local/lib/python3.10/site-packages/multiprocess
+568K	/usr/local/lib/python3.10/site-packages/typer
+584K	/usr/local/lib/python3.10/site-packages/jsonschema
+592K	/usr/local/lib/python3.10/site-packages/transformersci
+596K	/usr/local/lib/python3.10/site-packages/anyio
+620K	/usr/local/lib/python3.10/site-packages/git
+624K	/usr/local/lib/python3.10/site-packages/wrapt
+644K	/usr/local/lib/python3.10/site-packages/num2words
+700K	/usr/local/lib/python3.10/site-packages/frozenlist
+772K	/usr/local/lib/python3.10/site-packages/black
+832K	/usr/local/lib/python3.10/site-packages/multidict
+840K	/usr/local/lib/python3.10/site-packages/jiter
+868K	/usr/local/lib/python3.10/site-packages/fsspec
+880K	/usr/local/lib/python3.10/site-packages/werkzeug
+884K	/usr/local/lib/python3.10/site-packages/xxhash
+928K	/usr/local/lib/python3.10/site-packages/fastapi
+1.1M	/usr/local/lib/python3.10/site-packages/librosa
+1.1M	/usr/local/lib/python3.10/site-packages/rpds
+1.3M	/usr/local/lib/python3.10/site-packages/safetensors
+1.4M	/usr/local/lib/python3.10/site-packages/_pytest
+1.4M	/usr/local/lib/python3.10/site-packages/joblib
+1.4M	/usr/local/lib/python3.10/site-packages/msgpack
+1.4M	/usr/local/lib/python3.10/site-packages/rich
+1.5M	/usr/local/lib/python3.10/site-packages/torchaudio
+1.7M	/usr/local/lib/python3.10/site-packages/accelerate
+1.9M	/usr/local/lib/python3.10/site-packages/sacremoses
+2.0M	/usr/local/lib/python3.10/site-packages/pydantic
+2.1M	/usr/local/lib/python3.10/site-packages/mpmath
+2.1M	/usr/local/lib/python3.10/site-packages/torchvision.libs
+2.5M	/usr/local/lib/python3.10/site-packages/datasets
+2.5M	/usr/local/lib/python3.10/site-packages/torchgen
+2.6M	/usr/local/lib/python3.10/site-packages/google
+2.6M	/usr/local/lib/python3.10/site-packages/opentelemetry
+2.7M	/usr/local/lib/python3.10/site-packages/yaml
+2.8M	/usr/local/lib/python3.10/site-packages/pytz
+2.8M	/usr/local/lib/python3.10/site-packages/tzdata
+2.9M	/usr/local/lib/python3.10/site-packages/regex
+2.9M	/usr/local/lib/python3.10/site-packages/sentencepiece
+3.2M	/usr/local/lib/python3.10/site-packages/peft
+3.4M	/usr/local/lib/python3.10/site-packages/huggingface_hub
+3.4M	/usr/local/lib/python3.10/site-packages/tiktoken
+3.6M	/usr/local/lib/python3.10/site-packages/_soundfile_data
+4.0M	/usr/local/lib/python3.10/site-packages/torchvision
+4.4M	/usr/local/lib/python3.10/site-packages/emoji
+4.5M	/usr/local/lib/python3.10/site-packages/setuptools
+4.8M	/usr/local/lib/python3.10/site-packages/pydantic_core
+5.0M	/usr/local/lib/python3.10/site-packages/pygments
+5.5M	/usr/local/lib/python3.10/site-packages/PIL
+6.1M	/usr/local/lib/python3.10/site-packages/aiohttp
+6.6M	/usr/local/lib/python3.10/site-packages/nltk
+6.6M	/usr/local/lib/python3.10/site-packages/pip
+6.6M	/usr/local/lib/python3.10/site-packages/torchcodec
+7.0M	/usr/local/lib/python3.10/site-packages/Cryptodome
+7.1M	/usr/local/lib/python3.10/site-packages/rjieba
+7.7M	/usr/local/lib/python3.10/site-packages/networkx
+8.8M	/usr/local/lib/python3.10/site-packages/tensorboard
+9.5M	/usr/local/lib/python3.10/site-packages/timm
+9.6M	/usr/local/lib/python3.10/site-packages/libcst
+10M	/usr/local/lib/python3.10/site-packages/tokenizers
+11M	/usr/local/lib/python3.10/site-packages/openai
+12M	/usr/local/lib/python3.10/site-packages/hf_xet
+12M	/usr/local/lib/python3.10/site-packages/lxml
+14M	/usr/local/lib/python3.10/site-packages/pillow.libs
+17M	/usr/local/lib/python3.10/site-packages/grpc
+17M	/usr/local/lib/python3.10/site-packages/numba
+20M	/usr/local/lib/python3.10/site-packages/tensorboard_data_server
+22M	/usr/local/lib/python3.10/site-packages/pycountry
+23M	/usr/local/lib/python3.10/site-packages/faiss
+27M	/usr/local/lib/python3.10/site-packages/numpy.libs
+27M	/usr/local/lib/python3.10/site-packages/scipy.libs
+30M	/usr/local/lib/python3.10/site-packages/sympy
+32M	/usr/local/lib/python3.10/site-packages/numpy
+34M	/usr/local/lib/python3.10/site-packages/av
+35M	/usr/local/lib/python3.10/site-packages/sklearn
+36M	/usr/local/lib/python3.10/site-packages/mistral_common
+41M	/usr/local/lib/python3.10/site-packages/faiss_cpu.libs
+46M	/usr/local/lib/python3.10/site-packages/pandas
+58M	/usr/local/lib/python3.10/site-packages/transformers
+72M	/usr/local/lib/python3.10/site-packages/av.libs
+72M	/usr/local/lib/python3.10/site-packages/cv2
+81M	/usr/local/lib/python3.10/site-packages/opencv_python_headless.libs
+92M	/usr/local/lib/python3.10/site-packages/scipy
+152M	/usr/local/lib/python3.10/site-packages/pyarrow
+172M	/usr/local/lib/python3.10/site-packages/llvmlite
+695M	/usr/local/lib/python3.10/site-packages/torch
+2.1G	/usr/local/lib/python3.10/site-packages/
+##[group]Run pip list --format=freeze | tee installed.txt || true
+pip list --format=freeze | tee installed.txt || true
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+absl-py==2.5.0
+accelerate==1.14.0
+aiohappyeyeballs==2.7.1
+aiohttp==3.14.3
+aiosignal==1.4.0
+annotated-doc==0.0.5
+annotated-types==0.8.0
+anyio==4.14.2
+async-timeout==5.0.1
+attrs==26.1.0
+audioread==3.1.0
+av==17.1.0
+backports.asyncio.runner==1.2.0
+beautifulsoup4==4.15.0
+black==26.5.1
+blobfile==3.1.0
+certifi==2026.7.22
+cffi==2.1.1
+charset-normalizer==3.4.9
+click==8.4.2
+datasets==5.0.1
+decorator==5.3.1
+dill==0.3.4
+distro==1.9.0
+docopt==0.6.2
+emoji==2.15.0
+evaluate==0.4.6
+exceptiongroup==1.3.1
+execnet==2.1.2
+faiss-cpu==1.15.0
+fastapi==0.141.1
+fastjsonschema==2.22.1
+filelock==3.29.0
+frozenlist==1.8.0
+fsspec==2026.4.0
+gitdb==4.0.12
+GitPython==3.1.18
+googleapis-common-protos==1.75.0
+grpcio==1.83.0
+h11==0.16.0
+hf-doc-builder==0.5.0
+hf-xet==1.6.0
+httpcore==1.0.9
+httpx==0.28.1
+huggingface_hub==1.26.0
+idna==3.18
+iniconfig==2.3.0
+Jinja2==3.1.6
+jiter==0.16.0
+joblib==1.5.3
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+jupyter_core==5.9.1
+lazy-loader==0.5
+libcst==1.9.0
+librosa==0.11.0
+llvmlite==0.48.0
+lxml==6.1.1
+Markdown==3.10.3
+markdown-it-py==4.2.0
+MarkupSafe==3.0.3
+mdurl==0.1.2
+mistral_common==1.11.7
+mpmath==1.3.0
+msgpack==1.2.1
+multidict==6.7.1
+multiprocess==0.70.12.2
+mypy_extensions==1.1.0
+nbformat==5.10.4
+networkx==3.4.2
+nltk==3.8.1
+num2words==0.5.14
+numba==0.66.0
+numpy==2.2.6
+openai==2.53.0
+opencv-python-headless==5.0.0.93
+opentelemetry-api==1.44.0
+opentelemetry-container-distro==0.2.0
+opentelemetry-exporter-otlp==1.44.0
+opentelemetry-exporter-otlp-proto-common==1.44.0
+opentelemetry-exporter-otlp-proto-grpc==1.44.0
+opentelemetry-exporter-otlp-proto-http==1.44.0
+opentelemetry-instrumentation==0.65b0
+opentelemetry-proto==1.44.0
+opentelemetry-resourcedetector-docker==0.4.0
+opentelemetry-resourcedetector-kubernetes==0.3.0
+opentelemetry-resourcedetector-process==0.3.0
+opentelemetry-sdk==1.44.0
+opentelemetry-semantic-conventions==0.65b0
+packaging==26.3
+pandas==2.3.3
+parameterized==0.9.0
+pathspec==1.1.1
+peft==0.20.0
+pillow==12.2.0
+pip==26.2.1
+platformdirs==4.11.0
+pluggy==1.6.0
+pooch==1.9.0
+portalocker==2.0.0
+propcache==0.5.2
+protobuf==7.35.1
+psutil==7.2.2
+pyarrow==25.0.0
+pycountry==26.2.16
+pycparser==3.0
+pycryptodomex==3.23.0
+pydantic==2.13.4
+pydantic_core==2.46.4
+pydantic-extra-types==2.11.1
+Pygments==2.20.0
+pytest==8.4.0.dev529+g4b0a5b9e7
+pytest-asyncio==1.4.0
+pytest-env==1.2.0
+pytest-opentelemetry==1.1.0
+pytest-order==1.5.0
+pytest-random-order==1.2.0
+pytest-rerunfailures==15.1
+pytest-rich==0.2.0
+pytest-timeout==2.4.0
+pytest-xdist==3.8.0
+python-dateutil==2.9.0.post0
+pytokens==0.4.1
+pytz==2026.3.post1
+PyYAML==6.0.3
+referencing==0.37.0
+regex==2026.7.19
+requests==2.34.2
+rich==15.0.0
+rjieba==0.2.1
+rouge_score==0.1.2
+rpds-py==0.30.0
+ruff==0.14.10
+sacrebleu==1.5.1
+sacremoses==0.1.1
+safetensors==0.8.0
+scikit-learn==1.7.2
+scipy==1.15.3
+sentencepiece==0.2.2
+setuptools==83.0.0
+shellingham==1.5.4
+six==1.17.0
+smmap==5.0.3
+sniffio==1.3.1
+soundfile==0.14.0
+soupsieve==2.9.1
+soxr==1.1.0
+starlette==1.4.1
+sympy==1.14.0
+tensorboard==2.21.0
+tensorboard-data-server==0.7.2
+threadpoolctl==3.6.0
+tiktoken==0.13.0
+timeout-decorator==0.5.0
+timm==1.0.28
+tokenizers==0.22.2
+tomli==2.4.1
+torch==2.13.0+cpu
+torchaudio==2.11.0+cpu
+torchcodec==0.15.0+cpu
+torchvision==0.28.0+cpu
+tqdm==4.70.0
+traitlets==5.16.1
+transformers==5.15.0.dev0
+transformers-ci==0.1.0
+transformers-mlinter==0.1.2
+ty==0.0.20
+typer==0.27.1
+typing_extensions==4.15.0
+typing-inspection==0.4.2
+tzdata==2026.3
+urllib3==1.26.20
+uv==0.12.2
+uvicorn==0.52.1
+Werkzeug==3.1.8
+wheel==0.46.3
+wrapt==2.3.0
+xxhash==3.8.1
+yarl==1.24.5
+##[group]Run dpkg-query --show --showformat='${Installed-Size}\t${Package}\n' \
+dpkg-query --show --showformat='${Installed-Size}\t${Package}\n' \
+  | sort -rh | head -25 | sort -h \
+  | awk '{ package=$2; sub(".*/", "", package);
+           printf("%.5f GB %s\n", $1/1024/1024, package) }' \
+  || true
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+0.01044 GB linux-libc-dev
+0.01133 GB cmake-data
+0.01196 GB libc6-dev
+0.01202 GB git-lfs
+0.01261 GB libc6
+0.01350 GB libavfilter10
+0.01535 GB binutils-common
+0.01574 GB libcodec2-1.2
+0.01584 GB libavcodec61
+0.01601 GB libx265-215
+0.01655 GB libgcc-14-dev
+0.01760 GB coreutils
+0.01906 GB perl-modules-5.40
+0.02104 GB libstdc++-14-dev
+0.02292 GB espeak-ng-data
+0.02588 GB libz3-4
+0.02628 GB libflite1
+0.02796 GB libperl5.40
+0.03290 GB cpp-14-x86-64-linux-gnu
+0.03522 GB g++-14-x86-64-linux-gnu
+0.03911 GB cmake
+0.03969 GB mesa-libgallium
+0.04688 GB git
+0.06529 GB gcc-14-x86-64-linux-gnu
+0.12083 GB libllvm19
+##[group]Run mkdir -p test-results
+mkdir -p test-results
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+##[group]Run # Print inputs for log diagnostics.
+# Print inputs for log diagnostics.
+cat "$TEST_LIST"
+echo $TEST_LIST
+echo $TOTAL_SHARDS
+echo $SHARD_IDX
+
+if [ ! -f "$TEST_LIST" ] || [ ! -s "$TEST_LIST" ]; then
+  echo "WARNING: test list file not found or empty: $TEST_LIST"
+  echo "tests=" >> $GITHUB_OUTPUT
+  exit 0
+fi
+
+if [ "$TOTAL_SHARDS" -le 1 ]; then
+  # Mirrors: awk '{printf "%s ", $0}' {job}_test_list.txt > splitted_tests.txt
+  TESTS=$(awk '{printf "%s ", $0}' "$TEST_LIST")
+else
+  # Deterministic even chunk split — extends circleci tests split behavior.
+  # Replace with pytest-split + durations.json for timing-based parity.
+  TESTS=$(python3 - <<'EOF'
+import os, sys
+test_list = os.environ["TEST_LIST"]
+total_shards = int(os.environ["TOTAL_SHARDS"])
+shard_idx = int(os.environ["SHARD_IDX"])
+with open(test_list) as f:
+    files = [l.strip() for l in f if l.strip()]
+base, remainder = divmod(len(files), total_shards)
+sizes = [base + (1 if i < remainder else 0) for i in range(total_shards)]
+start = sum(sizes[:shard_idx])
+chunk = files[start:start + sizes[shard_idx]]
+print(" ".join(chunk))
+EOF
+  )
+fi
+
+echo "tests=$TESTS" >> $GITHUB_OUTPUT
+# Preview for log readability
+echo "$TESTS" | tr ' ' '\n' | head -30
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+  TEST_LIST: test_preparation/tests_peft_integration_test_list.txt
+  TOTAL_SHARDS: 1
+  SHARD_IDX: 0
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+tests/peft_integration/test_peft_integration.pytest_preparation/tests_peft_integration_test_list.txt
+1
+0
+tests/peft_integration/test_peft_integration.py
+
+##[group]Run cp -r /test_data/* . 2>/dev/null || true
+cp -r /test_data/* . 2>/dev/null || true
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+##[group]Run if [ -z "$TESTS" ]; then
+if [ -z "$TESTS" ]; then
+  echo "No tests assigned to this shard. Exiting cleanly."
+  exit 0
+fi
+
+# ── Marker flag ─────────────────────────────────────────────────────
+MARKER_CMD=""
+if [ -n "$MARKER" ]; then
+  MARKER_CMD="-m '$MARKER'"
+fi
+
+# ── COMMON_PYTEST_OPTIONS ────────────────────────────────────────────
+# --random-order-seed mirrors ${CIRCLE_BUILD_NUM:-0} → use run number
+COMMON_FLAGS="--max-worker-restart=0 -vvv -rsfE \
+  --random-order-bucket=module \
+  --random-order-seed=${GITHUB_RUN_NUMBER:-0}"
+
+# ── JUnit flags ──────────────────────────────────────────────────────
+JUNIT_FLAGS="-p no:warning -o junit_family=xunit1 \
+  --junitxml=test-results/junit.xml"
+
+# ── Flaky test rerun patterns ────────────────────────────────────────
+# Mirrors FLAKY_TEST_FAILURE_PATTERNS + --reruns flags.
+FLAKY_PATTERNS="OSError|Timeout|ConnectionError|FileNotFoundError|\
+PIL.UnidentifiedImageError|HTTPError|\
+AssertionError: Tensor-likes are not close!|\
+TypeError: expected str, bytes or os.PathLike object, not NoneType|\
+TypeError: stat: path should be string, bytes, os.PathLike or integer, not NoneType|\
+Converting from Tiktoken failed|\
+KeyError: <class |\
+TypeError: not a string"
+RERUN_FLAGS="--reruns 5 --reruns-delay 2 --only-rerun '($FLAKY_PATTERNS)'"
+
+# ── --make-reports name ──────────────────────────────────────────────
+# Falls back to job_name when report_name input is empty.
+if [ -z "$REPORT_NAME" ]; then
+  REPORT_NAME="$JOB_NAME"
+fi
+MAKE_REPORTS="--make-reports=${REPORT_NAME}"
+
+# ── Timeout wrapper ──────────────────────────────────────────────────
+TIMEOUT_CMD=""
+if [ "$COMMAND_TIMEOUT" -gt 0 ]; then
+  TIMEOUT_CMD="timeout $COMMAND_TIMEOUT"
+fi
+
+# ── HF_TOKEN ─────────────────────────────────────────────────────────
+# We no longer need the token anymore after the migration - as we have shared cache.
+
+# ── Execute ──────────────────────────────────────────────────────────
+set -o pipefail
+configure-ci-otel \
+  --protocol http \
+  --service-name "pytest-observability" \
+  --otlp-endpoint "$OTEL_EXPORTER_OTLP_ENDPOINT" \
+  --staging-endpoint 10.90.52.50:5317 \
+  --staging-protocol grpc \
+  --ping-server || echo "OTEL PING WARNING configure-ci-otel --ping-server is unavailable in this environment"
+
+# Emit a run-start span BEFORE pytest so the run/job is visible on the
+# live dashboards immediately, instead of only once the first test span
+# arrives. It carries the same OTEL resource attributes as the pytest
+# run but no test span, so it is discoverable yet counts zero tests.
+# report-ci-start is a no-op when OTEL is unconfigured; never fail here.
+configure-ci-otel \
+  --suite "$JOB_NAME" \
+  --service-name "pytest-observability" \
+  --protocol http \
+  --otlp-endpoint "$OTEL_EXPORTER_OTLP_ENDPOINT" \
+  --token "$OTEL_TOKEN" \
+  --staging-endpoint 10.90.52.50:5317 \
+  --staging-protocol grpc \
+  -- report-ci-start || echo "OTEL START WARNING report-ci-start is unavailable in this environment"
+
+eval "$TIMEOUT_CMD configure-ci-otel \
+  --suite $JOB_NAME \
+  --service-name "pytest-observability" \
+  --protocol http \
+  --otlp-endpoint \"$OTEL_EXPORTER_OTLP_ENDPOINT\" \
+  --token \"$OTEL_TOKEN\" \
+  --staging-endpoint 10.90.52.50:5317 \
+  --staging-protocol grpc \
+  -- python3 -m pytest \
+  $MARKER_CMD \
+  -n $PYTEST_NUM_WORKERS \
+  $JUNIT_FLAGS \
+  $RERUN_FLAGS \
+  $COMMON_FLAGS \
+  $PYTEST_EXTRA_OPTIONS \
+  $MAKE_REPORTS \
+  $TESTS" | tee tests_output.txt
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+  TESTS: tests/peft_integration/test_peft_integration.py 
+  MARKER: 
+  REPORT_NAME: 
+  JOB_NAME: tests_peft_integration
+  COMMAND_TIMEOUT: 0
+  PYTEST_NUM_WORKERS: 8
+  PYTEST_EXTRA_OPTIONS: 
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+OTEL PING OK source=OTEL_EXPORTER_OTLP_ENDPOINT endpoint=https://transformers-ci-traces.lor-e.huggingface.cool target=transformers-ci-traces.lor-e.huggingface.cool:443 timeout=2.0s
+OTEL PING OK source=TRANSFORMERS_TEST_OTEL_STAGING_ENDPOINT endpoint=10.90.52.50:5317 target=10.90.52.50:5317 timeout=2.0s
+OTEL TRACE START trace_id=2f95b4edaf35774cb66f36413e49289b service=pytest-observability job=tests_peft_integration exporter_version=0.1.0+g6058dcc command=report-ci-start
+report-ci-start: emitted run-start span for job 'tests_peft_integration'.
+OTEL TRACE END trace_id=2f95b4edaf35774cb66f36413e49289b service=pytest-observability job=tests_peft_integration exporter_version=0.1.0+g6058dcc exit_code=0
+OTEL TRACE START trace_id=400a2ebbbc700b9dd3de5b6db484f879 service=pytest-observability job=tests_peft_integration exporter_version=0.1.0+g6058dcc command=python3 -m pytest -n 8 -p no:warning -o junit_family=xunit1 --junitxml=test-results/junit.xml --reruns 5 --reruns-delay 2 --only-rerun (OSError|Timeout|ConnectionError|FileNotFoundError|PIL.UnidentifiedImageError|HTTPError|AssertionError: Tensor-likes are not close!|TypeError: expected str, bytes or os.PathLike object, not NoneType|TypeError: stat: path should be string, bytes, os.PathLike or integer, not NoneType|Converting from Tiktoken failed|KeyError: <class |TypeError: not a string) --max-worker-restart=0 -vvv -rsfE --random-order-bucket=module --random-order-seed=8949 --make-reports=tests_peft_integration tests/peft_integration/test_peft_integration.py --export-traces
+OTEL DEBUG patched export() on 2 OTLP exporter class(es)
+OTEL DEBUG patched export() on 2 OTLP exporter class(es)
+OTEL DEBUG patched export() on 2 OTLP exporter class(es)
+OTEL DEBUG patched export() on 2 OTLP exporter class(es)
+OTEL DEBUG patched export() on 2 OTLP exporter class(es)
+OTEL DEBUG patched export() on 2 OTLP exporter class(es)
+OTEL DEBUG patched export() on 2 OTLP exporter class(es)
+OTEL DEBUG patched export() on 2 OTLP exporter class(es)
+OTEL DEBUG patched export() on 2 OTLP exporter class(es)
+============================= test session starts ==============================
+platform linux -- Python 3.10.20, pytest-8.4.0.dev529+g4b0a5b9e7, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+Using --random-order-bucket=module
+Using --random-order-seed=8949
+
+rootdir: /__w/transformers/transformers
+configfile: pyproject.toml
+plugins: opentelemetry-1.1.0, transformers-ci-0.1.0, anyio-4.14.2, asyncio-1.4.0, env-1.2.0, order-1.5.0, random-order-1.2.0, rerunfailures-15.1, rich-0.2.0, timeout-2.4.0, xdist-3.8.0
+asyncio: mode=strict, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+timeout: 120.0s
+timeout method: signal
+timeout func_only: False
+created: 8/8 workers
+8 workers [45 items]
+
+scheduling tests via LoadScheduling
+
+OTEL DEBUG BSP CONFIG max_queue_size=2048 max_export_batch_size=512 schedule_delay_millis=5000 export_timeout_millis=30000 otlp_timeout_env=30 (export_timeout_millis=BSP per-flush deadline; otlp_timeout_env=per-export OTLP client timeout — see timeout_s on each EXPORT line for the resolved value)
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_applies_user_key_mapping 
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_save_quantized_regression 
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained_kwargs 
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_pipeline_no_warning 
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained_unexpected_keys_warning 
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_wrong_peft_type_raises 
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_state_dict 
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_enable_peft_hotswap_called_after_adapter_added_raises 
+OTEL DEBUG BSP CONFIG max_queue_size=2048 max_export_batch_size=512 schedule_delay_millis=5000 export_timeout_millis=30000 otlp_timeout_env=30 (export_timeout_millis=BSP per-flush deadline; otlp_timeout_env=per-export OTLP client timeout — see timeout_s on each EXPORT line for the resolved value)
+OTEL DEBUG BSP CONFIG max_queue_size=2048 max_export_batch_size=512 schedule_delay_millis=5000 export_timeout_millis=30000 otlp_timeout_env=30 (export_timeout_millis=BSP per-flush deadline; otlp_timeout_env=per-export OTLP client timeout — see timeout_s on each EXPORT line for the resolved value)
+OTEL DEBUG BSP CONFIG max_queue_size=2048 max_export_batch_size=512 schedule_delay_millis=5000 export_timeout_millis=30000 otlp_timeout_env=30 (export_timeout_millis=BSP per-flush deadline; otlp_timeout_env=per-export OTLP client timeout — see timeout_s on each EXPORT line for the resolved value)
+[gw6] [  2%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained_kwargs tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained_kwargs [SKIPPED] 0.00s
+
+[gw0] [  4%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_wrong_peft_type_raises tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_wrong_peft_type_raises [SKIPPED] 0.00s
+
+[gw5] [  6%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_enable_peft_hotswap_called_after_adapter_added_raises tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_enable_peft_hotswap_called_after_adapter_added_raises [SKIPPED] 0.00s
+
+[gw3] [  8%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_save_quantized_regression tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_save_quantized_regression [SKIPPED] 0.00s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_warmup_uses_adapter_expected_keys 
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_training_gradient_checkpointing 
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_save_reload_preserves_adapter_weights 
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_maybe_load_adapters_path_not_overwritten_for_complete_model 
+[gw6] [ 11%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_maybe_load_adapters_path_not_overwritten_for_complete_model tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_maybe_load_adapters_path_not_overwritten_for_complete_model [SKIPPED] 0.00s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter 
+[gw3] [ 13%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_training_gradient_checkpointing tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_training_gradient_checkpointing [PASSED] 1.12s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_save_quantized 
+[gw3] [ 15%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_save_quantized tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_save_quantized [SKIPPED] 0.00s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_mixtral_lora_conversion 
+[gw6] [ 17%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter [PASSED] 1.23s
+
+OTEL DEBUG BSP CONFIG max_queue_size=2048 max_export_batch_size=512 schedule_delay_millis=5000 export_timeout_millis=30000 otlp_timeout_env=30 (export_timeout_millis=BSP per-flush deadline; otlp_timeout_env=per-export OTLP client timeout — see timeout_s on each EXPORT line for the resolved value)
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_enable_disable_adapters 
+[gw1] [ 20%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained_unexpected_keys_warning tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained_unexpected_keys_warning [PASSED] 1.38s
+
+OTEL DEBUG BSP CONFIG max_queue_size=2048 max_export_batch_size=512 schedule_delay_millis=5000 export_timeout_millis=30000 otlp_timeout_env=30 (export_timeout_millis=BSP per-flush deadline; otlp_timeout_env=per-export OTLP client timeout — see timeout_s on each EXPORT line for the resolved value)
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained_missing_keys_warning 
+[gw7] [ 22%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_pipeline_no_warning tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_pipeline_no_warning [PASSED] 1.79s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_without_load_config_recomputes_conversions 
+[gw0] [ 24%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_warmup_uses_adapter_expected_keys tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_warmup_uses_adapter_expected_keys [PASSED] 2.41s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_delete_adapter 
+[gw5] [ 26%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_save_reload_preserves_adapter_weights tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_save_reload_preserves_adapter_weights [PASSED] 2.56s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_delete_adapter_with_modules_to_save 
+[gw6] [ 28%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_enable_disable_adapters tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_enable_disable_adapters [PASSED] 1.38s
+
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_without_compile_and_same_ranks_works 
+[gw6] [ 31%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_without_compile_and_same_ranks_works tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_without_compile_and_same_ranks_works [SKIPPED] 0.00s
+
+OTEL DEBUG BSP CONFIG max_queue_size=2048 max_export_batch_size=512 schedule_delay_millis=5000 export_timeout_millis=30000 otlp_timeout_env=30 (export_timeout_millis=BSP per-flush deadline; otlp_timeout_env=per-export OTLP client timeout — see timeout_s on each EXPORT line for the resolved value)
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_with_state_dict_low_cpu_mem_usage 
+[gw2] [ 33%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_state_dict tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_state_dict [PASSED] 3.04s
+
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_with_compile_and_same_ranks_works 
+[gw2] [ 35%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_with_compile_and_same_ranks_works tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_with_compile_and_same_ranks_works [SKIPPED] 0.00s
+
+[gw1] [ 37%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained_missing_keys_warning tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained_missing_keys_warning [PASSED] 1.67s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_non_lora_load_adapter 
+[gw3] [ 40%] FAILED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_mixtral_lora_conversion tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_mixtral_lora_conversion [FAILED] 1.78s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained_hub_kwargs 
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_without_existing_adapter_raises 
+[gw2] [ 42%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_without_existing_adapter_raises tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_without_existing_adapter_raises [SKIPPED] 0.00s
+
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_without_compile_and_with_lower_rank_works 
+[gw2] [ 44%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_without_compile_and_with_lower_rank_works tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_without_compile_and_with_lower_rank_works [SKIPPED] 0.00s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_prefix_tuning_trainer_load_best_model_at_end_error 
+[gw5] [ 46%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_delete_adapter_with_modules_to_save tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_delete_adapter_with_modules_to_save [PASSED] 0.74s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_save_pretrained 
+[gw4] [ 48%] RERUN tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_applies_user_key_mapping tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_applies_user_key_mapping [SKIPPED] 1.23s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_applies_user_key_mapping 
+[gw7] [ 51%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_without_load_config_recomputes_conversions tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_without_load_config_recomputes_conversions [PASSED] 1.64s
+
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_enable_peft_hotswap_called_after_adapter_added_warns 
+[gw7] [ 53%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_enable_peft_hotswap_called_after_adapter_added_warns tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_enable_peft_hotswap_called_after_adapter_added_warns [SKIPPED] 0.00s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained 
+[gw0] [ 55%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_delete_adapter tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_delete_adapter [PASSED] 1.39s
+
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_different_adapter_name_raises 
+[gw0] [ 57%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_different_adapter_name_raises tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_different_adapter_name_raises [SKIPPED] 0.00s
+
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_with_compile_and_higher_rank_works 
+[gw0] [ 60%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_with_compile_and_higher_rank_works tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_with_compile_and_higher_rank_works [SKIPPED] 0.00s
+
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_without_compile_and_with_higher_rank_works 
+[gw0] [ 62%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_without_compile_and_with_higher_rank_works tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_without_compile_and_with_higher_rank_works [SKIPPED] 0.00s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_non_lora_add_adapter 
+[gw6] [ 64%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_with_state_dict_low_cpu_mem_usage tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_with_state_dict_low_cpu_mem_usage [PASSED] 1.28s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_multi_adapter 
+[gw0] [ 66%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_non_lora_add_adapter tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_non_lora_add_adapter [PASSED] 1.14s
+
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_enable_peft_hotswap_called_after_adapter_added_ignored 
+[gw0] [ 68%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_enable_peft_hotswap_called_after_adapter_added_ignored tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_enable_peft_hotswap_called_after_adapter_added_ignored [SKIPPED] 0.00s
+
+OTEL DEBUG BSP CONFIG max_queue_size=2048 max_export_batch_size=512 schedule_delay_millis=5000 export_timeout_millis=30000 otlp_timeout_env=30 (export_timeout_millis=BSP per-flush deadline; otlp_timeout_env=per-export OTLP client timeout — see timeout_s on each EXPORT line for the resolved value)
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_modules_to_save 
+[gw4] [ 68%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_applies_user_key_mapping tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_applies_user_key_mapping [PASSED] 1.96s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_training_inference_mode_false 
+[gw1] [ 71%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_non_lora_load_adapter tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_non_lora_load_adapter [PASSED] 2.65s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_with_state_dict 
+[gw6] [ 73%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_multi_adapter tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_multi_adapter [PASSED] 1.69s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_pipeline 
+[gw7] [ 75%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained [PASSED] 2.54s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_non_moe_conversion_mapped_model 
+OTEL DEBUG EXPORT spans=9 result=SUCCESS dest=prod duration_ms=4.0 timeout_s=30.0 protocol=http/protobuf endpoint=https://transformers-ci-traces.lor-e.huggingface.cool
+[gw0] [ 77%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_modules_to_save tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_modules_to_save [PASSED] 1.40s
+
+OTEL DEBUG EXPORT spans=3 result=SUCCESS dest=prod duration_ms=3.6 timeout_s=30.0 protocol=http/protobuf endpoint=https://transformers-ci-traces.lor-e.huggingface.cool
+[gw7] [ 80%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_non_moe_conversion_mapped_model tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_non_moe_conversion_mapped_model [PASSED] 0.94s
+
+[gw5] [ 82%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_save_pretrained tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_save_pretrained [PASSED] 3.69s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_from_pretrained 
+OTEL DEBUG EXPORT spans=4 result=SUCCESS dest=prod duration_ms=4.2 timeout_s=30.0 protocol=http/protobuf endpoint=https://transformers-ci-traces.lor-e.huggingface.cool
+[gw1] [ 84%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_with_state_dict tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_with_state_dict [PASSED] 1.45s
+
+[gw3] [ 86%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained_hub_kwargs tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained_hub_kwargs [PASSED] 5.25s
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_training_inference_mode_true 
+OTEL DEBUG EXPORT spans=4 result=SUCCESS dest=prod duration_ms=4.0 timeout_s=30.0 protocol=http/protobuf endpoint=https://transformers-ci-traces.lor-e.huggingface.cool
+[gw6] [ 88%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_pipeline tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_pipeline [PASSED] 2.73s
+
+[gw2] [ 91%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_prefix_tuning_trainer_load_best_model_at_end_error tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_prefix_tuning_trainer_load_best_model_at_end_error [PASSED] 5.91s
+
+tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_with_compile_and_lower_rank_works 
+OTEL DEBUG EXPORT spans=3 result=SUCCESS dest=prod duration_ms=3.9 timeout_s=30.0 protocol=http/protobuf endpoint=https://transformers-ci-traces.lor-e.huggingface.cool
+[gw2] [ 93%] SKIPPED tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_with_compile_and_lower_rank_works tests/peft_integration/test_peft_integration.py::PeftHotswapIntegrationTest::test_hotswap_with_compile_and_lower_rank_works [SKIPPED] 0.00s
+
+OTEL DEBUG EXPORT spans=2 result=SUCCESS dest=prod duration_ms=3.9 timeout_s=30.0 protocol=http/protobuf endpoint=https://transformers-ci-traces.lor-e.huggingface.cool
+[gw5] [ 95%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_from_pretrained tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_from_pretrained [PASSED] 2.56s
+
+OTEL DEBUG EXPORT spans=2 result=SUCCESS dest=prod duration_ms=3.5 timeout_s=30.0 protocol=http/protobuf endpoint=https://transformers-ci-traces.lor-e.huggingface.cool
+[gw4] [ 97%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_training_inference_mode_false tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_training_inference_mode_false [PASSED] 4.50s
+
+OTEL DEBUG EXPORT spans=3 result=SUCCESS dest=prod duration_ms=4.6 timeout_s=30.0 protocol=http/protobuf endpoint=https://transformers-ci-traces.lor-e.huggingface.cool
+OTEL DEBUG SUMMARY produced=7 submitted=7 exported=7 failed=0 not_exported=0 export_calls=2 failed_calls=0 stage_produced=0 stage_exported=0 stage_failed=0 (headline fields are PROD ONLY — staging mirror excluded; produced=spans handed to BatchSpanProcessor; submitted=spans passed to exporter; exported=spans the exporter confirmed shipped (result=SUCCESS); failed=spans whose export returned FAILURE/raised — LOST after retries; not_exported=produced-submitted=BSP queue overflow; stage_*=staging mirror, NOT part of prod comparisons)OTEL DEBUG SUMMARY produced=6 submitted=6 exported=6 failed=0 not_exported=0 export_calls=3 failed_calls=0 stage_produced=0 stage_exported=0 stage_failed=0 (headline fields are PROD ONLY — staging mirror excluded; produced=spans handed to BatchSpanProcessor; submitted=spans passed to exporter; exported=spans the exporter confirmed shipped (result=SUCCESS); failed=spans whose export returned FAILURE/raised — LOST after retries; not_exported=produced-submitted=BSP queue overflow; stage_*=staging mirror, NOT part of prod comparisons)
+OTEL DEBUG SUMMARY produced=3 submitted=3 exported=3 failed=0 not_exported=0 export_calls=2 failed_calls=0 stage_produced=0 stage_exported=0 stage_failed=0 (headline fields are PROD ONLY — staging mirror excluded; produced=spans handed to BatchSpanProcessor; submitted=spans passed to exporter; exported=spans the exporter confirmed shipped (result=SUCCESS); failed=spans whose export returned FAILURE/raised — LOST after retries; not_exported=produced-submitted=BSP queue overflow; stage_*=staging mirror, NOT part of prod comparisons)
+OTEL DEBUG SUMMARY produced=9 submitted=9 exported=9 failed=0 not_exported=0 export_calls=2 failed_calls=0 stage_produced=0 stage_exported=0 stage_failed=0 (headline fields are PROD ONLY — staging mirror excluded; produced=spans handed to BatchSpanProcessor; submitted=spans passed to exporter; exported=spans the exporter confirmed shipped (result=SUCCESS); failed=spans whose export returned FAILURE/raised — LOST after retries; not_exported=produced-submitted=BSP queue overflow; stage_*=staging mirror, NOT part of prod comparisons)
+OTEL DEBUG SUMMARY produced=10 submitted=10 exported=10 failed=0 not_exported=0 export_calls=2 failed_calls=0 stage_produced=0 stage_exported=0 stage_failed=0 (headline fields are PROD ONLY — staging mirror excluded; produced=spans handed to BatchSpanProcessor; submitted=spans passed to exporter; exported=spans the exporter confirmed shipped (result=SUCCESS); failed=spans whose export returned FAILURE/raised — LOST after retries; not_exported=produced-submitted=BSP queue overflow; stage_*=staging mirror, NOT part of prod comparisons)
+
+OTEL DEBUG SUMMARY produced=5 submitted=5 exported=5 failed=0 not_exported=0 export_calls=2 failed_calls=0 stage_produced=0 stage_exported=0 stage_failed=0 (headline fields are PROD ONLY — staging mirror excluded; produced=spans handed to BatchSpanProcessor; submitted=spans passed to exporter; exported=spans the exporter confirmed shipped (result=SUCCESS); failed=spans whose export returned FAILURE/raised — LOST after retries; not_exported=produced-submitted=BSP queue overflow; stage_*=staging mirror, NOT part of prod comparisons)
+OTEL DEBUG SUMMARY produced=6 submitted=6 exported=6 failed=0 not_exported=0 export_calls=2 failed_calls=0 stage_produced=0 stage_exported=0 stage_failed=0 (headline fields are PROD ONLY — staging mirror excluded; produced=spans handed to BatchSpanProcessor; submitted=spans passed to exporter; exported=spans the exporter confirmed shipped (result=SUCCESS); failed=spans whose export returned FAILURE/raised — LOST after retries; not_exported=produced-submitted=BSP queue overflow; stage_*=staging mirror, NOT part of prod comparisons)
+OTEL DEBUG SUMMARY produced=7 submitted=7 exported=7 failed=0 not_exported=0 export_calls=3 failed_calls=0 stage_produced=0 stage_exported=0 stage_failed=0 (headline fields are PROD ONLY — staging mirror excluded; produced=spans handed to BatchSpanProcessor; submitted=spans passed to exporter; exported=spans the exporter confirmed shipped (result=SUCCESS); failed=spans whose export returned FAILURE/raised — LOST after retries; not_exported=produced-submitted=BSP queue overflow; stage_*=staging mirror, NOT part of prod comparisons)
+OTEL DEBUG BSP CONFIG max_queue_size=2048 max_export_batch_size=512 schedule_delay_millis=5000 export_timeout_millis=30000 otlp_timeout_env=30 (export_timeout_millis=BSP per-flush deadline; otlp_timeout_env=per-export OTLP client timeout — see timeout_s on each EXPORT line for the resolved value)
+OTEL DEBUG EXPORT spans=1 result=SUCCESS dest=prod duration_ms=29.2 timeout_s=30.0 protocol=http/protobuf endpoint=https://transformers-ci-traces.lor-e.huggingface.cool
+[gw3] [100%] PASSED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_training_inference_mode_true tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_load_adapter_training_inference_mode_true [PASSED] 3.48s
+
+
+=================================== FAILURES ===================================
+______________ PeftIntegrationTester.test_mixtral_lora_conversion ______________
+[gw3] linux -- Python 3.10.20 /usr/local/bin/python3
+
+self = <test_peft_integration.PeftIntegrationTester testMethod=test_mixtral_lora_conversion>
+
+    @require_peft_greater_or_equal("0.20.0")
+    def test_mixtral_lora_conversion(self):
+        inputs = torch.arange(10).view(1, -1).to(torch_device)
+        model_name = "hf-internal-testing/Mixtral-tiny"
+        adapter_name = "peft-internal-testing/mixtral-pre-v5-lora"
+    
+        # original logits were:
+        # tensor([[[ 0.2676,  0.3870,  0.2956,  ...,  0.4624,  0.1966,  0.2539],
+        #          [-0.6706, -0.0969, -0.6240,  ..., -0.0201,  0.7099, -0.3099],
+        #          [ 0.0663,  0.1653,  0.7189,  ...,  0.5905,  0.0649,  0.5839],
+        #          ...,
+        #          [-0.2712, -0.6451, -0.0219,  ..., -0.4344,  0.5471, -0.9355],
+        #          [-0.3607,  0.4526,  0.2750,  ...,  0.1082,  0.7179,  0.8487],
+        #          [ 0.5826, -0.1407, -0.3131,  ...,  0.1026,  0.6878, -0.3382]]],
+        #        device='cuda:0')
+        expected_logits_0_to_3 = torch.Tensor(
+            [
+                [0.2676, 0.3870, 0.2956],
+                [-0.6706, -0.0969, -0.6240],
+                [0.0663, 0.1653, 0.7189],
+            ]
+        ).to(device=torch_device, dtype=torch.float16)
+    
+        model = AutoModelForCausalLM.from_pretrained(model_name)
+>       model.load_adapter(adapter_name)
+
+tests/peft_integration/test_peft_integration.py:1142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.10/site-packages/transformers/integrations/peft.py:229: in load_adapter
+    peft_weight_conversions = build_peft_weight_mapping(weight_conversions, adapter_name, peft_config=peft_config)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+weight_conversions = [WeightRenaming(source_patterns=['.block_sparse_moe.'], target_patterns=['.mlp.']), WeightConverter(source_patterns=['.experts.*.w1.weight', '.experts.*.w3.weight'], target_patterns=['.experts.gate_up_proj']), WeightConverter(source_patterns=['.experts.*.w2.weight'], target_patterns=['.experts.down_proj']), WeightRenaming(source_patterns=['LayerNorm.gamma'], target_patterns=['LayerNorm.weight']), WeightRenaming(source_patterns=['LayerNorm.beta'], target_patterns=['LayerNorm.bias']), WeightRenaming(source_patterns=['.weight_g$'], target_patterns=['.parametrizations.weight.original0']), ...]
+adapter_name = 'default'
+peft_config = LoraConfig(task_type=None, peft_type=<PeftType.LORA: 'LORA'>, auto_mapping={'base_model_class': 'MixtralForCausalLM', 'parent_library': 'transformers.models.mixtral.modeling_mixtral'}, peft_version='0.18.0', base_model_name_or_path='hf-internal-testing/Mixtral-tiny', revision=None, inference_mode=True, r=8, target_modules={'o_proj', 'w1', 'gate', 'w2', 'v_proj', 'q_proj', 'k_proj', 'w3'}, exclude_modules=None, lora_alpha=8, lora_dropout=0.0, fan_in_fan_out=False, bias='none', use_rslora=False, modules_to_save=None, init_lora_weights=False, layers_to_transform=None, layers_pattern=None, rank_pattern={}, alpha_pattern={}, megatron_config=None, megatron_core='megatron.core', trainable_token_indices=None, loftq_config={}, eva_config=None, corda_config=None, lora_ga_config=None, use_dora=False, velora_config=None, alora_invocation_tokens=None, use_qalora=False, qalora_group_size=16, monteclora_config=None, layer_replication=None, runtime_config=LoraRuntimeConfig(ephemeral_gpu_offload=False), lora_bias=False, target_parameters=None, use_bdlora=None, arrow_config=None, ensure_weight_tying=False)
+
+    def build_peft_weight_mapping(
+        weight_conversions: list[WeightConverter | WeightRenaming] | None, adapter_name: str, peft_config=None
+    ) -> list[WeightConverter | WeightRenaming]:
+        # We iterate over all the operations of the original model and simply edit them to apply to the PEFT adapter when
+        # appropriate.
+        # Note: This function is used in PEFT, changing it requires coordination.
+        if not weight_conversions:
+            return []
+    
+        # strip "base_model.model" and add adapter name
+        new_weight_conversions = [
+            WeightRenaming("base_model.model.model.", "model."),
+            WeightRenaming("base_model.model.", ""),
+        ]
+    
+        prefixes = set()
+        from peft.mapping import PEFT_TYPE_TO_PREFIX_MAPPING
+    
+        peft_type = getattr(peft_config, "peft_type", None)
+        if peft_type in PEFT_TYPE_TO_PREFIX_MAPPING:
+            prefixes.add(PEFT_TYPE_TO_PREFIX_MAPPING[peft_type])
+        else:
+            prefixes.update(PEFT_TYPE_TO_PREFIX_MAPPING.values())
+    
+        for prefix in sorted(prefixes):
+            escaped_prefix = re.escape(prefix)
+            new_weight_conversions.append(
+                WeightRenaming(
+                    source_patterns=rf"({escaped_prefix}[^\.]*)",
+                    target_patterns=rf"\1.{adapter_name}",
+                )
+            )
+    
+        for orig_conversion in weight_conversions:
+            if isinstance(orig_conversion, WeightRenaming):
+                new_weight_conversions.append(orig_conversion)
+                continue
+    
+            if len(orig_conversion.target_patterns) == 1 and orig_conversion.target_patterns[0].endswith("gate_up_proj"):
+                # gate_up_proj requires both merging the experts and concatenating for the fusion of w1 and w3
+                for lora in ("lora_A", "lora_B"):  # TODO: lora_embedding_A and lora_embedding_B
+                    # deal with operations
+                    peft_weight_operations = []
+                    for op in orig_conversion.operations:
+                        if isinstance(op, Concatenate):
+                            if lora == "lora_B":  # block diagonal concat
+                                peft_weight_operations.append(PeftConcatenate(dim=op.dim))
+                            else:  # normal concat + flatten
+                                peft_weight_operations.append(op)
+                                peft_weight_operations.append(FlattenDims(dims=(0, 1)))
+                        elif isinstance(op, MergeModulelist):
+                            peft_weight_operations.append(op)
+    
+                    if not peft_weight_operations:
+                        continue
+    
+                    # TODO: this assumption may not hold for models != mixtral
+                    # For source, we capture the original weights + the lora weights
+                    new_source_patterns = []
+                    for pat in list(orig_conversion.source_patterns):
+                        # we replace the weight pattern to colllect loras
+                        pat = pat.rsplit(".", 1)[0]
+                        # note: the source state_dict does *not* contain the adapter name
+                        new_source_patterns.append(f"{pat}.{lora}.*")
+    
+                    # the gate_up_proj is the innner PEFT ParamWrapper, so we need to use base_layer
+                    pat = orig_conversion.target_patterns[0]
+                    pat = pat.replace("gate_up_proj", "base_layer")
+                    # we make sure the target key is correct, add '.weight' because the parameter is targeted directly
+                    new_target_patterns = [f"{pat}.{lora}.{adapter_name}.weight"]
+    
+                    # Instantiate a new object that correctly post process patterns if needed
+                    new_conversion = orig_conversion.__class__(
+                        source_patterns=new_source_patterns,
+                        target_patterns=new_target_patterns,
+                        operations=peft_weight_operations,
+                    )
+>                   new_conversion.distributed_operation = orig_conversion.distributed_operation
+E                   AttributeError: 'WeightConverter' object has no attribute 'distributed_operation'
+
+/usr/local/lib/python3.10/site-packages/peft/utils/transformers_weight_conversion.py:279: AttributeError
+----------------------------- Captured stderr call -----------------------------
+
+Loading weights:   0%|          | 0/21 [00:00<?, ?it/s]
+Loading weights:  14%|█▍        | 3/21 [00:00<00:04,  3.93it/s]
+Loading weights:  57%|█████▋    | 12/21 [00:00<00:00, 16.64it/s]
+Loading weights: 100%|██████████| 21/21 [00:00<00:00, 22.69it/s]
+OTEL DEBUG EXPORT spans=3 result=SUCCESS dest=prod duration_ms=19.6 timeout_s=30.0 protocol=http/protobuf endpoint=https://transformers-ci-traces.lor-e.huggingface.cool
+=============================== warnings summary ===============================
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_multi_adapter
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_from_pretrained
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_with_state_dict
+  /usr/local/lib/python3.10/site-packages/transformers/generation/utils.py:1665: UserWarning: Using the model-agnostic default `max_length` (=28) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
+    warnings.warn(
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_delete_adapter_with_modules_to_save
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_modules_to_save
+  /usr/local/lib/python3.10/site-packages/peft/tuners/tuners_utils.py:1377: UserWarning: Model has `tie_word_embeddings=True` and a tied layer is part of the adapter, but `ensure_weight_tying` is not set to True. This can lead to complications, for example when merging the adapter or converting your model to formats other than safetensors. Check the discussion here: https://github.com/huggingface/peft/issues/2777
+    warnings.warn(msg)
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_delete_adapter
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_adapter_with_state_dict_low_cpu_mem_usage
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_peft_add_multi_adapter
+  /usr/local/lib/python3.10/site-packages/peft/tuners/tuners_utils.py:305: UserWarning: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!
+    warnings.warn(
+
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_prefix_tuning_trainer_load_best_model_at_end_error
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_prefix_tuning_trainer_load_best_model_at_end_error
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_prefix_tuning_trainer_load_best_model_at_end_error
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_prefix_tuning_trainer_load_best_model_at_end_error
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_prefix_tuning_trainer_load_best_model_at_end_error
+tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_prefix_tuning_trainer_load_best_model_at_end_error
+  /usr/local/lib/python3.10/site-packages/torch/utils/data/dataloader.py:759: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+    super().__init__(loader)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+-- generated xml file: /__w/transformers/transformers/test-results/junit.xml ---
+========================= CI READ-ONLY CACHE FALLBACK ==========================
+Read-only cache fallback fired 2 time(s):
+  - hf-internal-testing/tiny-random-paligemma-lora-key-mapping (x1)
+  - tomaarsen/tiny-random-paligemma-lora-key-mapping (x1)
+=========================== short test summary info ============================
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:582: test requires accelerator
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1228: test is slow
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1264: test is slow
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:645: test requires accelerator
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1340: test is slow
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:602: test requires accelerator
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1307: test is slow
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1316: test is slow
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1242: test is slow
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1310: test is slow
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1277: test is slow
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1252: test is slow
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1332: test is slow
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1313: test is slow
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1293: test is slow
+SKIPPED [1] tests/peft_integration/test_peft_integration.py:1324: test is slow
+FAILED tests/peft_integration/test_peft_integration.py::PeftIntegrationTester::test_mixtral_lora_conversion - AttributeError: 'WeightConverter' object has no attribute 'distributed_operation'
+======= 1 failed, 28 passed, 16 skipped, 15 warnings, 1 rerun in 43.87s ========
+OTEL TRACE END trace_id=400a2ebbbc700b9dd3de5b6db484f879 service=pytest-observability job=tests_peft_integration exporter_version=0.1.0+g6058dcc exit_code=1
+##[error]Error: failed to run script step: command terminated with non-zero exit code: error executing command [sh -e /__w/_temp/c3706640-915f-11f1-9d07-a7233370f38d.sh], exit code 1
+##[error]Process completed with exit code 1.
+##[error]Executing the custom container implementation failed. Please contact your self hosted runner administrator.
+##[group]Run if [ ! -f tests_output.txt ]; then
+if [ ! -f tests_output.txt ]; then
+  echo "ERROR: tests_output.txt does not exist — tests may not have run"
+  exit 1
+elif grep -q "crashed and worker restarting disabled" tests_output.txt; then
+  echo "ERROR: Worker crash detected in test output"
+  exit 1
+else
+  echo "No worker crashes detected."
+fi
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+No worker crashes detected.
+##[group]Run python3 .circleci/parse_test_outputs.py --file tests_output.txt --skip
+python3 .circleci/parse_test_outputs.py --file tests_output.txt --skip
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+   3 skipped because: test requires accelerator
+  13 skipped because: test is slow
+Number of skipped tests: 16
+##[group]Run python3 .circleci/parse_test_outputs.py --file tests_output.txt --fail
+python3 .circleci/parse_test_outputs.py --file tests_output.txt --fail
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+   1 failed because `AttributeError` -> 'WeightConverter' object has no attribute 'distributed_operation'
+Number of failed tests: 1
+##[error]Error: failed to run script step: command terminated with non-zero exit code: error executing command [sh -e /__w/_temp/e739c6c0-915f-11f1-a47b-810cd999736d.sh], exit code 1
+##[error]Process completed with exit code 1.
+##[error]Executing the custom container implementation failed. Please contact your self hosted runner administrator.
+##[group]Run python3 .circleci/parse_test_outputs.py --file tests_output.txt --errors
+python3 .circleci/parse_test_outputs.py --file tests_output.txt --errors
+shell: sh -e {0}
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+tests_output.txt
+Number of errors: 0
+##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+with:
+  name: tests_peft_integration_shard0_junit
+  path: test-results/junit.xml
+  retention-days: 14
+  if-no-files-found: warn
+  compression-level: 6
+  overwrite: false
+  include-hidden-files: false
+  archive: true
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+With the provided path, there will be 1 file uploaded
+Artifact name is valid!
+Root directory input is valid!
+Uploading artifact: tests_peft_integration_shard0_junit.zip
+Beginning upload of artifact content to blob storage
+Uploaded bytes 4073
+Finished uploading artifact content to blob storage!
+SHA256 digest of uploaded artifact is 0d13a8e8333e663bc317815759cbea1f6b3891443971dd8a802bf4dc765e6339
+Finalizing artifact upload
+Artifact tests_peft_integration_shard0_junit successfully finalized. Artifact ID 8958029689
+Artifact tests_peft_integration_shard0_junit has been successfully uploaded! Final size is 4073 bytes. Artifact ID is 8958029689
+Artifact download URL: https://github.com/huggingface/transformers/actions/runs/31077067781/artifacts/8958029689
+##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+with:
+  name: tests_peft_integration_shard0_reports
+  path: reports/
+  retention-days: 14
+  if-no-files-found: ignore
+  compression-level: 6
+  overwrite: false
+  include-hidden-files: false
+  archive: true
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+With the provided path, there will be 8 files uploaded
+Artifact name is valid!
+Root directory input is valid!
+Uploading artifact: tests_peft_integration_shard0_reports.zip
+Beginning upload of artifact content to blob storage
+Uploaded bytes 8548
+Finished uploading artifact content to blob storage!
+SHA256 digest of uploaded artifact is a9a2a20470b10b8608137a77280aecda48d8e0d82f75bfe60fc223ccdf5d765b
+Finalizing artifact upload
+Artifact tests_peft_integration_shard0_reports successfully finalized. Artifact ID 8958030110
+Artifact tests_peft_integration_shard0_reports has been successfully uploaded! Final size is 8548 bytes. Artifact ID is 8958030110
+Artifact download URL: https://github.com/huggingface/transformers/actions/runs/31077067781/artifacts/8958030110
+##[group]Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+with:
+  name: tests_peft_integration_shard0_artifacts
+  path: tests_output.txt
+installed.txt
+
+  retention-days: 14
+  if-no-files-found: ignore
+  compression-level: 6
+  overwrite: false
+  include-hidden-files: false
+  archive: true
+env:
+  OMP_NUM_THREADS: 1
+  TRANSFORMERS_IS_CI: true
+  PYTEST_TIMEOUT: 120
+  RUN_PIPELINE_TESTS: false
+  RUN_FLAKY: false
+  DISABLE_SAFETENSORS_CONVERSION: true
+  RUN_CUSTOM_TOKENIZERS: false
+  RUN_TRAINING_TESTS: false
+  RUN_TENSOR_PARALLEL_TESTS: false
+  RUN_FSDP_TESTS: false
+  TRANSFORMERS_VERBOSITY: 
+  DATASETS_VERBOSITY: 
+  SKIP_CUDA_DOCTEST: 0
+  TRANSFORMERSCI_OTEL_DEBUG: 1
+  TRANSFORMERS_TEST_OTEL_PR: 47579
+  TRANSFORMERS_TEST_OTEL_SUITE: tests_peft_integration
+  HF_HOME: /mnt/cache
+  HF_DATASETS_CACHE: /tmp/hf_datasets_cache
+  HF_MODULES_CACHE: /tmp/hf_modules_cache
+  HF_XET_LOG_DEST: /tmp/xet_logs/
+  HF_METRICS_CACHE: /tmp/hf_metrics_cache
+##[endgroup]
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Multiple search paths detected. Calculating the least common ancestor of all paths
+The least common ancestor is /__w/transformers/transformers. This will be the root directory of the artifact
+With the provided path, there will be 2 files uploaded
+Artifact name is valid!
+Root directory input is valid!
+Uploading artifact: tests_peft_integration_shard0_artifacts.zip
+Beginning upload of artifact content to blob storage
+Uploaded bytes 7913
+Finished uploading artifact content to blob storage!
+SHA256 digest of uploaded artifact is 92e9f2b5d6c279c9f0fd42072d095d31c606f8b1c9bfc1d22b9db2169b0d62c3
+Finalizing artifact upload
+Artifact tests_peft_integration_shard0_artifacts successfully finalized. Artifact ID 8958030568
+Artifact tests_peft_integration_shard0_artifacts has been successfully uploaded! Final size is 7913 bytes. Artifact ID is 8958030568
+Artifact download URL: https://github.com/huggingface/transformers/actions/runs/31077067781/artifacts/8958030568
+Post job cleanup.
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+[command]/usr/bin/git version
+git version 2.47.3
+Copying '/root/.gitconfig' to '/__w/_temp/01126cce-9e34-40bd-afe9-aa9fc0d72bed/.gitconfig'
+Temporarily overriding HOME='/__w/_temp/01126cce-9e34-40bd-afe9-aa9fc0d72bed' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /__w/transformers/transformers
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/__w/transformers/transformers/.git.path
+includeif.gitdir:/__w/transformers/transformers/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/__w/transformers/transformers/.git.path
+/__w/_temp/git-credentials-85241384-51ee-4fcc-9bbe-3124f8f2a9c1.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/__w/transformers/transformers/.git.path \/__w\/_temp\/git\-credentials\-85241384\-51ee\-4fcc\-9bbe\-3124f8f2a9c1\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/__w/transformers/transformers/.git/worktrees/*.path
+/__w/_temp/git-credentials-85241384-51ee-4fcc-9bbe-3124f8f2a9c1.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/__w/transformers/transformers/.git/worktrees/*.path \/__w\/_temp\/git\-credentials\-85241384\-51ee\-4fcc\-9bbe\-3124f8f2a9c1\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-85241384-51ee-4fcc-9bbe-3124f8f2a9c1.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-85241384\-51ee\-4fcc\-9bbe\-3124f8f2a9c1\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-85241384-51ee-4fcc-9bbe-3124f8f2a9c1.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-85241384\-51ee\-4fcc\-9bbe\-3124f8f2a9c1\.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/__w/_temp/git-credentials-85241384-51ee-4fcc-9bbe-3124f8f2a9c1.config'
+##[group]Run '/home/runner/k8s/index.js'
+shell: /home/runner/externals/node20/bin/node {0}
+##[endgroup]
+Cleaning up orphan processes

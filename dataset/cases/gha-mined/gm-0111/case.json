@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0111",
+  "title": "encode/httpx Python 3.12",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "encode/httpx",
+    "run_id": 26175769958,
+    "run_attempt": 1,
+    "head_sha": "86eb33fe9d4f4ed3bca9e407c1d72ceefda4ff81",
+    "pr_number": null,
+    "failed_job_name": "Python 3.12",
+    "failed_step_name": "Run tests",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "flaky_test",
+    "subcategory": "resource_leak",
+    "related_to_diff": false,
+    "culprit_files": [],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/encode/httpx/actions/runs/26175769958",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on flaky_test/resource_leak. Lowest confidence of the two was 0.55. Decisive evidence: ResourceWarning: Async generator 'httpx._content.ByteStream.__aiter__' was garbage collected before it had been exhausted.",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}
