@@ -15,7 +15,7 @@ from urllib.parse import urlsplit, urlunsplit
 import httpx
 
 from buildsleuth.llm.rate_limit import RateLimiter
-from buildsleuth.llm.registry import ModelSpec
+from buildsleuth.llm.registry import ModelSpec, output_token_budget
 from buildsleuth.llm.types import (
     CompletionRequest,
     CompletionResult,
@@ -134,7 +134,9 @@ class OpenAICompatClient:
                 for message in request.messages
             ],
             "temperature": request.temperature,
-            "max_tokens": request.max_tokens,
+            # The caller sizes a budget for the answer; a reasoning model also
+            # needs room for the thinking the provider bills to the same line.
+            "max_tokens": max(request.max_tokens, output_token_budget(self._spec)),
         }
         response_format = self._response_format(request.response_schema)
         if response_format is not None:
@@ -217,8 +219,13 @@ class OpenAICompatClient:
         choices = body.get("choices") or []
         if not choices:
             raise ModelError(f"{self._spec.name}: response carried no choices")
-        content = choices[0].get("message", {}).get("content") or ""
+
+        choice = choices[0]
+        content = choice.get("message", {}).get("content") or ""
         raw_usage = body.get("usage") or {}
+        if not content:
+            raise ModelError(self._empty_content_reason(choice, raw_usage))
+
         return CompletionResult(
             content=content,
             usage=Usage(
@@ -228,6 +235,18 @@ class OpenAICompatClient:
             latency_ms=latency_ms,
             model=self._spec.name,
         )
+
+    def _empty_content_reason(self, choice: dict[str, Any], raw_usage: dict[str, Any]) -> str:
+        """Say why the answer was empty, since the usual cause is fixable."""
+        finish = choice.get("finish_reason")
+        details = raw_usage.get("completion_tokens_details") or {}
+        thinking = int(details.get("reasoning_tokens") or 0)
+        if thinking:
+            return (
+                f"{self._spec.name}: returned no content after spending {thinking} tokens"
+                f" reasoning (finish_reason {finish}). Raise the output budget for this model."
+            )
+        return f"{self._spec.name}: returned empty content (finish_reason {finish})"
 
 
 def _retry_after_seconds(response: httpx.Response) -> float | None:

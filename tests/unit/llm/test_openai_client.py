@@ -244,13 +244,13 @@ def test_empty_choices_raise_a_model_error(respx_mock: respx.MockRouter) -> None
         model.complete(request())
 
 
-def test_null_content_becomes_an_empty_string(respx_mock: respx.MockRouter) -> None:
+def test_null_content_is_an_error_not_an_empty_answer(respx_mock: respx.MockRouter) -> None:
+    """Passing an empty answer downstream hides the failure at the scoring layer."""
     body = completion_body()
     body["choices"][0]["message"]["content"] = None
     respx_mock.post(GEMINI_URL).respond(json=body)
-    with client() as model:
-        result = model.complete(request())
-    assert result.content == ""
+    with client() as model, pytest.raises(ModelError, match="empty content"):
+        model.complete(request())
 
 
 def test_rate_limiter_is_acquired_before_and_recorded_after(

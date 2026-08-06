@@ -14,6 +14,17 @@ TOKENS_PER_MILLION = 1_000_000
 FREE = 0.0
 NO_API_KEY_ENV_VAR = ""
 
+# A triage verdict is a few hundred tokens. Reasoning models need room for the
+# thinking that precedes it, which the provider bills to the same budget.
+DIRECT_OUTPUT_TOKENS = 2048
+REASONING_OUTPUT_TOKENS = 16_384
+
+
+def output_token_budget(spec: "ModelSpec") -> int:
+    """Output budget for one call, sized for whether the model thinks first."""
+    return REASONING_OUTPUT_TOKENS if spec.quirks.reasoning else DIRECT_OUTPUT_TOKENS
+
+
 GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai"
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
@@ -56,6 +67,10 @@ class ProviderQuirks:
     context_window: int
     max_retries: int
     supports_response_format: bool = True
+    # Reasoning models spend hidden tokens thinking, and those count against
+    # the output budget. A verdict is only a few hundred tokens, so a budget
+    # sized for the answer alone leaves them nothing to answer with.
+    reasoning: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -234,6 +249,7 @@ MODEL_SPECS: tuple[ModelSpec, ...] = (
         quirks=ProviderQuirks(
             native_json_schema=False,
             supports_response_format=False,
+            reasoning=True,
             supports_tools=True,
             rpm=20,
             rpd=50,

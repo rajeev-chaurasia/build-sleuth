@@ -14,12 +14,13 @@ Current scorecard, 6 cases, every model scored through the same code path:
 
 | model | coverage | accuracy | macro F1 | cost weighted error | subcategory | usd per triage | seconds |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| gemini-3.1-flash-lite | 6/6 | 0.667 | **0.438** | 0.500 | **0.500** | 0.0003 | 8.9 |
+| nemotron-3-ultra-550b | 6/6 | **0.833** | **0.472** | **0.250** | **0.833** | 0.0043 | 287.5 |
+| gemini-3.1-flash-lite | 6/6 | 0.667 | 0.438 | 0.500 | 0.500 | 0.0003 | 8.9 |
+| regex baseline | 6/6 | 0.667 | 0.200 | 0.417 | 0.000 | 0.0000 | 0.0 |
 | nemotron-3-super-120b | 6/6 | 0.333 | 0.333 | 0.833 | 0.333 | 0.0003 | 25.4 |
-| regex baseline | 6/6 | 0.667 | 0.200 | **0.417** | 0.000 | 0.0000 | 0.0 |
 | gpt-oss-20b | 5/6 | not comparable | | | | 0.0001 | 231.1 |
 
-Cost is at the provider's list price; the actual runs were free-tier and billed nothing.
+Cost is at the provider's list price; the actual runs were free-tier and billed nothing. Thirty two times slower for the best answers is a real tradeoff, not a rounding error, and which end of it you want depends on whether a human is waiting.
 
 Read that table carefully, because it is the argument for having an eval harness at all:
 
@@ -29,7 +30,9 @@ Read that table carefully, because it is the argument for having an eval harness
 
 One metric alone would have told you the wrong story three different ways.
 
-**Bigger did not mean better.** A 120B model scored roughly half the accuracy of a small Flash model on the same six cases, and its cost weighted error was the worst of anything measured: it reached for `pipeline_config` on two failures that were plainly code defects. Parameter count is not a proxy for reading a build log correctly, which is the sort of claim that needs a harness rather than an opinion.
+**Bigger is not reliably better either.** The 550B model leads on every quality axis, but the 120B from the same family scores half the accuracy of a small Flash model and posts the worst cost weighted error measured, reaching for `pipeline_config` on two failures that were plainly code defects. Parameter count predicts neither result.
+
+**The harness caught a bug that looked like a bad model.** The 550B first scored 3 of 6 and was reported unrankable. The cause was not the model: it is a reasoning model, its hidden thinking tokens are billed against the output budget, and a budget sized for a short verdict left it nothing to answer with. Raising that one number moved it from unrankable to best in class, unchanged in every other respect. Output budget is now a property of the model rather than a constant, and an empty answer after reasoning says so instead of failing with something cryptic.
 
 Compare models yourself, on every axis at once:
 
