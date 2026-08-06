@@ -9,10 +9,11 @@ import re
 from collections.abc import Sequence
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Self
 
-from pydantic import BaseModel
+from pydantic import BaseModel, model_validator
 
-from buildsleuth.models.taxonomy import FailureClass
+from buildsleuth.models.taxonomy import MAX_ERROR_COST, FailureClass
 from evals.scorers.classification import ClassificationReport, classification_metrics
 from evals.scorers.localization import LocalizationReport, localization_metrics
 
@@ -46,6 +47,15 @@ class CaseResult(BaseModel):
     localization_rank: int | None = None
     latency_ms: float | None = None
     error: str | None = None
+
+    @model_validator(mode="after")
+    def check_missing_verdict_is_explained(self) -> Self:
+        """A dropped case must carry a reason, or it vanishes from every metric silently."""
+        if self.predicted_class is None and not self.error:
+            raise ValueError(f"case {self.case_id} has no verdict and no error explaining why")
+        if self.predicted_class is None and self.correct:
+            raise ValueError(f"case {self.case_id} cannot be correct without a verdict")
+        return self
 
 
 class Scorecard(BaseModel):
@@ -123,6 +133,26 @@ def _num(value: float) -> str:
     return f"{value:.{DECIMALS}f}"
 
 
+def _answered(card: Scorecard) -> list[CaseResult]:
+    return [case for case in card.per_case if case.predicted_class is not None]
+
+
+def _subcategory_rate(card: Scorecard) -> float:
+    """Share of answered cases whose subcategory also matched."""
+    answered = _answered(card)
+    if not answered:
+        return 0.0
+    return sum(case.subcategory_correct for case in answered) / len(answered)
+
+
+def _related_to_diff_rate(card: Scorecard) -> float:
+    """Share of answered cases that correctly judged patch relatedness."""
+    answered = _answered(card)
+    if not answered:
+        return 0.0
+    return sum(case.related_to_diff_correct for case in answered) / len(answered)
+
+
 def _table(header: Sequence[str], rows: Sequence[Sequence[str]]) -> list[str]:
     divider = ["---"] * len(header)
     return [
@@ -155,9 +185,20 @@ def render_markdown(card: Scorecard) -> str:
 
     headline: list[Sequence[str]] = []
     if card.classification is not None:
+        evaluated = card.classification.confusion.total()
+        headline.append(["evaluated cases", f"{evaluated} of {len(card.per_case)}"])
         headline.append(["accuracy", _num(card.classification.accuracy)])
-        headline.append(["macro f1", _num(card.classification.macro_f1)])
-        headline.append(["cost weighted error", _num(card.classification.cost_weighted_error)])
+        # Averaged over all four classes, so a subset missing a class is
+        # capped below 1.0 by design. Stated here so the number is not misread.
+        headline.append(["macro f1 (all 4 classes)", _num(card.classification.macro_f1)])
+        headline.append(
+            [
+                f"cost weighted error (0 to {MAX_ERROR_COST:.1f})",
+                _num(card.classification.cost_weighted_error),
+            ]
+        )
+        headline.append(["subcategory accuracy", _num(_subcategory_rate(card))])
+        headline.append(["related to diff accuracy", _num(_related_to_diff_rate(card))])
     if card.localization is not None:
         headline.append(["hit@1", _num(card.localization.hit_at_1)])
         headline.append(["hit@5", _num(card.localization.hit_at_5)])

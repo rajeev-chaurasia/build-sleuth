@@ -7,6 +7,7 @@ import pytest
 from evals.diff_baseline import (
     ACCURACY,
     COST_WEIGHTED_ERROR,
+    COVERAGE,
     EXIT_OK,
     EXIT_REGRESSED,
     HIT_AT_1,
@@ -74,6 +75,7 @@ def test_identical_scorecards_do_not_regress() -> None:
     report = compare(_card(), _card(), TOL)
     assert report.regressed is False
     assert [delta.name for delta in report.deltas] == [
+        COVERAGE,
         MACRO_F1,
         ACCURACY,
         COST_WEIGHTED_ERROR,
@@ -134,12 +136,11 @@ def test_newly_failing_and_passing_cases() -> None:
     # are ignored: only cases present on both sides can flip.
 
 
-def test_missing_reports_are_skipped_not_failed() -> None:
+def test_losing_a_report_is_a_regression() -> None:
+    """Skipping a missing report would let a total collapse pass the gate."""
     baseline = _card()
     current = _card().model_copy(update={"classification": None, "localization": None})
-    report = compare(baseline, current, TOL)
-    assert report.deltas == []
-    assert report.regressed is False
+    assert compare(baseline, current, TOL).regressed is True
 
 
 def test_render_comparison_markdown() -> None:

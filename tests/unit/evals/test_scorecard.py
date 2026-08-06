@@ -132,7 +132,7 @@ def test_render_markdown_reports_the_headline_numbers() -> None:
     assert "### BuildSleuth scorecard: `smoke`" in rendered
     assert "`openrouter/meta-llama:free`" in rendered
     assert "| accuracy | 0.500 |" in rendered
-    assert "| cost weighted error | 1.500 |" in rendered
+    assert "| cost weighted error (0 to 3.0) | 1.500 |" in rendered
     assert "| hit@1 | 0.500 |" in rendered
     assert "| localized cases | 2 |" in rendered
     assert "#### Per class" in rendered

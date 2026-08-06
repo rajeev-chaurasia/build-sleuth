@@ -20,6 +20,7 @@ MACRO_F1 = "macro_f1"
 ACCURACY = "accuracy"
 COST_WEIGHTED_ERROR = "cost_weighted_error"
 HIT_AT_1 = "hit_at_1"
+COVERAGE = "coverage"
 
 SYMBOL_UP = "^"
 SYMBOL_DOWN = "v"
@@ -48,6 +49,9 @@ class Tolerances(BaseModel):
     accuracy_drop: float = 0.02
     cost_weighted_error_rise: float = 0.05
     hit_at_1_drop: float = 0.02
+    # Answering fewer cases inflates every other metric, so coverage is held
+    # to a tighter bound than accuracy itself.
+    coverage_drop: float = 0.0
 
 
 class ComparisonReport(BaseModel):
@@ -55,6 +59,25 @@ class ComparisonReport(BaseModel):
     regressed: bool = False
     newly_failing_cases: list[str] = []
     newly_passing_cases: list[str] = []
+    incomparable_reasons: list[str] = []
+
+
+def _coverage(card: Scorecard) -> float:
+    """Share of cases the model actually produced a verdict for."""
+    if not card.per_case:
+        return 0.0
+    answered = sum(1 for case in card.per_case if case.predicted_class is not None)
+    return answered / len(card.per_case)
+
+
+def _comparability_problems(baseline: Scorecard, current: Scorecard) -> list[str]:
+    """Metrics only mean the same thing when the subset and dataset match."""
+    problems: list[str] = []
+    if baseline.subset != current.subset:
+        problems.append(f"subset changed: {baseline.subset} to {current.subset}")
+    if baseline.dataset_hash != current.dataset_hash:
+        problems.append(f"dataset changed: {baseline.dataset_hash} to {current.dataset_hash}")
+    return problems
 
 
 def _metric_delta(
@@ -72,8 +95,19 @@ def _metric_delta(
 
 
 def compare(baseline: Scorecard, current: Scorecard, tol: Tolerances) -> ComparisonReport:
-    """Diff two scorecards. A metric absent from either side is skipped, not failed."""
-    deltas: list[MetricDelta] = []
+    """Diff two scorecards.
+
+    Coverage is compared first and always: a model that stops answering would
+    otherwise raise every remaining metric and pass the gate while getting
+    strictly worse. Losing a report the baseline had is likewise a regression,
+    not something to skip over.
+    """
+    deltas: list[MetricDelta] = [
+        _metric_delta(COVERAGE, _coverage(baseline), _coverage(current), tol.coverage_drop, True)
+    ]
+    lost_reports = (baseline.classification is not None and current.classification is None) or (
+        baseline.localization is not None and current.localization is None
+    )
     if baseline.classification is not None and current.classification is not None:
         before, after = baseline.classification, current.classification
         deltas += [
@@ -100,15 +134,18 @@ def compare(baseline: Scorecard, current: Scorecard, tol: Tolerances) -> Compari
 
     was_correct = {case.case_id: case.correct for case in baseline.per_case}
     shared = [case for case in current.per_case if case.case_id in was_correct]
+    newly_failing = sorted(
+        case.case_id for case in shared if was_correct[case.case_id] and not case.correct
+    )
+    problems = _comparability_problems(baseline, current)
     return ComparisonReport(
         deltas=deltas,
-        regressed=any(delta.regressed for delta in deltas),
-        newly_failing_cases=sorted(
-            case.case_id for case in shared if was_correct[case.case_id] and not case.correct
-        ),
+        regressed=any(delta.regressed for delta in deltas) or lost_reports or bool(problems),
+        newly_failing_cases=newly_failing,
         newly_passing_cases=sorted(
             case.case_id for case in shared if case.correct and not was_correct[case.case_id]
         ),
+        incomparable_reasons=problems,
     )
 
 
@@ -144,6 +181,11 @@ def render_comparison_markdown(report: ComparisonReport) -> str:
             "",
             f"Newly failing cases: {_case_list(report.newly_failing_cases)}",
             f"Newly passing cases: {_case_list(report.newly_passing_cases)}",
+            *(
+                ["", "Not comparable: " + "; ".join(report.incomparable_reasons)]
+                if report.incomparable_reasons
+                else []
+            ),
         ]
     )
 

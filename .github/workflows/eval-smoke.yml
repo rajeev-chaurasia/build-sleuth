@@ -36,12 +36,12 @@ jobs:
 
       - name: Compare against baseline
         id: compare
+        # pipefail matters: without it the pipeline reports tee's status and
+        # the gate's non-zero exit is silently discarded.
+        shell: bash
         run: |
-          baseline=$(uv run python -c "
-          import json, pathlib
-          pointer = pathlib.Path('results/baseline.json')
-          print(pointer.read_text().strip() if pointer.exists() else '')
-          ")
+          set -euo pipefail
+          baseline=$(cat results/baseline.json 2>/dev/null || true)
           current=$(ls results/current/*.json | head -1)
           if [ -z "$baseline" ] || [ ! -f "results/$baseline" ]; then
             echo "no baseline recorded yet, skipping the gate" | tee comparison.md

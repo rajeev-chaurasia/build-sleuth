@@ -69,6 +69,10 @@ ERROR_COSTS: dict[tuple[FailureClass, FailureClass], float] = {
 }
 
 
+# Upper bound of the cost-weighted error metric, so readers know its scale.
+MAX_ERROR_COST = max([NEUTRAL_ERROR_COST, *ERROR_COSTS.values()])
+
+
 def is_valid_subcategory(failure_class: FailureClass, subcategory: str) -> bool:
     return subcategory in SUBCATEGORIES[failure_class]
 
