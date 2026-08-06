@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Environments
+.venv/
+.env
+
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+
+# Eval transcripts (scorecards in results/ are committed, raw logs are not)
+logs/
+*.eval
+
+# OS
+.DS_Store
+Thumbs.db
