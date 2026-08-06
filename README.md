@@ -8,24 +8,31 @@ The differentiator is the eval harness. Explaining a failed build is a commodity
 
 ## Status
 
-Under active development. Classification runs against a non-LLM baseline today; the model layer lands next.
+Classification works end to end against real models. Localization and fix generation are next.
 
-Current scorecard, regex baseline, 6 cases:
+Current scorecard, 6 cases, every model scored through the same code path:
 
-| metric | value |
-| --- | --- |
-| accuracy | 0.667 |
-| macro F1 (all 4 classes) | 0.200 |
-| subcategory accuracy | 0.000 |
-| cost per triage | $0.00 (no model calls) |
+| model | coverage | accuracy | macro F1 | cost weighted error | subcategory | usd per triage |
+| --- | --- | --- | --- | --- | --- | --- |
+| gemini-3.1-flash-lite | 6/6 | 0.667 | **0.438** | 0.500 | **0.500** | 0.0003 |
+| regex baseline | 6/6 | 0.667 | 0.200 | **0.417** | 0.000 | 0.0000 |
+| majority baseline | 6/6 | 0.667 | 0.200 | **0.417** | 0.000 | 0.0000 |
 
-The gap between accuracy and macro F1 is the point: the baseline predicts `code_change` for everything, so it looks passable on accuracy while failing both minority classes outright. That is the floor a model has to beat.
+Cost is at the provider's list price; the actual runs were free-tier and billed nothing.
+
+Read that table carefully, because it is the argument for having an eval harness at all:
+
+- **Accuracy says all three are identical.** They are not. Four of six cases are `code_change`, so a classifier that answers `code_change` every time scores 0.667 while understanding nothing.
+- **Macro F1 separates them**, because it refuses to let the majority class carry the score. The model more than doubles the floor.
+- **Cost weighted error says the model is worse**, and that is not a bug in the metric. The baseline never guesses anything but `code_change`, so it never makes an expensive mistake. The model misread one code failure as infrastructure, which is the kind of error that sends someone hunting a runner outage that never happened.
+
+One metric alone would have told you the wrong story three different ways.
 
 Honest caveats, kept current:
 
-- 6 cases so far, target is 80. Numbers on this few cases are directional, not conclusive.
-- No case has been human-verified yet, so none are eligible for the pull request gate. Labels were derived from log evidence and each one records why.
-- Localization and fix generation are not implemented, so those rows are absent rather than zero.
+- 6 cases so far, target is 80. Numbers this small are directional, not conclusive.
+- No case has been human-verified yet, so none are eligible for the pull request gate. Labels were derived from log evidence and each case records the line that decided it.
+- `gemini-3.6-flash` is in the registry but has no free tier: an unbilled key gets a 429 on the first request.
 
 ## How it works
 
@@ -43,10 +50,18 @@ Ingestion snapshots a run so triage runs offline and eval cases stay replayable 
 uv sync
 uv run buildsleuth fetch https://github.com/OWNER/REPO/actions/runs/RUN_ID
 uv run buildsleuth condense snapshots/OWNER-REPO-RUN_ID/log.txt
-uv run python -m evals.run_eval
+uv run python -m evals.run_eval                                  # regex baseline, no key needed
+uv run python -m evals.run_eval --model gemini-3.1-flash-lite    # needs a free Gemini key
 ```
 
-Fetching needs a GitHub token in `BUILDSLEUTH_GITHUB_TOKEN` (fine-grained, `Actions: read`).
+Put credentials in `.env`, which is gitignored:
+
+```
+BUILDSLEUTH_GITHUB_TOKEN=...     # fine-grained, Actions: read
+BUILDSLEUTH_GEMINI_API_KEY=...   # free tier from aistudio.google.com
+```
+
+Traces go to any OTLP backend. `docker/phoenix` starts one with a single command.
 
 ## Eval design
 
