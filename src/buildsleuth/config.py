@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     )
 
     github_token: SecretStr | None = None
+    # Repositories this agent may open pull requests against, comma separated.
+    # Empty means none, so a fresh checkout cannot write anywhere.
+    pr_allowlist: str = ""
     gemini_api_key: SecretStr | None = Field(
         default=None,
         validation_alias=AliasChoices(

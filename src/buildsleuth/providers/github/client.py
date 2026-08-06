@@ -123,6 +123,55 @@ class GitHubClient:
         data: list[JsonDict] = self._get(f"/repos/{repo}/commits/{sha}/pulls").json()
         return data
 
+    def create_blob(self, repo: str, content: str, encoding: str) -> JsonDict:
+        """Store file content and return its blob sha."""
+        data: JsonDict = self._post(
+            f"/repos/{repo}/git/blobs", {"content": content, "encoding": encoding}
+        ).json()
+        return data
+
+    def create_tree(self, repo: str, base_tree: str, entries: list[dict[str, str]]) -> JsonDict:
+        """Build a tree from a base commit plus the entries that changed."""
+        data: JsonDict = self._post(
+            f"/repos/{repo}/git/trees", {"base_tree": base_tree, "tree": entries}
+        ).json()
+        return data
+
+    def create_commit(self, repo: str, message: str, tree_sha: str, parents: list[str]) -> JsonDict:
+        """Create one commit holding every changed file."""
+        data: JsonDict = self._post(
+            f"/repos/{repo}/git/commits",
+            {"message": message, "tree": tree_sha, "parents": parents},
+        ).json()
+        return data
+
+    def create_ref(self, repo: str, ref: str, sha: str) -> JsonDict:
+        """Point a new branch at a commit."""
+        data: JsonDict = self._post(f"/repos/{repo}/git/refs", {"ref": ref, "sha": sha}).json()
+        return data
+
+    def get_ref(self, repo: str, ref: str) -> JsonDict:
+        """Resolve a ref such as heads/main to its commit."""
+        data: JsonDict = self._get(f"/repos/{repo}/git/ref/{ref}").json()
+        return data
+
+    def create_pull_request(
+        self, repo: str, title: str, head: str, base: str, body: str, draft: bool = True
+    ) -> JsonDict:
+        """Open a pull request. Draft by default, because nothing here is ready to merge."""
+        data: JsonDict = self._post(
+            f"/repos/{repo}/pulls",
+            {"title": title, "head": head, "base": base, "body": body, "draft": draft},
+        ).json()
+        return data
+
+    def add_labels(self, repo: str, issue_number: int, labels: list[str]) -> JsonDict | list[Any]:
+        """Label a pull request, which the issues endpoint handles."""
+        data: JsonDict | list[Any] = self._post(
+            f"/repos/{repo}/issues/{issue_number}/labels", {"labels": labels}
+        ).json()
+        return data
+
     def get_pr(self, repo: str, number: int) -> JsonDict:
         """Fetch a pull request's metadata, including its base commit."""
         data: JsonDict = self._get(f"/repos/{repo}/pulls/{number}").json()
@@ -150,6 +199,16 @@ class GitHubClient:
             return None
         _ensure_success(response)
         return response.text
+
+    def _post(self, url: str, payload: dict[str, Any]) -> httpx.Response:
+        """POST JSON, with the same error handling every read uses.
+
+        Writes are not retried. A retried create can leave a second branch or
+        a duplicate pull request behind, which is worse than failing once.
+        """
+        response = self._http.post(url, json=payload)
+        _ensure_success(response)
+        return response
 
     def _get(
         self, url: str, *, accept: str | None = None, params: dict[str, str] | None = None

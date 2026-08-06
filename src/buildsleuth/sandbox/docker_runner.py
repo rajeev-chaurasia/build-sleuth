@@ -59,13 +59,11 @@ def docker_available(timeout: int = 15) -> bool:
     return completed.returncode == 0
 
 
-def build_script(spec: SandboxSpec, apply_patch: bool, network_off_for_tests: bool) -> str:
+def build_script(spec: SandboxSpec, apply_patch: bool = False, run_regression: bool = False) -> str:
     """The shell script the container runs.
 
-    Setup needs the network to install things; the tests themselves must not,
-    so that a green result cannot be a network fluke. Docker has no way to
-    drop networking mid-container, so the caller runs setup and tests as
-    separate containers when isolation matters.
+    Whether the regression suite runs is its own decision, kept separate from
+    network isolation, which is a property of how the container is started.
     """
     lines = [
         "set -eux",
@@ -78,7 +76,7 @@ def build_script(spec: SandboxSpec, apply_patch: bool, network_off_for_tests: bo
     lines.extend(spec.setup_commands)
     if spec.test_command:
         lines.append(spec.test_command)
-    if network_off_for_tests and spec.regression_command:
+    if run_regression and spec.regression_command:
         lines.append(spec.regression_command)
     return "\n".join(lines)
 
