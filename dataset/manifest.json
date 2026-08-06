@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "dataset_hash": "2251deb9cc07",
-  "case_count": 42,
+  "dataset_hash": "7c81d9be36b6",
+  "case_count": 48,
   "cases": [
     {
       "case_id": "gm-0001",
@@ -271,6 +271,42 @@
     {
       "case_id": "gm-0135",
       "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0200",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0201",
+      "failure_class": "infra_environment",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0202",
+      "failure_class": "pipeline_config",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0203",
+      "failure_class": "infra_environment",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0204",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": []
+    },
+    {
+      "case_id": "gm-0205",
+      "failure_class": "infra_environment",
       "source": "gha_mined",
       "tags": []
     },

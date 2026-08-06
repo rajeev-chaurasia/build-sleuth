@@ -1,0 +1,14 @@
+{
+  "repo": "pandas-dev/pandas",
+  "run_id": 30755143431,
+  "run_attempt": 1,
+  "head_sha": "f38169497b94a3a7d409d239b694c0587a77a321",
+  "workflow_name": "Unit Tests",
+  "failed_job": "Linux-32-bit",
+  "failed_step": "Checkout pandas Repo",
+  "pr_number": 66598,
+  "has_diff": true,
+  "log_lines": 204,
+  "original_url": "https://github.com/pandas-dev/pandas/actions/runs/30755143431",
+  "mining_signal": "failed_in_setup_step"
+}

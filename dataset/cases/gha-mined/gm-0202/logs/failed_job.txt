@@ -1,0 +1,419 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {4416bd0c-ca71-4856-9aa1-e86a471323e4}
+Azure Region: centralus
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260720.247.2
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+Download action repository 'actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+Download action repository 'astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b' (SHA:08807647e7069bb48b6ef5acd8ec9567f424441b)
+Complete job name: Test vLLM integration
+##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+with:
+  repository: huggingface/transformers
+  persist-credentials: false
+  path: transformers
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+env:
+  UV_SYSTEM_PYTHON: 1
+  VLLM_USE_PRECOMPILED: 1
+  VLLM_PRECOMPILED_WHEEL_VARIANT: cpu
+  VLLM_TARGET_DEVICE: cpu
+##[endgroup]
+Syncing repository: huggingface/transformers
+##[group]Getting Git version info
+Working directory is '/home/runner/work/transformers/transformers/transformers'
+[command]/usr/bin/git version
+git version 2.54.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/1767be94-8bc1-49cb-b17c-d3c683824aa8' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/transformers/transformers/transformers
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/transformers/transformers/transformers
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/transformers/transformers/transformers/.git/
+[command]/usr/bin/git remote add origin https://github.com/huggingface/transformers
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/transformers/transformers/transformers/.git.path /home/runner/work/_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/transformers/transformers/transformers/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/transformers/.git.path /github/runner_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/transformers/.git/worktrees/*.path /github/runner_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2eaaa20ac8aca4c7b0fa9bc36919a82a7d72449d:refs/remotes/origin/main
+From https://github.com/huggingface/transformers
+ * [new ref]         2eaaa20ac8aca4c7b0fa9bc36919a82a7d72449d -> origin/main
+[command]/usr/bin/git branch --list --remote origin/main
+  origin/main
+[command]/usr/bin/git rev-parse refs/remotes/origin/main
+2eaaa20ac8aca4c7b0fa9bc36919a82a7d72449d
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Switched to a new branch 'main'
+branch 'main' set up to track 'origin/main'.
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+2eaaa20ac8aca4c7b0fa9bc36919a82a7d72449d
+##[group]Removing auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/home/runner/work/transformers/transformers/transformers/.git.path
+includeif.gitdir:/home/runner/work/transformers/transformers/transformers/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/transformers/.git.path
+includeif.gitdir:/github/workspace/transformers/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/transformers/transformers/transformers/.git.path
+/home/runner/work/_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/transformers/transformers/transformers/.git.path /home/runner/work/_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/transformers/transformers/transformers/.git/worktrees/*.path
+/home/runner/work/_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/transformers/transformers/transformers/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/transformers/.git.path
+/github/runner_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/transformers/.git.path /github/runner_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/transformers/.git/worktrees/*.path
+/github/runner_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/transformers/.git/worktrees/*.path /github/runner_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/home/runner/work/_temp/git-credentials-d0ef5b05-2d92-4eaf-ba1e-ef951bb5931a.config'
+##[endgroup]
+##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+with:
+  repository: vllm-project/vllm
+  persist-credentials: false
+  path: vllm
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+env:
+  UV_SYSTEM_PYTHON: 1
+  VLLM_USE_PRECOMPILED: 1
+  VLLM_PRECOMPILED_WHEEL_VARIANT: cpu
+  VLLM_TARGET_DEVICE: cpu
+##[endgroup]
+Syncing repository: vllm-project/vllm
+##[group]Getting Git version info
+Working directory is '/home/runner/work/transformers/transformers/vllm'
+[command]/usr/bin/git version
+git version 2.54.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/ee3ebf94-3524-4070-b29a-226b40f2e533' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/transformers/transformers/vllm
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/transformers/transformers/vllm
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/transformers/transformers/vllm/.git/
+[command]/usr/bin/git remote add origin https://github.com/vllm-project/vllm
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/transformers/transformers/vllm/.git.path /home/runner/work/_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/transformers/transformers/vllm/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/vllm/.git.path /github/runner_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/vllm/.git/worktrees/*.path /github/runner_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config
+##[endgroup]
+##[group]Determining the default branch
+Retrieving the default branch name
+Default branch 'main'
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+From https://github.com/vllm-project/vllm
+ * [new branch]      main       -> origin/main
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Switched to a new branch 'main'
+branch 'main' set up to track 'origin/main'.
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+2e09247c2d7b6b97d13af6e71a85bf8d1271deb6
+##[group]Removing auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/home/runner/work/transformers/transformers/vllm/.git.path
+includeif.gitdir:/home/runner/work/transformers/transformers/vllm/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/vllm/.git.path
+includeif.gitdir:/github/workspace/vllm/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/transformers/transformers/vllm/.git.path
+/home/runner/work/_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/transformers/transformers/vllm/.git.path /home/runner/work/_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/transformers/transformers/vllm/.git/worktrees/*.path
+/home/runner/work/_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/transformers/transformers/vllm/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/vllm/.git.path
+/github/runner_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/vllm/.git.path /github/runner_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/vllm/.git/worktrees/*.path
+/github/runner_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/vllm/.git/worktrees/*.path /github/runner_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/home/runner/work/_temp/git-credentials-9fca25e1-96c1-4424-806b-ddf7a8745f35.config'
+##[endgroup]
+##[group]Run actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+with:
+  python-version: 3.12
+  check-latest: false
+  token: ***
+  update-environment: true
+  allow-prereleases: false
+  freethreaded: false
+env:
+  UV_SYSTEM_PYTHON: 1
+  VLLM_USE_PRECOMPILED: 1
+  VLLM_PRECOMPILED_WHEEL_VARIANT: cpu
+  VLLM_TARGET_DEVICE: cpu
+##[endgroup]
+##[group]Installed versions
+Successfully set up CPython (3.12.13)
+##[endgroup]
+##[group]Run astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b
+with:
+  activate-environment: false
+  no-project: false
+  working-directory: /home/runner/work/transformers/transformers
+  github-token: ***
+  enable-cache: auto
+  cache-dependency-glob: **/*requirements*.txt
+**/*requirements*.in
+**/*constraints*.txt
+**/*constraints*.in
+**/pyproject.toml
+**/uv.lock
+**/*.py.lock
+
+  restore-cache: true
+  save-cache: true
+  prune-cache: true
+  cache-python: false
+  ignore-nothing-to-cache: false
+  ignore-empty-workdir: false
+  add-problem-matchers: true
+  resolution-strategy: highest
+env:
+  UV_SYSTEM_PYTHON: 1
+  VLLM_USE_PRECOMPILED: 1
+  VLLM_PRECOMPILED_WHEEL_VARIANT: cpu
+  VLLM_TARGET_DEVICE: cpu
+  pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+##[endgroup]
+Trying to find version for uv in: /home/runner/work/transformers/transformers/uv.toml
+Could not find file: /home/runner/work/transformers/transformers/uv.toml
+Trying to find version for uv in: /home/runner/work/transformers/transformers/pyproject.toml
+Could not find file: /home/runner/work/transformers/transformers/pyproject.toml
+Could not determine uv version from uv.toml or pyproject.toml. Falling back to latest.
+Fetching manifest data from https://raw.githubusercontent.com/astral-sh/versions/main/v1/uv.ndjson ...
+Downloading uv from "https://releases.astral.sh/github/uv/releases/download/0.12.2/uv-x86_64-unknown-linux-gnu.tar.gz" ...
+[command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/04872b0b-94d2-4915-b386-b0c2dd2bf081 -f /home/runner/work/_temp/f5849e4a-4183-4d8d-aaec-3b81ee66eed9
+Added /home/runner/.local/bin to the path
+Added /opt/hostedtoolcache/uv/0.12.2/x86_64 to the path
+Set UV_PYTHON_INSTALL_DIR to /home/runner/work/_temp/uv-python-dir
+Added /home/runner/work/_temp/uv-python-dir to the path
+Set UV_CACHE_DIR to /home/runner/work/_temp/setup-uv-cache
+Successfully installed uv version 0.12.2
+Searching files using cache dependency glob: /home/runner/work/transformers/transformers/**/*requirements*.txt,/home/runner/work/transformers/transformers/**/*requirements*.in,/home/runner/work/transformers/transformers/**/*constraints*.txt,/home/runner/work/transformers/transformers/**/*constraints*.in,/home/runner/work/transformers/transformers/**/pyproject.toml,/home/runner/work/transformers/transformers/**/uv.lock,/home/runner/work/transformers/transformers/**/*.py.lock
+/home/runner/work/transformers/transformers/transformers/benchmark/requirements.txt
+/home/runner/work/transformers/transformers/transformers/benchmark_v2/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/_tests_requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/audio-classification/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/contrastive-image-text/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/image-classification/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/image-pretraining/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/instance-segmentation/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/language-modeling/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/multiple-choice/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/object-detection/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/question-answering/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/semantic-segmentation/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/speech-pretraining/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/speech-recognition/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/summarization/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/text-classification/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/text-generation/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/token-classification/requirements.txt
+/home/runner/work/transformers/transformers/transformers/examples/pytorch/translation/requirements.txt
+/home/runner/work/transformers/transformers/transformers/pyproject.toml
+/home/runner/work/transformers/transformers/transformers/tests/sagemaker/scripts/pytorch/requirements.txt
+/home/runner/work/transformers/transformers/vllm/benchmarks/kernels/requirements.txt
+/home/runner/work/transformers/transformers/vllm/benchmarks/multi_turn/requirements.txt
+/home/runner/work/transformers/transformers/vllm/examples/features/structured_outputs/pyproject.toml
+/home/runner/work/transformers/transformers/vllm/pyproject.toml
+Found 26 files to hash.
+Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12.13-pruned-17669a18a01489759ca34508cc03391acbc57c449f8c7cb050dc16fd3f18817f
+No GitHub Actions cache found for key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.12.13-pruned-17669a18a01489759ca34508cc03391acbc57c449f8c7cb050dc16fd3f18817f
+##[group]Run uv pip install -e vllm -e transformers
+uv pip install -e vllm -e transformers
+shell: /usr/bin/bash -e {0}
+env:
+  UV_SYSTEM_PYTHON: 1
+  VLLM_USE_PRECOMPILED: 1
+  VLLM_PRECOMPILED_WHEEL_VARIANT: cpu
+  VLLM_TARGET_DEVICE: cpu
+  pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+##[endgroup]
+Using Python 3.12.13 environment at: /opt/hostedtoolcache/Python/3.12.13/x64
+  × No solution found when resolving dependencies:
+  ╰─▶ Because there is no version of torch{platform_machine ==
+      'aarch64' or platform_machine == 's390x' or platform_machine ==
+      'x86_64'}==2.13.0+cpu and vllm==0.1.dev1+g2e09247c2.cpu depends on
+      torch{platform_machine == 'aarch64' or platform_machine == 's390x'
+      or platform_machine == 'x86_64'}==2.13.0+cpu, we can conclude that
+      vllm==0.1.dev1+g2e09247c2.cpu cannot be used.
+      And because only vllm==0.1.dev1+g2e09247c2.cpu is available and you
+      require vllm, we can conclude that your requirements are unsatisfiable.
+##[error]Process completed with exit code 1.
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/dbfc7027-5d1b-41a1-8262-645ce390c90d' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/transformers/transformers/vllm
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/01913691-b883-41d5-baf0-cb48382e9232' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/transformers/transformers/transformers
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Cleaning up orphan processes

@@ -1,0 +1,14 @@
+{
+  "repo": "home-assistant/core",
+  "run_id": 31070597087,
+  "run_attempt": 1,
+  "head_sha": "742c067c413ee579e7475fb9d1951ffe96e81fa6",
+  "workflow_name": "CI",
+  "failed_job": "Prepare dependencies (3.14.5)",
+  "failed_step": "Set up Python 3.14.5 and build venv",
+  "pr_number": null,
+  "has_diff": false,
+  "log_lines": 1242,
+  "original_url": "https://github.com/home-assistant/core/actions/runs/31070597087",
+  "mining_signal": "failed_in_setup_step"
+}

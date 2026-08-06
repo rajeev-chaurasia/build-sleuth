@@ -1,0 +1,1241 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {b0022962-bdcf-42cb-90de-891d265603f5}
+Azure Region: northcentralus
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260720.247.2
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: None
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Download action repository 'actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a' (SHA:043fb46d1a93c77aae656e7c1c64a875d1fc6a0a)
+Complete job name: Prepare dependencies (3.14.5)
+##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+with:
+  persist-credentials: false
+  repository: home-assistant/core
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+##[endgroup]
+Syncing repository: home-assistant/core
+##[group]Getting Git version info
+Working directory is '/home/runner/work/core/core'
+[command]/usr/bin/git version
+git version 2.54.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/f4f9c929-d42d-4a12-9a20-933b87ea4245' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/core/core
+Deleting the contents of '/home/runner/work/core/core'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/core/core
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/core/core/.git/
+[command]/usr/bin/git remote add origin https://github.com/home-assistant/core
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-a7693c01-295f-4df4-9774-90f430c45e03.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/core/core/.git.path /home/runner/work/_temp/git-credentials-a7693c01-295f-4df4-9774-90f430c45e03.config
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/core/core/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-a7693c01-295f-4df4-9774-90f430c45e03.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-a7693c01-295f-4df4-9774-90f430c45e03.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-a7693c01-295f-4df4-9774-90f430c45e03.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +0b08386d57fbc39889cb82d466e6b5ca7b531e69:refs/remotes/pull/178291/merge
+From https://github.com/home-assistant/core
+ * [new ref]           0b08386d57fbc39889cb82d466e6b5ca7b531e69 -> pull/178291/merge
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force refs/remotes/pull/178291/merge
+Updating files:  67% (18175/27000)
+Updating files:  68% (18360/27000)
+Updating files:  69% (18630/27000)
+Updating files:  70% (18900/27000)
+Updating files:  71% (19170/27000)
+Updating files:  72% (19440/27000)
+Updating files:  73% (19710/27000)
+Updating files:  74% (19980/27000)
+Updating files:  75% (20250/27000)
+Updating files:  76% (20520/27000)
+Updating files:  77% (20790/27000)
+Updating files:  78% (21060/27000)
+Updating files:  79% (21330/27000)
+Updating files:  80% (21600/27000)
+Updating files:  81% (21870/27000)
+Updating files:  82% (22140/27000)
+Updating files:  83% (22410/27000)
+Updating files:  84% (22680/27000)
+Updating files:  85% (22950/27000)
+Updating files:  86% (23220/27000)
+Updating files:  87% (23490/27000)
+Updating files:  88% (23760/27000)
+Updating files:  89% (24030/27000)
+Updating files:  90% (24300/27000)
+Updating files:  91% (24570/27000)
+Updating files:  92% (24840/27000)
+Updating files:  93% (25110/27000)
+Updating files:  94% (25380/27000)
+Updating files:  95% (25650/27000)
+Updating files:  96% (25920/27000)
+Updating files:  97% (26190/27000)
+Updating files:  98% (26460/27000)
+Updating files:  99% (26730/27000)
+Updating files: 100% (27000/27000)
+Updating files: 100% (27000/27000), done.
+Note: switching to 'refs/remotes/pull/178291/merge'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 0b08386d Merge 742c067c413ee579e7475fb9d1951ffe96e81fa6 into 66059633a3bcd77df1c92d5158501c1e63e3ed78
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+0b08386d57fbc39889cb82d466e6b5ca7b531e69
+##[group]Removing auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/home/runner/work/core/core/.git.path
+includeif.gitdir:/home/runner/work/core/core/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/core/core/.git.path
+/home/runner/work/_temp/git-credentials-a7693c01-295f-4df4-9774-90f430c45e03.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/core/core/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-a7693c01\-295f\-4df4\-9774\-90f430c45e03\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/core/core/.git/worktrees/*.path
+/home/runner/work/_temp/git-credentials-a7693c01-295f-4df4-9774-90f430c45e03.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/core/core/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-a7693c01\-295f\-4df4\-9774\-90f430c45e03\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-a7693c01-295f-4df4-9774-90f430c45e03.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-a7693c01\-295f\-4df4\-9774\-90f430c45e03\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-a7693c01-295f-4df4-9774-90f430c45e03.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-a7693c01\-295f\-4df4\-9774\-90f430c45e03\.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/home/runner/work/_temp/git-credentials-a7693c01-295f-4df4-9774-90f430c45e03.config'
+##[endgroup]
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9' (SHA:55cc8345863c7cc4c66a329aec7e433d2d1c52a9)
+##[group]Run ./.github/actions/restore-or-build-venv
+with:
+  uv-version: 0.12.0
+  python-version: 3.14.5
+  python-cache-key: venv-4-2026.9-95ca936402f00b2878372c5eb1c73fd9a19e9d9c7e8964c32316718b1cc0d66d-d29917a3b898170024e30172d18a618c0354f62d068436ef6e160ad338a68413-212e8a2d328196d695a3329b67db9756414c3bee849274619eb2b7e56c5b38e8-080b996bfe97f5f2b8c1035fff27585220bf8ff68c9f38f38d620136028ae6f0-32a32750abe4dee93427b521fc1ceaa6dbe997ad54bbebec6c308177abc526ea
+  uv-cache-dir: /tmp/uv-cache
+  apt-cache-version: 1
+  save: true
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+##[endgroup]
+##[start-action display=Set up uv and managed Python;id=python.python]
+Prepare all required actions
+Getting action download info
+Download action repository 'astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39' (SHA:fac544c07dec837d0ccb6301d7b5580bf5edae39)
+##[group]Run ./.github/actions/setup-uv-python
+with:
+  uv-version: 0.12.0
+  python-version: 3.14.5
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+##[endgroup]
+##[start-action display=Set up uv;id=python.python.uv]
+##[group]Run astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39
+with:
+  version: 0.12.0
+  python-version: 3.14.5
+  cache-python: true
+  ignore-nothing-to-cache: true
+  activate-environment: false
+  no-project: false
+  working-directory: /home/runner/work/core/core
+  github-token: ***
+  enable-cache: auto
+  cache-dependency-glob: **/*requirements*.txt
+**/*requirements*.in
+**/*constraints*.txt
+**/*constraints*.in
+**/pyproject.toml
+**/uv.lock
+**/*.py.lock
+
+  restore-cache: true
+  save-cache: true
+  prune-cache: true
+  ignore-empty-workdir: false
+  download-from-astral-mirror: true
+  add-problem-matchers: true
+  quiet: false
+  resolution-strategy: highest
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+##[endgroup]
+UV_CACHE_DIR is already set to /tmp/uv-cache
+Fetching manifest data from https://raw.githubusercontent.com/astral-sh/versions/main/v1/uv.ndjson ...
+Downloading uv from "https://releases.astral.sh/github/uv/releases/download/0.12.0/uv-x86_64-unknown-linux-gnu.tar.gz" ...
+[command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/06fa18cc-0780-44a6-9c34-a9dba3a22928 -f /home/runner/work/_temp/06f6b0b3-3681-4e92-85f1-fb10f944d913
+Added /home/runner/.local/bin to the path
+Added /opt/hostedtoolcache/uv/0.12.0/x86_64 to the path
+Set UV_PYTHON_INSTALL_DIR to /home/runner/work/_temp/uv-python-dir
+Added /home/runner/work/_temp/uv-python-dir to the path
+Set UV_PYTHON to 3.14.5
+Set UV_CACHE_DIR to /tmp/uv-cache
+Successfully installed uv version 0.12.0
+Searching files using cache dependency glob: /home/runner/work/core/core/**/*requirements*.txt,/home/runner/work/core/core/**/*requirements*.in,/home/runner/work/core/core/**/*constraints*.txt,/home/runner/work/core/core/**/*constraints*.in,/home/runner/work/core/core/**/pyproject.toml,/home/runner/work/core/core/**/uv.lock,/home/runner/work/core/core/**/*.py.lock
+/home/runner/work/core/core/homeassistant/package_constraints.txt
+/home/runner/work/core/core/pylint/plugins/pyproject.toml
+/home/runner/work/core/core/pyproject.toml
+/home/runner/work/core/core/requirements.txt
+/home/runner/work/core/core/requirements_all.txt
+/home/runner/work/core/core/requirements_test.txt
+/home/runner/work/core/core/requirements_test_pre_commit.txt
+/home/runner/work/core/core/script/check_requirements/requirements.txt
+Found 8 files to hash.
+Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.14.5-pruned-py-68fe9c3fb1b819964c6b71f3183685d928e96c4664da84ab703baf3c7e2b85e1
+Cache hit for: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.14.5-pruned-py-68fe9c3fb1b819964c6b71f3183685d928e96c4664da84ab703baf3c7e2b85e1
+Received 1098 of 1098 (100.0%), 0.0 MBs/sec
+Cache Size: ~0 MB (1098 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/594bc65f-9d13-456d-9377-845348529d2d/cache.tzst -P -C /home/runner/work/core/core --use-compress-program unzstd
+Cache restored successfully
+cache restored from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.14.5-pruned-py-68fe9c3fb1b819964c6b71f3183685d928e96c4664da84ab703baf3c7e2b85e1
+Trying to restore cache from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.14.5-pruned-py-68fe9c3fb1b819964c6b71f3183685d928e96c4664da84ab703baf3c7e2b85e1-python
+Cache hit for: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.14.5-pruned-py-68fe9c3fb1b819964c6b71f3183685d928e96c4664da84ab703baf3c7e2b85e1-python
+Received 35085649 of 35085649 (100.0%), 59.1 MBs/sec
+Cache Size: ~33 MB (35085649 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/fe8e0958-5af7-430f-88cf-2cf49299eb2a/cache.tzst -P -C /home/runner/work/core/core --use-compress-program unzstd
+Cache restored successfully
+cache restored from GitHub Actions cache with key: setup-uv-2-x86_64-unknown-linux-gnu-ubuntu-24.04-3.14.5-pruned-py-68fe9c3fb1b819964c6b71f3183685d928e96c4664da84ab703baf3c7e2b85e1-python
+##[end-action id=python.python.uv;outcome=success;conclusion=success;duration_ms=5038]
+##[start-action display=Install Python interpreter;id=python.python.__run]
+##[group]Run uv python install "${PYTHON_VERSION}"
+uv python install "${PYTHON_VERSION}"
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+  PYTHON_VERSION: 3.14.5
+##[endgroup]
+Installed Python 3.14.5 in 425ms
+ + cpython-3.14.5-linux-x86_64-gnu (python3.14)
+##[end-action id=python.python.__run;outcome=success;conclusion=success;duration_ms=535]
+##[end-action id=python.python;outcome=success;conclusion=success;duration_ms=6082]
+##[start-action display=Restore full Python virtual environment;id=python.cache-venv]
+##[group]Run actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+with:
+  path: venv
+  key: Linux-X64-3.14.5-venv-4-2026.9-95ca936402f00b2878372c5eb1c73fd9a19e9d9c7e8964c32316718b1cc0d66d-d29917a3b898170024e30172d18a618c0354f62d068436ef6e160ad338a68413-212e8a2d328196d695a3329b67db9756414c3bee849274619eb2b7e56c5b38e8-080b996bfe97f5f2b8c1035fff27585220bf8ff68c9f38f38d620136028ae6f0-32a32750abe4dee93427b521fc1ceaa6dbe997ad54bbebec6c308177abc526ea
+  enableCrossOsArchive: false
+  fail-on-cache-miss: false
+  lookup-only: false
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+##[endgroup]
+Cache not found for input keys: Linux-X64-3.14.5-venv-4-2026.9-95ca936402f00b2878372c5eb1c73fd9a19e9d9c7e8964c32316718b1cc0d66d-d29917a3b898170024e30172d18a618c0354f62d068436ef6e160ad338a68413-212e8a2d328196d695a3329b67db9756414c3bee849274619eb2b7e56c5b38e8-080b996bfe97f5f2b8c1035fff27585220bf8ff68c9f38f38d620136028ae6f0-32a32750abe4dee93427b521fc1ceaa6dbe997ad54bbebec6c308177abc526ea
+##[end-action id=python.cache-venv;outcome=success;conclusion=success;duration_ms=227]
+##[start-action display=Generate partial uv restore key;id=python.generate-uv-key]
+##[group]Run partial_key="${RUNNER_OS}-${RUNNER_ARCH}-${PYTHON_VERSION}-uv-"
+partial_key="${RUNNER_OS}-${RUNNER_ARCH}-${PYTHON_VERSION}-uv-"
+echo "partial_key=${partial_key}" >> $GITHUB_OUTPUT
+echo "full_key=${partial_key}${HASH_FILES}" >> $GITHUB_OUTPUT
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+  RUNNER_OS: Linux
+  RUNNER_ARCH: X64
+  PYTHON_VERSION: 3.14.5
+  HASH_FILES: 95a218aaa7c159fb6cefd726e7ca2d606b3ec118eb269c973dea67e22acc0870
+##[endgroup]
+##[end-action id=python.generate-uv-key;outcome=success;conclusion=success;duration_ms=18]
+##[start-action display=Restore uv wheel cache;id=python.__actions_cache]
+##[group]Run actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+with:
+  path: /tmp/uv-cache
+  key: Linux-X64-3.14.5-uv-95a218aaa7c159fb6cefd726e7ca2d606b3ec118eb269c973dea67e22acc0870
+  restore-keys: Linux-X64-3.14.5-uv-
+  enableCrossOsArchive: false
+  fail-on-cache-miss: false
+  lookup-only: false
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+##[endgroup]
+Cache hit for restore-key: Linux-X64-3.14.5-uv-ad6406b16d40e27206c6726689cdee61fcc99cd23ab4bb72b870b67e0d2c6d25
+Received 46624386 of 46624386 (100.0%), 80.0 MBs/sec
+Cache Size: ~44 MB (46624386 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/f6c4e453-a70d-4530-a080-d592ad83a659/cache.tzst -P -C /home/runner/work/core/core --use-compress-program unzstd
+Cache restored successfully
+Cache restored from key: Linux-X64-3.14.5-uv-ad6406b16d40e27206c6726689cdee61fcc99cd23ab4bb72b870b67e0d2c6d25
+##[end-action id=python.__actions_cache;outcome=success;conclusion=success;duration_ms=1257]
+##[start-action display=Install additional OS dependencies;id=python.__self]
+Prepare all required actions
+Getting action download info
+Download action repository 'awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05' (SHA:acb598e5ddbc6f68a970c5da0688d2f3a9f04d05)
+Getting action download info
+Download action repository 'actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+##[group]Run ./.github/actions/cache-apt-packages
+with:
+  packages: bluez ffmpeg libturbojpeg libxml2-utils libavcodec-dev libavdevice-dev libavfilter-dev libavformat-dev libavutil-dev libswresample-dev libswscale-dev libudev-dev
+  version: 1
+  execute_install_scripts: true
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+##[endgroup]
+##[start-action display=Remove conflicting Microsoft apt source;id=python.__self.__run]
+##[group]Run sudo rm -f /etc/apt/sources.list.d/microsoft-prod.list
+sudo rm -f /etc/apt/sources.list.d/microsoft-prod.list
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+##[endgroup]
+##[end-action id=python.__self.__run;outcome=success;conclusion=success;duration_ms=22]
+##[start-action display=Install apt packages via cache;id=python.__self.__awalsh128_cache-apt-pkgs-action]
+##[group]Run awalsh128/cache-apt-pkgs-action@acb598e5ddbc6f68a970c5da0688d2f3a9f04d05
+with:
+  packages: bluez ffmpeg libturbojpeg libxml2-utils libavcodec-dev libavdevice-dev libavfilter-dev libavformat-dev libavutil-dev libswresample-dev libswscale-dev libudev-dev
+  version: 1
+  execute_install_scripts: true
+  empty_packages_behavior: error
+  debug: false
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+##[endgroup]
+##[start-action display=Run ${GITHUB_ACTION_PATH}/pre_cache_action.sh \;id=python.__self.__awalsh128_cache-apt-pkgs-action.pre-cache]
+##[group]Run ${GITHUB_ACTION_PATH}/pre_cache_action.sh \
+${GITHUB_ACTION_PATH}/pre_cache_action.sh \
+  ~/cache-apt-pkgs \
+  "$VERSION" \
+  "$EXEC_INSTALL_SCRIPTS" \
+  "$DEBUG" \
+  "$ADD_REPOSITORY" \
+  "$PACKAGES"
+if [ -f ~/cache-apt-pkgs/cache_key.md5 ]; then
+  echo "CACHE_KEY=$(cat ~/cache-apt-pkgs/cache_key.md5)" >> $GITHUB_ENV
+else
+  echo "CACHE_KEY=" >> $GITHUB_ENV
+fi
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+  VERSION: 1
+  EXEC_INSTALL_SCRIPTS: true
+  EMPTY_PACKAGES_BEHAVIOR: error
+  DEBUG: false
+  ADD_REPOSITORY: 
+  PACKAGES: bluez ffmpeg libturbojpeg libxml2-utils libavcodec-dev libavdevice-dev libavfilter-dev libavformat-dev libavutil-dev libswresample-dev libswscale-dev libudev-dev
+##[endgroup]
+Normalizing package list...
+done
+Validating action arguments (version='1', packages='bluez=5.72-0ubuntu5.5 ffmpeg=7:6.1.1-3ubuntu5 libavcodec-dev=7:6.1.1-3ubuntu5 libavdevice-dev=7:6.1.1-3ubuntu5 libavfilter-dev=7:6.1.1-3ubuntu5 libavformat-dev=7:6.1.1-3ubuntu5 libavutil-dev=7:6.1.1-3ubuntu5 libswresample-dev=7:6.1.1-3ubuntu5 libswscale-dev=7:6.1.1-3ubuntu5 libturbojpeg=1:2.1.5-2ubuntu2 libudev-dev=255.4-1ubuntu8.16 libxml2-utils=2.9.14+dfsg-1.3ubuntu3.8')...
+done
+
+Creating cache key...
+- CPU architecture is 'x86_64'.
+- Value to hash is 'bluez=5.72-0ubuntu5.5 ffmpeg=7:6.1.1-3ubuntu5 libavcodec-dev=7:6.1.1-3ubuntu5 libavdevice-dev=7:6.1.1-3ubuntu5 libavfilter-dev=7:6.1.1-3ubuntu5 libavformat-dev=7:6.1.1-3ubuntu5 libavutil-dev=7:6.1.1-3ubuntu5 libswresample-dev=7:6.1.1-3ubuntu5 libswscale-dev=7:6.1.1-3ubuntu5 libturbojpeg=1:2.1.5-2ubuntu2 libudev-dev=255.4-1ubuntu8.16 libxml2-utils=2.9.14+dfsg-1.3ubuntu3.8 @ 1 3'.
+- Value hashed as 'c6b4b61d5fef4b64788ade85e17ce5c1'.
+done
+Hash value written to /home/runner/cache-apt-pkgs/cache_key.md5
+##[end-action id=python.__self.__awalsh128_cache-apt-pkgs-action.pre-cache;outcome=success;conclusion=success;duration_ms=1148]
+##[start-action display=Run actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830;id=python.__self.__awalsh128_cache-apt-pkgs-action.load-cache]
+Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+##[group]Run actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830
+with:
+  path: ~/cache-apt-pkgs
+  key: cache-apt-pkgs_c6b4b61d5fef4b64788ade85e17ce5c1
+  enableCrossOsArchive: false
+  fail-on-cache-miss: false
+  lookup-only: false
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+  CACHE_KEY: c6b4b61d5fef4b64788ade85e17ce5c1
+##[endgroup]
+(node:2576) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Cache hit for: cache-apt-pkgs_c6b4b61d5fef4b64788ade85e17ce5c1
+(node:2576) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Received 130023424 of 161543551 (80.5%), 123.9 MBs/sec
+Received 161543551 of 161543551 (100.0%), 115.2 MBs/sec
+Cache Size: ~154 MB (161543551 B)
+[command]/usr/bin/tar -xf /home/runner/work/_temp/0f75fa39-f4d7-42f8-a3ec-e44530df2f35/cache.tzst -P -C /home/runner/work/core/core --use-compress-program unzstd
+Cache restored successfully
+Cache restored from key: cache-apt-pkgs_c6b4b61d5fef4b64788ade85e17ce5c1
+##[end-action id=python.__self.__awalsh128_cache-apt-pkgs-action.load-cache;outcome=success;conclusion=success;duration_ms=2320]
+##[start-action display=Run ${GITHUB_ACTION_PATH}/post_cache_action.sh \;id=python.__self.__awalsh128_cache-apt-pkgs-action.post-cache]
+##[group]Run ${GITHUB_ACTION_PATH}/post_cache_action.sh \
+${GITHUB_ACTION_PATH}/post_cache_action.sh \
+  ~/cache-apt-pkgs \
+  / \
+  "$CACHE_HIT" \
+  "$EXEC_INSTALL_SCRIPTS" \
+  "$DEBUG" \
+  "$ADD_REPOSITORY" \
+  "$PACKAGES"
+function create_list { local list=$(cat ~/cache-apt-pkgs/manifest_${1}.log | tr '\n' ','); echo ${list:0:-1}; };
+echo "package-version-list=$(create_list main)" >> $GITHUB_OUTPUT
+echo "all-package-version-list=$(create_list all)" >> $GITHUB_OUTPUT
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+  CACHE_KEY: c6b4b61d5fef4b64788ade85e17ce5c1
+  CACHE_HIT: true
+  EXEC_INSTALL_SCRIPTS: true
+  DEBUG: false
+  ADD_REPOSITORY: 
+  PACKAGES: bluez ffmpeg libturbojpeg libxml2-utils libavcodec-dev libavdevice-dev libavfilter-dev libavformat-dev libavutil-dev libswresample-dev libswscale-dev libudev-dev
+##[endgroup]
+Found 115 files in the cache.
+- bluez=5.72-0ubuntu5.5.tar
+- cache_key.md5
+- ffmpeg=7:6.1.1-3ubuntu5.tar
+- i965-va-driver=2.4.1+dfsg1-1ubuntu0.2.tar
+- install.log
+- intel-media-va-driver=24.1.0+dfsg1-1ubuntu0.2.tar
+- libaacs0=0.11.1-2build1.tar
+- libass9=1:0.17.1-2build1.tar
+- libasyncns0=0.8-6build4.tar
+- libavc1394-0=0.5.4-5build3.tar
+- libavcodec-dev=7:6.1.1-3ubuntu5.tar
+- libavcodec60=7:6.1.1-3ubuntu5.tar
+- libavdevice-dev=7:6.1.1-3ubuntu5.tar
+- libavdevice60=7:6.1.1-3ubuntu5.tar
+- libavfilter-dev=7:6.1.1-3ubuntu5.tar
+- libavfilter9=7:6.1.1-3ubuntu5.tar
+- libavformat-dev=7:6.1.1-3ubuntu5.tar
+- libavformat60=7:6.1.1-3ubuntu5.tar
+- libavutil-dev=7:6.1.1-3ubuntu5.tar
+- libavutil58=7:6.1.1-3ubuntu5.tar
+- libbdplus0=0.2.0-3build1.tar
+- libblas3=3.12.0-3build1.1.tar
+- libbluray2=1:1.3.4-1build1.tar
+- libbs2b0=3.1.0+dfsg-7build1.tar
+- libcaca0=0.99.beta20-4ubuntu0.2.tar
+- libcdio-cdda2t64=10.2+2.0.1-1.1build2.tar
+- libcdio-paranoia2t64=10.2+2.0.1-1.1build2.tar
+- libcdio19t64=2.1.0-4.1ubuntu1.2.tar
+- libchromaprint1=1.5.1-5.tar
+- libcjson1=1.7.17-1.tar
+- libcodec2-1.2=1.2.0-2build1.tar
+- libdav1d7=1.4.1-1build1.tar
+- libdc1394-25=2.2.6-4build1.tar
+- libdecor-0-0=0.2.2-1build2.tar
+- libdecor-0-plugin-1-gtk=0.2.2-1build2.tar
+- libflac12t64=1.4.3+ds-2.1ubuntu2.tar
+- libflite1=2.2-6build3.tar
+- libgme0=0.6.3-7build1.tar
+- libgsm1=1.0.22-1build1.tar
+- libhwy1t64=1.0.7-8.1build1.tar
+- libiec61883-0=1.2.0-6build1.tar
+- libigdgmm12=22.3.17+ds1-1ubuntu1.tar
+- libjack-jackd2-0=1.9.21~dfsg-3ubuntu3.tar
+- libjxl0.7=0.7.0-10.2ubuntu6.1.tar
+- liblapack3=3.12.0-3build1.1.tar
+- liblilv-0-0=0.24.22-1build1.tar
+- libmbedcrypto7t64=2.28.8-1.tar
+- libmp3lame0=3.100-6build1.tar
+- libmpg123-0t64=1.32.5-1ubuntu1.1.tar
+- libmysofa1=1.3.2+dfsg-2ubuntu2.tar
+- libopenal-data=1:1.23.1-4build1.tar
+- libopenal1=1:1.23.1-4build1.tar
+- libopenmpt0t64=0.7.3-1.1build3.tar
+- libopus0=1.4-1build1.tar
+- libplacebo338=6.338.2-2build1.tar
+- libpocketsphinx3=0.8.0+real5prealpha+1-15ubuntu5.tar
+- libpostproc-dev=7:6.1.1-3ubuntu5.tar
+- libpostproc57=7:6.1.1-3ubuntu5.tar
+- libpulse0=1:16.1+dfsg1-2ubuntu10.1.tar
+- librav1e0=0.7.1-2.tar
+- libraw1394-11=2.1.2-2build3.tar
+- librist4=0.2.10+dfsg-2.tar
+- librsvg2-2=2.58.0+dfsg-1build1.tar
+- librsvg2-common=2.58.0+dfsg-1build1.tar
+- librubberband2=3.3.0+dfsg-2build1.tar
+- libsamplerate0=0.2.2-4build1.tar
+- libsdl2-2.0-0=2.30.0+dfsg-1ubuntu3.1.tar
+- libserd-0-0=0.32.2-1.tar
+- libshine3=3.1.1-2build1.tar
+- libsndfile1=1.2.2-1ubuntu5.24.04.1.tar
+- libsndio7.0=1.9.0-0.3build3.tar
+- libsord-0-0=0.16.16-2build1.tar
+- libsoxr0=0.1.3-4build3.tar
+- libspeex1=1.2.1-2ubuntu2.24.04.1.tar
+- libsphinxbase3t64=0.8+5prealpha+1-17build2.tar
+- libsratom-0-0=0.6.16-1build1.tar
+- libsrt1.5-gnutls=1.5.3-1build2.tar
+- libssh-gcrypt-4=0.10.6-2ubuntu0.4.tar
+- libsvtav1enc1d1=1.7.0+dfsg-2build1.tar
+- libswresample-dev=7:6.1.1-3ubuntu5.tar
+- libswresample4=7:6.1.1-3ubuntu5.tar
+- libswscale-dev=7:6.1.1-3ubuntu5.tar
+- libswscale7=7:6.1.1-3ubuntu5.tar
+- libtheora0=1.1.1+dfsg.1-16.1build3.tar
+- libturbojpeg=1:2.1.5-2ubuntu2.tar
+- libtwolame0=0.4.0-2build3.tar
+- libudev-dev=255.4-1ubuntu8.16.tar
+- libudfread0=1.1.2-1build1.tar
+- libunibreak5=5.1-2build1.tar
+- libva-drm2=2.20.0-2ubuntu0.2.tar
+- libva-x11-2=2.20.0-2ubuntu0.2.tar
+- libva2=2.20.0-2ubuntu0.2.tar
+- libvdpau1=1.5-2build1.tar
+- libvidstab1.1=1.1.0-2build1.tar
+- libvorbisenc2=1.3.7-1build3.tar
+- libvpl2=2023.3.0-1build1.tar
+- libvpx9=1.14.0-1ubuntu2.3.tar
+- libx264-164=2:0.164.3108+git31e19f9-1.tar
+- libx265-199=3.5-2build1.tar
+- libxcb-shape0=1.15-1ubuntu2.tar
+- libxml2-utils=2.9.14+dfsg-1.3ubuntu3.8.tar
+- libxv1=2:1.0.11-1.1build1.tar
+- libxvidcore4=2:1.3.7-1build1.tar
+- libzimg2=3.0.5+ds1-1build1.tar
+- libzix-0-0=0.4.2-2build1.tar
+- libzvbi-common=0.2.42-2.tar
+- libzvbi0t64=0.2.42-2.tar
+- manifest_all.log
+- manifest_main.log
+- mesa-va-drivers=25.2.8-0ubuntu0.24.04.2.tar
+- mesa-vdpau-drivers=25.2.8-0ubuntu0.24.04.2.tar
+- ocl-icd-libopencl1=2.3.2-1build1.tar
+- pocketsphinx-en-us=0.8.0+real5prealpha+1-15ubuntu5.tar
+- va-driver-all=2.20.0-2ubuntu0.2.tar
+- vdpau-driver-all=1.5-2build1.tar
+
+Reading from main requested packages manifest...
+- bluez=5.72-0ubuntu5.5
+- ffmpeg=7 6.1.1-3ubuntu5
+- libavcodec-dev=7 6.1.1-3ubuntu5
+- libavdevice-dev=7 6.1.1-3ubuntu5
+- libavfilter-dev=7 6.1.1-3ubuntu5
+- libavformat-dev=7 6.1.1-3ubuntu5
+- libavutil-dev=7 6.1.1-3ubuntu5
+- libswresample-dev=7 6.1.1-3ubuntu5
+- libswscale-dev=7 6.1.1-3ubuntu5
+- libturbojpeg=1 2.1.5-2ubuntu2
+- libudev-dev=255.4-1ubuntu8.16
+- libxml2-utils=2.9.14+dfsg-1.3ubuntu3.8
+done
+
+Restoring 111 packages from cache...
+- bluez=5.72-0ubuntu5.5.tar restoring...
+  done
+- ffmpeg=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- i965-va-driver=2.4.1+dfsg1-1ubuntu0.2.tar restoring...
+  done
+- intel-media-va-driver=24.1.0+dfsg1-1ubuntu0.2.tar restoring...
+  done
+- libaacs0=0.11.1-2build1.tar restoring...
+  done
+- libass9=1:0.17.1-2build1.tar restoring...
+  done
+- libasyncns0=0.8-6build4.tar restoring...
+  done
+- libavc1394-0=0.5.4-5build3.tar restoring...
+  done
+- libavcodec-dev=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libavcodec60=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libavdevice-dev=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libavdevice60=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libavfilter-dev=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libavfilter9=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libavformat-dev=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libavformat60=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libavutil-dev=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libavutil58=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libbdplus0=0.2.0-3build1.tar restoring...
+  done
+- libblas3=3.12.0-3build1.1.tar restoring...
+  done
+- libbluray2=1:1.3.4-1build1.tar restoring...
+  done
+- libbs2b0=3.1.0+dfsg-7build1.tar restoring...
+  done
+- libcaca0=0.99.beta20-4ubuntu0.2.tar restoring...
+  done
+- libcdio-cdda2t64=10.2+2.0.1-1.1build2.tar restoring...
+  done
+- libcdio-paranoia2t64=10.2+2.0.1-1.1build2.tar restoring...
+  done
+- libcdio19t64=2.1.0-4.1ubuntu1.2.tar restoring...
+  done
+- libchromaprint1=1.5.1-5.tar restoring...
+  done
+- libcjson1=1.7.17-1.tar restoring...
+  done
+- libcodec2-1.2=1.2.0-2build1.tar restoring...
+  done
+- libdav1d7=1.4.1-1build1.tar restoring...
+  done
+- libdc1394-25=2.2.6-4build1.tar restoring...
+  done
+- libdecor-0-0=0.2.2-1build2.tar restoring...
+  done
+- libdecor-0-plugin-1-gtk=0.2.2-1build2.tar restoring...
+  done
+- libflac12t64=1.4.3+ds-2.1ubuntu2.tar restoring...
+  done
+- libflite1=2.2-6build3.tar restoring...
+  done
+- libgme0=0.6.3-7build1.tar restoring...
+  done
+- libgsm1=1.0.22-1build1.tar restoring...
+  done
+- libhwy1t64=1.0.7-8.1build1.tar restoring...
+  done
+- libiec61883-0=1.2.0-6build1.tar restoring...
+  done
+- libigdgmm12=22.3.17+ds1-1ubuntu1.tar restoring...
+  done
+- libjack-jackd2-0=1.9.21~dfsg-3ubuntu3.tar restoring...
+  done
+- libjxl0.7=0.7.0-10.2ubuntu6.1.tar restoring...
+  done
+- liblapack3=3.12.0-3build1.1.tar restoring...
+  done
+- liblilv-0-0=0.24.22-1build1.tar restoring...
+  done
+- libmbedcrypto7t64=2.28.8-1.tar restoring...
+  done
+- libmp3lame0=3.100-6build1.tar restoring...
+  done
+- libmpg123-0t64=1.32.5-1ubuntu1.1.tar restoring...
+  done
+- libmysofa1=1.3.2+dfsg-2ubuntu2.tar restoring...
+  done
+- libopenal-data=1:1.23.1-4build1.tar restoring...
+  done
+- libopenal1=1:1.23.1-4build1.tar restoring...
+  done
+- libopenmpt0t64=0.7.3-1.1build3.tar restoring...
+  done
+- libopus0=1.4-1build1.tar restoring...
+  done
+- libplacebo338=6.338.2-2build1.tar restoring...
+  done
+- libpocketsphinx3=0.8.0+real5prealpha+1-15ubuntu5.tar restoring...
+  done
+- libpostproc-dev=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libpostproc57=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libpulse0=1:16.1+dfsg1-2ubuntu10.1.tar restoring...
+  done
+- librav1e0=0.7.1-2.tar restoring...
+  done
+- libraw1394-11=2.1.2-2build3.tar restoring...
+  done
+- librist4=0.2.10+dfsg-2.tar restoring...
+  done
+- librsvg2-2=2.58.0+dfsg-1build1.tar restoring...
+  done
+- librsvg2-common=2.58.0+dfsg-1build1.tar restoring...
+  done
+- librubberband2=3.3.0+dfsg-2build1.tar restoring...
+  done
+- libsamplerate0=0.2.2-4build1.tar restoring...
+  done
+- libsdl2-2.0-0=2.30.0+dfsg-1ubuntu3.1.tar restoring...
+  done
+- libserd-0-0=0.32.2-1.tar restoring...
+  done
+- libshine3=3.1.1-2build1.tar restoring...
+  done
+- libsndfile1=1.2.2-1ubuntu5.24.04.1.tar restoring...
+  done
+- libsndio7.0=1.9.0-0.3build3.tar restoring...
+  done
+- libsord-0-0=0.16.16-2build1.tar restoring...
+  done
+- libsoxr0=0.1.3-4build3.tar restoring...
+  done
+- libspeex1=1.2.1-2ubuntu2.24.04.1.tar restoring...
+  done
+- libsphinxbase3t64=0.8+5prealpha+1-17build2.tar restoring...
+  done
+- libsratom-0-0=0.6.16-1build1.tar restoring...
+  done
+- libsrt1.5-gnutls=1.5.3-1build2.tar restoring...
+  done
+- libssh-gcrypt-4=0.10.6-2ubuntu0.4.tar restoring...
+  done
+- libsvtav1enc1d1=1.7.0+dfsg-2build1.tar restoring...
+  done
+- libswresample-dev=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libswresample4=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libswscale-dev=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libswscale7=7:6.1.1-3ubuntu5.tar restoring...
+  done
+- libtheora0=1.1.1+dfsg.1-16.1build3.tar restoring...
+  done
+- libturbojpeg=1:2.1.5-2ubuntu2.tar restoring...
+  done
+- libtwolame0=0.4.0-2build3.tar restoring...
+  done
+- libudev-dev=255.4-1ubuntu8.16.tar restoring...
+  done
+- libudfread0=1.1.2-1build1.tar restoring...
+  done
+- libunibreak5=5.1-2build1.tar restoring...
+  done
+- libva-drm2=2.20.0-2ubuntu0.2.tar restoring...
+  done
+- libva-x11-2=2.20.0-2ubuntu0.2.tar restoring...
+  done
+- libva2=2.20.0-2ubuntu0.2.tar restoring...
+  done
+- libvdpau1=1.5-2build1.tar restoring...
+  done
+- libvidstab1.1=1.1.0-2build1.tar restoring...
+  done
+- libvorbisenc2=1.3.7-1build3.tar restoring...
+  done
+- libvpl2=2023.3.0-1build1.tar restoring...
+  done
+- libvpx9=1.14.0-1ubuntu2.3.tar restoring...
+  done
+- libx264-164=2:0.164.3108+git31e19f9-1.tar restoring...
+  done
+- libx265-199=3.5-2build1.tar restoring...
+  done
+- libxcb-shape0=1.15-1ubuntu2.tar restoring...
+  done
+- libxml2-utils=2.9.14+dfsg-1.3ubuntu3.8.tar restoring...
+  done
+- libxv1=2:1.0.11-1.1build1.tar restoring...
+  done
+- libxvidcore4=2:1.3.7-1build1.tar restoring...
+  done
+- libzimg2=3.0.5+ds1-1build1.tar restoring...
+  done
+- libzix-0-0=0.4.2-2build1.tar restoring...
+  done
+- libzvbi-common=0.2.42-2.tar restoring...
+  done
+- libzvbi0t64=0.2.42-2.tar restoring...
+  done
+- mesa-va-drivers=25.2.8-0ubuntu0.24.04.2.tar restoring...
+  done
+- mesa-vdpau-drivers=25.2.8-0ubuntu0.24.04.2.tar restoring...
+  done
+- ocl-icd-libopencl1=2.3.2-1build1.tar restoring...
+  done
+- pocketsphinx-en-us=0.8.0+real5prealpha+1-15ubuntu5.tar restoring...
+  done
+- va-driver-all=2.20.0-2ubuntu0.2.tar restoring...
+  done
+- vdpau-driver-all=1.5-2build1.tar restoring...
+  done
+done
+
+##[end-action id=python.__self.__awalsh128_cache-apt-pkgs-action.post-cache;outcome=success;conclusion=success;duration_ms=3689]
+##[start-action display=Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02;id=python.__self.__awalsh128_cache-apt-pkgs-action.upload-logs]
+##[end-action id=python.__self.__awalsh128_cache-apt-pkgs-action.upload-logs;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Run actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830;id=python.__self.__awalsh128_cache-apt-pkgs-action.save-cache]
+##[end-action id=python.__self.__awalsh128_cache-apt-pkgs-action.save-cache;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Run rm -rf ~/cache-apt-pkgs;id=python.__self.__awalsh128_cache-apt-pkgs-action.clean-cache]
+##[group]Run rm -rf ~/cache-apt-pkgs
+rm -rf ~/cache-apt-pkgs
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+  CACHE_KEY: c6b4b61d5fef4b64788ade85e17ce5c1
+##[endgroup]
+##[end-action id=python.__self.__awalsh128_cache-apt-pkgs-action.clean-cache;outcome=success;conclusion=success;duration_ms=89]
+##[end-action id=python.__self.__awalsh128_cache-apt-pkgs-action;outcome=success;conclusion=success;duration_ms=7266]
+##[start-action display=Refresh dynamic linker cache;id=python.__self.__run_2]
+##[group]Run # awalsh128/cache-apt-pkgs-action does not run postinst scripts on
+# awalsh128/cache-apt-pkgs-action does not run postinst scripts on
+# cache restore, so update-alternatives symlinks (eg the one libblas
+# creates at /usr/lib/<multiarch>/libblas.so.3) are never produced.
+# Add every /usr/lib/<multiarch> subdirectory that holds shared
+# libraries to the ldconfig search path so the dynamic linker still
+# finds them.  Use dpkg-architecture to derive the host's multiarch
+# tuple so this works on non-x86_64 runners too.
+multiarch="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
+find "/usr/lib/${multiarch}" -mindepth 2 -maxdepth 2 \
+  -name '*.so.*' -printf '%h\n' \
+  | sort -u \
+  | sudo tee /etc/ld.so.conf.d/zzz-cache-apt-extras.conf > /dev/null
+sudo ldconfig
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+  CACHE_KEY: c6b4b61d5fef4b64788ade85e17ce5c1
+##[endgroup]
+##[end-action id=python.__self.__run_2;outcome=success;conclusion=success;duration_ms=193]
+##[end-action id=python.__self;outcome=success;conclusion=success;duration_ms=8304]
+##[start-action display=Create Python virtual environment;id=python.create-venv]
+##[group]Run uv venv venv --python "${PYTHON_VERSION}"
+uv venv venv --python "${PYTHON_VERSION}"
+. venv/bin/activate
+python --version
+uv pip install -r requirements.txt
+uv pip install -r requirements_all.txt -r requirements_test.txt
+uv pip install -e . --config-settings editable_mode=compat
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  CACHE_VERSION: 4
+  MYPY_CACHE_VERSION: 1
+  HA_SHORT_VERSION: 2026.9
+  ADDITIONAL_PYTHON_VERSIONS: []
+  MARIADB_VERSIONS: ['mariadb:10.3.32','mariadb:10.6.10','mariadb:10.10.3','mariadb:10.11.2','mariadb:11.4.9','mysql:8.0.32']
+  POSTGRESQL_VERSIONS: ['postgres:12.14','postgres:15.2']
+  UV_CACHE_DIR: /tmp/uv-cache
+  APT_CACHE_VERSION: 1
+  SQLALCHEMY_WARN_20: 1
+  PYTHONASYNCIODEBUG: 1
+  HASS_CI: 1
+  UV_PYTHON_INSTALL_DIR: /home/runner/work/_temp/uv-python-dir
+  UV_PYTHON: 3.14.5
+  CACHE_KEY: c6b4b61d5fef4b64788ade85e17ce5c1
+  PYTHON_VERSION: 3.14.5
+##[endgroup]
+Using CPython 3.14.5
+Creating virtual environment at: venv
+Activate with: venv/bin/activate
+Python 3.14.5
+Using Python 3.14.5 environment at: venv
+Resolved 113 packages in 171ms
+Downloading aiohttp (1.7MiB)
+Downloading pillow (6.6MiB)
+Downloading botocore (14.3MiB)
+Downloading cryptography (4.5MiB)
+Downloading pynacl (1.3MiB)
+Downloading habluetooth (1.1MiB)
+Downloading sqlalchemy (3.1MiB)
+Downloading grpcio (6.4MiB)
+Downloading numpy (15.9MiB)
+Downloading zeroconf (2.1MiB)
+Downloading uv (21.0MiB)
+ Downloaded habluetooth
+ Downloaded pynacl
+ Downloaded zeroconf
+ Downloaded aiohttp
+ Downloaded cryptography
+ Downloaded pillow
+ Downloaded grpcio
+ Downloaded uv
+ Downloaded sqlalchemy
+ Downloaded numpy
+ Downloaded botocore
+Prepared 113 packages in 1.26s
+Installed 113 packages in 142ms
+ + acme==5.4.0
+ + aiodns==4.0.4
+ + aiogithubapi==26.0.0
+ + aiohappyeyeballs==2.7.1
+ + aiohttp==3.14.3
+ + aiohttp-asyncmdnsresolver==0.2.0
+ + aiohttp-cors==0.8.1
+ + aiohttp-fast-zlib==0.3.0
+ + aiooui==0.1.9
+ + aiosignal==1.4.0
+ + aiozoneinfo==0.2.3
+ + annotatedyaml==1.0.2
+ + anyio==4.13.0
+ + astral==2.2
+ + async-interrupt==1.2.2
+ + async-timeout==4.0.3
+ + atomicwrites-homeassistant==1.4.1
+ + attrs==26.1.0
+ + audioop-lts==0.2.2
+ + awesomeversion==25.8.0
+ + backoff==2.2.1
+ + bcrypt==5.0.0
+ + bleak==3.0.2
+ + bleak-retry-connector==4.6.3
+ + bluetooth-adapters==2.4.0
+ + bluetooth-auto-recovery==1.6.4
+ + bluetooth-data-tools==1.29.18
+ + boto3==1.42.97
+ + botocore==1.42.97
+ + btsocket==0.3.0
+ + certifi==2026.7.22
+ + cffi==2.0.0
+ + charset-normalizer==3.4.3
+ + ciso8601==2.3.3
+ + cronsim==2.7
+ + cryptography==48.0.1
+ + dbus-fast==5.0.22
+ + envs==1.4
+ + fnv-hash-fast==2.0.3
+ + fnvhash==0.2.1
+ + frozenlist==1.8.0
+ + greenlet==3.5.4
+ + grpcio==1.78.0
+ + h11==0.16.0
+ + ha-ffmpeg==3.2.2
+ + habluetooth==6.26.5
+ + hass-nabucasa==2.2.0
+ + hassil==3.11.0
+ + home-assistant-bluetooth==2.0.0
+ + home-assistant-intents==2026.7.30
+ + httpcore==1.0.9
+ + httpx==0.28.1
+ + icmplib==3.0.4
+ + idna==3.18
+ + ifaddr==0.2.0
+ + infrared-protocols==9.0.0
+ + jinja2==3.1.6
+ + jmespath==1.1.0
+ + josepy==2.2.0
+ + lru-dict==1.4.1
+ + markupsafe==3.0.3
+ + mashumaro==3.22
+ + multidict==6.7.1
+ + mutagen==1.48.1
+ + numpy==2.3.2
+ + orjson==3.11.9
+ + packaging==26.3
+ + pillow==12.3.0
+ + propcache==0.5.2
+ + psutil==7.2.2
+ + psutil-home-assistant==0.0.1
+ + pycares==5.0.1
+ + pycognito==2024.5.1
+ + pycparser==3.0
+ + pyjwt==2.13.0
+ + pymicro-vad==1.0.1
+ + pynacl==1.6.2
+ + pyopenssl==26.2.0
+ + pyrfc3339==2.1.0
+ + pyric==0.1.6.3
+ + pyspeex-noise==1.0.2
+ + python-dateutil==2.9.0.post0
+ + python-slugify==8.0.4
+ + pyturbojpeg==1.8.3
+ + pytz==2026.3.post1
+ + pyyaml==6.0.3
+ + regex==2026.7.19
+ + requests==2.34.2
+ + rf-protocols==4.3.0
+ + s3transfer==0.16.1
+ + securetar==2026.4.1
+ + sentence-stream==1.3.0
+ + six==1.17.0
+ + snitun==0.45.1
+ + sqlalchemy==2.0.51
+ + standard-aifc==3.13.0
+ + standard-chunk==3.13.0
+ + standard-telnetlib==3.13.0
+ + text-unidecode==1.3
+ + typing-extensions==4.16.0
+ + tzdata==2026.3
+ + uart-devices==0.1.1
+ + ulid-transform==2.2.9
+ + unicode-rbnf==2.4.0
+ + urllib3==2.7.0
+ + usb-devices==0.5.1
+ + uv==0.12.0
+ + voluptuous==0.15.2
+ + voluptuous-openapi==0.4.1
+ + voluptuous-serialize==2.7.0
+ + webrtc-models==0.3.0
+ + yarl==1.24.5
+ + zeroconf==0.150.0
+Using Python 3.14.5 environment at: venv
+  × No solution found when resolving dependencies:
+  ╰─▶ Because there is no version of python-otbr-api==2.11.0 and you require
+      python-otbr-api==2.11.0, we can conclude that your requirements are
+      unsatisfiable.
+##[error]Process completed with exit code 1.
+##[end-action id=python.create-venv;outcome=failure;conclusion=failure;duration_ms=2570]
+##[start-action display=Prune uv cache;id=python.__run]
+##[end-action id=python.__run;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Save uv wheel cache;id=python.__actions_cache_2]
+##[end-action id=python.__actions_cache_2;outcome=skipped;conclusion=skipped;duration_ms=0]
+##[start-action display=Save full Python virtual environment;id=python.__actions_cache_3]
+##[end-action id=python.__actions_cache_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+Post job cleanup.
+##[start-action display=Set up uv;id=__0333b267-92e1-40c3-ad68-27b60bdbff71.uv]
+##[end-action id=__0333b267-92e1-40c3-ad68-27b60bdbff71.uv;outcome=skipped;conclusion=skipped;duration_ms=0]
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/255b2621-e178-49be-a19d-2596c724a3be' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/core/core
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Cleaning up orphan processes
+##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

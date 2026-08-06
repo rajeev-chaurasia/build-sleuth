@@ -1,0 +1,203 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {4b8c7a17-2adf-47b2-becf-d7192053ce40}
+Azure Region: northcentralus
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260720.247.2
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Contents: read
+Metadata: read
+##[endgroup]
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Complete job name: Linux-32-bit
+##[group]Checking docker version
+##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+'1.48'
+Docker daemon API version: '1.48'
+##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+'1.48'
+Docker client API version: '1.48'
+##[endgroup]
+##[group]Clean up resources from previous jobs
+##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=e55f8b"
+##[command]/usr/bin/docker network prune --force --filter "label=e55f8b"
+##[endgroup]
+##[group]Create local container network
+##[command]/usr/bin/docker network create --label e55f8b github_network_20c4329167ea429ab15a97ed30fd6a00
+f6770dc30bf127690e968074f366e20c7c693dd907a8143f78687d66250d20a1
+##[endgroup]
+##[group]Starting job container
+##[command]/usr/bin/docker pull quay.io/pypa/manylinux_2_28_i686
+Using default tag: latest
+latest: Pulling from pypa/manylinux_2_28_i686
+9cd1e97969bf: Pulling fs layer
+8d6b976163f5: Pulling fs layer
+115710a90f06: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+5659ab444e24: Pulling fs layer
+a5ff443b1577: Pulling fs layer
+c30982914b18: Pulling fs layer
+30f2e8bcde33: Pulling fs layer
+51c2f2420048: Pulling fs layer
+d5ddf5c1e46d: Pulling fs layer
+18775145da4f: Pulling fs layer
+23774a3b6593: Pulling fs layer
+28748311669c: Pulling fs layer
+f9d49c9abf4e: Pulling fs layer
+d3da6bc2f178: Pulling fs layer
+c5fb638437f4: Pulling fs layer
+d8e3897dc78f: Pulling fs layer
+c4d5ecfb2e03: Pulling fs layer
+865e4ef8f2cf: Pulling fs layer
+8865fed70226: Pulling fs layer
+234842ef8771: Pulling fs layer
+c30982914b18: Waiting
+30f2e8bcde33: Waiting
+51c2f2420048: Waiting
+d5ddf5c1e46d: Waiting
+18775145da4f: Waiting
+23774a3b6593: Waiting
+28748311669c: Waiting
+f9d49c9abf4e: Waiting
+d3da6bc2f178: Waiting
+c5fb638437f4: Waiting
+d8e3897dc78f: Waiting
+c4d5ecfb2e03: Waiting
+865e4ef8f2cf: Waiting
+8865fed70226: Waiting
+234842ef8771: Waiting
+4f4fb700ef54: Waiting
+5659ab444e24: Waiting
+a5ff443b1577: Waiting
+115710a90f06: Download complete
+8d6b976163f5: Verifying Checksum
+8d6b976163f5: Download complete
+5659ab444e24: Verifying Checksum
+5659ab444e24: Download complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+a5ff443b1577: Verifying Checksum
+a5ff443b1577: Download complete
+30f2e8bcde33: Verifying Checksum
+30f2e8bcde33: Download complete
+51c2f2420048: Verifying Checksum
+51c2f2420048: Download complete
+d5ddf5c1e46d: Download complete
+9cd1e97969bf: Verifying Checksum
+9cd1e97969bf: Download complete
+23774a3b6593: Verifying Checksum
+23774a3b6593: Download complete
+18775145da4f: Verifying Checksum
+18775145da4f: Download complete
+f9d49c9abf4e: Verifying Checksum
+f9d49c9abf4e: Download complete
+28748311669c: Verifying Checksum
+28748311669c: Download complete
+d3da6bc2f178: Verifying Checksum
+d3da6bc2f178: Download complete
+c5fb638437f4: Verifying Checksum
+c5fb638437f4: Download complete
+d8e3897dc78f: Download complete
+865e4ef8f2cf: Verifying Checksum
+865e4ef8f2cf: Download complete
+c4d5ecfb2e03: Verifying Checksum
+c4d5ecfb2e03: Download complete
+234842ef8771: Verifying Checksum
+234842ef8771: Download complete
+c30982914b18: Verifying Checksum
+c30982914b18: Download complete
+9cd1e97969bf: Pull complete
+8865fed70226: Verifying Checksum
+8865fed70226: Download complete
+8d6b976163f5: Pull complete
+115710a90f06: Pull complete
+4f4fb700ef54: Pull complete
+5659ab444e24: Pull complete
+a5ff443b1577: Pull complete
+c30982914b18: Pull complete
+30f2e8bcde33: Pull complete
+51c2f2420048: Pull complete
+d5ddf5c1e46d: Pull complete
+18775145da4f: Pull complete
+23774a3b6593: Pull complete
+28748311669c: Pull complete
+f9d49c9abf4e: Pull complete
+d3da6bc2f178: Pull complete
+c5fb638437f4: Pull complete
+d8e3897dc78f: Pull complete
+c4d5ecfb2e03: Pull complete
+865e4ef8f2cf: Pull complete
+8865fed70226: Pull complete
+234842ef8771: Pull complete
+Digest: sha256:febd4229cf38d0f6d238f9bb3dc25615111e6305932b26c70956b610feac7ca2
+Status: Downloaded newer image for quay.io/pypa/manylinux_2_28_i686:latest
+quay.io/pypa/manylinux_2_28_i686:latest
+##[command]/usr/bin/docker create --name 9e9635210d624c768fbee71122eb4405_quayiopypamanylinux_2_28_i686_86d4aa --label e55f8b --workdir /__w/pandas/pandas --network github_network_20c4329167ea429ab15a97ed30fd6a00 --platform linux/386 -e "HOME=/github/home" -e GITHUB_ACTIONS=true -e CI=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work":"/__w" -v "/home/runner/actions-runner/cached/2.336.0/externals":"/__e":ro -v "/home/runner/work/_temp":"/__w/_temp" -v "/home/runner/work/_actions":"/__w/_actions" -v "/opt/hostedtoolcache":"/__t" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" --entrypoint "tail" quay.io/pypa/manylinux_2_28_i686 "-f" "/dev/null"
+70aa3c8fb79138a9d7bef4b05826e7df46bfae2e16a6db7bfc14fc267c7265f4
+##[command]/usr/bin/docker start 70aa3c8fb79138a9d7bef4b05826e7df46bfae2e16a6db7bfc14fc267c7265f4
+70aa3c8fb79138a9d7bef4b05826e7df46bfae2e16a6db7bfc14fc267c7265f4
+##[command]/usr/bin/docker ps --all --filter id=70aa3c8fb79138a9d7bef4b05826e7df46bfae2e16a6db7bfc14fc267c7265f4 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+70aa3c8fb79138a9d7bef4b05826e7df46bfae2e16a6db7bfc14fc267c7265f4 Up Less than a second
+##[command]/usr/bin/docker inspect --format "{{range .Config.Env}}{{println .}}{{end}}" 70aa3c8fb79138a9d7bef4b05826e7df46bfae2e16a6db7bfc14fc267c7265f4
+HOME=/github/home
+GITHUB_ACTIONS=true
+CI=true
+PATH=/opt/clang/bin:/opt/rh/gcc-toolset-14/root/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+LANG=en_US.UTF-8
+AUDITWHEEL_POLICY=manylinux_2_28
+AUDITWHEEL_ARCH=i686
+AUDITWHEEL_PLAT=manylinux_2_28_i686
+LC_ALL=en_US.UTF-8
+LANGUAGE=en_US.UTF-8
+DEVTOOLSET_ROOTPATH=/opt/rh/gcc-toolset-14/root
+LD_LIBRARY_PATH=/opt/rh/gcc-toolset-14/root/usr/lib64:/opt/rh/gcc-toolset-14/root/usr/lib:/opt/rh/gcc-toolset-14/root/usr/lib64/dyninst:/opt/rh/gcc-toolset-14/root/usr/lib/dyninst
+PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+PIPX_DISABLE_SHARED_LIBS_AUTO_UPGRADE=1
+SSL_CERT_FILE=/opt/_internal/certs.pem
+##[endgroup]
+##[group]Waiting for all services to be ready
+##[endgroup]
+##[group]Run git config --global --add safe.directory $PWD
+git config --global --add safe.directory $PWD
+
+if [ $GITHUB_EVENT_NAME != pull_request ]; then
+    git clone --recursive --branch=$GITHUB_REF_NAME https://github.com/${GITHUB_REPOSITORY}.git $GITHUB_WORKSPACE
+    git reset --hard $GITHUB_SHA
+else
+    git clone --recursive https://github.com/${GITHUB_REPOSITORY}.git $GITHUB_WORKSPACE
+    git fetch origin $GITHUB_REF:my_ref_name
+    git checkout $GITHUB_BASE_REF
+    git -c user.email="you@example.com" merge --no-commit my_ref_name
+fi
+shell: bash -euox pipefail {0}
+##[endgroup]
++ git config --global --add safe.directory /__w/pandas/pandas
++ '[' pull_request '!=' pull_request ']'
++ git clone --recursive https://github.com/pandas-dev/pandas.git /__w/pandas/pandas
+Cloning into '/__w/pandas/pandas'...
++ git fetch origin refs/pull/66598/merge:my_ref_name
+fatal: couldn't find remote ref refs/pull/66598/merge
+##[error]Process completed with exit code 128.
+Stop and remove container: 9e9635210d624c768fbee71122eb4405_quayiopypamanylinux_2_28_i686_86d4aa
+##[command]/usr/bin/docker rm --force 70aa3c8fb79138a9d7bef4b05826e7df46bfae2e16a6db7bfc14fc267c7265f4
+70aa3c8fb79138a9d7bef4b05826e7df46bfae2e16a6db7bfc14fc267c7265f4
+Remove container network: github_network_20c4329167ea429ab15a97ed30fd6a00
+##[command]/usr/bin/docker network rm github_network_20c4329167ea429ab15a97ed30fd6a00
+github_network_20c4329167ea429ab15a97ed30fd6a00
+Cleaning up orphan processes

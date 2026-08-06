@@ -1,0 +1,14 @@
+{
+  "repo": "pydantic/pydantic",
+  "run_id": 30995648364,
+  "run_attempt": 1,
+  "head_sha": "96d73553d498bd5dc7d8df459470c3c138de562b",
+  "workflow_name": "CI",
+  "failed_job": "core / Build PyEmscripten (3.14)",
+  "failed_step": "Run emscripten-core/setup-emsdk@4528d102f7230f0e7b276855c01ea1159be0e984",
+  "pr_number": null,
+  "has_diff": false,
+  "log_lines": 486,
+  "original_url": "https://github.com/pydantic/pydantic/actions/runs/30995648364",
+  "mining_signal": "failed_in_setup_step"
+}

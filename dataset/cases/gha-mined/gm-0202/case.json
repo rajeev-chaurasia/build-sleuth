@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0202",
+  "title": "huggingface/transformers Test vLLM integration",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "huggingface/transformers",
+    "run_id": 31070108424,
+    "run_attempt": 1,
+    "head_sha": "2eaaa20ac8aca4c7b0fa9bc36919a82a7d72449d",
+    "pr_number": 47807,
+    "failed_job_name": "Test vLLM integration",
+    "failed_step_name": "Install dependencies",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": "diff.patch",
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "pipeline_config",
+    "subcategory": "build_step_misconfig",
+    "related_to_diff": false,
+    "culprit_files": [],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/huggingface/transformers/actions/runs/31070108424",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on pipeline_config/build_step_misconfig. Lowest confidence of the two was 0.50. Decisive evidence: Because there is no version of torch==2.13.0+cpu and vllm depends on torch==2.13.0+cpu",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

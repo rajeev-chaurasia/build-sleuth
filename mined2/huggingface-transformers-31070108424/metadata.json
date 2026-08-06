@@ -1,0 +1,14 @@
+{
+  "repo": "huggingface/transformers",
+  "run_id": 31070108424,
+  "run_attempt": 1,
+  "head_sha": "2eaaa20ac8aca4c7b0fa9bc36919a82a7d72449d",
+  "workflow_name": "Dependents Smoke Test",
+  "failed_job": "Test vLLM integration",
+  "failed_step": "Install dependencies",
+  "pr_number": 47807,
+  "has_diff": true,
+  "log_lines": 420,
+  "original_url": "https://github.com/huggingface/transformers/actions/runs/31070108424",
+  "mining_signal": "failed_in_setup_step"
+}

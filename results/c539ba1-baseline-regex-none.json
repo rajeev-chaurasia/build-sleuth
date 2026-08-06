@@ -1,0 +1,597 @@
+{
+  "schema_version": 1,
+  "git_sha": "c539ba1",
+  "model": "baseline-regex",
+  "prompt_hash": "none",
+  "dataset_hash": "7c81d9be36b6",
+  "subset": "full",
+  "created_at": "2026-08-06T08:29:25.254004Z",
+  "classification": {
+    "per_class": {
+      "code_change": {
+        "precision": 0.7619047619047619,
+        "recall": 0.8421052631578947,
+        "f1": 0.8,
+        "support": 38
+      },
+      "flaky_test": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 4
+      },
+      "infra_environment": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 3
+      },
+      "pipeline_config": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 3
+      }
+    },
+    "macro_f1": 0.2,
+    "accuracy": 0.6666666666666666,
+    "confusion": {
+      "counts": {
+        "code_change": {
+          "code_change": 32,
+          "flaky_test": 6
+        },
+        "pipeline_config": {
+          "code_change": 3
+        },
+        "flaky_test": {
+          "code_change": 4
+        },
+        "infra_environment": {
+          "code_change": 3
+        }
+      }
+    },
+    "cost_weighted_error": 0.625
+  },
+  "localization": null,
+  "cost": {
+    "total_input_tokens": 0,
+    "total_output_tokens": 0,
+    "total_requests": 48,
+    "wall_seconds": 1.267063799983589,
+    "estimated_usd": 0.0,
+    "list_price_usd": 0.0,
+    "schema_failure_rate": 0.0
+  },
+  "per_case": [
+    {
+      "case_id": "gm-0001",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 19.56740001332946,
+      "error": null
+    },
+    {
+      "case_id": "gm-0002",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 3.8201999850571156,
+      "error": null
+    },
+    {
+      "case_id": "gm-0003",
+      "truth_class": "pipeline_config",
+      "predicted_class": "code_change",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 12.42320000892505,
+      "error": null
+    },
+    {
+      "case_id": "gm-0004",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 7.624800025951117,
+      "error": null
+    },
+    {
+      "case_id": "gm-0005",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 7.9190999967977405,
+      "error": null
+    },
+    {
+      "case_id": "gm-0100",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 3.334599983645603,
+      "error": null
+    },
+    {
+      "case_id": "gm-0101",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 15.422500000568107,
+      "error": null
+    },
+    {
+      "case_id": "gm-0102",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 13.517899991711602,
+      "error": null
+    },
+    {
+      "case_id": "gm-0103",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 6.307899981038645,
+      "error": null
+    },
+    {
+      "case_id": "gm-0104",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 20.24149999488145,
+      "error": null
+    },
+    {
+      "case_id": "gm-0105",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 10.771900007966906,
+      "error": null
+    },
+    {
+      "case_id": "gm-0106",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 15.221199981169775,
+      "error": null
+    },
+    {
+      "case_id": "gm-0107",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 19.813899998553097,
+      "error": null
+    },
+    {
+      "case_id": "gm-0108",
+      "truth_class": "code_change",
+      "predicted_class": "flaky_test",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 1.7386999970767647,
+      "error": null
+    },
+    {
+      "case_id": "gm-0109",
+      "truth_class": "code_change",
+      "predicted_class": "flaky_test",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 2.7831000043079257,
+      "error": null
+    },
+    {
+      "case_id": "gm-0110",
+      "truth_class": "code_change",
+      "predicted_class": "flaky_test",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 3.06239997735247,
+      "error": null
+    },
+    {
+      "case_id": "gm-0111",
+      "truth_class": "flaky_test",
+      "predicted_class": "code_change",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 1.7955000221263617,
+      "error": null
+    },
+    {
+      "case_id": "gm-0112",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 5.118200002470985,
+      "error": null
+    },
+    {
+      "case_id": "gm-0113",
+      "truth_class": "flaky_test",
+      "predicted_class": "code_change",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 12.83809999586083,
+      "error": null
+    },
+    {
+      "case_id": "gm-0114",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 3.7614999746438116,
+      "error": null
+    },
+    {
+      "case_id": "gm-0115",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 4.831400001421571,
+      "error": null
+    },
+    {
+      "case_id": "gm-0116",
+      "truth_class": "code_change",
+      "predicted_class": "flaky_test",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 5.855099996551871,
+      "error": null
+    },
+    {
+      "case_id": "gm-0117",
+      "truth_class": "code_change",
+      "predicted_class": "flaky_test",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 5.0854999863076955,
+      "error": null
+    },
+    {
+      "case_id": "gm-0118",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 2.9375000158324838,
+      "error": null
+    },
+    {
+      "case_id": "gm-0119",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 6.418000004487112,
+      "error": null
+    },
+    {
+      "case_id": "gm-0120",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 9.57559997914359,
+      "error": null
+    },
+    {
+      "case_id": "gm-0121",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 10.276699991663918,
+      "error": null
+    },
+    {
+      "case_id": "gm-0122",
+      "truth_class": "pipeline_config",
+      "predicted_class": "code_change",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 1.0794000118039548,
+      "error": null
+    },
+    {
+      "case_id": "gm-0123",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 10.337599989725277,
+      "error": null
+    },
+    {
+      "case_id": "gm-0124",
+      "truth_class": "flaky_test",
+      "predicted_class": "code_change",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 71.00990001345053,
+      "error": null
+    },
+    {
+      "case_id": "gm-0125",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 122.30800001998432,
+      "error": null
+    },
+    {
+      "case_id": "gm-0126",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 163.25070001767017,
+      "error": null
+    },
+    {
+      "case_id": "gm-0127",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 2.6286000211257488,
+      "error": null
+    },
+    {
+      "case_id": "gm-0128",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 3.1611000013072044,
+      "error": null
+    },
+    {
+      "case_id": "gm-0129",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 4.335300007369369,
+      "error": null
+    },
+    {
+      "case_id": "gm-0130",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 3.268900007242337,
+      "error": null
+    },
+    {
+      "case_id": "gm-0131",
+      "truth_class": "code_change",
+      "predicted_class": "flaky_test",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 7.952999992994592,
+      "error": null
+    },
+    {
+      "case_id": "gm-0132",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 3.9643000054638833,
+      "error": null
+    },
+    {
+      "case_id": "gm-0133",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 55.865899979835376,
+      "error": null
+    },
+    {
+      "case_id": "gm-0134",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 5.558300006669015,
+      "error": null
+    },
+    {
+      "case_id": "gm-0135",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 4.805199976544827,
+      "error": null
+    },
+    {
+      "case_id": "gm-0200",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 2.5025999930221587,
+      "error": null
+    },
+    {
+      "case_id": "gm-0201",
+      "truth_class": "infra_environment",
+      "predicted_class": "code_change",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 3.157999977702275,
+      "error": null
+    },
+    {
+      "case_id": "gm-0202",
+      "truth_class": "pipeline_config",
+      "predicted_class": "code_change",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 5.8794000069610775,
+      "error": null
+    },
+    {
+      "case_id": "gm-0203",
+      "truth_class": "infra_environment",
+      "predicted_class": "code_change",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 2.8049999964423478,
+      "error": null
+    },
+    {
+      "case_id": "gm-0204",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 3.9795000047888607,
+      "error": null
+    },
+    {
+      "case_id": "gm-0205",
+      "truth_class": "infra_environment",
+      "predicted_class": "code_change",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 4.780199989909306,
+      "error": null
+    },
+    {
+      "case_id": "sy-0001",
+      "truth_class": "flaky_test",
+      "predicted_class": "code_change",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 3.3549999934621155,
+      "error": null
+    }
+  ]
+}

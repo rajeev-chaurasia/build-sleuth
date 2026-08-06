@@ -41,12 +41,14 @@ RUNS_PER_PAGE = 20
 CANDIDATES_FILE = "candidates.json"
 
 
-def collect(provider: GitHubProvider, client: GitHubClient, repos: list[str]) -> list[Candidate]:
+def collect(
+    provider: GitHubProvider, client: GitHubClient, repos: list[str], event: str | None = None
+) -> list[Candidate]:
     """Walk each repo's recent failures and describe what the signals say."""
     found: list[Candidate] = []
     for repo in repos:
         try:
-            runs = client.list_failed_runs(repo, RUNS_PER_PAGE, event="pull_request")
+            runs = client.list_failed_runs(repo, RUNS_PER_PAGE, event=event)
         except GitHubApiError as error:
             print(f"  {repo}: skipped, {error}")
             continue
@@ -74,6 +76,14 @@ def main() -> int:
     parser.add_argument("--per-repo", type=int, default=DEFAULT_PER_REPO)
     parser.add_argument("--limit", type=int, default=DEFAULT_LIMIT)
     parser.add_argument("--out", type=Path, default=Path("mined"))
+    # Pull request failures are overwhelmingly code failures, so mining only
+    # those produces a benchmark a single-guess classifier can beat. Widening
+    # the event and keeping only non-code signals is how the other classes
+    # get represented at all.
+    parser.add_argument("--event", default="pull_request", help="Blank for any event.")
+    parser.add_argument(
+        "--signals", default="", help="Comma separated signals to keep, blank for all."
+    )
     args = parser.parse_args()
 
     settings = load_settings()
@@ -86,7 +96,11 @@ def main() -> int:
     try:
         provider = GitHubProvider(client)
         print(f"scanning {len(repos)} repositories")
-        candidates = list(diversify(collect(provider, client, repos), args.per_repo))[: args.limit]
+        found = collect(provider, client, repos, args.event or None)
+        if args.signals:
+            wanted = {name.strip() for name in args.signals.split(",") if name.strip()}
+            found = [c for c in found if c.signal.value in wanted]
+        candidates = list(diversify(found, args.per_repo))[: args.limit]
     finally:
         client.close()
 

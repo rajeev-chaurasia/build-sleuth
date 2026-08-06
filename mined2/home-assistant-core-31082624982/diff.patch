@@ -1,0 +1,633 @@
+diff --git a/homeassistant/components/teslemetry/cover.py b/homeassistant/components/teslemetry/cover.py
+index c718f3db8ffb2..e54e978f74b32 100644
+--- a/homeassistant/components/teslemetry/cover.py
++++ b/homeassistant/components/teslemetry/cover.py
+@@ -4,7 +4,13 @@
+ from typing import Any, override
+ 
+ from tesla_fleet_api import firmware_at_least
+-from tesla_fleet_api.const import Scope, SunRoofCommand, Trunk, WindowCommand
++from tesla_fleet_api.const import (
++    ClosureState,
++    Scope,
++    SunRoofCommand,
++    Trunk,
++    WindowCommand,
++)
+ from tesla_fleet_api.teslemetry import Vehicle
+ from teslemetry_stream import Signal
+ from teslemetry_stream.const import WindowState
+@@ -29,6 +35,7 @@
+ 
+ OPEN = 1
+ CLOSED = 0
++TONNEAU_CLOSED = "Closed"
+ 
+ PARALLEL_UPDATES = 0
+ 
+@@ -84,6 +91,14 @@ async def async_setup_entry(
+                 if vehicle.poll
+                 and vehicle.coordinator.data.get("vehicle_config_sun_roof_installed")
+             ),
++            (
++                TeslemetryStreamingTonneauEntity(vehicle, entry.runtime_data.scopes)
++                for vehicle in entry.runtime_data.vehicles
++                if not vehicle.poll
++                and firmware_at_least(vehicle.firmware, "2024.44.25")
++                and vehicle.coordinator.data.get("vehicle_config_car_type")
++                == "cybertruck"
++            ),
+         )
+     )
+ 
+@@ -518,3 +533,84 @@ async def async_stop_cover(self, **kwargs: Any) -> None:
+         await handle_vehicle_command(self.api.sun_roof_control(SunRoofCommand.STOP))
+         self._attr_is_closed = False
+         self.async_write_ha_state()
++
++
++class TeslemetryTonneauEntity(TeslemetryRootEntity, CoverEntity):
++    """Base class for the Cybertruck tonneau cover entity."""
++
++    api: Vehicle
++    _attr_device_class = CoverDeviceClass.DOOR
++    _attr_supported_features = (
++        CoverEntityFeature.OPEN | CoverEntityFeature.CLOSE | CoverEntityFeature.STOP
++    )
++
++    @override
++    async def async_open_cover(self, **kwargs: Any) -> None:
++        """Open tonneau."""
++        self.raise_for_scope(Scope.VEHICLE_CMDS)
++        await handle_vehicle_command(self.api.closure(tonneau=ClosureState.OPEN))
++        self._attr_is_closed = False
++        self.async_write_ha_state()
++
++    @override
++    async def async_close_cover(self, **kwargs: Any) -> None:
++        """Close tonneau."""
++        self.raise_for_scope(Scope.VEHICLE_CMDS)
++        await handle_vehicle_command(self.api.closure(tonneau=ClosureState.CLOSE))
++        self._attr_is_closed = True
++        self.async_write_ha_state()
++
++    @override
++    async def async_stop_cover(self, **kwargs: Any) -> None:
++        """Stop tonneau."""
++        self.raise_for_scope(Scope.VEHICLE_CMDS)
++        await handle_vehicle_command(self.api.closure(tonneau=ClosureState.STOP))
++        self._attr_is_closed = False
++        self.async_write_ha_state()
++
++
++class TeslemetryStreamingTonneauEntity(
++    TeslemetryVehicleStreamEntity, TeslemetryTonneauEntity, CoverRestoreEntity
++):
++    """Streaming cover entity for the Cybertruck tonneau."""
++
++    def __init__(self, vehicle: TeslemetryVehicleData, scopes: list[Scope]) -> None:
++        """Initialize the cover."""
++        super().__init__(vehicle, "tonneau")
++        # Kept as an attribute rather than checked upfront, matching how scoping
++        # is handled for the other entities in this integration.
++        self.scoped = Scope.VEHICLE_CMDS in scopes
++        if not self.scoped:
++            self._attr_supported_features = CoverEntityFeature(0)
++        self._attr_is_closed = None
++
++    @override
++    async def async_added_to_hass(self) -> None:
++        """When entity is added to hass."""
++        await super().async_added_to_hass()
++        self.async_on_remove(
++            self.vehicle.stream_vehicle.listen_TonneauPosition(
++                self._async_position_from_stream
++            )
++        )
++        self.async_on_remove(
++            self.vehicle.stream_vehicle.listen_TonneauOpenPercent(
++                self._async_percent_from_stream
++            )
++        )
++
++    def _async_position_from_stream(self, value: str | None) -> None:
++        """Update the entity attributes."""
++        # None and "Invalid" are treated the same as "Unknown" here as
++        # defensive handling: a past bug interpreted None as false and
++        # "Invalid" as true for a similar streaming field.
++        if value in (None, "Unknown", "Invalid"):
++            self._attr_is_closed = None
++        else:
++            self._attr_is_closed = value == TONNEAU_CLOSED
++        self.async_write_ha_state()
++
++    def _async_percent_from_stream(self, value: float | None) -> None:
++        """Update the entity attributes."""
++        self._attr_current_cover_position = None if value is None else int(value)
++        self.async_write_ha_state()
+diff --git a/homeassistant/components/teslemetry/strings.json b/homeassistant/components/teslemetry/strings.json
+index 974171c5b47a3..ce7afee21c79b 100644
+--- a/homeassistant/components/teslemetry/strings.json
++++ b/homeassistant/components/teslemetry/strings.json
+@@ -311,6 +311,9 @@
+       "charge_state_charge_port_door_open": {
+         "name": "Charge port door"
+       },
++      "tonneau": {
++        "name": "Tonneau"
++      },
+       "vehicle_state_ft": {
+         "name": "Frunk"
+       },
+diff --git a/tests/components/teslemetry/const.py b/tests/components/teslemetry/const.py
+index 88c28648dc438..547e998ce3936 100644
+--- a/tests/components/teslemetry/const.py
++++ b/tests/components/teslemetry/const.py
+@@ -13,6 +13,8 @@
+ PRODUCTS = load_json_object_fixture("products.json", DOMAIN)
+ PRODUCTS_MODERN = load_json_object_fixture("products.json", DOMAIN)
+ PRODUCTS_MODERN["response"][0]["command_signing"] = "required"
++PRODUCTS_CYBERTRUCK = load_json_object_fixture("products.json", DOMAIN)
++PRODUCTS_CYBERTRUCK["response"][0]["vehicle_config"]["car_type"] = "cybertruck"
+ VEHICLE_DATA = load_json_object_fixture("vehicle_data.json", DOMAIN)
+ VEHICLE_DATA_ASLEEP = load_json_object_fixture("vehicle_data.json", DOMAIN)
+ VEHICLE_DATA_ASLEEP["response"]["state"] = TeslemetryState.OFFLINE
+diff --git a/tests/components/teslemetry/snapshots/test_cover.ambr b/tests/components/teslemetry/snapshots/test_cover.ambr
+index dc00633792f69..705412732e222 100644
+--- a/tests/components/teslemetry/snapshots/test_cover.ambr
++++ b/tests/components/teslemetry/snapshots/test_cover.ambr
+@@ -476,6 +476,271 @@
+     'state': 'open',
+   })
+ # ---
++# name: test_cover_cybertruck[cover.test_charge_port_door-entry]
++  EntityRegistryEntrySnapshot({
++    'aliases': list([
++      None,
++    ]),
++    'area_id': None,
++    'capabilities': None,
++    'config_entry_id': <ANY>,
++    'config_subentry_id': <ANY>,
++    'device_class': None,
++    'device_id': <ANY>,
++    'disabled_by': None,
++    'domain': 'cover',
++    'entity_category': None,
++    'entity_id': 'cover.test_charge_port_door',
++    'has_entity_name': True,
++    'hidden_by': None,
++    'icon': None,
++    'id': <ANY>,
++    'labels': set({
++    }),
++    'name': None,
++    'object_id_base': 'Charge port door',
++    'options': dict({
++    }),
++    'original_device_class': <CoverDeviceClass.DOOR: 'door'>,
++    'original_icon': None,
++    'original_name': 'Charge port door',
++    'platform': 'teslemetry',
++    'previous_unique_id': None,
++    'suggested_object_id': None,
++    'supported_features': <CoverEntityFeature: 3>,
++    'translation_key': 'charge_state_charge_port_door_open',
++    'unique_id': 'LRW3F7EK4NC700000-charge_state_charge_port_door_open',
++    'unit_of_measurement': None,
++  })
++# ---
++# name: test_cover_cybertruck[cover.test_charge_port_door-state]
++  StateSnapshot({
++    'attributes': ReadOnlyDict({
++      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'door',
++      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Test Charge port door',
++      <CoverEntityStateAttribute.IS_CLOSED: 'is_closed'>: None,
++      <EntityStateAttribute.SUPPORTED_FEATURES: 'supported_features'>: <CoverEntityFeature: 3>,
++    }),
++    'context': <ANY>,
++    'entity_id': 'cover.test_charge_port_door',
++    'last_changed': <ANY>,
++    'last_reported': <ANY>,
++    'last_updated': <ANY>,
++    'state': 'unknown',
++  })
++# ---
++# name: test_cover_cybertruck[cover.test_frunk-entry]
++  EntityRegistryEntrySnapshot({
++    'aliases': list([
++      None,
++    ]),
++    'area_id': None,
++    'capabilities': None,
++    'config_entry_id': <ANY>,
++    'config_subentry_id': <ANY>,
++    'device_class': None,
++    'device_id': <ANY>,
++    'disabled_by': None,
++    'domain': 'cover',
++    'entity_category': None,
++    'entity_id': 'cover.test_frunk',
++    'has_entity_name': True,
++    'hidden_by': None,
++    'icon': None,
++    'id': <ANY>,
++    'labels': set({
++    }),
++    'name': None,
++    'object_id_base': 'Frunk',
++    'options': dict({
++    }),
++    'original_device_class': <CoverDeviceClass.DOOR: 'door'>,
++    'original_icon': None,
++    'original_name': 'Frunk',
++    'platform': 'teslemetry',
++    'previous_unique_id': None,
++    'suggested_object_id': None,
++    'supported_features': <CoverEntityFeature: 1>,
++    'translation_key': 'vehicle_state_ft',
++    'unique_id': 'LRW3F7EK4NC700000-vehicle_state_ft',
++    'unit_of_measurement': None,
++  })
++# ---
++# name: test_cover_cybertruck[cover.test_frunk-state]
++  StateSnapshot({
++    'attributes': ReadOnlyDict({
++      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'door',
++      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Test Frunk',
++      <CoverEntityStateAttribute.IS_CLOSED: 'is_closed'>: None,
++      <EntityStateAttribute.SUPPORTED_FEATURES: 'supported_features'>: <CoverEntityFeature: 1>,
++    }),
++    'context': <ANY>,
++    'entity_id': 'cover.test_frunk',
++    'last_changed': <ANY>,
++    'last_reported': <ANY>,
++    'last_updated': <ANY>,
++    'state': 'unknown',
++  })
++# ---
++# name: test_cover_cybertruck[cover.test_tonneau-entry]
++  EntityRegistryEntrySnapshot({
++    'aliases': list([
++      None,
++    ]),
++    'area_id': None,
++    'capabilities': None,
++    'config_entry_id': <ANY>,
++    'config_subentry_id': <ANY>,
++    'device_class': None,
++    'device_id': <ANY>,
++    'disabled_by': None,
++    'domain': 'cover',
++    'entity_category': None,
++    'entity_id': 'cover.test_tonneau',
++    'has_entity_name': True,
++    'hidden_by': None,
++    'icon': None,
++    'id': <ANY>,
++    'labels': set({
++    }),
++    'name': None,
++    'object_id_base': 'Tonneau',
++    'options': dict({
++    }),
++    'original_device_class': <CoverDeviceClass.DOOR: 'door'>,
++    'original_icon': None,
++    'original_name': 'Tonneau',
++    'platform': 'teslemetry',
++    'previous_unique_id': None,
++    'suggested_object_id': None,
++    'supported_features': <CoverEntityFeature: 11>,
++    'translation_key': 'tonneau',
++    'unique_id': 'LRW3F7EK4NC700000-tonneau',
++    'unit_of_measurement': None,
++  })
++# ---
++# name: test_cover_cybertruck[cover.test_tonneau-state]
++  StateSnapshot({
++    'attributes': ReadOnlyDict({
++      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'door',
++      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Test Tonneau',
++      <CoverEntityStateAttribute.IS_CLOSED: 'is_closed'>: None,
++      <EntityStateAttribute.SUPPORTED_FEATURES: 'supported_features'>: <CoverEntityFeature: 11>,
++    }),
++    'context': <ANY>,
++    'entity_id': 'cover.test_tonneau',
++    'last_changed': <ANY>,
++    'last_reported': <ANY>,
++    'last_updated': <ANY>,
++    'state': 'unknown',
++  })
++# ---
++# name: test_cover_cybertruck[cover.test_trunk-entry]
++  EntityRegistryEntrySnapshot({
++    'aliases': list([
++      None,
++    ]),
++    'area_id': None,
++    'capabilities': None,
++    'config_entry_id': <ANY>,
++    'config_subentry_id': <ANY>,
++    'device_class': None,
++    'device_id': <ANY>,
++    'disabled_by': None,
++    'domain': 'cover',
++    'entity_category': None,
++    'entity_id': 'cover.test_trunk',
++    'has_entity_name': True,
++    'hidden_by': None,
++    'icon': None,
++    'id': <ANY>,
++    'labels': set({
++    }),
++    'name': None,
++    'object_id_base': 'Trunk',
++    'options': dict({
++    }),
++    'original_device_class': <CoverDeviceClass.DOOR: 'door'>,
++    'original_icon': None,
++    'original_name': 'Trunk',
++    'platform': 'teslemetry',
++    'previous_unique_id': None,
++    'suggested_object_id': None,
++    'supported_features': <CoverEntityFeature: 3>,
++    'translation_key': 'vehicle_state_rt',
++    'unique_id': 'LRW3F7EK4NC700000-vehicle_state_rt',
++    'unit_of_measurement': None,
++  })
++# ---
++# name: test_cover_cybertruck[cover.test_trunk-state]
++  StateSnapshot({
++    'attributes': ReadOnlyDict({
++      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'door',
++      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Test Trunk',
++      <CoverEntityStateAttribute.IS_CLOSED: 'is_closed'>: None,
++      <EntityStateAttribute.SUPPORTED_FEATURES: 'supported_features'>: <CoverEntityFeature: 3>,
++    }),
++    'context': <ANY>,
++    'entity_id': 'cover.test_trunk',
++    'last_changed': <ANY>,
++    'last_reported': <ANY>,
++    'last_updated': <ANY>,
++    'state': 'unknown',
++  })
++# ---
++# name: test_cover_cybertruck[cover.test_windows-entry]
++  EntityRegistryEntrySnapshot({
++    'aliases': list([
++      None,
++    ]),
++    'area_id': None,
++    'capabilities': None,
++    'config_entry_id': <ANY>,
++    'config_subentry_id': <ANY>,
++    'device_class': None,
++    'device_id': <ANY>,
++    'disabled_by': None,
++    'domain': 'cover',
++    'entity_category': None,
++    'entity_id': 'cover.test_windows',
++    'has_entity_name': True,
++    'hidden_by': None,
++    'icon': None,
++    'id': <ANY>,
++    'labels': set({
++    }),
++    'name': None,
++    'object_id_base': 'Windows',
++    'options': dict({
++    }),
++    'original_device_class': <CoverDeviceClass.WINDOW: 'window'>,
++    'original_icon': None,
++    'original_name': 'Windows',
++    'platform': 'teslemetry',
++    'previous_unique_id': None,
++    'suggested_object_id': None,
++    'supported_features': <CoverEntityFeature: 3>,
++    'translation_key': 'windows',
++    'unique_id': 'LRW3F7EK4NC700000-windows',
++    'unit_of_measurement': None,
++  })
++# ---
++# name: test_cover_cybertruck[cover.test_windows-state]
++  StateSnapshot({
++    'attributes': ReadOnlyDict({
++      <EntityStateAttribute.DEVICE_CLASS: 'device_class'>: 'window',
++      <EntityStateAttribute.FRIENDLY_NAME: 'friendly_name'>: 'Test Windows',
++      <CoverEntityStateAttribute.IS_CLOSED: 'is_closed'>: None,
++      <EntityStateAttribute.SUPPORTED_FEATURES: 'supported_features'>: <CoverEntityFeature: 3>,
++    }),
++    'context': <ANY>,
++    'entity_id': 'cover.test_windows',
++    'last_changed': <ANY>,
++    'last_reported': <ANY>,
++    'last_updated': <ANY>,
++    'state': 'unknown',
++  })
++# ---
+ # name: test_cover_none[cover.test_charge_port_door-entry]
+   EntityRegistryEntrySnapshot({
+     'aliases': list([
+diff --git a/tests/components/teslemetry/test_cover.py b/tests/components/teslemetry/test_cover.py
+index 4e45ab2c6dd85..41810c20c3afa 100644
+--- a/tests/components/teslemetry/test_cover.py
++++ b/tests/components/teslemetry/test_cover.py
+@@ -1,13 +1,16 @@
+ """Test the Teslemetry cover platform."""
+ 
++from copy import deepcopy
+ from unittest.mock import AsyncMock, patch
+ 
+ import pytest
+ from syrupy.assertion import SnapshotAssertion
++from tesla_fleet_api.const import ClosureState
+ from tesla_fleet_api.exceptions import InvalidCommand
+ from teslemetry_stream import Signal
+ 
+ from homeassistant.components.cover import (
++    ATTR_CURRENT_POSITION,
+     DOMAIN as COVER_DOMAIN,
+     SERVICE_CLOSE_COVER,
+     SERVICE_OPEN_COVER,
+@@ -23,11 +26,16 @@
+ from .const import (
+     COMMAND_ERRORS,
+     COMMAND_OK,
++    METADATA,
+     METADATA_NOSCOPE,
++    PRODUCTS,
++    PRODUCTS_CYBERTRUCK,
+     VEHICLE_DATA_ALT,
+     VEHICLE_DATA_NONE,
+ )
+ 
++VIN = PRODUCTS_CYBERTRUCK["response"][0]["vin"]
++
+ 
+ @pytest.mark.usefixtures("entity_registry_enabled_by_default")
+ async def test_cover(
+@@ -86,6 +94,164 @@ async def test_cover_noscope(
+     assert_entities(hass, entry.entry_id, entity_registry, snapshot)
+ 
+ 
++@pytest.mark.parametrize(
++    ("products", "expected"),
++    [
++        pytest.param(PRODUCTS, False, id="model3"),
++        pytest.param(PRODUCTS_CYBERTRUCK, True, id="cybertruck"),
++    ],
++)
++async def test_cover_tonneau_model_gate(
++    hass: HomeAssistant,
++    mock_products: AsyncMock,
++    products: dict,
++    expected: bool,
++) -> None:
++    """Tests that the tonneau cover is only created for a Cybertruck."""
++
++    mock_products.return_value = products
++    await setup_platform(hass, [Platform.COVER])
++    assert (hass.states.get("cover.test_tonneau") is not None) == expected
++
++
++@pytest.mark.parametrize(
++    ("firmware", "expected"),
++    [
++        pytest.param("2024.44.24", False, id="below_threshold"),
++        pytest.param("2024.44.25", True, id="at_threshold"),
++    ],
++)
++async def test_cover_tonneau_firmware_gate(
++    hass: HomeAssistant,
++    mock_products: AsyncMock,
++    mock_metadata: AsyncMock,
++    firmware: str,
++    expected: bool,
++) -> None:
++    """Tests that the tonneau cover is only created on firmware >= 2024.44.25."""
++
++    mock_products.return_value = PRODUCTS_CYBERTRUCK
++    metadata = deepcopy(METADATA)
++    metadata["vehicles"][VIN]["firmware"] = firmware
++    mock_metadata.return_value = metadata
++
++    await setup_platform(hass, [Platform.COVER])
++    assert (hass.states.get("cover.test_tonneau") is not None) == expected
++
++
++@pytest.mark.usefixtures("entity_registry_enabled_by_default")
++async def test_cover_cybertruck(
++    hass: HomeAssistant,
++    snapshot: SnapshotAssertion,
++    entity_registry: er.EntityRegistry,
++    mock_products: AsyncMock,
++) -> None:
++    """Tests that the cover entities are correct for a Cybertruck."""
++
++    mock_products.return_value = PRODUCTS_CYBERTRUCK
++    entry = await setup_platform(hass, [Platform.COVER])
++    assert_entities(hass, entry.entry_id, entity_registry, snapshot)
++
++
++@pytest.mark.usefixtures("entity_registry_enabled_by_default")
++async def test_cover_tonneau_services(
++    hass: HomeAssistant,
++    mock_products: AsyncMock,
++) -> None:
++    """Tests that the tonneau cover commands work for a Cybertruck."""
++
++    mock_products.return_value = PRODUCTS_CYBERTRUCK
++    await setup_platform(hass, [Platform.COVER])
++
++    entity_id = "cover.test_tonneau"
++    with patch(
++        "tesla_fleet_api.teslemetry.Vehicle.closure",
++        return_value=COMMAND_OK,
++    ) as call:
++        await hass.services.async_call(
++            COVER_DOMAIN,
++            SERVICE_OPEN_COVER,
++            {ATTR_ENTITY_ID: [entity_id]},
++            blocking=True,
++        )
++        call.assert_called_once_with(tonneau=ClosureState.OPEN)
++        state = hass.states.get(entity_id)
++        assert state
++        assert state.state == CoverState.OPEN
++
++        call.reset_mock()
++        await hass.services.async_call(
++            COVER_DOMAIN,
++            SERVICE_STOP_COVER,
++            {ATTR_ENTITY_ID: [entity_id]},
++            blocking=True,
++        )
++        call.assert_called_once_with(tonneau=ClosureState.STOP)
++        state = hass.states.get(entity_id)
++        assert state
++        assert state.state == CoverState.OPEN
++
++        call.reset_mock()
++        await hass.services.async_call(
++            COVER_DOMAIN,
++            SERVICE_CLOSE_COVER,
++            {ATTR_ENTITY_ID: [entity_id]},
++            blocking=True,
++        )
++        call.assert_called_once_with(tonneau=ClosureState.CLOSE)
++        state = hass.states.get(entity_id)
++        assert state
++        assert state.state == CoverState.CLOSED
++
++
++async def test_cover_tonneau_streaming(
++    hass: HomeAssistant,
++    mock_products: AsyncMock,
++    mock_add_listener: AsyncMock,
++) -> None:
++    """Tests that the tonneau cover reflects streamed position and percent."""
++
++    mock_products.return_value = PRODUCTS_CYBERTRUCK
++    await setup_platform(hass, [Platform.COVER])
++
++    entity_id = "cover.test_tonneau"
++    vin = PRODUCTS_CYBERTRUCK["response"][0]["vin"]
++
++    mock_add_listener.send(
++        {
++            "vin": vin,
++            "data": {
++                Signal.TONNEAU_POSITION: "TonneauPositionStateClosed",
++                Signal.TONNEAU_OPEN_PERCENT: 0,
++            },
++            "createdAt": "2024-10-04T10:45:17.537Z",
++        }
++    )
++    await hass.async_block_till_done()
++
++    state = hass.states.get(entity_id)
++    assert state
++    assert state.state == CoverState.CLOSED
++    assert state.attributes[ATTR_CURRENT_POSITION] == 0
++
++    mock_add_listener.send(
++        {
++            "vin": vin,
++            "data": {
++                Signal.TONNEAU_POSITION: "TonneauPositionStateFullyOpen",
++                Signal.TONNEAU_OPEN_PERCENT: 100,
++            },
++            "createdAt": "2024-10-04T10:45:17.537Z",
++        }
++    )
++    await hass.async_block_till_done()
++
++    state = hass.states.get(entity_id)
++    assert state
++    assert state.state == CoverState.OPEN
++    assert state.attributes[ATTR_CURRENT_POSITION] == 100
++
++
+ @pytest.mark.usefixtures("entity_registry_enabled_by_default")
+ async def test_cover_services(
+     hass: HomeAssistant,

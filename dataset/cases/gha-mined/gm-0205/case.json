@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0205",
+  "title": "pydantic/pydantic core / Build on linux (x86_64 - pypy3.11 graalpy3.11 graalpy3.12 - manylinux)",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "pydantic/pydantic",
+    "run_id": 30998886966,
+    "run_attempt": 1,
+    "head_sha": "53b39c38c0628fc75010d24c198cf9bcfbe3698e",
+    "pr_number": 13505,
+    "failed_job_name": "core / Build on linux (x86_64 - pypy3.11 graalpy3.11 graalpy3.12 - manylinux)",
+    "failed_step_name": "Run astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": "diff.patch",
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "infra_environment",
+    "subcategory": "network_timeout",
+    "related_to_diff": false,
+    "culprit_files": [],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/pydantic/pydantic/actions/runs/30998886966",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on infra_environment/network_timeout. Lowest confidence of the two was 0.90. Decisive evidence: Fetching manifest data from raw.githubusercontent.com then: The operation was aborted due to timeout",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

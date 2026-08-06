@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0201",
+  "title": "home-assistant/core Check mypy",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "home-assistant/core",
+    "run_id": 31082624982,
+    "run_attempt": 1,
+    "head_sha": "09892ba3b1e539c24e2bb10b2003a451cef4ce5e",
+    "pr_number": 177610,
+    "failed_job_name": "Check mypy",
+    "failed_step_name": "Set up Python and restore venv",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": "diff.patch",
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "infra_environment",
+    "subcategory": "network_timeout",
+    "related_to_diff": false,
+    "culprit_files": [],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/home-assistant/core/actions/runs/31082624982",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on infra_environment/network_timeout. Lowest confidence of the two was 0.90. Decisive evidence: Fetching manifest data from raw.githubusercontent.com then: The operation was aborted due to timeout",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0203",
+  "title": "pandas-dev/pandas Linux-Musl",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "pandas-dev/pandas",
+    "run_id": 30800349868,
+    "run_attempt": 1,
+    "head_sha": "4b8d2bad4145909ac7be3efcd6d1078934336ac5",
+    "pr_number": null,
+    "failed_job_name": "Linux-Musl",
+    "failed_step_name": "Checkout pandas Repo",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "infra_environment",
+    "subcategory": "external_service",
+    "related_to_diff": false,
+    "culprit_files": [],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/pandas-dev/pandas/actions/runs/30800349868",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on infra_environment/external_service. Lowest confidence of the two was 0.75. Decisive evidence: error: RPC failed; HTTP 503 curl 22 The requested URL returned error: 503",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

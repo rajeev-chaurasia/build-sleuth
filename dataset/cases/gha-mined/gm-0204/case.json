@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0204",
+  "title": "pydantic/pydantic core / Build PyEmscripten (3.14)",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "pydantic/pydantic",
+    "run_id": 30995648364,
+    "run_attempt": 1,
+    "head_sha": "96d73553d498bd5dc7d8df459470c3c138de562b",
+    "pr_number": null,
+    "failed_job_name": "core / Build PyEmscripten (3.14)",
+    "failed_step_name": "Run emscripten-core/setup-emsdk@4528d102f7230f0e7b276855c01ea1159be0e984",
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "compile_error",
+    "related_to_diff": null,
+    "culprit_files": [
+      "pydantic/main.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/pydantic/pydantic/actions/runs/30995648364",
+    "snapshot_date": "2026-08-06",
+    "notes": "Two blind labellers independently agreed on code_change/compile_error. Lowest confidence of the two was 0.45. Decisive evidence: AttributeError: 'tuple' object has no attribute 'url'",
+    "independent_adjudications": 2,
+    "adjudicators_agreeing": 2
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": []
+}

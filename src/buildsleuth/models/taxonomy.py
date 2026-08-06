@@ -29,6 +29,13 @@ SUBCATEGORIES: dict[FailureClass, frozenset[str]] = {
             # Added after two independent labellers both forced a missing
             # changelog entry into lint_or_format and flagged it as wrong.
             "policy_gate",
+            # Four labellers across two rounds independently reported that
+            # nothing covered a deterministic crash that is neither a failed
+            # compile nor a failed assertion: a broken database migration, an
+            # AttributeError from an API a change removed, a regression that
+            # breaks a build tool. They each forced it somewhere different,
+            # which is what a missing category looks like.
+            "runtime_error",
         }
     ),
     FailureClass.FLAKY_TEST: frozenset(
