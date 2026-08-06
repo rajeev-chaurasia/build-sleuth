@@ -28,4 +28,4 @@ Thumbs.db
 snapshots/
 
 # Mined candidates awaiting curation (evidence is large; curated cases live in dataset/)
-mined/
+mined*/
