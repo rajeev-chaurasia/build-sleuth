@@ -42,10 +42,23 @@ uv run python -m evals.compare_models --models gemini-3.1-flash-lite,baseline-re
 
 A model that answers fewer cases is reported as unrankable rather than being quietly scored on the subset it managed.
 
+## How the labels were checked
+
+Every case was labelled twice more by independent annotators who saw only the log and diff, never the recorded label and never each other's work. Agreement is recorded per case, and the disagreements were the useful part:
+
+| axis | unanimous |
+| --- | --- |
+| failure class | 6 of 6 |
+| subcategory | 5 of 6 |
+| related to diff | 3 of 6 |
+
+Both annotators refused to judge whether a failure followed the diff on cases that carry no diff, and they were right to: the agent is shown no diff either, so scoring it there measures guessing. That field is now nullable and unanswerable cases are excluded from the metric rather than given an answer inferred from a branch name. One label was corrected outright as a result.
+
+Both also hit the same two taxonomy gaps, independently, so `code_change` gained `policy_gate` and `pipeline_config` gained `build_step_misconfig`, and the two cases forced into a poor fit moved to them. A taxonomy that annotators cannot apply consistently is a broken measuring instrument, and disagreement is how you find out.
+
 Honest caveats, kept current:
 
 - 6 cases so far, target is 80. Numbers this small are directional, not conclusive.
-- No case has been human-verified yet, so none are eligible for the pull request gate. Labels were derived from log evidence and each case records the line that decided it.
 - **The model choice is not settled on quality.** `gemini-3.1-flash-lite` is the default because it is the only model that has answered all six cases. `gemini-3.5-flash` looked stronger on the four it finished before running out of free quota, but four of six is exactly the partial number this harness exists to distrust. That comparison is open.
 - `gemini-3.6-flash` is in the registry but has no free tier: an unbilled key gets a 429 on the first request.
 

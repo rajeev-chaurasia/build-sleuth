@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "git_sha": "e4f41ec",
+  "git_sha": "19fa73a",
   "model": "baseline-regex",
   "prompt_hash": "none",
-  "dataset_hash": "b7da606b3784",
+  "dataset_hash": "4fc2dde0c4ff",
   "subset": "full",
-  "created_at": "2026-08-06T06:38:07.328761Z",
+  "created_at": "2026-08-06T07:22:29.735256Z",
   "classification": {
     "per_class": {
       "code_change": {
@@ -55,7 +55,7 @@
     "total_input_tokens": 0,
     "total_output_tokens": 0,
     "total_requests": 6,
-    "wall_seconds": 0.0665588999981992,
+    "wall_seconds": 0.061422100028721616,
     "estimated_usd": 0.0,
     "list_price_usd": 0.0,
     "schema_failure_rate": 0.0
@@ -69,7 +69,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 15.245499991578981,
+      "latency_ms": 16.731399984564632,
       "error": null
     },
     {
@@ -80,7 +80,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 4.858900007093325,
+      "latency_ms": 4.691500012995675,
       "error": null
     },
     {
@@ -91,7 +91,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": 9.429300000192598,
+      "latency_ms": 9.350700012873858,
       "error": null
     },
     {
@@ -102,7 +102,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 5.830400012200698,
+      "latency_ms": 5.285899998852983,
       "error": null
     },
     {
@@ -113,7 +113,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 11.743599985493347,
+      "latency_ms": 8.521599986124784,
       "error": null
     },
     {
@@ -124,7 +124,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 2.424800011795014,
+      "latency_ms": 2.415299997664988,
       "error": null
     }
   ]

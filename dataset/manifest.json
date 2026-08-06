@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "dataset_hash": "b7da606b3784",
+  "dataset_hash": "4fc2dde0c4ff",
   "case_count": 6,
   "cases": [
     {
@@ -10,7 +10,8 @@
       "tags": [
         "docs",
         "sphinx",
-        "spellcheck"
+        "spellcheck",
+        "smoke"
       ]
     },
     {
@@ -31,7 +32,8 @@
       "tags": [
         "codeql",
         "scheduled",
-        "build-system"
+        "build-system",
+        "smoke"
       ]
     },
     {
@@ -41,7 +43,8 @@
       "tags": [
         "policy-check",
         "changelog",
-        "towncrier"
+        "towncrier",
+        "smoke"
       ]
     },
     {

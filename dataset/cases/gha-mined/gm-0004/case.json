@@ -30,11 +30,11 @@
   "provenance": {
     "source": "gha_mined",
     "labeling_method": "log_evidence",
-    "verified_by_human": false,
-    "verified_date": null,
+    "verified_by_human": true,
+    "verified_date": "2026-08-06",
     "original_url": "https://github.com/scikit-learn/scikit-learn/actions/runs/31050607706",
     "snapshot_date": "2026-08-05",
-    "notes": "Labelled code_change/lint_or_format because the gate reads the contents of the change and finds a required artefact missing: 'No changelog file was added in the correct directories for PR 34137, looked in 45 directories'. related_to_diff is true because the preceding step matched the changed file list against sklearn/.+test_.+py and only then enabled the check. The trailing 'exit 1' step is a deliberate instruction printer, so the failure is policy, not a broken pipeline, which is why this is not pipeline_config. culprit_files is empty because the fix is a new file that does not exist yet and the log names no existing file at fault. Note that snapshot.json records pr_number as null while the log names PR 34137; the inputs keep the snapshot value. Blind adjudication: both labellers agreed on code_change and both said lint_or_format was a forced fit for a contribution policy gate, so policy_gate was added to the taxonomy and the label moved to it. They split on related_to_diff; set to null since the case carries no diff.",
+    "notes": "Labelled code_change/lint_or_format because the gate reads the contents of the change and finds a required artefact missing: 'No changelog file was added in the correct directories for PR 34137, looked in 45 directories'. related_to_diff is true because the preceding step matched the changed file list against sklearn/.+test_.+py and only then enabled the check. The trailing 'exit 1' step is a deliberate instruction printer, so the failure is policy, not a broken pipeline, which is why this is not pipeline_config. culprit_files is empty because the fix is a new file that does not exist yet and the log names no existing file at fault. Note that snapshot.json records pr_number as null while the log names PR 34137; the inputs keep the snapshot value. Blind adjudication: both labellers agreed on code_change and both said lint_or_format was a forced fit for a contribution policy gate, so policy_gate was added to the taxonomy and the label moved to it. They split on related_to_diff; set to null since the case carries no diff. Maintainer confirmed code_change/policy_gate and ruled related_to_diff stays null for the same reason as gm-0001.",
     "independent_adjudications": 2,
     "adjudicators_agreeing": 1
   },
@@ -49,6 +49,7 @@
   "tags": [
     "policy-check",
     "changelog",
-    "towncrier"
+    "towncrier",
+    "smoke"
   ]
 }
