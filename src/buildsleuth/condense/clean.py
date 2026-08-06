@@ -4,7 +4,7 @@ import re
 
 # GitHub prefixes every log line with an ISO-8601 UTC timestamp and a space;
 # the fractional-second digits vary in count.
-_TIMESTAMP_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z ")
+_TIMESTAMP_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z ", re.MULTILINE)
 # CSI sequences (colors, cursor moves) and OSC sequences (terminal titles),
 # which CI tooling emits and which would otherwise survive into excerpts.
 _ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[ -/]*[@-~]|\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)")
