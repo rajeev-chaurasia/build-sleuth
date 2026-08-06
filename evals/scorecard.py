@@ -32,6 +32,9 @@ class CostSummary(BaseModel):
     total_requests: int = 0
     wall_seconds: float = 0.0
     estimated_usd: float = 0.0
+    # What the same run would cost at the provider's paid rate. Free-tier runs
+    # bill nothing, and "$0.00 per triage" alone tells a reader very little.
+    list_price_usd: float = 0.0
     schema_failure_rate: float = 0.0
 
 
@@ -133,6 +136,13 @@ def _num(value: float) -> str:
     return f"{value:.{DECIMALS}f}"
 
 
+def _per_triage(card: Scorecard) -> float:
+    """List-price cost divided across the cases actually triaged."""
+    if not card.per_case:
+        return 0.0
+    return card.cost.list_price_usd / len(card.per_case)
+
+
 def _answered(card: Scorecard) -> list[CaseResult]:
     return [case for case in card.per_case if case.predicted_class is not None]
 
@@ -205,7 +215,9 @@ def render_markdown(card: Scorecard) -> str:
         headline.append(["mrr", _num(card.localization.mrr)])
         headline.append(["localized cases", str(card.localization.n_evaluated)])
     headline.append(["schema failure rate", _num(card.cost.schema_failure_rate)])
-    headline.append(["estimated usd", _num(card.cost.estimated_usd)])
+    headline.append(["estimated usd", f"{card.cost.estimated_usd:.4f}"])
+    headline.append(["usd at list price", f"{card.cost.list_price_usd:.4f}"])
+    headline.append(["usd per triage at list price", f"{_per_triage(card):.4f}"])
     headline.append(
         ["tokens in / out", f"{card.cost.total_input_tokens} / {card.cost.total_output_tokens}"]
     )
