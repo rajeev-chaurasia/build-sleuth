@@ -26,3 +26,6 @@ Thumbs.db
 
 # Local run snapshots (fetched artifacts, not source)
 snapshots/
+
+# Mined candidates awaiting curation (evidence is large; curated cases live in dataset/)
+mined/

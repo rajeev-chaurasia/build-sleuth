@@ -95,6 +95,17 @@ class GitHubClient:
             )
         return url
 
+    def list_failed_runs(
+        self, repo: str, per_page: int = 20, event: str | None = None
+    ) -> list[JsonDict]:
+        """Recent failed workflow runs, newest first."""
+        params = {"status": "failure", "per_page": str(per_page)}
+        if event:
+            params["event"] = event
+        data = self._get(f"/repos/{repo}/actions/runs", params=params).json()
+        runs: list[JsonDict] = data.get("workflow_runs") or []
+        return runs
+
     def get_job_log(self, repo: str, job_id: int) -> str:
         """Fetch the plain-text log of one job."""
         return self._get(f"/repos/{repo}/actions/jobs/{job_id}/logs").text
