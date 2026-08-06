@@ -86,7 +86,7 @@ def main() -> int:
     classifier = build_classifier(args.model, args.dataset, args.subset, settings)
     prompt_hash = getattr(classifier, "prompt_hash", NO_PROMPT_HASH)
     card = evaluate(classifier, args.dataset, subset=args.subset, prompt_hash=prompt_hash)
-    _attach_cost(card, classifier)
+    attach_cost(card, classifier)
 
     print(render_markdown(card))
     if args.save:
@@ -97,7 +97,7 @@ def main() -> int:
     return 0
 
 
-def _attach_cost(card: Scorecard, classifier: Classifier) -> None:
+def attach_cost(card: Scorecard, classifier: Classifier) -> None:
     """Fold real token usage into the scorecard. Baselines have none, so they are skipped."""
     if not isinstance(classifier, LlmClassifier):
         return

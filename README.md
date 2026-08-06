@@ -28,10 +28,19 @@ Read that table carefully, because it is the argument for having an eval harness
 
 One metric alone would have told you the wrong story three different ways.
 
+Compare models yourself, on every axis at once:
+
+```bash
+uv run python -m evals.compare_models --models gemini-3.1-flash-lite,baseline-regex
+```
+
+A model that answers fewer cases is reported as unrankable rather than being quietly scored on the subset it managed.
+
 Honest caveats, kept current:
 
 - 6 cases so far, target is 80. Numbers this small are directional, not conclusive.
 - No case has been human-verified yet, so none are eligible for the pull request gate. Labels were derived from log evidence and each case records the line that decided it.
+- **The model choice is not settled on quality.** `gemini-3.1-flash-lite` is the default because it is the only model that has answered all six cases. `gemini-3.5-flash` looked stronger on the four it finished before running out of free quota, but four of six is exactly the partial number this harness exists to distrust. That comparison is open.
 - `gemini-3.6-flash` is in the registry but has no free tier: an unbilled key gets a 429 on the first request.
 
 ## How it works
