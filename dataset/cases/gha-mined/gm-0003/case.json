@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0003",
+  "title": "pandas-dev/pandas CodeQL autobuild cannot build the C extension",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "pandas-dev/pandas",
+    "run_id": 31060542360,
+    "run_attempt": 1,
+    "head_sha": "300a0cd8d3539fc9ca8539fbffd31809cc2f1fa5",
+    "pr_number": 66381,
+    "failed_job_name": "analyze (c-cpp)",
+    "failed_step_name": "Run github/codeql-action/autobuild@f205ea1c3313d32999d8d6a48b4f6530d4437b38",
+    "log_files": ["logs/failed_job.txt"],
+    "diff_file": "diff.patch",
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "pipeline_config",
+    "subcategory": "action_version",
+    "related_to_diff": false,
+    "culprit_files": [".github/workflows/codeql.yml"],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": "Replace the codeql-action/autobuild step for the c-cpp language with explicit build steps that install the project build requirements, or switch that language to build-mode none."
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/pandas-dev/pandas/actions/runs/31060542360",
+    "snapshot_date": "2026-08-05",
+    "notes": "Labelled pipeline_config because the fix belongs in the workflow, not in the repository source: the action itself says 'We were unable to automatically build your code. Please replace the call to the autobuild action with your custom build steps.' The proximate error is '../meson.build:7:13: ERROR: Command `/usr/bin/python3 generate_version.py --print` failed with status 1.', which is the autobuild guess of a build command running under the system interpreter without the project build requirements. related_to_diff is false: the event is a scheduled run on main and the captured diff only rewrites LaTeX escapes in a docstring in pandas/core/generic.py, which cannot affect a meson configure step. culprit_files uses the workflow path the log itself reports as CODEQL_ACTION_ANALYSIS_KEY. Caveat on the taxonomy: none of the pipeline_config subcategories describes a misconfigured build step, and action_version was chosen as the nearest fit."
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": ["codeql", "scheduled", "build-system"]
+}

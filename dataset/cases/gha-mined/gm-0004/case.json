@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0004",
+  "title": "scikit-learn changelog gate fails: PR touches tests with no towncrier entry",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "scikit-learn/scikit-learn",
+    "run_id": 31050607706,
+    "run_attempt": 1,
+    "head_sha": "c0ef303c32e9359d354f265217707e1f4bb96596",
+    "pr_number": null,
+    "failed_job_name": "A reviewer will let you know if it is required or can be bypassed",
+    "failed_step_name": "Check changelog entry",
+    "log_files": ["logs/failed_job.txt"],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "lint_or_format",
+    "related_to_diff": true,
+    "culprit_files": [],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": "Add a towncrier changelog fragment under doc/whats_new/upcoming_changes/ for the modules this PR touches, or have a maintainer set the bypass label."
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/scikit-learn/scikit-learn/actions/runs/31050607706",
+    "snapshot_date": "2026-08-05",
+    "notes": "Labelled code_change/lint_or_format because the gate reads the contents of the change and finds a required artefact missing: 'No changelog file was added in the correct directories for PR 34137, looked in 45 directories'. related_to_diff is true because the preceding step matched the changed file list against sklearn/.+test_.+py and only then enabled the check. The trailing 'exit 1' step is a deliberate instruction printer, so the failure is policy, not a broken pipeline, which is why this is not pipeline_config. culprit_files is empty because the fix is a new file that does not exist yet and the log names no existing file at fault. Note that snapshot.json records pr_number as null while the log names PR 34137; the inputs keep the snapshot value."
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": ["policy-check", "changelog", "towncrier"]
+}

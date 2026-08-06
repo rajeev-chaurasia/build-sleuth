@@ -32,6 +32,8 @@ console = Console()
 SNAPSHOT_FILE = "snapshot.json"
 LOG_FILE = "log.txt"
 DIFF_FILE = "diff.patch"
+DATASET_DIR = Path("dataset")
+RESULTS_DIR = Path("results")
 
 
 @app.callback()
@@ -97,3 +99,22 @@ def condense(
     )
     # rich degrades unencodable characters gracefully on legacy Windows consoles
     console.print(result.as_text(), markup=False, highlight=False)
+
+
+@app.command()
+def dataset(
+    check: Annotated[bool, typer.Option(help="Fail if the manifest is stale.")] = False,
+) -> None:
+    """Validate the case dataset and refresh its manifest."""
+    from buildsleuth.dataset.manifest import build_manifest, read_manifest, write_manifest
+
+    manifest = build_manifest(DATASET_DIR)
+    if check:
+        if read_manifest(DATASET_DIR) != manifest:
+            console.print("[red]manifest is stale, rerun without --check[/red]")
+            raise typer.Exit(code=1)
+        console.print("[green]manifest is up to date[/green]")
+        return
+
+    write_manifest(DATASET_DIR, manifest)
+    console.print(f"[green]{manifest.case_count} case(s)[/green] | hash {manifest.dataset_hash}")

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "case_id": "gm-0002",
+  "title": "home-assistant/core venv build fails: python-otbr-api==2.11.0 does not exist",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "home-assistant/core",
+    "run_id": 31069203798,
+    "run_attempt": 1,
+    "head_sha": "9e58b2cdfc84357468a3f7a2cf00bc4a42e2ede4",
+    "pr_number": null,
+    "failed_job_name": "Prepare dependencies (3.14.5)",
+    "failed_step_name": "Set up Python 3.14.5 and build venv",
+    "log_files": ["logs/failed_job.txt"],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "dependency_conflict",
+    "related_to_diff": true,
+    "culprit_files": [],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": "Pin python-otbr-api to a version that is published on PyPI, or wait for 2.11.0 to be released, then regenerate requirements_all.txt."
+  },
+  "provenance": {
+    "source": "gha_mined",
+    "labeling_method": "log_evidence",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": "https://github.com/home-assistant/core/actions/runs/31069203798",
+    "snapshot_date": "2026-08-05",
+    "notes": "Labelled code_change/dependency_conflict because the resolver rejects a pin deterministically rather than failing to reach the index: 'Because there is no version of python-otbr-api==2.11.0 and you require python-otbr-api==2.11.0, we can conclude that your requirements are unsatisfiable.' There is no download error, timeout, or registry outage anywhere in the log, which rules out infra_environment. related_to_diff is true by inference: the head branch is ha7-otbr-migrate-network and the single unsatisfiable requirement is the OTBR client library, so the branch almost certainly moved the pin ahead of the release. No diff was captured for this run, so that inference is unverified. culprit_files is empty on purpose: the log names the package and the failing command ('uv pip install -r requirements_all.txt -r requirements_test.txt') but never names the file that carries the pin."
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": ["dependencies", "uv", "python"]
+}

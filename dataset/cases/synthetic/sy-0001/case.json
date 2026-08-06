@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "case_id": "sy-0001",
+  "title": "Synthetic: async worker pool drain times out on one attempt and passes on the rerun",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "buildsleuth/synthetic-fixtures",
+    "run_id": 1,
+    "run_attempt": 2,
+    "head_sha": "0000000000000000000000000000000000000000",
+    "pr_number": 41,
+    "failed_job_name": "tests (3.12)",
+    "failed_step_name": "Run uv run pytest -q --timeout=30",
+    "log_files": ["logs/failed_job.txt"],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": "logs/passing_rerun.txt"
+  },
+  "ground_truth": {
+    "failure_class": "flaky_test",
+    "subcategory": "async_wait",
+    "related_to_diff": false,
+    "culprit_files": [],
+    "failing_tests": ["tests/test_worker_pool.py::test_worker_drains_queue_after_stop"],
+    "fix_commit_sha": null,
+    "fix_summary": "Await the in-flight item before asserting on the drain event, or wait on the event without a fixed 0.5 second budget."
+  },
+  "provenance": {
+    "source": "synthetic",
+    "labeling_method": "constructed",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": null,
+    "snapshot_date": "2026-08-05",
+    "notes": "Hand written, not mined: both logs were authored for this case and describe no real run. Labelled flaky_test/async_wait by construction, and the log is written so the evidence supports it: the failure is a bounded wait, 'await asyncio.wait_for(pool.drained.wait(), timeout=0.5)' ending in TimeoutError with 'drain event not set, 1 item still in flight', and the same commit passes in logs/passing_rerun.txt with no code change. related_to_diff is false and culprit_files is empty because a timing race in the test itself has no single culprit source file. This case exists so the loader, the manifest, and the passing_run_log input have coverage for a class the five mined cases do not contain."
+  },
+  "verification": {
+    "method": "none",
+    "docker_image": null,
+    "setup_commands": [],
+    "test_command": null,
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": ["synthetic", "asyncio", "pytest"]
+}

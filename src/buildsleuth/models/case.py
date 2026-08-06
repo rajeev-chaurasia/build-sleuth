@@ -24,11 +24,19 @@ class CaseSource(StrEnum):
 
 
 class LabelingMethod(StrEnum):
+    """How a case's ground truth was derived, weakest evidence last.
+
+    LOG_EVIDENCE means the label was read off the failure log alone, with no
+    corroborating rerun, fix commit, or maintainer issue. It is the weakest
+    method and is tracked separately so headline metrics can be split by it.
+    """
+
     RERUN_ATTEMPT_HEURISTIC = "rerun_attempt_heuristic"
     FIX_COMMIT_HEURISTIC = "fix_commit_heuristic"
     ISSUE_CROSSREF = "issue_crossref"
     IMPORTED = "imported"
     CONSTRUCTED = "constructed"
+    LOG_EVIDENCE = "log_evidence"
 
 
 class VerificationMethod(StrEnum):

@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "dataset_hash": "89c740280243",
+  "case_count": 6,
+  "cases": [
+    {
+      "case_id": "gm-0001",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": [
+        "docs",
+        "sphinx",
+        "spellcheck"
+      ]
+    },
+    {
+      "case_id": "gm-0002",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": [
+        "dependencies",
+        "uv",
+        "python"
+      ]
+    },
+    {
+      "case_id": "gm-0003",
+      "failure_class": "pipeline_config",
+      "source": "gha_mined",
+      "tags": [
+        "codeql",
+        "scheduled",
+        "build-system"
+      ]
+    },
+    {
+      "case_id": "gm-0004",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": [
+        "policy-check",
+        "changelog",
+        "towncrier"
+      ]
+    },
+    {
+      "case_id": "gm-0005",
+      "failure_class": "code_change",
+      "source": "gha_mined",
+      "tags": [
+        "python",
+        "packaging",
+        "smoke-test"
+      ]
+    },
+    {
+      "case_id": "sy-0001",
+      "failure_class": "flaky_test",
+      "source": "synthetic",
+      "tags": [
+        "synthetic",
+        "asyncio",
+        "pytest"
+      ]
+    }
+  ]
+}

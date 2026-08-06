@@ -1,0 +1,58 @@
+Current runner version: '2.336.0'
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+##[endgroup]
+Prepare workflow directory
+Prepare all required actions
+Complete job name: tests (3.12)
+##[group]Run actions/checkout@v4
+##[endgroup]
+Syncing repository: buildsleuth/synthetic-fixtures
+/usr/bin/git init /home/runner/work/synthetic-fixtures/synthetic-fixtures
+/usr/bin/git checkout --progress --force refs/remotes/pull/41/merge
+HEAD is now at 0000000 Merge 0000000000000000000000000000000000000000 into main
+##[group]Run uv sync --frozen
+uv sync --frozen
+shell: /usr/bin/bash -e {0}
+##[endgroup]
+Resolved 64 packages in 118ms
+Installed 64 packages in 231ms
+##[group]Run uv run pytest -q --timeout=30
+uv run pytest -q --timeout=30
+shell: /usr/bin/bash -e {0}
+env:
+  PYTHONHASHSEED: 0
+##[endgroup]
+............................................F......................      [ 68%]
+................................                                         [100%]
+=================================== FAILURES ===================================
+_____________________ test_worker_drains_queue_after_stop ______________________
+
+    @pytest.mark.asyncio
+    async def test_worker_drains_queue_after_stop() -> None:
+        pool = WorkerPool(size=4)
+        await pool.start()
+        for item in range(64):
+            await pool.submit(item)
+        await pool.stop()
+>       await asyncio.wait_for(pool.drained.wait(), timeout=0.5)
+E       TimeoutError
+
+tests/test_worker_pool.py:118: TimeoutError
+------------------------------ Captured log call -------------------------------
+INFO     worker_pool:pool.py:74 worker-0 stopped after 17 items
+INFO     worker_pool:pool.py:74 worker-1 stopped after 16 items
+INFO     worker_pool:pool.py:74 worker-2 stopped after 16 items
+INFO     worker_pool:pool.py:74 worker-3 stopped after 14 items
+WARNING  worker_pool:pool.py:91 drain event not set, 1 item still in flight
+=========================== short test summary info ============================
+FAILED tests/test_worker_pool.py::test_worker_drains_queue_after_stop - TimeoutError
+1 failed, 98 passed in 6.42s
+##[error]Process completed with exit code 1.
+Post job cleanup.
+Cleaning up orphan processes

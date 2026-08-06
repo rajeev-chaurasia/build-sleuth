@@ -1,0 +1,1581 @@
+Current runner version: '2.336.0'
+##[group]Runner Image Provisioner
+Hosted Compute Agent
+Version: 20260707.563
+Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e
+Build Date: 2026-07-07T19:33:50Z
+Worker ID: {d574639a-e9a1-4f23-9f49-3f406320ef0d}
+Azure Region: westus3
+##[endgroup]
+##[group]Operating System
+Ubuntu
+24.04.4
+LTS
+##[endgroup]
+##[group]Runner Image
+Image: ubuntu-24.04
+Version: 20260720.247.2
+Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260720.247/images/ubuntu/Ubuntu2404-Readme.md
+Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260720.247
+##[endgroup]
+##[group]GITHUB_TOKEN Permissions
+Actions: read
+Contents: read
+Metadata: read
+SecurityEvents: write
+##[endgroup]
+Secret source: Actions
+Prepare workflow directory
+Prepare all required actions
+Getting action download info
+Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Download action repository 'github/codeql-action@f205ea1c3313d32999d8d6a48b4f6530d4437b38' (SHA:f205ea1c3313d32999d8d6a48b4f6530d4437b38)
+Complete job name: analyze (c-cpp)
+##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+with:
+  repository: pandas-dev/pandas
+  token: ***
+  ssh-strict: true
+  ssh-user: git
+  persist-credentials: true
+  clean: true
+  sparse-checkout-cone-mode: true
+  fetch-depth: 1
+  fetch-tags: false
+  show-progress: true
+  lfs: false
+  submodules: false
+  set-safe-directory: true
+  allow-unsafe-pr-checkout: false
+##[endgroup]
+Syncing repository: pandas-dev/pandas
+##[group]Getting Git version info
+Working directory is '/home/runner/work/pandas/pandas'
+[command]/usr/bin/git version
+git version 2.54.0
+##[endgroup]
+Temporarily overriding HOME='/home/runner/work/_temp/c1dcdf8f-3244-4cdc-9a18-a76ca6d27768' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/pandas/pandas
+Deleting the contents of '/home/runner/work/pandas/pandas'
+##[group]Determining repository object format
+##[endgroup]
+##[group]Initializing the repository
+[command]/usr/bin/git init /home/runner/work/pandas/pandas
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/runner/work/pandas/pandas/.git/
+[command]/usr/bin/git remote add origin https://github.com/pandas-dev/pandas
+##[endgroup]
+##[group]Disabling automatic garbage collection
+[command]/usr/bin/git config --local gc.auto 0
+##[endgroup]
+##[group]Setting up auth
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+[command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-1b9f66ab-1e37-484d-bd2c-1a8072e7ff51.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/pandas/pandas/.git.path /home/runner/work/_temp/git-credentials-1b9f66ab-1e37-484d-bd2c-1a8072e7ff51.config
+[command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/pandas/pandas/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-1b9f66ab-1e37-484d-bd2c-1a8072e7ff51.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-1b9f66ab-1e37-484d-bd2c-1a8072e7ff51.config
+[command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-1b9f66ab-1e37-484d-bd2c-1a8072e7ff51.config
+##[endgroup]
+##[group]Fetching the repository
+[command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +300a0cd8d3539fc9ca8539fbffd31809cc2f1fa5:refs/remotes/origin/main
+From https://github.com/pandas-dev/pandas
+ * [new ref]         300a0cd8d3539fc9ca8539fbffd31809cc2f1fa5 -> origin/main
+[command]/usr/bin/git branch --list --remote origin/main
+  origin/main
+[command]/usr/bin/git rev-parse refs/remotes/origin/main
+300a0cd8d3539fc9ca8539fbffd31809cc2f1fa5
+##[endgroup]
+##[group]Determining the checkout info
+##[endgroup]
+[command]/usr/bin/git sparse-checkout disable
+[command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+##[group]Checking out the ref
+[command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Switched to a new branch 'main'
+branch 'main' set up to track 'origin/main'.
+##[endgroup]
+[command]/usr/bin/git log -1 --format=%H
+300a0cd8d3539fc9ca8539fbffd31809cc2f1fa5
+##[group]Run github/codeql-action/init@f205ea1c3313d32999d8d6a48b4f6530d4437b38
+with:
+  languages: c-cpp
+  analysis-kinds: code-scanning
+  token: ***
+  matrix: {
+  "language": "c-cpp"
+}
+  debug: false
+  check-run-id: 92487361720
+##[endgroup]
+Job run UUID is 5b9b799f-4a9a-4d7a-a195-aa50f2e3cb8c.
+##[group]Setup CodeQL tools
+[command]/usr/bin/tar --version
+tar (GNU tar) 1.35
+Copyright (C) 2023 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Written by John Gilmore and Jay Fenlason.
+Found gnu tar version 1.35.
+Did not find CodeQL tools version 2.26.2 in the toolcache.
+Using CodeQL CLI version 2.26.2 sourced from https://github.com/github/codeql-action/releases/download/codeql-bundle-v2.26.2/codeql-bundle-linux64.tar.zst .
+Downloading CodeQL tools from https://github.com/github/codeql-action/releases/download/codeql-bundle-v2.26.2/codeql-bundle-linux64.tar.zst . This may take a while.
+Streaming the extraction of the CodeQL bundle.
+[command]tar -x --zstd --ignore-zeros --warning=no-unknown-keyword --overwrite -f - -C /opt/hostedtoolcache/CodeQL/2.26.2/x64
+Finished downloading and extracting CodeQL bundle to /opt/hostedtoolcache/CodeQL/2.26.2/x64 (3.7s).
+Created toolcache marker file /opt/hostedtoolcache/CodeQL/2.26.2/x64.complete
+{
+  "productName": "CodeQL",
+  "vendor": "GitHub",
+  "version": "2.26.2",
+  "sha": "a668db4064994abb88e66b7e2fa14af8f6eb42aa",
+  "branches": [
+    "codeql-cli-2.26.2"
+  ],
+  "copyright": "Copyright (C) 2019-2026 GitHub, Inc.",
+  "unpackedLocation": "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql",
+  "configFileLocation": "/home/runner/.config/codeql/config",
+  "configFileFound": false,
+  "overlayVersion": 4,
+  "features": {
+    "analysisSummaryV2Default": true,
+    "buildModeOption": true,
+    "bundleSupportsIncludeDiagnostics": true,
+    "bundleSupportsIncludeLogs": true,
+    "bundleSupportsOverlay": true,
+    "databaseInterpretResultsSupportsSarifRunProperty": true,
+    "featuresInVersionResult": true,
+    "indirectTracingSupportsStaticBinaries": false,
+    "informsAboutUnsupportedPathFilters": true,
+    "supportsPython312": true,
+    "mrvaPackCreate": true,
+    "threatModelOption": true,
+    "traceCommandUseBuildMode": true,
+    "v2ramSizing": true,
+    "mrvaPackCreateMultipleQueries": true,
+    "setsCodeqlRunnerEnvVar": true,
+    "sarifMergeRunsFromEqualCategory": true,
+    "forceOverwrite": true,
+    "generateSummarySymbolMap": true,
+    "pythonDefaultIsToNotExtractStdlib": true,
+    "queryServerRunQueries": true,
+    "queryServerTrimCacheWithMode": true,
+    "builtinExtractorsSpecifyDefaultQueries": true,
+    "bqrsDiffResultSets": true,
+    "bundleSupportsIncludeOption": true,
+    "suppressesMissingFileBaselineWarning": true
+  }
+}
+##[endgroup]
+##[group]Validating workflow
+[command]/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/codeql resolve languages --format=betterjson --extractor-options-verbosity=4 --extractor-include-aliases
+{
+  "aliases" : {
+    "c" : "cpp",
+    "c++" : "cpp",
+    "c-c++" : "cpp",
+    "c-cpp" : "cpp",
+    "c#" : "csharp",
+    "java-kotlin" : "java",
+    "kotlin" : "java",
+    "javascript-typescript" : "javascript",
+    "typescript" : "javascript"
+  },
+  "extractors" : {
+    "javascript" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/javascript",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "TRAP options",
+            "description" : "Options about how the extractor handles TRAP files",
+            "type" : "object",
+            "visibility" : 3,
+            "properties" : {
+              "cache" : {
+                "title" : "TRAP cache options",
+                "description" : "Options about how the extractor handles its TRAP cache",
+                "type" : "object",
+                "properties" : {
+                  "dir" : {
+                    "title" : "TRAP cache directory",
+                    "description" : "The directory of the TRAP cache to use",
+                    "type" : "string"
+                  },
+                  "bound" : {
+                    "title" : "TRAP cache bound",
+                    "description" : "A soft limit (in MB) on the size of the TRAP cache",
+                    "type" : "string",
+                    "pattern" : "[0-9]+"
+                  },
+                  "write" : {
+                    "title" : "TRAP cache writeable",
+                    "description" : "Whether to write to the TRAP cache as well as reading it",
+                    "type" : "string",
+                    "pattern" : "(true|TRUE|false|FALSE)"
+                  }
+                }
+              }
+            }
+          },
+          "skip_types" : {
+            "title" : "Skip type extraction for TypeScript",
+            "description" : "Whether to skip the extraction of types in a TypeScript application",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          }
+        }
+      }
+    ],
+    "yaml" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/yaml"
+      }
+    ],
+    "python" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/python",
+        "extractor_options" : {
+          "logging" : {
+            "title" : "Options pertaining to logging.",
+            "description" : "Options pertaining to logging.",
+            "type" : "object",
+            "properties" : {
+              "verbosity" : {
+                "title" : "Python extractor logging verbosity level.",
+                "description" : "Controls the level of verbosity of the CodeQL Python extractor.\nThe supported levels are (in order of increasing verbosity):\n\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                "type" : "string",
+                "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+              }
+            }
+          },
+          "python_executable_name" : {
+            "title" : "Controls the name of the Python executable used by the Python extractor.",
+            "description" : "The Python extractor uses platform-dependent heuristics to determine the name of the Python executable to use. Specifying a value for this option overrides the name of the Python executable used by the extractor. Accepted values are py, python and python3. Use this setting with caution, the Python extractor requires Python 3 to run.\n",
+            "type" : "string",
+            "pattern" : "^(py|python|python3)$"
+          }
+        }
+      }
+    ],
+    "swift" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/swift"
+      }
+    ],
+    "go" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/go",
+        "extractor_options" : {
+          "extract_tests" : {
+            "title" : "Whether to include Go test files in the CodeQL database.",
+            "description" : "A value indicating whether Go test files should be included in the CodeQL database. The default is 'false'.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          },
+          "extract_vendor_dirs" : {
+            "title" : "Whether to include Go vendor directories in the CodeQL database.",
+            "description" : "A value indicating whether Go vendor directories should be included in the CodeQL database. The default is 'false'.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          }
+        }
+      }
+    ],
+    "csv" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/csv"
+      }
+    ],
+    "ruby" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/ruby",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "Options pertaining to TRAP.",
+            "description" : "Options pertaining to TRAP.",
+            "type" : "object",
+            "properties" : {
+              "compression" : {
+                "title" : "Controls compression for the TRAP files written by the extractor.",
+                "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'gzip' (the default, to write gzip-compressed TRAP) 'zstd' (to write Zstandard-compressed TRAP) and 'none' (to write uncompressed TRAP).\n",
+                "type" : "string",
+                "pattern" : "^(none|gzip|zstd)$"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "properties" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/properties"
+      }
+    ],
+    "csharp" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/csharp",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "Options pertaining to TRAP.",
+            "description" : "Options pertaining to TRAP.",
+            "type" : "object",
+            "properties" : {
+              "compression" : {
+                "title" : "Controls compression for the TRAP files written by the extractor.",
+                "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'brotli' (the default, to write brotli-compressed TRAP), 'gzip', and 'none' (to write uncompressed TRAP).\n",
+                "type" : "string",
+                "pattern" : "^(none|gzip|brotli)$"
+              }
+            }
+          },
+          "buildless" : {
+            "title" : "DEPRECATED - Whether to use buildless (standalone) extraction.",
+            "description" : "DEPRECATED: Use `--build-mode none` instead.\nA value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          },
+          "logging" : {
+            "title" : "Options pertaining to logging.",
+            "description" : "Options pertaining to logging.",
+            "type" : "object",
+            "properties" : {
+              "verbosity" : {
+                "title" : "Extractor logging verbosity level.",
+                "description" : "Controls the level of verbosity of the extractor. The supported levels are (in order of increasing verbosity):\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                "type" : "string",
+                "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+              }
+            }
+          },
+          "binlog" : {
+            "title" : "Binlog",
+            "description" : "[EXPERIMENTAL] The value is a path to the MsBuild binary log file that should be extracted. This option only works when `--build-mode none` is also specified.\n",
+            "type" : "array"
+          },
+          "buildless_dependency_dir" : {
+            "title" : "The path where buildless (standalone) extraction should keep dependencies.",
+            "description" : "If set, the buildless (standalone) extractor will store dependencies in this directory.\n",
+            "type" : "string"
+          }
+        }
+      }
+    ],
+    "xml" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/xml"
+      }
+    ],
+    "java" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/java",
+        "extractor_options" : {
+          "exclude" : {
+            "title" : "A glob excluding files from analysis.",
+            "description" : "A glob indicating what files to exclude from the analysis. This accepts glob patterns that are supported by Java's 'getPathMatcher' implementation.\n",
+            "type" : "string"
+          },
+          "add_prefer_source" : {
+            "title" : "Whether to always prefer source files over class files.",
+            "description" : "A value indicating whether source files should be preferred over class files. If set to 'true', the extraction adds '-Xprefer:source' to the javac command line. If set to 'false', the extraction uses the default javac behavior ('-Xprefer:newer'). The default is 'true'.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          },
+          "buildless" : {
+            "title" : "Whether to use buildless (standalone) extraction (experimental).",
+            "description" : "A value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          },
+          "buildless_dependency_dir" : {
+            "title" : "The path where buildless (standalone) extraction should keep dependencies.",
+            "description" : "If set, the buildless (standalone) extractor will store dependencies in this directory.\n",
+            "type" : "string"
+          },
+          "minimize_dependency_jars" : {
+            "title" : "Whether to rewrite and minimize downloaded JAR dependencies (experimental).",
+            "description" : "If 'true', JAR dependencies downloaded during extraction will be rewritten to remove unneeded data, such as method bodies. The default is 'false'.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          }
+        }
+      }
+    ],
+    "actions" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/actions",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "TRAP options",
+            "description" : "Options about how the extractor handles TRAP files",
+            "type" : "object",
+            "visibility" : 3,
+            "properties" : {
+              "cache" : {
+                "title" : "TRAP cache options",
+                "description" : "Options about how the extractor handles its TRAP cache",
+                "type" : "object",
+                "properties" : {
+                  "dir" : {
+                    "title" : "TRAP cache directory",
+                    "description" : "The directory of the TRAP cache to use",
+                    "type" : "string"
+                  },
+                  "bound" : {
+                    "title" : "TRAP cache bound",
+                    "description" : "A soft limit (in MB) on the size of the TRAP cache",
+                    "type" : "string",
+                    "pattern" : "[0-9]+"
+                  },
+                  "write" : {
+                    "title" : "TRAP cache writeable",
+                    "description" : "Whether to write to the TRAP cache as well as reading it",
+                    "type" : "string",
+                    "pattern" : "(true|TRUE|false|FALSE)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "rust" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/rust",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "Options pertaining to TRAP.",
+            "description" : "Options pertaining to TRAP.",
+            "type" : "object",
+            "properties" : {
+              "compression" : {
+                "title" : "Controls compression for the TRAP files written by the extractor.",
+                "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'gzip' (to write gzip-compressed TRAP) 'zstd' (to write Zstandard-compressed TRAP) and 'none' (the default, to write uncompressed TRAP).\n",
+                "type" : "string",
+                "pattern" : "^(none|gzip|zstd)$"
+              }
+            }
+          },
+          "cargo_target_dir" : {
+            "title" : "Directory to use for cargo output files.",
+            "description" : "This value is an optional path to use as `CARGO_TARGET_DIR` for the internal cargo commands the extractor uses. Pointing it to a persistent directory may reduce execution time of consecutive extractor runs. By default, a new scratch directory is used for each run.\n",
+            "type" : "string"
+          },
+          "cargo_target" : {
+            "title" : "Target architecture",
+            "description" : "Target architecture to use for analysis, analogous to `cargo --target`. By default the host architecture is used.\n",
+            "type" : "string"
+          },
+          "cargo_features" : {
+            "title" : "Cargo features to turn on",
+            "description" : "Comma-separated list of features to turn on. By default all features are enabled. If any features are specified, then only those features are enabled. The `default` feature must be explicitly specified if only default features are desired. Can be repeated.\n",
+            "type" : "array"
+          },
+          "cargo_cfg_overrides" : {
+            "title" : "Cargo cfg overrides",
+            "description" : "Comma-separated list of cfg settings to enable, or disable if prefixed with `-`. Can be repeated.\n",
+            "type" : "array"
+          },
+          "logging" : {
+            "title" : "Options pertaining to logging.",
+            "description" : "Options pertaining to logging.",
+            "type" : "object",
+            "properties" : {
+              "verbosity" : {
+                "title" : "Extractor logging verbosity level.",
+                "description" : "Controls the level of verbosity of the extractor. The supported levels are (in order of increasing verbosity):\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                "type" : "string",
+                "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+              },
+              "flamegraph" : {
+                "title" : "[Experimental] File path for write flame graph log",
+                "description" : "Collect flame graph data using the `tracing-flame` crate. To render a flame graph or chart, run the `inferno-flamegraph` command. See also: https://crates.io/crates/tracing-flame\n",
+                "type" : "string"
+              }
+            }
+          },
+          "extract_dependencies_as_source" : {
+            "title" : "Extract dependencies as source code",
+            "description" : "Extract the full source code of dependencies instead of only extracting signatures.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          }
+        }
+      }
+    ],
+    "cpp" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/cpp",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "TRAP options",
+            "description" : "Options about how the extractor handles TRAP files",
+            "type" : "object",
+            "visibility" : 3,
+            "properties" : {
+              "cache" : {
+                "title" : "TRAP cache options",
+                "description" : "Options about how the extractor handles its TRAP cache",
+                "type" : "object",
+                "properties" : {
+                  "dir" : {
+                    "title" : "TRAP cache directory",
+                    "description" : "The directory of the TRAP cache to use",
+                    "type" : "string"
+                  },
+                  "bound" : {
+                    "title" : "TRAP cache bound",
+                    "description" : "A soft limit (in MB) on the size of the TRAP cache",
+                    "type" : "string",
+                    "pattern" : "[0-9]+"
+                  },
+                  "write" : {
+                    "title" : "TRAP cache writeable",
+                    "description" : "Whether to write to the TRAP cache as well as reading it",
+                    "type" : "string",
+                    "pattern" : "(true|TRUE|false|FALSE)"
+                  }
+                }
+              }
+            }
+          },
+          "scale_timeouts" : {
+            "title" : "Value to scale compiler introspection timeouts with",
+            "description" : "The extractor attempts to determine what compiler the source code being extracted is compiled with. To this end the extractor makes additional calls to the compiler, some of which are expected to return within a certain fixed time (either 10s or 15s). On some systems that are under high load this time might be too short, and can be scaled up using this option.\n",
+            "type" : "string",
+            "pattern" : "[0-9]+"
+          },
+          "log_verbosity" : {
+            "title" : "Verbosity of the extractor logging",
+            "description" : "Set the verbosity of the extractor logging to 'quiet' (0), 'normal' (1), 'chatty' (2), or 'noisy' (3). The default is 'normal'.\n",
+            "type" : "string",
+            "pattern" : "[0-3]"
+          },
+          "frontend_options" : {
+            "title" : "C/C++ extractor frontend options",
+            "description" : "Set additional options that should be passed to the C/C++ extractor frontend.\n",
+            "type" : "array",
+            "visibility" : 3
+          }
+        }
+      }
+    ],
+    "html" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/html"
+      }
+    ]
+  }
+}
+Detected no issues with the code scanning workflow.
+##[endgroup]
+##[group]Load language configuration
+[command]/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/codeql resolve languages --format=betterjson --extractor-options-verbosity=4 --extractor-include-aliases --filter-to-languages-with-queries
+{
+  "aliases" : {
+    "c" : "cpp",
+    "c++" : "cpp",
+    "c-c++" : "cpp",
+    "c-cpp" : "cpp",
+    "c#" : "csharp",
+    "java-kotlin" : "java",
+    "kotlin" : "java",
+    "javascript-typescript" : "javascript",
+    "typescript" : "javascript"
+  },
+  "extractors" : {
+    "rust" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/rust",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "Options pertaining to TRAP.",
+            "description" : "Options pertaining to TRAP.",
+            "type" : "object",
+            "properties" : {
+              "compression" : {
+                "title" : "Controls compression for the TRAP files written by the extractor.",
+                "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'gzip' (to write gzip-compressed TRAP) 'zstd' (to write Zstandard-compressed TRAP) and 'none' (the default, to write uncompressed TRAP).\n",
+                "type" : "string",
+                "pattern" : "^(none|gzip|zstd)$"
+              }
+            }
+          },
+          "cargo_target_dir" : {
+            "title" : "Directory to use for cargo output files.",
+            "description" : "This value is an optional path to use as `CARGO_TARGET_DIR` for the internal cargo commands the extractor uses. Pointing it to a persistent directory may reduce execution time of consecutive extractor runs. By default, a new scratch directory is used for each run.\n",
+            "type" : "string"
+          },
+          "cargo_target" : {
+            "title" : "Target architecture",
+            "description" : "Target architecture to use for analysis, analogous to `cargo --target`. By default the host architecture is used.\n",
+            "type" : "string"
+          },
+          "cargo_features" : {
+            "title" : "Cargo features to turn on",
+            "description" : "Comma-separated list of features to turn on. By default all features are enabled. If any features are specified, then only those features are enabled. The `default` feature must be explicitly specified if only default features are desired. Can be repeated.\n",
+            "type" : "array"
+          },
+          "cargo_cfg_overrides" : {
+            "title" : "Cargo cfg overrides",
+            "description" : "Comma-separated list of cfg settings to enable, or disable if prefixed with `-`. Can be repeated.\n",
+            "type" : "array"
+          },
+          "logging" : {
+            "title" : "Options pertaining to logging.",
+            "description" : "Options pertaining to logging.",
+            "type" : "object",
+            "properties" : {
+              "verbosity" : {
+                "title" : "Extractor logging verbosity level.",
+                "description" : "Controls the level of verbosity of the extractor. The supported levels are (in order of increasing verbosity):\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                "type" : "string",
+                "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+              },
+              "flamegraph" : {
+                "title" : "[Experimental] File path for write flame graph log",
+                "description" : "Collect flame graph data using the `tracing-flame` crate. To render a flame graph or chart, run the `inferno-flamegraph` command. See also: https://crates.io/crates/tracing-flame\n",
+                "type" : "string"
+              }
+            }
+          },
+          "extract_dependencies_as_source" : {
+            "title" : "Extract dependencies as source code",
+            "description" : "Extract the full source code of dependencies instead of only extracting signatures.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          }
+        }
+      }
+    ],
+    "python" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/python",
+        "extractor_options" : {
+          "logging" : {
+            "title" : "Options pertaining to logging.",
+            "description" : "Options pertaining to logging.",
+            "type" : "object",
+            "properties" : {
+              "verbosity" : {
+                "title" : "Python extractor logging verbosity level.",
+                "description" : "Controls the level of verbosity of the CodeQL Python extractor.\nThe supported levels are (in order of increasing verbosity):\n\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                "type" : "string",
+                "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+              }
+            }
+          },
+          "python_executable_name" : {
+            "title" : "Controls the name of the Python executable used by the Python extractor.",
+            "description" : "The Python extractor uses platform-dependent heuristics to determine the name of the Python executable to use. Specifying a value for this option overrides the name of the Python executable used by the extractor. Accepted values are py, python and python3. Use this setting with caution, the Python extractor requires Python 3 to run.\n",
+            "type" : "string",
+            "pattern" : "^(py|python|python3)$"
+          }
+        }
+      }
+    ],
+    "csharp" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/csharp",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "Options pertaining to TRAP.",
+            "description" : "Options pertaining to TRAP.",
+            "type" : "object",
+            "properties" : {
+              "compression" : {
+                "title" : "Controls compression for the TRAP files written by the extractor.",
+                "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'brotli' (the default, to write brotli-compressed TRAP), 'gzip', and 'none' (to write uncompressed TRAP).\n",
+                "type" : "string",
+                "pattern" : "^(none|gzip|brotli)$"
+              }
+            }
+          },
+          "buildless" : {
+            "title" : "DEPRECATED - Whether to use buildless (standalone) extraction.",
+            "description" : "DEPRECATED: Use `--build-mode none` instead.\nA value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          },
+          "logging" : {
+            "title" : "Options pertaining to logging.",
+            "description" : "Options pertaining to logging.",
+            "type" : "object",
+            "properties" : {
+              "verbosity" : {
+                "title" : "Extractor logging verbosity level.",
+                "description" : "Controls the level of verbosity of the extractor. The supported levels are (in order of increasing verbosity):\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                "type" : "string",
+                "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+              }
+            }
+          },
+          "binlog" : {
+            "title" : "Binlog",
+            "description" : "[EXPERIMENTAL] The value is a path to the MsBuild binary log file that should be extracted. This option only works when `--build-mode none` is also specified.\n",
+            "type" : "array"
+          },
+          "buildless_dependency_dir" : {
+            "title" : "The path where buildless (standalone) extraction should keep dependencies.",
+            "description" : "If set, the buildless (standalone) extractor will store dependencies in this directory.\n",
+            "type" : "string"
+          }
+        }
+      }
+    ],
+    "cpp" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/cpp",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "TRAP options",
+            "description" : "Options about how the extractor handles TRAP files",
+            "type" : "object",
+            "visibility" : 3,
+            "properties" : {
+              "cache" : {
+                "title" : "TRAP cache options",
+                "description" : "Options about how the extractor handles its TRAP cache",
+                "type" : "object",
+                "properties" : {
+                  "dir" : {
+                    "title" : "TRAP cache directory",
+                    "description" : "The directory of the TRAP cache to use",
+                    "type" : "string"
+                  },
+                  "bound" : {
+                    "title" : "TRAP cache bound",
+                    "description" : "A soft limit (in MB) on the size of the TRAP cache",
+                    "type" : "string",
+                    "pattern" : "[0-9]+"
+                  },
+                  "write" : {
+                    "title" : "TRAP cache writeable",
+                    "description" : "Whether to write to the TRAP cache as well as reading it",
+                    "type" : "string",
+                    "pattern" : "(true|TRUE|false|FALSE)"
+                  }
+                }
+              }
+            }
+          },
+          "scale_timeouts" : {
+            "title" : "Value to scale compiler introspection timeouts with",
+            "description" : "The extractor attempts to determine what compiler the source code being extracted is compiled with. To this end the extractor makes additional calls to the compiler, some of which are expected to return within a certain fixed time (either 10s or 15s). On some systems that are under high load this time might be too short, and can be scaled up using this option.\n",
+            "type" : "string",
+            "pattern" : "[0-9]+"
+          },
+          "log_verbosity" : {
+            "title" : "Verbosity of the extractor logging",
+            "description" : "Set the verbosity of the extractor logging to 'quiet' (0), 'normal' (1), 'chatty' (2), or 'noisy' (3). The default is 'normal'.\n",
+            "type" : "string",
+            "pattern" : "[0-3]"
+          },
+          "frontend_options" : {
+            "title" : "C/C++ extractor frontend options",
+            "description" : "Set additional options that should be passed to the C/C++ extractor frontend.\n",
+            "type" : "array",
+            "visibility" : 3
+          }
+        }
+      }
+    ],
+    "java" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/java",
+        "extractor_options" : {
+          "exclude" : {
+            "title" : "A glob excluding files from analysis.",
+            "description" : "A glob indicating what files to exclude from the analysis. This accepts glob patterns that are supported by Java's 'getPathMatcher' implementation.\n",
+            "type" : "string"
+          },
+          "add_prefer_source" : {
+            "title" : "Whether to always prefer source files over class files.",
+            "description" : "A value indicating whether source files should be preferred over class files. If set to 'true', the extraction adds '-Xprefer:source' to the javac command line. If set to 'false', the extraction uses the default javac behavior ('-Xprefer:newer'). The default is 'true'.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          },
+          "buildless" : {
+            "title" : "Whether to use buildless (standalone) extraction (experimental).",
+            "description" : "A value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          },
+          "buildless_dependency_dir" : {
+            "title" : "The path where buildless (standalone) extraction should keep dependencies.",
+            "description" : "If set, the buildless (standalone) extractor will store dependencies in this directory.\n",
+            "type" : "string"
+          },
+          "minimize_dependency_jars" : {
+            "title" : "Whether to rewrite and minimize downloaded JAR dependencies (experimental).",
+            "description" : "If 'true', JAR dependencies downloaded during extraction will be rewritten to remove unneeded data, such as method bodies. The default is 'false'.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          }
+        }
+      }
+    ],
+    "go" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/go",
+        "extractor_options" : {
+          "extract_tests" : {
+            "title" : "Whether to include Go test files in the CodeQL database.",
+            "description" : "A value indicating whether Go test files should be included in the CodeQL database. The default is 'false'.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          },
+          "extract_vendor_dirs" : {
+            "title" : "Whether to include Go vendor directories in the CodeQL database.",
+            "description" : "A value indicating whether Go vendor directories should be included in the CodeQL database. The default is 'false'.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          }
+        }
+      }
+    ],
+    "actions" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/actions",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "TRAP options",
+            "description" : "Options about how the extractor handles TRAP files",
+            "type" : "object",
+            "visibility" : 3,
+            "properties" : {
+              "cache" : {
+                "title" : "TRAP cache options",
+                "description" : "Options about how the extractor handles its TRAP cache",
+                "type" : "object",
+                "properties" : {
+                  "dir" : {
+                    "title" : "TRAP cache directory",
+                    "description" : "The directory of the TRAP cache to use",
+                    "type" : "string"
+                  },
+                  "bound" : {
+                    "title" : "TRAP cache bound",
+                    "description" : "A soft limit (in MB) on the size of the TRAP cache",
+                    "type" : "string",
+                    "pattern" : "[0-9]+"
+                  },
+                  "write" : {
+                    "title" : "TRAP cache writeable",
+                    "description" : "Whether to write to the TRAP cache as well as reading it",
+                    "type" : "string",
+                    "pattern" : "(true|TRUE|false|FALSE)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "javascript" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/javascript",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "TRAP options",
+            "description" : "Options about how the extractor handles TRAP files",
+            "type" : "object",
+            "visibility" : 3,
+            "properties" : {
+              "cache" : {
+                "title" : "TRAP cache options",
+                "description" : "Options about how the extractor handles its TRAP cache",
+                "type" : "object",
+                "properties" : {
+                  "dir" : {
+                    "title" : "TRAP cache directory",
+                    "description" : "The directory of the TRAP cache to use",
+                    "type" : "string"
+                  },
+                  "bound" : {
+                    "title" : "TRAP cache bound",
+                    "description" : "A soft limit (in MB) on the size of the TRAP cache",
+                    "type" : "string",
+                    "pattern" : "[0-9]+"
+                  },
+                  "write" : {
+                    "title" : "TRAP cache writeable",
+                    "description" : "Whether to write to the TRAP cache as well as reading it",
+                    "type" : "string",
+                    "pattern" : "(true|TRUE|false|FALSE)"
+                  }
+                }
+              }
+            }
+          },
+          "skip_types" : {
+            "title" : "Skip type extraction for TypeScript",
+            "description" : "Whether to skip the extraction of types in a TypeScript application",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          }
+        }
+      }
+    ],
+    "swift" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/swift"
+      }
+    ],
+    "ruby" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/ruby",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "Options pertaining to TRAP.",
+            "description" : "Options pertaining to TRAP.",
+            "type" : "object",
+            "properties" : {
+              "compression" : {
+                "title" : "Controls compression for the TRAP files written by the extractor.",
+                "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'gzip' (the default, to write gzip-compressed TRAP) 'zstd' (to write Zstandard-compressed TRAP) and 'none' (to write uncompressed TRAP).\n",
+                "type" : "string",
+                "pattern" : "^(none|gzip|zstd)$"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
+Languages from configuration: cpp
+Using Git version 2.54.0
+Setting overlay database mode to overlay-base with caching because we are analyzing the default branch.
+##[warning]Cannot build an overlay-base database because build-mode is set to "undefined" instead of "none". Falling back to creating a normal full database instead.
+Using overlay database mode: none without caching.
+Not performing diff-informed analysis because we are not analyzing a pull request.
+[command]/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/codeql resolve languages --format=betterjson --extractor-options-verbosity=4 --extractor-include-aliases
+{
+  "aliases" : {
+    "c" : "cpp",
+    "c++" : "cpp",
+    "c-c++" : "cpp",
+    "c-cpp" : "cpp",
+    "c#" : "csharp",
+    "java-kotlin" : "java",
+    "kotlin" : "java",
+    "javascript-typescript" : "javascript",
+    "typescript" : "javascript"
+  },
+  "extractors" : {
+    "javascript" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/javascript",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "TRAP options",
+            "description" : "Options about how the extractor handles TRAP files",
+            "type" : "object",
+            "visibility" : 3,
+            "properties" : {
+              "cache" : {
+                "title" : "TRAP cache options",
+                "description" : "Options about how the extractor handles its TRAP cache",
+                "type" : "object",
+                "properties" : {
+                  "dir" : {
+                    "title" : "TRAP cache directory",
+                    "description" : "The directory of the TRAP cache to use",
+                    "type" : "string"
+                  },
+                  "bound" : {
+                    "title" : "TRAP cache bound",
+                    "description" : "A soft limit (in MB) on the size of the TRAP cache",
+                    "type" : "string",
+                    "pattern" : "[0-9]+"
+                  },
+                  "write" : {
+                    "title" : "TRAP cache writeable",
+                    "description" : "Whether to write to the TRAP cache as well as reading it",
+                    "type" : "string",
+                    "pattern" : "(true|TRUE|false|FALSE)"
+                  }
+                }
+              }
+            }
+          },
+          "skip_types" : {
+            "title" : "Skip type extraction for TypeScript",
+            "description" : "Whether to skip the extraction of types in a TypeScript application",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          }
+        }
+      }
+    ],
+    "yaml" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/yaml"
+      }
+    ],
+    "python" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/python",
+        "extractor_options" : {
+          "logging" : {
+            "title" : "Options pertaining to logging.",
+            "description" : "Options pertaining to logging.",
+            "type" : "object",
+            "properties" : {
+              "verbosity" : {
+                "title" : "Python extractor logging verbosity level.",
+                "description" : "Controls the level of verbosity of the CodeQL Python extractor.\nThe supported levels are (in order of increasing verbosity):\n\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                "type" : "string",
+                "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+              }
+            }
+          },
+          "python_executable_name" : {
+            "title" : "Controls the name of the Python executable used by the Python extractor.",
+            "description" : "The Python extractor uses platform-dependent heuristics to determine the name of the Python executable to use. Specifying a value for this option overrides the name of the Python executable used by the extractor. Accepted values are py, python and python3. Use this setting with caution, the Python extractor requires Python 3 to run.\n",
+            "type" : "string",
+            "pattern" : "^(py|python|python3)$"
+          }
+        }
+      }
+    ],
+    "swift" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/swift"
+      }
+    ],
+    "go" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/go",
+        "extractor_options" : {
+          "extract_tests" : {
+            "title" : "Whether to include Go test files in the CodeQL database.",
+            "description" : "A value indicating whether Go test files should be included in the CodeQL database. The default is 'false'.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          },
+          "extract_vendor_dirs" : {
+            "title" : "Whether to include Go vendor directories in the CodeQL database.",
+            "description" : "A value indicating whether Go vendor directories should be included in the CodeQL database. The default is 'false'.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          }
+        }
+      }
+    ],
+    "csv" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/csv"
+      }
+    ],
+    "ruby" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/ruby",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "Options pertaining to TRAP.",
+            "description" : "Options pertaining to TRAP.",
+            "type" : "object",
+            "properties" : {
+              "compression" : {
+                "title" : "Controls compression for the TRAP files written by the extractor.",
+                "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'gzip' (the default, to write gzip-compressed TRAP) 'zstd' (to write Zstandard-compressed TRAP) and 'none' (to write uncompressed TRAP).\n",
+                "type" : "string",
+                "pattern" : "^(none|gzip|zstd)$"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "properties" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/properties"
+      }
+    ],
+    "csharp" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/csharp",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "Options pertaining to TRAP.",
+            "description" : "Options pertaining to TRAP.",
+            "type" : "object",
+            "properties" : {
+              "compression" : {
+                "title" : "Controls compression for the TRAP files written by the extractor.",
+                "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'brotli' (the default, to write brotli-compressed TRAP), 'gzip', and 'none' (to write uncompressed TRAP).\n",
+                "type" : "string",
+                "pattern" : "^(none|gzip|brotli)$"
+              }
+            }
+          },
+          "buildless" : {
+            "title" : "DEPRECATED - Whether to use buildless (standalone) extraction.",
+            "description" : "DEPRECATED: Use `--build-mode none` instead.\nA value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          },
+          "logging" : {
+            "title" : "Options pertaining to logging.",
+            "description" : "Options pertaining to logging.",
+            "type" : "object",
+            "properties" : {
+              "verbosity" : {
+                "title" : "Extractor logging verbosity level.",
+                "description" : "Controls the level of verbosity of the extractor. The supported levels are (in order of increasing verbosity):\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                "type" : "string",
+                "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+              }
+            }
+          },
+          "binlog" : {
+            "title" : "Binlog",
+            "description" : "[EXPERIMENTAL] The value is a path to the MsBuild binary log file that should be extracted. This option only works when `--build-mode none` is also specified.\n",
+            "type" : "array"
+          },
+          "buildless_dependency_dir" : {
+            "title" : "The path where buildless (standalone) extraction should keep dependencies.",
+            "description" : "If set, the buildless (standalone) extractor will store dependencies in this directory.\n",
+            "type" : "string"
+          }
+        }
+      }
+    ],
+    "xml" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/xml"
+      }
+    ],
+    "java" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/java",
+        "extractor_options" : {
+          "exclude" : {
+            "title" : "A glob excluding files from analysis.",
+            "description" : "A glob indicating what files to exclude from the analysis. This accepts glob patterns that are supported by Java's 'getPathMatcher' implementation.\n",
+            "type" : "string"
+          },
+          "add_prefer_source" : {
+            "title" : "Whether to always prefer source files over class files.",
+            "description" : "A value indicating whether source files should be preferred over class files. If set to 'true', the extraction adds '-Xprefer:source' to the javac command line. If set to 'false', the extraction uses the default javac behavior ('-Xprefer:newer'). The default is 'true'.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          },
+          "buildless" : {
+            "title" : "Whether to use buildless (standalone) extraction (experimental).",
+            "description" : "A value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          },
+          "buildless_dependency_dir" : {
+            "title" : "The path where buildless (standalone) extraction should keep dependencies.",
+            "description" : "If set, the buildless (standalone) extractor will store dependencies in this directory.\n",
+            "type" : "string"
+          },
+          "minimize_dependency_jars" : {
+            "title" : "Whether to rewrite and minimize downloaded JAR dependencies (experimental).",
+            "description" : "If 'true', JAR dependencies downloaded during extraction will be rewritten to remove unneeded data, such as method bodies. The default is 'false'.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          }
+        }
+      }
+    ],
+    "actions" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/actions",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "TRAP options",
+            "description" : "Options about how the extractor handles TRAP files",
+            "type" : "object",
+            "visibility" : 3,
+            "properties" : {
+              "cache" : {
+                "title" : "TRAP cache options",
+                "description" : "Options about how the extractor handles its TRAP cache",
+                "type" : "object",
+                "properties" : {
+                  "dir" : {
+                    "title" : "TRAP cache directory",
+                    "description" : "The directory of the TRAP cache to use",
+                    "type" : "string"
+                  },
+                  "bound" : {
+                    "title" : "TRAP cache bound",
+                    "description" : "A soft limit (in MB) on the size of the TRAP cache",
+                    "type" : "string",
+                    "pattern" : "[0-9]+"
+                  },
+                  "write" : {
+                    "title" : "TRAP cache writeable",
+                    "description" : "Whether to write to the TRAP cache as well as reading it",
+                    "type" : "string",
+                    "pattern" : "(true|TRUE|false|FALSE)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "rust" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/rust",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "Options pertaining to TRAP.",
+            "description" : "Options pertaining to TRAP.",
+            "type" : "object",
+            "properties" : {
+              "compression" : {
+                "title" : "Controls compression for the TRAP files written by the extractor.",
+                "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'gzip' (to write gzip-compressed TRAP) 'zstd' (to write Zstandard-compressed TRAP) and 'none' (the default, to write uncompressed TRAP).\n",
+                "type" : "string",
+                "pattern" : "^(none|gzip|zstd)$"
+              }
+            }
+          },
+          "cargo_target_dir" : {
+            "title" : "Directory to use for cargo output files.",
+            "description" : "This value is an optional path to use as `CARGO_TARGET_DIR` for the internal cargo commands the extractor uses. Pointing it to a persistent directory may reduce execution time of consecutive extractor runs. By default, a new scratch directory is used for each run.\n",
+            "type" : "string"
+          },
+          "cargo_target" : {
+            "title" : "Target architecture",
+            "description" : "Target architecture to use for analysis, analogous to `cargo --target`. By default the host architecture is used.\n",
+            "type" : "string"
+          },
+          "cargo_features" : {
+            "title" : "Cargo features to turn on",
+            "description" : "Comma-separated list of features to turn on. By default all features are enabled. If any features are specified, then only those features are enabled. The `default` feature must be explicitly specified if only default features are desired. Can be repeated.\n",
+            "type" : "array"
+          },
+          "cargo_cfg_overrides" : {
+            "title" : "Cargo cfg overrides",
+            "description" : "Comma-separated list of cfg settings to enable, or disable if prefixed with `-`. Can be repeated.\n",
+            "type" : "array"
+          },
+          "logging" : {
+            "title" : "Options pertaining to logging.",
+            "description" : "Options pertaining to logging.",
+            "type" : "object",
+            "properties" : {
+              "verbosity" : {
+                "title" : "Extractor logging verbosity level.",
+                "description" : "Controls the level of verbosity of the extractor. The supported levels are (in order of increasing verbosity):\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                "type" : "string",
+                "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+              },
+              "flamegraph" : {
+                "title" : "[Experimental] File path for write flame graph log",
+                "description" : "Collect flame graph data using the `tracing-flame` crate. To render a flame graph or chart, run the `inferno-flamegraph` command. See also: https://crates.io/crates/tracing-flame\n",
+                "type" : "string"
+              }
+            }
+          },
+          "extract_dependencies_as_source" : {
+            "title" : "Extract dependencies as source code",
+            "description" : "Extract the full source code of dependencies instead of only extracting signatures.\n",
+            "type" : "string",
+            "pattern" : "^(false|true)$"
+          }
+        }
+      }
+    ],
+    "cpp" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/cpp",
+        "extractor_options" : {
+          "trap" : {
+            "title" : "TRAP options",
+            "description" : "Options about how the extractor handles TRAP files",
+            "type" : "object",
+            "visibility" : 3,
+            "properties" : {
+              "cache" : {
+                "title" : "TRAP cache options",
+                "description" : "Options about how the extractor handles its TRAP cache",
+                "type" : "object",
+                "properties" : {
+                  "dir" : {
+                    "title" : "TRAP cache directory",
+                    "description" : "The directory of the TRAP cache to use",
+                    "type" : "string"
+                  },
+                  "bound" : {
+                    "title" : "TRAP cache bound",
+                    "description" : "A soft limit (in MB) on the size of the TRAP cache",
+                    "type" : "string",
+                    "pattern" : "[0-9]+"
+                  },
+                  "write" : {
+                    "title" : "TRAP cache writeable",
+                    "description" : "Whether to write to the TRAP cache as well as reading it",
+                    "type" : "string",
+                    "pattern" : "(true|TRUE|false|FALSE)"
+                  }
+                }
+              }
+            }
+          },
+          "scale_timeouts" : {
+            "title" : "Value to scale compiler introspection timeouts with",
+            "description" : "The extractor attempts to determine what compiler the source code being extracted is compiled with. To this end the extractor makes additional calls to the compiler, some of which are expected to return within a certain fixed time (either 10s or 15s). On some systems that are under high load this time might be too short, and can be scaled up using this option.\n",
+            "type" : "string",
+            "pattern" : "[0-9]+"
+          },
+          "log_verbosity" : {
+            "title" : "Verbosity of the extractor logging",
+            "description" : "Set the verbosity of the extractor logging to 'quiet' (0), 'normal' (1), 'chatty' (2), or 'noisy' (3). The default is 'normal'.\n",
+            "type" : "string",
+            "pattern" : "[0-3]"
+          },
+          "frontend_options" : {
+            "title" : "C/C++ extractor frontend options",
+            "description" : "Set additional options that should be passed to the C/C++ extractor frontend.\n",
+            "type" : "array",
+            "visibility" : 3
+          }
+        }
+      }
+    ],
+    "html" : [
+      {
+        "extractor_root" : "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/html"
+      }
+    ]
+  }
+}
+Found 1 languages that support TRAP caching
+Analyzing default branch. Skipping downloading of TRAP caches.
+Enabling TRAP caching for C/C++.
+##[endgroup]
+While resolving threads, found a cgroup CPUs file with 4 CPUs in /sys/fs/cgroup/cpuset.cpus.effective.
+Writing augmented user configuration file to /home/runner/work/_temp/user-config.yaml
+##[group]Augmented user configuration file contents
+{}
+
+##[endgroup]
+[command]/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/codeql database init --force-overwrite --db-cluster /home/runner/work/_temp/codeql_databases --source-root=/home/runner/work/pandas/pandas --calculate-language-specific-baseline --sublanguage-file-coverage --extractor-include-aliases --language=cpp --begin-tracing -O=cpp.trap.cache.dir=/home/runner/work/_temp/trapCaches/cpp -O=cpp.trap.cache.bound=1024 -O=cpp.trap.cache.write=true --trace-process-name=Runner.Worker.exe --codescanning-config=/home/runner/work/_temp/user-config.yaml
+Package install location: /home/runner/.codeql/packages
+Nothing downloaded.
+Calculating baseline information in /home/runner/work/pandas/pandas
+Running command in /home/runner/work/pandas/pandas: [/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/actions/tools/configure-baseline.sh]
+Calculated baseline information for languages: actions, c, cpp, python (220ms).
+Resolving extractor cpp.
+Successfully loaded extractor C/C++ (cpp) from /opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/cpp.
+Created skeleton CodeQL database at /home/runner/work/_temp/codeql_databases/cpp. This in-progress database is ready to be populated by an extractor.
+##[group]Run github/codeql-action/autobuild@f205ea1c3313d32999d8d6a48b4f6530d4437b38
+with:
+  token: ***
+  matrix: {
+  "language": "c-cpp"
+}
+env:
+  CODEQL_ACTION_FEATURE_MULTI_LANGUAGE: false
+  CODEQL_ACTION_FEATURE_SANDWICH: false
+  CODEQL_ACTION_FEATURE_SARIF_COMBINE: true
+  CODEQL_ACTION_FEATURE_WILL_UPLOAD: true
+  CODEQL_ACTION_VERSION: 4.37.4
+  JOB_RUN_UUID: 5b9b799f-4a9a-4d7a-a195-aa50f2e3cb8c
+  CODEQL_ACTION_INIT_HAS_RUN: true
+  CODEQL_ACTION_ANALYSIS_KEY: .github/workflows/codeql.yml:analyze
+  CODEQL_WORKFLOW_STARTED_AT: 2026-08-06T00:42:37.819Z
+  CODEQL_ACTION_CLI_VERSION_INFO: {"cmd":"/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/codeql","version":{"productName":"CodeQL","vendor":"GitHub","version":"2.26.2","sha":"a668db4064994abb88e66b7e2fa14af8f6eb42aa","branches":["codeql-cli-2.26.2"],"copyright":"Copyright (C) 2019-2026 GitHub, Inc.","unpackedLocation":"/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql","configFileLocation":"/home/runner/.config/codeql/config","configFileFound":false,"overlayVersion":4,"features":{"analysisSummaryV2Default":true,"buildModeOption":true,"bundleSupportsIncludeDiagnostics":true,"bundleSupportsIncludeLogs":true,"bundleSupportsOverlay":true,"databaseInterpretResultsSupportsSarifRunProperty":true,"featuresInVersionResult":true,"indirectTracingSupportsStaticBinaries":false,"informsAboutUnsupportedPathFilters":true,"supportsPython312":true,"mrvaPackCreate":true,"threatModelOption":true,"traceCommandUseBuildMode":true,"v2ramSizing":true,"mrvaPackCreateMultipleQueries":true,"setsCodeqlRunnerEnvVar":true,"sarifMergeRunsFromEqualCategory":true,"forceOverwrite":true,"generateSummarySymbolMap":true,"pythonDefaultIsToNotExtractStdlib":true,"queryServerRunQueries":true,"queryServerTrimCacheWithMode":true,"builtinExtractorsSpecifyDefaultQueries":true,"bqrsDiffResultSets":true,"bundleSupportsIncludeOption":true,"suppressesMissingFileBaselineWarning":true}}}
+  CODEQL_EXTRACTOR_CPP_TRAP_CACHING: true
+  CODEQL_RAM: 14574
+  CODEQL_THREADS: 4
+  CODEQL_SCRATCH_DIR: /home/runner/work/_temp/codeql_databases/working
+  CODEQL_VERBOSITY: warnings
+  CODEQL_DIST: /opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql
+  CODEQL_PLATFORM: linux64
+  CODEQL_PLATFORM_DLL_EXTENSION: .so
+  CODEQL_JAVA_HOME: /opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/tools/linux64/java
+  CODEQL_EXTRACTOR_CPP_ROOT: /opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/cpp
+  CODEQL_EXTRACTOR_CPP_WIP_DATABASE: /home/runner/work/_temp/codeql_databases/cpp
+  CODEQL_EXTRACTOR_CPP_DIAGNOSTIC_DIR: /home/runner/work/_temp/codeql_databases/cpp/diagnostic/extractors/cpp
+  CODEQL_EXTRACTOR_CPP_LOG_DIR: /home/runner/work/_temp/codeql_databases/cpp/log
+  CODEQL_EXTRACTOR_CPP_SCRATCH_DIR: /home/runner/work/_temp/codeql_databases/cpp/working
+  CODEQL_EXTRACTOR_CPP_TRAP_DIR: /home/runner/work/_temp/codeql_databases/cpp/trap/cpp
+  CODEQL_EXTRACTOR_CPP_SOURCE_ARCHIVE_DIR: /home/runner/work/_temp/codeql_databases/cpp/src
+  CODEQL_EXTRACTOR_CPP_THREADS: 4
+  CODEQL_EXTRACTOR_CPP_RAM: 14574
+  CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_WRITE: true
+  CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_BOUND: 1024
+  CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_DIR: /home/runner/work/_temp/trapCaches/cpp
+  CODEQL_TRACER_LOG: /home/runner/work/_temp/codeql_databases/log/build-tracer.log
+  CODEQL_TRACER_DIAGNOSTICS_DIR: /home/runner/work/_temp/codeql_databases/diagnostic/tracer
+  CODEQL_TRACER_LANGUAGES: cpp
+  SEMMLE_PRELOAD_libtrace: /opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/tools/linux64/${LIB}_${PLATFORM}_trace.so
+  SEMMLE_PRELOAD_libtrace32: /opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/tools/linux64/lib32trace.so
+  SEMMLE_PRELOAD_libtrace64: /opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/tools/linux64/lib64trace.so
+  CODEQL_RUNNER: /opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/tools/linux64/runner
+  LD_PRELOAD: /opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/tools/linux64/${LIB}_${PLATFORM}_trace.so
+##[endgroup]
+##[group]Attempting to automatically build cpp code
+Enabling C++ automatic installation of dependencies. This can be disabled by setting the CODEQL_EXTRACTOR_CPP_AUTOINSTALL_DEPENDENCIES environment variable to 'false'. See https://docs.github.com/en/actions/learn-github-actions/variables#defining-environment-variables-for-a-single-workflow for more information.
+Picked up JAVA_TOOL_OPTIONS:  -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false
+[command]/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/cpp/tools/autobuild.sh 
+Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:6 https://packages.microsoft.com/repos/azure-cli noble InRelease [3564 B]
+Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+Get:8 https://dl.google.com/linux/chrome-stable/deb stable InRelease [2548 B]
+Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1183 kB]
+Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [281 kB]
+Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [180 kB]
+Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1681 kB]
+Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [334 kB]
+Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [387 kB]
+Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1414 kB]
+Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [320 kB]
+Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [45.4 kB]
+Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [12.3 kB]
+Get:19 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+Get:20 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5780 B]
+Get:21 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [31.0 kB]
+Get:22 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.6 kB]
+Get:23 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [925 kB]
+Get:24 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [201 kB]
+Get:25 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [46.3 kB]
+Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1199 kB]
+Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [239 kB]
+Get:28 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.2 kB]
+Get:29 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1316 kB]
+Get:33 https://packages.microsoft.com/repos/azure-cli noble/main amd64 Packages [2375 B]
+Get:30 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [301 kB]
+Get:31 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Packages [40.3 kB]
+Get:32 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [10.6 kB]
+Get:34 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [12.2 kB]
+Get:35 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [266 kB]
+Get:36 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [306 kB]
+Get:37 https://packages.microsoft.com/ubuntu/24.04/prod noble/main all Packages [643 B]
+Get:38 https://dl.google.com/linux/chrome-stable/deb stable/main amd64 Packages [1409 B]
+Fetched 11.2 MB in 1s (8809 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+unzip is already the newest version (6.0-28ubuntu4.1).
+0 upgraded, 0 newly installed, 0 to remove and 83 not upgraded.
+cpp/autobuilder: using built-in deptrace DB
+cpp/autobuilder: launched deptrace server
+
+cpp/autobuilder: Using build system found in '.'
+
+cpp/autobuilder: trying to run meson .. [current dir: /home/runner/work/pandas/pandas/_codeql_build_dir]
+The Meson build system
+Version: 1.3.2
+Source dir: /home/runner/work/pandas/pandas
+Build dir: /home/runner/work/pandas/pandas/_codeql_build_dir
+Build type: native build
+Program python3 found: YES (/usr/bin/python3)
+
+../meson.build:7:13: ERROR: Command `/usr/bin/python3 generate_version.py --print` failed with status 1.
+
+A full log can be found at /home/runner/work/pandas/pandas/_codeql_build_dir/meson-logs/meson-log.txt
+WARNING: Running the setup command as `meson [options]` instead of `meson setup [options]` is ambiguous and deprecated.
+~/work/pandas/pandas ~/work/pandas/pandas
+~/work/pandas/pandas
+cpp/autobuilder: No supported build command succeeded.
+cpp/autobuilder: deptrace was enabled.
+cpp/autobuilder: auto installed the following packages:
+cpp/autobuilder:   meson
+cpp/autobuilder: autobuild summary.
+##[error]We were unable to automatically build your code. Please replace the call to the autobuild action with your custom build steps. Encountered a fatal error while running "/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/cpp/tools/autobuild.sh". Exit code was 1 and last log line was: cpp/autobuilder: autobuild summary. See the logs for more details.
+Post job cleanup.
+[command]/opt/hostedtoolcache/CodeQL/2.26.2/x64/codeql/codeql database export-diagnostics /home/runner/work/_temp/codeql_databases --db-cluster --format=sarif-latest --output=../codeql-failed-run.sarif --sarif-include-diagnostics -vvv
+Writing logs to /home/runner/work/_temp/codeql_databases/log/database-export-diagnostics-20260806.004309.452.log.
+Interpreting diagnostic messages...
+Looking for diagnostics in /home/runner/work/_temp/codeql_databases/cpp/diagnostic...
+Looking for diagnostics in /home/runner/work/_temp/codeql_databases/cpp/diagnostic/codeql-action...
+Found diagnostics file /home/runner/work/_temp/codeql_databases/cpp/diagnostic/codeql-action/codeql-action-2026-08-06T004247.029Z-0.json.
+Looking for diagnostics in /home/runner/work/_temp/codeql_databases/cpp/diagnostic/extractors...
+Looking for diagnostics in /home/runner/work/_temp/codeql_databases/cpp/diagnostic/extractors/cpp...
+Found diagnostics file /home/runner/work/_temp/codeql_databases/cpp/diagnostic/extractors/cpp/autobuilder-3155.jsonl.
+Found diagnostics file /home/runner/work/_temp/codeql_databases/cpp/diagnostic/extractors/cpp/autobuilder-3165.jsonl.
+Found diagnostics file /home/runner/work/_temp/codeql_databases/cpp/diagnostic/extractors/cpp/autobuilder-3140.jsonl.
+Looking for diagnostics in /home/runner/work/_temp/codeql_databases/diagnostic...
+Looking for diagnostics in /home/runner/work/_temp/codeql_databases/diagnostic/tracer...
+Found diagnostics file /home/runner/work/_temp/codeql_databases/diagnostic/cli-diagnostics-add-20260806T004251.576Z.json.
+Found 6 raw diagnostic messages.
+Processed diagnostic messages (removed 0 due to limits, created 0 summary diagnostics for status page).
+Interpreted diagnostic messages (83ms).
+Uploading failed SARIF file ../codeql-failed-run.sarif
+Post-processing sarif files: ["../codeql-failed-run.sarif"]
+Adding fingerprints to SARIF file. See https://docs.github.com/en/code-security/reference/code-scanning/sarif-support-for-code-scanning#data-for-preventing-duplicated-alerts for more information.
+##[group]Uploading code scanning results
+Uploading results
+Successfully uploaded results
+##[endgroup]
+##[group]Waiting for processing to finish
+Analysis upload status is failed.
+Successfully uploaded a SARIF file for the unsuccessful execution. Received expected "unsuccessful execution" processing error, and no other errors.
+##[endgroup]
+CodeQL job status was configuration error.
+Sending status report for init-post step.
+Status report sent for init-post step.
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/fec6822a-9248-4bc8-b12b-155c3e95a225' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/pandas/pandas
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+includeif.gitdir:/home/runner/work/pandas/pandas/.git.path
+includeif.gitdir:/home/runner/work/pandas/pandas/.git/worktrees/*.path
+includeif.gitdir:/github/workspace/.git.path
+includeif.gitdir:/github/workspace/.git/worktrees/*.path
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/pandas/pandas/.git.path
+/home/runner/work/_temp/git-credentials-1b9f66ab-1e37-484d-bd2c-1a8072e7ff51.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/pandas/pandas/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-1b9f66ab\-1e37\-484d\-bd2c\-1a8072e7ff51\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/pandas/pandas/.git/worktrees/*.path
+/home/runner/work/_temp/git-credentials-1b9f66ab-1e37-484d-bd2c-1a8072e7ff51.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/pandas/pandas/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-1b9f66ab\-1e37\-484d\-bd2c\-1a8072e7ff51\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+/github/runner_temp/git-credentials-1b9f66ab-1e37-484d-bd2c-1a8072e7ff51.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-1b9f66ab\-1e37\-484d\-bd2c\-1a8072e7ff51\.config
+[command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+/github/runner_temp/git-credentials-1b9f66ab-1e37-484d-bd2c-1a8072e7ff51.config
+[command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-1b9f66ab\-1e37\-484d\-bd2c\-1a8072e7ff51\.config
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Removing credentials config '/home/runner/work/_temp/git-credentials-1b9f66ab-1e37-484d-bd2c-1a8072e7ff51.config'
+Cleaning up orphan processes

@@ -1,0 +1,1999 @@
+
+Restoring cache-docs-inventory-v1-main from branch main.
+##[end-action id=restore-docs-inventory-cache.check-stash;outcome=success;conclusion=success;duration_ms=1070]
+##[start-action display=Download Stash;id=restore-docs-inventory-cache.download]
+##[group]Run import os, sys
+import os, sys
+import download_stash
+sys.exit(download_stash.download_stash(os.environ))
+shell: /opt/hostedtoolcache/Python/3.10.20/x64/bin/python3 {0}
+env:
+  GITHUB_REPOSITORY: apache/airflow
+  GITHUB_TOKEN: ***
+  GITHUB_USERNAME: AlejandroMorgante
+  INCLUDE_NOT_READY_PROVIDERS: true
+  INCLUDE_SUCCESS_OUTPUTS: false
+  PYTHON_MAJOR_MINOR_VERSION: 3.10
+  VERBOSE: true
+  pythonLocation: /opt/hostedtoolcache/Python/3.10.20/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.20/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.20/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.20/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.20/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.20/x64/lib
+  PYTHONPATH: /home/runner/work/_actions/apache/infrastructure-actions/0ff9972b5872e19c9f4555c9159c2fea4f794355/stash/restore
+  GH_TOKEN: ***
+  STASH_NAME: cache-docs-inventory-v1-main
+  STASH_RUN_ID: 30988410212
+  REPO: apache/airflow
+  STASH_DIR: /home/runner/work/airflow/airflow/generated/_inventory_cache
+  CLEAN: false
+  RETRY_COUNT: 3
+  FAIL_ON_DOWNLOAD: false
+##[endgroup]
+Downloading stash (attempt 1 of 3)...
+##[end-action id=restore-docs-inventory-cache.download;outcome=success;conclusion=success;duration_ms=1494]
+##[start-action display=Set stash-hit Output;id=restore-docs-inventory-cache.output]
+##[group]Run if [ "success" == "success" ]; then
+if [ "success" == "success" ]; then
+  echo "stash-hit=true" >> $GITHUB_OUTPUT
+else
+  echo "stash-hit=false" >> $GITHUB_OUTPUT
+  echo "No stash found for keys cache-docs-inventory-v1-70160_merge or cache-docs-inventory-v1-main."
+fi
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  GITHUB_REPOSITORY: apache/airflow
+  GITHUB_TOKEN: ***
+  GITHUB_USERNAME: AlejandroMorgante
+  INCLUDE_NOT_READY_PROVIDERS: true
+  INCLUDE_SUCCESS_OUTPUTS: false
+  PYTHON_MAJOR_MINOR_VERSION: 3.10
+  VERBOSE: true
+  pythonLocation: /opt/hostedtoolcache/Python/3.10.20/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.20/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.20/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.20/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.20/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.20/x64/lib
+##[endgroup]
+##[end-action id=restore-docs-inventory-cache.output;outcome=success;conclusion=success;duration_ms=17]
+##[group]Run breeze build-docs ${DOCS_LIST_AS_STRING} --spellcheck-only --refresh-airflow-inventories
+breeze build-docs ${DOCS_LIST_AS_STRING} --spellcheck-only --refresh-airflow-inventories
+shell: /usr/bin/bash -e {0}
+env:
+  GITHUB_REPOSITORY: apache/airflow
+  GITHUB_TOKEN: ***
+  GITHUB_USERNAME: AlejandroMorgante
+  INCLUDE_NOT_READY_PROVIDERS: true
+  INCLUDE_SUCCESS_OUTPUTS: false
+  PYTHON_MAJOR_MINOR_VERSION: 3.10
+  VERBOSE: true
+  pythonLocation: /opt/hostedtoolcache/Python/3.10.20/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.20/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.20/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.20/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.20/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.20/x64/lib
+  DOCS_LIST_AS_STRING: 
+##[endgroup]
+
+Breeze is installed as a legacy global 'uv' install, which still works but is no longer the recommended setup (see ADR 0017).
+Migrate to the per-worktree uvx shim by uninstalling the global install and running the setup script:
+
+     uv tool uninstall apache-airflow-breeze
+     /home/runner/work/airflow/airflow/scripts/tools/setup_breeze
+
+##[group]Running command: <docker info>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+docker info
+
+##[endgroup]
+##[group]Running command: <docker version>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+docker version
+
+##[endgroup]
+Docker container engine detected.
+##[group]Running command: <docker info>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+docker info
+
+##[endgroup]
+##[group]Running command: <docker version '{{.Client.Version}}'>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+docker version --format '{{.Client.Version}}'
+
+##[endgroup]
+Good version of Docker: 28.0.4.
+##[group]Running command: <docker compose version>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+docker compose version
+
+##[endgroup]
+Good version of docker-compose: 2.38.2
+Checking executable permissions on /home/runner/work/airflow/airflow/scripts/docker/entrypoint_exec.sh
+Checking executable permissions on /home/runner/work/airflow/airflow/scripts/docker/entrypoint_prod.sh
+Checking executable permissions on /home/runner/work/airflow/airflow/scripts/docker/entrypoint_ci.sh
+Executable permissions on entrypoints are OK
+##[group]Running command: <uv>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+uv --version
+
+##[endgroup]
+Good version of uv: 0.11.29.
+Host python version is 3.10.20 (main, Jun 16 2026, 21:03:20) [GCC 11.4.0]
+Cleaning .pyc and __pycache__
+Cleaned
+CI image already built locally.
+##[group]Running command: <docker inspect ghcr.io/apache/airflow/main/ci/python3.10>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+docker inspect ghcr.io/apache/airflow/main/ci/python3.10
+
+##[endgroup]
+Docker image build is not needed for CI build as no important files are changed! You can add --force-build to force it
+Removing all generated dirs.
+Removing airflow inventories.
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/helm-chart
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/docker-stack
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-microsoft-winrm
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-asana
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-openfaas
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-atlassian-jira
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-mysql
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-microsoft-mssql
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-hive
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-discord
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-sqlite
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-cassandra
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-tableau
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-pgvector
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-flink
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-common-ai
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-opsgenie
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-celery
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-openlineage
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-jenkins
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-common-dataquality
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-weaviate
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-datadog
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-openai
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-keycloak
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-databricks
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-grpc
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-dingding
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-amazon
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-ftp
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-imap
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-microsoft-azure
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-hashicorp
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-common-compat
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-kylin
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-mongo
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-common-messaging
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-kafka
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-informatica
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-pagerduty
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-google
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-github
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-iceberg
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-yandex
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-vespa
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-hdfs
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-cloudant
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-slack
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-opensearch
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-tinkerpop
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-redis
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-postgres
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-cncf-kubernetes
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-trino
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-ssh
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-http
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-odbc
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-salesforce
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-influxdb
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-spark
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-pinot
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-edge3
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-common-io
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-jdbc
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-anthropic
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-neo4j
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-facebook
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-cohere
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-git
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-zendesk
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-alibaba
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-elasticsearch
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-docker
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apprise
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-livy
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-standard
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-druid
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-teradata
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-papermill
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-airbyte
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-presto
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-ibm-mq
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-akeyless
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-singularity
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-pig
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-oracle
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-clickhousedb
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-snowflake
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-vertica
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-segment
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-pinecone
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-exasol
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-smtp
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-drill
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-fab
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-sendgrid
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-common-sql
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-ydb
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-telegram
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-samba
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-dbt-cloud
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-microsoft-psrp
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-apache-impala
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-arangodb
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-qdrant
+Removing /home/runner/work/airflow/airflow/generated/_inventory_cache/apache-airflow-providers-sftp
+Sqlite DB is cleaned
+Disabled port forwarding
+Project name set to: breeze-docs
+Forced quiet mode
+Forced skipping environment initialization
+Forced skipping upgrade check
+Command to execute: '/opt/airflow/scripts/in_container/run_docs_build.sh --spellcheck-only'
+##[group]Running command: <docker info>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+docker info
+
+##[endgroup]
+##[group]Running command: <docker version>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+docker version
+
+##[endgroup]
+Docker container engine detected.
+##[group]Running command: <docker info>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+docker info
+
+##[endgroup]
+##[group]Running command: <docker version '{{.Client.Version}}'>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+docker version --format '{{.Client.Version}}'
+
+##[endgroup]
+##[group]Running command: <docker compose version>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+docker compose version
+
+##[endgroup]
+##[group]Running command: <uv>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+uv --version
+
+##[endgroup]
+Cleaning .pyc and __pycache__
+Cleaned
+Use CI image
+Branch Name: main
+Docker Image: ghcr.io/apache/airflow/main/ci/python3.10
+Airflow source version:3.4.0
+Python Version: 3.10
+Backend: sqlite 
+Airflow used at runtime: None
+##[group]Running command: <git rev-parse HEAD>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+git rev-parse HEAD
+
+##[endgroup]
+Generating new docker env file : /home/runner/work/airflow/airflow/scripts/ci/docker-compose/_generated_docker.env
+Generating new docker compose env file : /home/runner/work/airflow/airflow/scripts/ci/docker-compose/_generated_docker_compose.env
+##[group]Running command: <docker compose quiet breeze-docs run>
+
+Working directory /home/runner/work/airflow/airflow
+
+
+ACCEPT_EULA="Y" \
+ACTIONS_ORCHESTRATION_ID="3a388cdb-d2ab-4cbc-bef3-066d9a7b530a.ci-image-checks.build-docs._--spellcheck-only" \
+ACTIONS_RUNNER_ACTION_ARCHIVE_CACHE="/opt/actionarchivecache" \
+ACTIONS_RUNNER_RETURN_JOB_RESULT_FOR_HOSTED="1" \
+AGENT_TOOLSDIRECTORY="/opt/hostedtoolcache" \
+ANDROID_HOME="/usr/local/lib/android/sdk" \
+ANDROID_NDK="/usr/local/lib/android/sdk/ndk/27.3.13750724" \
+ANDROID_NDK_HOME="/usr/local/lib/android/sdk/ndk/27.3.13750724" \
+ANDROID_NDK_LATEST_HOME="/usr/local/lib/android/sdk/ndk/29.0.14206865" \
+ANDROID_NDK_ROOT="/usr/local/lib/android/sdk/ndk/27.3.13750724" \
+ANDROID_SDK_ROOT="/usr/local/lib/android/sdk" \
+ANT_HOME="/usr/share/ant" \
+AZURE_EXTENSION_DIR="/opt/az/azcliextensions" \
+BOOTSTRAP_HASKELL_NONINTERACTIVE="1" \
+CHROMEWEBDRIVER="/usr/local/share/chromedriver-linux64" \
+CHROME_BIN="/usr/bin/google-chrome" \
+CI="true" \
+CONDA="/usr/share/miniconda" \
+DEBIAN_FRONTEND="noninteractive" \
+DOCS_LIST_AS_STRING="" \
+DOTNET_MULTILEVEL_LOOKUP="0" \
+DOTNET_NOLOGO="1" \
+DOTNET_SKIP_FIRST_TIME_EXPERIENCE="1" \
+EDGEWEBDRIVER="/usr/local/share/edge_driver" \
+ENABLE_RUNNER_TRACING="true" \
+GECKOWEBDRIVER="/usr/local/share/gecko_driver" \
+GHCUP_INSTALL_BASE_PREFIX="/usr/local" \
+GITHUB_ACTION="__run_2" \
+GITHUB_ACTIONS="true" \
+GITHUB_ACTION_REF="" \
+GITHUB_ACTION_REPOSITORY="" \
+GITHUB_ACTOR="AlejandroMorgante" \
+GITHUB_ACTOR_ID="62363051" \
+GITHUB_API_URL="https://api.github.com" \
+GITHUB_ARTIFACTS="/home/runner/work/_temp/_runner_file_commands/artifacts_164ad3ee-37ec-4fad-b638-b2377d2d6fc6" \
+GITHUB_ARTIFACTS_LIST="/home/runner/work/_temp/_runner_file_commands/artifacts_list_164ad3ee-37ec-4fad-b638-b2377d2d6fc6" \
+GITHUB_BASE_REF="main" \
+GITHUB_ENV="/home/runner/work/_temp/_runner_file_commands/set_env_164ad3ee-37ec-4fad-b638-b2377d2d6fc6" \
+GITHUB_EVENT_NAME="pull_request" \
+GITHUB_EVENT_PATH="/home/runner/work/_temp/_github_workflow/event.json" \
+GITHUB_GRAPHQL_URL="https://api.github.com/graphql" \
+GITHUB_HEAD_REF="add-oci-generative-ai-hook" \
+GITHUB_JOB="build-docs" \
+GITHUB_OUTPUT="/home/runner/work/_temp/_runner_file_commands/set_output_164ad3ee-37ec-4fad-b638-b2377d2d6fc6" \
+GITHUB_PATH="/home/runner/work/_temp/_runner_file_commands/add_path_164ad3ee-37ec-4fad-b638-b2377d2d6fc6" \
+GITHUB_REF="refs/pull/70160/merge" \
+GITHUB_REF_NAME="70160/merge" \
+GITHUB_REF_PROTECTED="false" \
+GITHUB_REF_TYPE="branch" \
+GITHUB_REPOSITORY="apache/airflow" \
+GITHUB_REPOSITORY_ID="33884891" \
+GITHUB_REPOSITORY_OWNER="apache" \
+GITHUB_REPOSITORY_OWNER_ID="47359" \
+GITHUB_RETENTION_DAYS="90" \
+GITHUB_RUN_ATTEMPT="1" \
+GITHUB_RUN_ID="31063661240" \
+GITHUB_RUN_NUMBER="37802" \
+GITHUB_SERVER_URL="https://github.com" \
+GITHUB_SHA="f595ac4feafa41183d2e99aa0d2f3b6bebd7aa0d" \
+GITHUB_STATE="/home/runner/work/_temp/_runner_file_commands/save_state_164ad3ee-37ec-4fad-b638-b2377d2d6fc6" \
+GITHUB_STEP_SUMMARY="/home/runner/work/_temp/_runner_file_commands/step_summary_164ad3ee-37ec-4fad-b638-b2377d2d6fc6" \
+GITHUB_TOKEN="ghs_15368_eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRobmQiLCJjdHgiOiIxdV***" \
+GITHUB_TRIGGERING_ACTOR="AlejandroMorgante" \
+GITHUB_USERNAME="AlejandroMorgante" \
+GITHUB_WORKFLOW="Tests (AMD)" \
+GITHUB_WORKFLOW_REF="apache/airflow/.github/workflows/ci-amd.yml@refs/pull/70160/merge" \
+GITHUB_WORKFLOW_SHA="f595ac4feafa41183d2e99aa0d2f3b6bebd7aa0d" \
+GITHUB_WORKSPACE="/home/runner/work/airflow/airflow" \
+GOROOT_1_24_X64="/opt/hostedtoolcache/go/1.24.13/x64" \
+GOROOT_1_25_X64="/opt/hostedtoolcache/go/1.25.12/x64" \
+GOROOT_1_26_X64="/opt/hostedtoolcache/go/1.26.5/x64" \
+GRADLE_HOME="/usr/share/gradle-9.6.1" \
+HCA_CLOUD_PROVIDER="azure" \
+HOME="/home/runner" \
+HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS="3650" \
+HOMEBREW_NO_AUTO_UPDATE="1" \
+INCLUDE_NOT_READY_PROVIDERS="true" \
+INCLUDE_SUCCESS_OUTPUTS="false" \
+INVOCATION_ID="89fa403facc24766a5455125176db4f8" \
+ImageOS="ubuntu22" \
+ImageVersion="20260720.234.2" \
+JAVA_HOME="/usr/lib/jvm/temurin-11-jdk-amd64" \
+JAVA_HOME_11_X64="/usr/lib/jvm/temurin-11-jdk-amd64" \
+JAVA_HOME_17_X64="/usr/lib/jvm/temurin-17-jdk-amd64" \
+JAVA_HOME_21_X64="/usr/lib/jvm/temurin-21-jdk-amd64" \
+JAVA_HOME_25_X64="/usr/lib/jvm/temurin-25-jdk-amd64" \
+JAVA_HOME_8_X64="/usr/lib/jvm/temurin-8-jdk-amd64" \
+JOURNAL_STREAM="8:9853" \
+LANG="C.UTF-8" \
+LD_LIBRARY_PATH="/opt/hostedtoolcache/Python/3.10.20/x64/lib" \
+LEIN_HOME="/usr/local/lib/lein" \
+LEIN_JAR="/usr/local/lib/lein/self-installs/leiningen-2.12.0-standalone.jar" \
+LOGNAME="runner" \
+NVM_DIR="/home/runner/.nvm" \
+PATH="/home/runner/.local/bin:/opt/hostedtoolcache/Python/3.10.20/x64/bin:/opt/hostedtoolcache/Python/3.10.20/x64:/snap/bin:/home/runner/.local/bin:/opt/pipx_bin:/home/runner/.cargo/bin:/home/runner/.config/composer/vendor/bin:/usr/local/.ghcup/bin:/home/runner/.dotnet/tools:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin" \
+PIPX_BIN_DIR="/opt/pipx_bin" \
+PIPX_HOME="/opt/pipx" \
+PKG_CONFIG_PATH="/opt/hostedtoolcache/Python/3.10.20/x64/lib/pkgconfig" \
+POWERSHELL_DISTRIBUTION_CHANNEL="GitHub-Actions-Linux" \
+PSModulePath="/root/.local/share/powershell/Modules:/usr/local/share/powershell/Modules:/opt/microsoft/powershell/7/Modules:/usr/share/az_15.6.1" \
+PWD="/home/runner/work/airflow/airflow" \
+PYTHON_MAJOR_MINOR_VERSION="3.10" \
+Python2_ROOT_DIR="/opt/hostedtoolcache/Python/3.10.20/x64" \
+Python3_ROOT_DIR="/opt/hostedtoolcache/Python/3.10.20/x64" \
+Python_ROOT_DIR="/opt/hostedtoolcache/Python/3.10.20/x64" \
+RUNNER_ARCH="X64" \
+RUNNER_ENVIRONMENT="github-hosted" \
+RUNNER_NAME="GitHub Actions 1024654115" \
+RUNNER_OS="Linux" \
+RUNNER_TEMP="/home/runner/work/_temp" \
+RUNNER_TOOL_CACHE="/opt/hostedtoolcache" \
+RUNNER_TRACKING_ID="github_1466290d-33e5-4f32-8178-20d86bddbeca" \
+RUNNER_WORKSPACE="/home/runner/work/airflow" \
+SELENIUM_JAR_PATH="/usr/share/java/selenium-server.jar" \
+SGX_AESM_ADDR="1" \
+SHELL="/bin/bash" \
+SHLVL="1" \
+SWIFT_PATH="/usr/share/swift/usr/bin" \
+SYSTEMD_EXEC_PID="1794" \
+USER="runner" \
+USE_BAZEL_FALLBACK_VERSION="silent:" \
+VCPKG_INSTALLATION_ROOT="/usr/local/share/vcpkg" \
+VERBOSE="true" \
+XDG_CONFIG_HOME="/home/runner/.config" \
+XDG_RUNTIME_DIR="/run/user/1001" \
+_="/home/runner/.local/bin/breeze" \
+pythonLocation="/opt/hostedtoolcache/Python/3.10.20/x64" \
+\
+AIRFLOW_CI_IMAGE="ghcr.io/apache/airflow/main/ci/python3.10" \
+AIRFLOW_CONSTRAINTS_LOCATION="" \
+AIRFLOW_CONSTRAINTS_MODE="constraints-source-providers" \
+AIRFLOW_CONSTRAINTS_REFERENCE="" \
+AIRFLOW_ENV="development" \
+AIRFLOW_EXTRAS="" \
+AIRFLOW_IMAGE_KUBERNETES="ghcr.io/apache/airflow/main/kubernetes/python3.10" \
+AIRFLOW_VERSION="3.4.0" \
+AIRFLOW__API_AUTH__JWT_ISSUER="airflow" \
+AIRFLOW__API_AUTH__JWT_SECRET="7FpGfZjhYyOtsJDTt5lQ8w==" \
+AIRFLOW__API__SECRET_KEY="ANcOx032OHcnI3BbtxMClg==" \
+AIRFLOW__CELERY__BROKER_URL="redis://redis:6379/0" \
+AIRFLOW__CORE__AUTH_MANAGER="airflow.api_fastapi.auth.managers.simple.simple_auth_manager.SimpleAuthManager" \
+AIRFLOW__CORE__EXECUTOR="LocalExecutor" \
+AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_PASSWORDS_FILE="/opt/airflow/dev/breeze/src/airflow_breeze/files/simple_auth_manager_passwords.json" \
+AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_USERS="admin:admin,viewer:viewer,user:user,op:op" \
+AIRFLOW__INFORMATICA__LISTENER_DISABLED="true" \
+ALLOW_PRE_RELEASES="false" \
+ANSWER="" \
+BACKEND="sqlite" \
+BASE_BRANCH="main" \
+BREEZE="true" \
+BREEZE_INIT_COMMAND="" \
+CELERY_BROKER_URLS_MAP="{'rabbitmq': '***rabbitmq:5672', 'redis': 'redis://redis:6379/0'}" \
+CELERY_FLOWER="false" \
+CI_BUILD_ID="0" \
+CI_EVENT_TYPE="pull_request" \
+CI_JOB_ID="0" \
+CI_TARGET_BRANCH="main" \
+CI_TARGET_REPO="apache/airflow" \
+CLEAN_AIRFLOW_INSTALLATION="false" \
+COLLECT_ONLY="false" \
+COMMIT_SHA="f595ac4feafa41183d2e99aa0d2f3b6bebd7aa0d" \
+COMPOSE_FILE="/home/runner/work/airflow/airflow/scripts/ci/docker-compose/base.yml:/home/runner/work/airflow/airflow/scripts/ci/docker-compose/docker-socket.yml:/home/runner/work/airflow/airflow/scripts/ci/docker-compose/backend-sqlite-no-volume.yml:/home/runner/work/airflow/airflow/scripts/ci/docker-compose/files.yml:/home/runner/work/airflow/airflow/scripts/ci/docker-compose/ci-tests.yml:/home/runner/work/airflow/airflow/scripts/ci/docker-compose/local-all-sources.yml" \
+CREATE_ALL_ROLES="false" \
+DB_RESET="false" \
+DEFAULT_BRANCH="main" \
+DEFAULT_CONSTRAINTS_BRANCH="constraints-main" \
+DEV_MODE="false" \
+DISTRIBUTION_FORMAT="wheel" \
+DOCKER_IS_ROOTLESS="false" \
+DOWNGRADE_PENDULUM="false" \
+DOWNGRADE_SQLALCHEMY="false" \
+DRILL_HOST_PORT="28047" \
+ENABLE_COVERAGE="false" \
+EXCLUDED_PROVIDERS="" \
+FLOWER_HOST_PORT="25555" \
+FORCE_LOWEST_DEPENDENCIES="false" \
+GREMLIN_HOST_PORT="8182" \
+HOST_GROUP_ID="1001" \
+HOST_OS="linux" \
+HOST_USER_ID="1001" \
+INIT_SCRIPT_FILE="init.sh" \
+INSTALL_AIRFLOW_PYTHON_CLIENT="false" \
+INSTALL_AIRFLOW_VERSION="" \
+INSTALL_AIRFLOW_WITH_CONSTRAINTS="false" \
+ISSUE_ID="" \
+LOAD_DEFAULT_CONNECTIONS="false" \
+LOAD_EXAMPLES="false" \
+MOUNT_SOURCES="all" \
+MOUNT_UI_DIST="false" \
+MSSQL_HOST_PORT="21433" \
+MYSQL_HOST_PORT="23306" \
+MYSQL_VERSION="8.0" \
+NUM_RUNS="" \
+ONLY_MIN_VERSION_UPDATE="false" \
+POSTGRES_DRIVER="psycopg" \
+POSTGRES_HOST_PORT="25433" \
+POSTGRES_VERSION="14" \
+PROVIDERS_CONSTRAINTS_LOCATION="" \
+PROVIDERS_CONSTRAINTS_MODE="constraints-source-providers" \
+PROVIDERS_CONSTRAINTS_REFERENCE="" \
+PROVIDERS_SKIP_CONSTRAINTS="false" \
+PYTHONDONTWRITEBYTECODE="true" \
+QUIET="true" \
+RABBITMQ_HOST_PORT="25672" \
+REDIS_HOST_PORT="26379" \
+REGENERATE_MISSING_DOCS="false" \
+RUN_TESTS="false" \
+SKIP_ASSETS_COMPILATION="false" \
+SKIP_ENVIRONMENT_INITIALIZATION="true" \
+SKIP_SSH_SETUP="false" \
+SQLALCHEMY_WARN_20="true" \
+SQLITE_URL="sqlite:////root/airflow/sqlite/airflow.db" \
+SSH_PORT="12322" \
+STANDALONE_DAG_PROCESSOR="false" \
+START_AIRFLOW="false" \
+START_API_SERVER_WITH_EXAMPLES="false" \
+SUSPENDED_PROVIDERS_FOLDERS="apache/beam" \
+SYSTEM_TESTS_ENV_ID="" \
+TERMINAL_MULTIPLEXER="mprocs" \
+TEST_GROUP="" \
+TEST_TYPE="" \
+UPGRADE_BOTO="false" \
+UPGRADE_SQLALCHEMY="false" \
+USE_AIRFLOW_VERSION="" \
+USE_DISTRIBUTIONS_FROM_DIST="false" \
+USE_UV="false" \
+USE_XDIST="false" \
+VERBOSE_COMMANDS="false" \
+VERSION_SUFFIX="" \
+WEB_HOST_PORT="28080" \
+_AIRFLOW_RUN_DB_TESTS_ONLY="false" \
+_AIRFLOW_SKIP_DB_TESTS="false" \
+docker compose --progress quiet --project-name breeze-docs run --service-ports --rm airflow -c '/opt/airflow/scripts/in_container/run_docs_build.sh --spellcheck-only'
+
+##[endgroup]
+
+Using 'uv' to install Airflow
+
+
+Using airflow version from current sources
+
+
+Using 'uv' to install Airflow
+
+##[group]Fetching inventories
+
+To download 109 inventorie(s)
+apache-airflow-providers-anthropic: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-anthropic/stable/objects.inv
+apache-airflow-providers-alibaba: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-alibaba/stable/objects.inv
+apache-airflow-providers-apache-drill: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-drill/stable/objects.inv
+apache-airflow-providers-apache-flink: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-flink/stable/objects.inv
+apache-airflow-providers-apache-cassandra: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-cassandra/stable/objects.inv
+apache-airflow-providers-airbyte: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-airbyte/stable/objects.inv
+apache-airflow-providers-akeyless: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-akeyless/stable/objects.inv
+apache-airflow-providers-apache-druid: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-druid/stable/objects.inv
+apache-airflow-providers-apache-hdfs: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-hdfs/stable/objects.inv
+apache-airflow-providers-apache-hive: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-hive/stable/objects.inv
+apache-airflow-providers-apache-iceberg: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-iceberg/stable/objects.inv
+apache-airflow-providers-apache-pig: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-pig/stable/objects.inv
+apache-airflow-providers-apache-kafka: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-kafka/stable/objects.inv
+apache-airflow-providers-apache-kylin: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-kylin/stable/objects.inv
+apache-airflow-providers-apache-impala: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-impala/stable/objects.inv
+apache-airflow-providers-apache-livy: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-livy/stable/objects.inv
+apache-airflow-providers-apache-pinot: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-pinot/stable/objects.inv
+apache-airflow-providers-apache-spark: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-spark/stable/objects.inv
+apache-airflow-providers-amazon: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-amazon/stable/objects.inv
+apache-airflow-providers-apache-tinkerpop: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apache-tinkerpop/stable/objects.inv
+apache-airflow-providers-apprise: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-apprise/stable/objects.inv
+apache-airflow-providers-arangodb: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-arangodb/stable/objects.inv
+apache-airflow-providers-atlassian-jira: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-atlassian-jira/stable/objects.inv
+apache-airflow-providers-clickhousedb: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-clickhousedb/stable/objects.inv
+apache-airflow-providers-asana: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-asana/stable/objects.inv
+apache-airflow-providers-celery: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-celery/stable/objects.inv
+apache-airflow-providers-cloudant: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-cloudant/stable/objects.inv
+apache-airflow-providers-cncf-kubernetes: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-cncf-kubernetes/stable/objects.inv
+apache-airflow-providers-cohere: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-cohere/stable/objects.inv
+apache-airflow-providers-common-ai: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-common-ai/stable/objects.inv
+apache-airflow-providers-common-dataquality: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-common-dataquality/stable/objects.inv
+apache-airflow-providers-common-compat: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-common-compat/stable/objects.inv
+apache-airflow-providers-common-io: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-common-io/stable/objects.inv
+apache-airflow-providers-common-messaging: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-common-messaging/stable/objects.inv
+apache-airflow-providers-databricks: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-databricks/stable/objects.inv
+apache-airflow-providers-common-sql: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-common-sql/stable/objects.inv
+apache-airflow-providers-datadog: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-datadog/stable/objects.inv
+apache-airflow-providers-dbt-cloud: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-dbt-cloud/stable/objects.inv
+apache-airflow-providers-dingding: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-dingding/stable/objects.inv
+apache-airflow-providers-discord: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-discord/stable/objects.inv
+apache-airflow-providers-docker: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-docker/stable/objects.inv
+apache-airflow-providers-edge3: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-edge3/stable/objects.inv
+apache-airflow-providers-elasticsearch: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-elasticsearch/stable/objects.inv
+apache-airflow-providers-exasol: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-exasol/stable/objects.inv
+apache-airflow-providers-fab: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-fab/stable/objects.inv
+apache-airflow-providers-facebook: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-facebook/stable/objects.inv
+apache-airflow-providers-ftp: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-ftp/stable/objects.inv
+apache-airflow-providers-git: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-git/stable/objects.inv
+apache-airflow-providers-github: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-github/stable/objects.inv
+apache-airflow-providers-grpc: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-grpc/stable/objects.inv
+apache-airflow-providers-hashicorp: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-hashicorp/stable/objects.inv
+apache-airflow-providers-http: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-http/stable/objects.inv
+apache-airflow-providers-ibm-mq: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-ibm-mq/stable/objects.inv
+apache-airflow-providers-influxdb: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-influxdb/stable/objects.inv
+apache-airflow-providers-imap: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-imap/stable/objects.inv
+apache-airflow-providers-informatica: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-informatica/stable/objects.inv
+apache-airflow-providers-jdbc: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-jdbc/stable/objects.inv
+apache-airflow-providers-jenkins: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-jenkins/stable/objects.inv
+apache-airflow-providers-keycloak: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-keycloak/stable/objects.inv
+apache-airflow-providers-microsoft-azure: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-microsoft-azure/stable/objects.inv
+apache-airflow-providers-microsoft-mssql: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-microsoft-mssql/stable/objects.inv
+apache-airflow-providers-microsoft-psrp: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-microsoft-psrp/stable/objects.inv
+apache-airflow-providers-microsoft-winrm: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-microsoft-winrm/stable/objects.inv
+apache-airflow-providers-mongo: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-mongo/stable/objects.inv
+apache-airflow-providers-mysql: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-mysql/stable/objects.inv
+apache-airflow-providers-neo4j: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-neo4j/stable/objects.inv
+apache-airflow-providers-google: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-google/stable/objects.inv
+apache-airflow-providers-oci: Failed to fetch inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-oci/stable/objects.inv
+apache-airflow-providers-oci: Failed with status: 404
+apache-airflow-providers-odbc: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-odbc/stable/objects.inv
+apache-airflow-providers-openai: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-openai/stable/objects.inv
+apache-airflow-providers-openfaas: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-openfaas/stable/objects.inv
+apache-airflow-providers-openlineage: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-openlineage/stable/objects.inv
+apache-airflow-providers-opensearch: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-opensearch/stable/objects.inv
+apache-airflow-providers-opsgenie: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-opsgenie/stable/objects.inv
+apache-airflow-providers-oracle: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-oracle/stable/objects.inv
+apache-airflow-providers-pagerduty: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-pagerduty/stable/objects.inv
+apache-airflow-providers-papermill: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-papermill/stable/objects.inv
+apache-airflow-providers-pinecone: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-pinecone/stable/objects.inv
+apache-airflow-providers-postgres: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-postgres/stable/objects.inv
+apache-airflow-providers-presto: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-presto/stable/objects.inv
+apache-airflow-providers-redis: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-redis/stable/objects.inv
+apache-airflow-providers-salesforce: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-salesforce/stable/objects.inv
+apache-airflow-providers-qdrant: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-qdrant/stable/objects.inv
+apache-airflow-providers-samba: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-samba/stable/objects.inv
+apache-airflow-providers-segment: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-segment/stable/objects.inv
+apache-airflow-providers-sendgrid: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-sendgrid/stable/objects.inv
+apache-airflow-providers-pgvector: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-pgvector/stable/objects.inv
+apache-airflow-providers-sftp: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-sftp/stable/objects.inv
+apache-airflow-providers-singularity: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-singularity/stable/objects.inv
+apache-airflow-providers-slack: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-slack/stable/objects.inv
+apache-airflow-providers-smtp: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-smtp/stable/objects.inv
+apache-airflow-providers-snowflake: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-snowflake/stable/objects.inv
+apache-airflow-providers-sqlite: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-sqlite/stable/objects.inv
+apache-airflow-providers-ssh: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-ssh/stable/objects.inv
+apache-airflow-providers-tableau: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-tableau/stable/objects.inv
+apache-airflow-providers-standard: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-standard/stable/objects.inv
+apache-airflow-providers-telegram: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-telegram/stable/objects.inv
+apache-airflow-providers-teradata: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-teradata/stable/objects.inv
+apache-airflow-providers-trino: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-trino/stable/objects.inv
+apache-airflow-providers-vertica: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-vertica/stable/objects.inv
+apache-airflow-providers-vespa: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-vespa/stable/objects.inv
+apache-airflow-providers-weaviate: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-weaviate/stable/objects.inv
+apache-airflow-providers-yandex: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-yandex/stable/objects.inv
+apache-airflow-providers-ydb: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-ydb/stable/objects.inv
+apache-airflow-providers-zendesk: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers-zendesk/stable/objects.inv
+helm-chart: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/helm-chart/stable/objects.inv
+apache-airflow-providers: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow-providers/objects.inv
+docker-stack: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/docker-stack/objects.inv
+apache-airflow: Fetched inventory: http://apache-airflow-docs.s3-website.eu-central-1.amazonaws.com/docs/apache-airflow/stable/objects.inv
+Result: 108 success, 1 failed
+Failed packages:
+1. apache-airflow-providers-oci
+Missing apache-airflow-providers-oci inventory is for an Airflow package, it will be built from sources.
+Failed to fetch those airflow inventories - building them first: [('apache-airflow-providers-oci', False)].
+
+##[endgroup]
+##[group]Documentation will be built for 111 package(s)with up to 4 parallel jobs,
+
+1. apache-airflow
+2. apache-airflow-providers-airbyte
+3. apache-airflow-providers-akeyless
+4. apache-airflow-providers-alibaba
+5. apache-airflow-providers-amazon
+6. apache-airflow-providers-anthropic
+7. apache-airflow-providers-apache-cassandra
+8. apache-airflow-providers-apache-drill
+9. apache-airflow-providers-apache-druid
+10. apache-airflow-providers-apache-flink
+11. apache-airflow-providers-apache-hdfs
+12. apache-airflow-providers-apache-hive
+13. apache-airflow-providers-apache-iceberg
+14. apache-airflow-providers-apache-impala
+15. apache-airflow-providers-apache-kafka
+16. apache-airflow-providers-apache-kylin
+17. apache-airflow-providers-apache-livy
+18. apache-airflow-providers-apache-pig
+19. apache-airflow-providers-apache-pinot
+20. apache-airflow-providers-apache-spark
+21. apache-airflow-providers-apache-tinkerpop
+22. apache-airflow-providers-apprise
+23. apache-airflow-providers-arangodb
+24. apache-airflow-providers-asana
+25. apache-airflow-providers-atlassian-jira
+26. apache-airflow-providers-celery
+27. apache-airflow-providers-clickhousedb
+28. apache-airflow-providers-cloudant
+29. apache-airflow-providers-cncf-kubernetes
+30. apache-airflow-providers-cohere
+31. apache-airflow-providers-common-ai
+32. apache-airflow-providers-common-compat
+33. apache-airflow-providers-common-dataquality
+34. apache-airflow-providers-common-io
+35. apache-airflow-providers-common-messaging
+36. apache-airflow-providers-common-sql
+37. apache-airflow-providers-databricks
+38. apache-airflow-providers-datadog
+39. apache-airflow-providers-dbt-cloud
+40. apache-airflow-providers-dingding
+41. apache-airflow-providers-discord
+42. apache-airflow-providers-docker
+43. apache-airflow-providers-edge3
+44. apache-airflow-providers-elasticsearch
+45. apache-airflow-providers-exasol
+46. apache-airflow-providers-fab
+47. apache-airflow-providers-facebook
+48. apache-airflow-providers-ftp
+49. apache-airflow-providers-git
+50. apache-airflow-providers-github
+51. apache-airflow-providers-google
+52. apache-airflow-providers-grpc
+53. apache-airflow-providers-hashicorp
+54. apache-airflow-providers-http
+55. apache-airflow-providers-ibm-mq
+56. apache-airflow-providers-imap
+57. apache-airflow-providers-influxdb
+58. apache-airflow-providers-informatica
+59. apache-airflow-providers-jdbc
+60. apache-airflow-providers-jenkins
+61. apache-airflow-providers-keycloak
+62. apache-airflow-providers-microsoft-azure
+63. apache-airflow-providers-microsoft-mssql
+64. apache-airflow-providers-microsoft-psrp
+65. apache-airflow-providers-microsoft-winrm
+66. apache-airflow-providers-mongo
+67. apache-airflow-providers-mysql
+68. apache-airflow-providers-neo4j
+69. apache-airflow-providers-oci
+70. apache-airflow-providers-odbc
+71. apache-airflow-providers-openai
+72. apache-airflow-providers-openfaas
+73. apache-airflow-providers-openlineage
+74. apache-airflow-providers-opensearch
+75. apache-airflow-providers-opsgenie
+76. apache-airflow-providers-oracle
+77. apache-airflow-providers-pagerduty
+78. apache-airflow-providers-papermill
+79. apache-airflow-providers-pgvector
+80. apache-airflow-providers-pinecone
+81. apache-airflow-providers-postgres
+82. apache-airflow-providers-presto
+83. apache-airflow-providers-qdrant
+84. apache-airflow-providers-redis
+85. apache-airflow-providers-salesforce
+86. apache-airflow-providers-samba
+87. apache-airflow-providers-segment
+88. apache-airflow-providers-sendgrid
+89. apache-airflow-providers-sftp
+90. apache-airflow-providers-singularity
+91. apache-airflow-providers-slack
+92. apache-airflow-providers-smtp
+93. apache-airflow-providers-snowflake
+94. apache-airflow-providers-sqlite
+95. apache-airflow-providers-ssh
+96. apache-airflow-providers-standard
+97. apache-airflow-providers-tableau
+98. apache-airflow-providers-telegram
+99. apache-airflow-providers-teradata
+100. apache-airflow-providers-trino
+101. apache-airflow-providers-vertica
+102. apache-airflow-providers-vespa
+103. apache-airflow-providers-weaviate
+104. apache-airflow-providers-yandex
+105. apache-airflow-providers-ydb
+106. apache-airflow-providers-zendesk
+107. apache-airflow-providers
+108. apache-airflow-ctl
+109. task-sdk
+110. helm-chart
+111. docker-stack
+
+##[endgroup]
+##[group]Cleaning documentation files
+
+apache-airflow-providers-oci                                : Cleaning files
+
+##[endgroup]
+apache-airflow-providers-oci                                : Checking spelling started
+apache-airflow-providers-oci                                : Finished spell-checking with errors
+apache-airflow-providers-oci                                : Checking spelling completed
+##[group]Output for spelling check: apache-airflow-providers-oci
+
+
+apache-airflow-providers-oci                                : ################################################################################
+apache-airflow-providers-oci                                 Running Sphinx v8.1.3
+apache-airflow-providers-oci                                 AUTOAPI_IGNORE:
+apache-airflow-providers-oci                                 [
+apache-airflow-providers-oci                                     '*/airflow/_vendor/*',
+apache-airflow-providers-oci                                     '*/airflow/executors/*',
+apache-airflow-providers-oci                                     '*/_internal*',
+apache-airflow-providers-oci                                     '*/node_modules/*',
+apache-airflow-providers-oci                                     '*/.pnpm-store/*',
+apache-airflow-providers-oci                                     '*/migrations/*',
+apache-airflow-providers-oci                                     '*/contrib/*',
+apache-airflow-providers-oci                                     '*/example_taskflow_api_docker_virtualenv.py',
+apache-airflow-providers-oci                                     '*/example_dag_decorator.py',
+apache-airflow-providers-oci                                     '*/conftest.py',
+apache-airflow-providers-oci                                     '*/tests/__init__.py',
+apache-airflow-providers-oci                                     '*/tests/system/__init__.py',
+apache-airflow-providers-oci                                     '*/tests/system/*/tests/*',
+apache-airflow-providers-oci                                     '*/tests/system/example_empty.py',
+apache-airflow-providers-oci                                     '*/airflow/__init__.py',
+apache-airflow-providers-oci                                     '*/airflow/providers/__init__.py',
+apache-airflow-providers-oci                                     '*/providers/__init__.py',
+apache-airflow-providers-oci                                     '*/conf/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/airbyte/src/airflow/providers/airbyte/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/airbyte/tests/system/airbyte/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/akeyless/src/airflow/providers/akeyless/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/akeyless/tests/system/akeyless/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/alibaba/src/airflow/providers/alibaba/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/alibaba/tests/system/alibaba/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/amazon/src/airflow/providers/amazon/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/amazon/tests/system/amazon/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/anthropic/src/airflow/providers/anthropic/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/anthropic/tests/system/anthropic/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/beam/src/airflow/providers/apache/beam/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/beam/tests/system/apache/beam/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/cassandra/src/airflow/providers/apache/cassandra/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/cassandra/tests/system/apache/cassandra/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/drill/src/airflow/providers/apache/drill/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/drill/tests/system/apache/drill/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/druid/src/airflow/providers/apache/druid/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/druid/tests/system/apache/druid/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/flink/src/airflow/providers/apache/flink/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/flink/tests/system/apache/flink/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/hdfs/src/airflow/providers/apache/hdfs/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/hdfs/tests/system/apache/hdfs/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/hive/src/airflow/providers/apache/hive/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/hive/tests/system/apache/hive/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/iceberg/src/airflow/providers/apache/iceberg/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/iceberg/tests/system/apache/iceberg/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/impala/src/airflow/providers/apache/impala/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/impala/tests/system/apache/impala/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/kafka/src/airflow/providers/apache/kafka/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/kafka/tests/system/apache/kafka/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/kylin/src/airflow/providers/apache/kylin/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/kylin/tests/system/apache/kylin/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/livy/src/airflow/providers/apache/livy/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/livy/tests/system/apache/livy/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/pig/src/airflow/providers/apache/pig/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/pig/tests/system/apache/pig/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/pinot/src/airflow/providers/apache/pinot/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/pinot/tests/system/apache/pinot/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/spark/src/airflow/providers/apache/spark/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/spark/tests/system/apache/spark/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/tinkerpop/src/airflow/providers/apache/tinkerpop/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apache/tinkerpop/tests/system/apache/tinkerpop/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apprise/src/airflow/providers/apprise/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/apprise/tests/system/apprise/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/arangodb/src/airflow/providers/arangodb/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/arangodb/tests/system/arangodb/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/asana/src/airflow/providers/asana/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/asana/tests/system/asana/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/atlassian/jira/src/airflow/providers/atlassian/jira/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/atlassian/jira/tests/system/atlassian/jira/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/celery/src/airflow/providers/celery/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/celery/tests/system/celery/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/clickhousedb/src/airflow/providers/clickhousedb/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/clickhousedb/tests/system/clickhousedb/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/cloudant/src/airflow/providers/cloudant/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/cloudant/tests/system/cloudant/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/cncf/kubernetes/src/airflow/providers/cncf/kubernetes/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/cncf/kubernetes/tests/system/cncf/kubernetes/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/cohere/src/airflow/providers/cohere/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/cohere/tests/system/cohere/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/common/ai/src/airflow/providers/common/ai/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/common/ai/tests/system/common/ai/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/common/compat/src/airflow/providers/common/compat/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/common/compat/tests/system/common/compat/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/common/dataquality/src/airflow/providers/common/dataquality/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/common/dataquality/tests/system/common/dataquality/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/common/io/src/airflow/providers/common/io/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/common/io/tests/system/common/io/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/common/messaging/src/airflow/providers/common/messaging/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/common/messaging/tests/system/common/messaging/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/common/sql/src/airflow/providers/common/sql/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/common/sql/tests/system/common/sql/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/databricks/src/airflow/providers/databricks/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/databricks/tests/system/databricks/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/datadog/src/airflow/providers/datadog/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/datadog/tests/system/datadog/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/dbt/cloud/src/airflow/providers/dbt/cloud/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/dbt/cloud/tests/system/dbt/cloud/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/dingding/src/airflow/providers/dingding/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/dingding/tests/system/dingding/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/discord/src/airflow/providers/discord/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/discord/tests/system/discord/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/docker/src/airflow/providers/docker/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/docker/tests/system/docker/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/edge3/src/airflow/providers/edge3/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/edge3/tests/system/edge3/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/elasticsearch/src/airflow/providers/elasticsearch/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/elasticsearch/tests/system/elasticsearch/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/exasol/src/airflow/providers/exasol/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/exasol/tests/system/exasol/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/fab/src/airflow/providers/fab/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/fab/tests/system/fab/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/facebook/src/airflow/providers/facebook/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/facebook/tests/system/facebook/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/ftp/src/airflow/providers/ftp/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/ftp/tests/system/ftp/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/git/src/airflow/providers/git/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/git/tests/system/git/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/github/src/airflow/providers/github/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/github/tests/system/github/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/google/src/airflow/providers/google/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/google/tests/system/google/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/grpc/src/airflow/providers/grpc/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/grpc/tests/system/grpc/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/hashicorp/src/airflow/providers/hashicorp/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/hashicorp/tests/system/hashicorp/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/http/src/airflow/providers/http/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/http/tests/system/http/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/ibm/mq/src/airflow/providers/ibm/mq/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/ibm/mq/tests/system/ibm/mq/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/imap/src/airflow/providers/imap/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/imap/tests/system/imap/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/influxdb/src/airflow/providers/influxdb/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/influxdb/tests/system/influxdb/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/informatica/src/airflow/providers/informatica/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/informatica/tests/system/informatica/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/jdbc/src/airflow/providers/jdbc/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/jdbc/tests/system/jdbc/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/jenkins/src/airflow/providers/jenkins/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/jenkins/tests/system/jenkins/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/keycloak/src/airflow/providers/keycloak/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/keycloak/tests/system/keycloak/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/microsoft/azure/src/airflow/providers/microsoft/azure/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/microsoft/azure/tests/system/microsoft/azure/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/microsoft/mssql/src/airflow/providers/microsoft/mssql/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/microsoft/mssql/tests/system/microsoft/mssql/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/microsoft/psrp/src/airflow/providers/microsoft/psrp/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/microsoft/psrp/tests/system/microsoft/psrp/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/microsoft/winrm/src/airflow/providers/microsoft/winrm/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/microsoft/winrm/tests/system/microsoft/winrm/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/mongo/src/airflow/providers/mongo/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/mongo/tests/system/mongo/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/mysql/src/airflow/providers/mysql/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/mysql/tests/system/mysql/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/neo4j/src/airflow/providers/neo4j/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/neo4j/tests/system/neo4j/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/odbc/src/airflow/providers/odbc/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/odbc/tests/system/odbc/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/openai/src/airflow/providers/openai/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/openai/tests/system/openai/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/openfaas/src/airflow/providers/openfaas/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/openfaas/tests/system/openfaas/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/openlineage/src/airflow/providers/openlineage/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/openlineage/tests/system/openlineage/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/opensearch/src/airflow/providers/opensearch/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/opensearch/tests/system/opensearch/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/opsgenie/src/airflow/providers/opsgenie/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/opsgenie/tests/system/opsgenie/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/oracle/src/airflow/providers/oracle/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/oracle/tests/system/oracle/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/pagerduty/src/airflow/providers/pagerduty/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/pagerduty/tests/system/pagerduty/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/papermill/src/airflow/providers/papermill/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/papermill/tests/system/papermill/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/pgvector/src/airflow/providers/pgvector/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/pgvector/tests/system/pgvector/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/pinecone/src/airflow/providers/pinecone/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/pinecone/tests/system/pinecone/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/postgres/src/airflow/providers/postgres/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/postgres/tests/system/postgres/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/presto/src/airflow/providers/presto/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/presto/tests/system/presto/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/qdrant/src/airflow/providers/qdrant/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/qdrant/tests/system/qdrant/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/redis/src/airflow/providers/redis/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/redis/tests/system/redis/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/salesforce/src/airflow/providers/salesforce/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/salesforce/tests/system/salesforce/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/samba/src/airflow/providers/samba/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/samba/tests/system/samba/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/segment/src/airflow/providers/segment/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/segment/tests/system/segment/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/sendgrid/src/airflow/providers/sendgrid/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/sendgrid/tests/system/sendgrid/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/sftp/src/airflow/providers/sftp/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/sftp/tests/system/sftp/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/singularity/src/airflow/providers/singularity/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/singularity/tests/system/singularity/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/slack/src/airflow/providers/slack/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/slack/tests/system/slack/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/smtp/src/airflow/providers/smtp/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/smtp/tests/system/smtp/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/snowflake/src/airflow/providers/snowflake/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/snowflake/tests/system/snowflake/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/sqlite/src/airflow/providers/sqlite/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/sqlite/tests/system/sqlite/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/ssh/src/airflow/providers/ssh/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/ssh/tests/system/ssh/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/standard/src/airflow/providers/standard/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/standard/tests/system/standard/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/tableau/src/airflow/providers/tableau/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/tableau/tests/system/tableau/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/telegram/src/airflow/providers/telegram/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/telegram/tests/system/telegram/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/teradata/src/airflow/providers/teradata/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/teradata/tests/system/teradata/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/trino/src/airflow/providers/trino/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/trino/tests/system/trino/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/vertica/src/airflow/providers/vertica/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/vertica/tests/system/vertica/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/vespa/src/airflow/providers/vespa/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/vespa/tests/system/vespa/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/weaviate/src/airflow/providers/weaviate/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/weaviate/tests/system/weaviate/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/yandex/src/airflow/providers/yandex/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/yandex/tests/system/yandex/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/ydb/src/airflow/providers/ydb/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/ydb/tests/system/ydb/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/zendesk/src/airflow/providers/zendesk/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/zendesk/tests/system/zendesk/*',
+apache-airflow-providers-oci                                     '/opt/airflow/providers/oci/tests/unit/*'
+apache-airflow-providers-oci                                 ]
+apache-airflow-providers-oci                                 
+apache-airflow-providers-oci                                 loading translations ... done
+apache-airflow-providers-oci                                 Initializing Spelling Checker 8.0.2
+apache-airflow-providers-oci                                 Ignoring wiki words
+apache-airflow-providers-oci                                 Ignoring acronyms
+apache-airflow-providers-oci                                 Ignoring Python builtins
+apache-airflow-providers-oci                                 Ignoring importable module names
+apache-airflow-providers-oci                                 Looking for custom word list in /opt/airflow/docs/spelling_wordlist.txt
+apache-airflow-providers-oci                                 loading intersphinx inventory 'boto3' from /opt/airflow/generated/_inventory_cache/boto3/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'celery' from /opt/airflow/generated/_inventory_cache/celery/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'docker' from /opt/airflow/generated/_inventory_cache/docker/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'hdfs' from /opt/airflow/generated/_inventory_cache/hdfs/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'jinja2' from /opt/airflow/generated/_inventory_cache/jinja2/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'mongodb' from /opt/airflow/generated/_inventory_cache/mongodb/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'pandas' from /opt/airflow/generated/_inventory_cache/pandas/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'python' from /opt/airflow/generated/_inventory_cache/python/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'requests' from /opt/airflow/generated/_inventory_cache/requests/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'sqlalchemy' from /opt/airflow/generated/_inventory_cache/sqlalchemy/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-airbyte' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-airbyte/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-akeyless' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-akeyless/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-alibaba' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-alibaba/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-amazon' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-amazon/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-anthropic' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-anthropic/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-cassandra' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-cassandra/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-drill' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-drill/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-druid' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-druid/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-flink' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-flink/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-hdfs' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-hdfs/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-hive' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-hive/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-iceberg' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-iceberg/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-impala' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-impala/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-kafka' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-kafka/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-kylin' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-kylin/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-livy' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-livy/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-pig' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-pig/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-pinot' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-pinot/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-spark' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-spark/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apache-tinkerpop' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apache-tinkerpop/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-apprise' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-apprise/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-arangodb' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-arangodb/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-asana' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-asana/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-atlassian-jira' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-atlassian-jira/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-celery' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-celery/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-clickhousedb' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-clickhousedb/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-cloudant' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-cloudant/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-cncf-kubernetes' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-cncf-kubernetes/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-cohere' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-cohere/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-common-ai' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-common-ai/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-common-compat' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-common-compat/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-common-dataquality' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-common-dataquality/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-common-io' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-common-io/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-common-messaging' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-common-messaging/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-common-sql' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-common-sql/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-databricks' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-databricks/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-datadog' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-datadog/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-dbt-cloud' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-dbt-cloud/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-dingding' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-dingding/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-discord' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-discord/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-docker' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-docker/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-edge3' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-edge3/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-elasticsearch' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-elasticsearch/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-exasol' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-exasol/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-fab' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-fab/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-facebook' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-facebook/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-ftp' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-ftp/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-git' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-git/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-github' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-github/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-google' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-google/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-grpc' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-grpc/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-hashicorp' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-hashicorp/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-http' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-http/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-ibm-mq' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-ibm-mq/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-imap' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-imap/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-influxdb' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-influxdb/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-informatica' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-informatica/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-jdbc' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-jdbc/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-jenkins' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-jenkins/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-keycloak' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-keycloak/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-microsoft-azure' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-microsoft-azure/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-microsoft-mssql' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-microsoft-mssql/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-microsoft-psrp' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-microsoft-psrp/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-microsoft-winrm' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-microsoft-winrm/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-mongo' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-mongo/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-mysql' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-mysql/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-neo4j' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-neo4j/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-odbc' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-odbc/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-openai' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-openai/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-openfaas' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-openfaas/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-openlineage' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-openlineage/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-opensearch' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-opensearch/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-opsgenie' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-opsgenie/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-oracle' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-oracle/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-pagerduty' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-pagerduty/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-papermill' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-papermill/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-pgvector' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-pgvector/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-pinecone' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-pinecone/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-postgres' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-postgres/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-presto' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-presto/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-qdrant' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-qdrant/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-redis' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-redis/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-salesforce' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-salesforce/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-samba' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-samba/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-segment' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-segment/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-sendgrid' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-sendgrid/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-sftp' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-sftp/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-singularity' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-singularity/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-slack' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-slack/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-smtp' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-smtp/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-snowflake' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-snowflake/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-sqlite' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-sqlite/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-ssh' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-ssh/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-standard' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-standard/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-tableau' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-tableau/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-telegram' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-telegram/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-teradata' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-teradata/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-trino' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-trino/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-vertica' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-vertica/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-vespa' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-vespa/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-weaviate' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-weaviate/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-yandex' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-yandex/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-ydb' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-ydb/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers-zendesk' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers-zendesk/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow' from /opt/airflow/generated/_inventory_cache/apache-airflow/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'helm-chart' from /opt/airflow/generated/_inventory_cache/helm-chart/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'task-sdk' from /opt/airflow/generated/_inventory_cache/task-sdk/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'apache-airflow-providers' from /opt/airflow/generated/_inventory_cache/apache-airflow-providers/objects.inv ...
+apache-airflow-providers-oci                                 loading intersphinx inventory 'docker-stack' from /opt/airflow/generated/_inventory_cache/docker-stack/objects.inv ...
+apache-airflow-providers-oci                                 Could not found the redirect file: /opt/airflow/providers/oci/docs/redirects.txt
+apache-airflow-providers-oci                                 [AutoAPI] Ignoring file: /opt/airflow/providers/oci/src/airflow/__init__.py
+apache-airflow-providers-oci                                 [AutoAPI] Ignoring file: /opt/airflow/providers/oci/src/airflow/providers/__init__.py
+apache-airflow-providers-oci                                 [AutoAPI] Ignoring file: /opt/airflow/providers/oci/tests/conftest.py
+apache-airflow-providers-oci                                 [AutoAPI] Ignoring directory: /opt/airflow/providers/oci/tests/unit/oci/
+apache-airflow-providers-oci                                 [AutoAPI] Ignoring file: /opt/airflow/providers/oci/tests/unit/__init__.py
+apache-airflow-providers-oci                                 [AutoAPI] Ignoring file: /opt/airflow/providers/oci/tests/system/__init__.py
+apache-airflow-providers-oci                                 [AutoAPI] Reading files... [ 17%] /opt/airflow/providers/oci/src/airflow/providers/oci/__init__.py
+apache-airflow-providers-oci                                 [AutoAPI] Reading files... [ 33%] /opt/airflow/providers/oci/src/airflow/providers/oci/get_provider_info.py
+apache-airflow-providers-oci                                 [AutoAPI] Reading files... [ 50%] /opt/airflow/providers/oci/src/airflow/providers/oci/hooks/generative_ai.py
+apache-airflow-providers-oci                                 [AutoAPI] Reading files... [ 67%] /opt/airflow/providers/oci/src/airflow/providers/oci/hooks/base.py
+apache-airflow-providers-oci                                 [AutoAPI] Reading files... [ 83%] /opt/airflow/providers/oci/src/airflow/providers/oci/hooks/__init__.py
+apache-airflow-providers-oci                                 [AutoAPI] Reading files... [100%] /opt/airflow/providers/oci/tests/system/oci/__init__.py
+apache-airflow-providers-oci                                 
+apache-airflow-providers-oci                                 [AutoAPI] Mapping Data... [ 17%] /opt/airflow/providers/oci/src/airflow/providers/oci/__init__.py
+apache-airflow-providers-oci                                 [AutoAPI] Mapping Data... [ 33%] /opt/airflow/providers/oci/src/airflow/providers/oci/get_provider_info.py
+apache-airflow-providers-oci                                 [AutoAPI] Mapping Data... [ 50%] /opt/airflow/providers/oci/src/airflow/providers/oci/hooks/generative_ai.py
+apache-airflow-providers-oci                                 [AutoAPI] Mapping Data... [ 67%] /opt/airflow/providers/oci/src/airflow/providers/oci/hooks/base.py
+apache-airflow-providers-oci                                 [AutoAPI] Mapping Data... [ 83%] /opt/airflow/providers/oci/src/airflow/providers/oci/hooks/__init__.py
+apache-airflow-providers-oci                                 [AutoAPI] Mapping Data... [100%] /opt/airflow/providers/oci/tests/system/oci/__init__.py
+apache-airflow-providers-oci                                 
+apache-airflow-providers-oci                                 [AutoAPI] Rendering Data... [ 17%] tests.system.oci
+apache-airflow-providers-oci                                 [AutoAPI] Rendering Data... [ 33%] airflow.providers.oci
+apache-airflow-providers-oci                                 [AutoAPI] Rendering Data... [ 50%] airflow.providers.oci.hooks
+apache-airflow-providers-oci                                 [AutoAPI] Rendering Data... [ 67%] airflow.providers.oci.hooks.base
+apache-airflow-providers-oci                                 [AutoAPI] Rendering Data... [ 83%] airflow.providers.oci.get_provider_info
+apache-airflow-providers-oci                                 [AutoAPI] Rendering Data... [100%] airflow.providers.oci.hooks.generative_ai
+apache-airflow-providers-oci                                 
+apache-airflow-providers-oci                                  generating autosummary for: changelog.rst, commits.rst, connections/oci.rst, generative_ai.rst, index.rst, installing-providers-from-sources.rst, security.rst
+apache-airflow-providers-oci                                 building : targets for 0 po files that are out of date
+apache-airflow-providers-oci                                 writing output... 
+apache-airflow-providers-oci                                 building : all documents
+apache-airflow-providers-oci                                 updating environment:  13 added, 0 changed, 0 removed
+apache-airflow-providers-oci                                 reading sources... [  8%] _api/airflow/providers/oci/get_provider_info/index
+apache-airflow-providers-oci                                 reading sources... [ 15%] _api/airflow/providers/oci/hooks/base/index
+apache-airflow-providers-oci                                 reading sources... [ 23%] _api/airflow/providers/oci/hooks/generative_ai/index
+apache-airflow-providers-oci                                 reading sources... [ 31%] _api/airflow/providers/oci/hooks/index
+apache-airflow-providers-oci                                 reading sources... [ 38%] _api/airflow/providers/oci/index
+apache-airflow-providers-oci                                 reading sources... [ 46%] _api/tests/system/oci/index
+apache-airflow-providers-oci                                 reading sources... [ 54%] changelog
+apache-airflow-providers-oci                                 reading sources... [ 62%] commits
+apache-airflow-providers-oci                                 reading sources... [ 69%] connections/oci
+apache-airflow-providers-oci                                 reading sources... [ 77%] generative_ai
+apache-airflow-providers-oci                                 reading sources... [ 85%] index
+apache-airflow-providers-oci                                 reading sources... [ 92%] installing-providers-from-sources
+apache-airflow-providers-oci                                 reading sources... [100%] security
+apache-airflow-providers-oci                                 
+apache-airflow-providers-oci                                 looking for now-outdated files... none found
+apache-airflow-providers-oci                                 pickling environment... done
+apache-airflow-providers-oci                                 checking consistency... done
+apache-airflow-providers-oci                                 preparing documents... done
+apache-airflow-providers-oci                                 copying assets... 
+apache-airflow-providers-oci                                 copying assets: done
+apache-airflow-providers-oci                                 writing output... [  8%] _api/airflow/providers/oci/get_provider_info/index
+apache-airflow-providers-oci                                 writing output... [ 15%] _api/airflow/providers/oci/hooks/base/index
+apache-airflow-providers-oci                                 writing output... [ 23%] _api/airflow/providers/oci/hooks/generative_ai/index
+apache-airflow-providers-oci                                 writing output... [ 31%] _api/airflow/providers/oci/hooks/index
+apache-airflow-providers-oci                                 writing output... [ 38%] _api/airflow/providers/oci/index
+apache-airflow-providers-oci                                 writing output... [ 46%] _api/tests/system/oci/index
+apache-airflow-providers-oci                                 providers/oci/docs/_api/tests/system/oci/index.rst:2: : Spell check: oci: tests.system.oci.
+apache-airflow-providers-oci                                 Writing /opt/airflow/generated/_build/docs/apache-airflow-providers-oci/stable/output-spelling-results-apache-airflow-providers-oci/_api/tests/system/oci/index.spelling
+apache-airflow-providers-oci                                 writing output... [ 54%] changelog
+apache-airflow-providers-oci                                 writing output... [ 62%] commits
+apache-airflow-providers-oci                                 providers/oci/docs/commits.rst:26: : Spell check: oci: Package apache-airflow-providers-oci.
+apache-airflow-providers-oci                                 Writing /opt/airflow/generated/_build/docs/apache-airflow-providers-oci/stable/output-spelling-results-apache-airflow-providers-oci/commits.spelling
+apache-airflow-providers-oci                                 writing output... [ 69%] connections/oci
+apache-airflow-providers-oci                                 writing output... [ 77%] generative_ai
+apache-airflow-providers-oci                                 writing output... [ 85%] index
+apache-airflow-providers-oci                                 providers/oci/docs/index.rst:70: : Spell check: oci: apache-airflow-providers-oci package.
+apache-airflow-providers-oci                                 Writing /opt/airflow/generated/_build/docs/apache-airflow-providers-oci/stable/output-spelling-results-apache-airflow-providers-oci/index.spelling
+apache-airflow-providers-oci                                 writing output... [ 92%] installing-providers-from-sources
+apache-airflow-providers-oci                                 writing output... [100%] security
+apache-airflow-providers-oci                                 
+apache-airflow-providers-oci                                 WARNING: Found 3 misspelled words
+apache-airflow-providers-oci                                 build finished with problems, 1 warning (with warnings treated as errors).
+apache-airflow-providers-oci                                : ################################################################################
+
+
+##[endgroup]
+##[group]Cleaning documentation files
+
+apache-airflow                                              : Cleaning files
+apache-airflow-providers-airbyte                            : Cleaning files
+apache-airflow-providers-akeyless                           : Cleaning files
+apache-airflow-providers-alibaba                            : Cleaning files
+apache-airflow-providers-amazon                             : Cleaning files
+apache-airflow-providers-anthropic                          : Cleaning files
+apache-airflow-providers-apache-cassandra                   : Cleaning files
+apache-airflow-providers-apache-drill                       : Cleaning files
+apache-airflow-providers-apache-druid                       : Cleaning files
+apache-airflow-providers-apache-flink                       : Cleaning files
+apache-airflow-providers-apache-hdfs                        : Cleaning files
+apache-airflow-providers-apache-hive                        : Cleaning files
+apache-airflow-providers-apache-iceberg                     : Cleaning files
+apache-airflow-providers-apache-impala                      : Cleaning files
+apache-airflow-providers-apache-kafka                       : Cleaning files
+apache-airflow-providers-apache-kylin                       : Cleaning files
+apache-airflow-providers-apache-livy                        : Cleaning files
+apache-airflow-providers-apache-pig                         : Cleaning files
+apache-airflow-providers-apache-pinot                       : Cleaning files
+apache-airflow-providers-apache-spark                       : Cleaning files
+apache-airflow-providers-apache-tinkerpop                   : Cleaning files
+apache-airflow-providers-apprise                            : Cleaning files
+apache-airflow-providers-arangodb                           : Cleaning files
+apache-airflow-providers-asana                              : Cleaning files
+apache-airflow-providers-atlassian-jira                     : Cleaning files
+apache-airflow-providers-celery                             : Cleaning files
+apache-airflow-providers-clickhousedb                       : Cleaning files
+apache-airflow-providers-cloudant                           : Cleaning files
+apache-airflow-providers-cncf-kubernetes                    : Cleaning files
+apache-airflow-providers-cohere                             : Cleaning files
+apache-airflow-providers-common-ai                          : Cleaning files
+apache-airflow-providers-common-compat                      : Cleaning files
+apache-airflow-providers-common-dataquality                 : Cleaning files
+apache-airflow-providers-common-io                          : Cleaning files
+apache-airflow-providers-common-messaging                   : Cleaning files
+apache-airflow-providers-common-sql                         : Cleaning files
+apache-airflow-providers-databricks                         : Cleaning files
+apache-airflow-providers-datadog                            : Cleaning files
+apache-airflow-providers-dbt-cloud                          : Cleaning files
+apache-airflow-providers-dingding                           : Cleaning files
+apache-airflow-providers-discord                            : Cleaning files
+apache-airflow-providers-docker                             : Cleaning files
+apache-airflow-providers-edge3                              : Cleaning files
+apache-airflow-providers-elasticsearch                      : Cleaning files
+apache-airflow-providers-exasol                             : Cleaning files
+apache-airflow-providers-fab                                : Cleaning files
+apache-airflow-providers-facebook                           : Cleaning files
+apache-airflow-providers-ftp                                : Cleaning files
+apache-airflow-providers-git                                : Cleaning files
+apache-airflow-providers-github                             : Cleaning files
+apache-airflow-providers-google                             : Cleaning files
+apache-airflow-providers-grpc                               : Cleaning files
+apache-airflow-providers-hashicorp                          : Cleaning files
+apache-airflow-providers-http                               : Cleaning files
+apache-airflow-providers-ibm-mq                             : Cleaning files
+apache-airflow-providers-imap                               : Cleaning files
+apache-airflow-providers-influxdb                           : Cleaning files
+apache-airflow-providers-informatica                        : Cleaning files
+apache-airflow-providers-jdbc                               : Cleaning files
+apache-airflow-providers-jenkins                            : Cleaning files
+apache-airflow-providers-keycloak                           : Cleaning files
+apache-airflow-providers-microsoft-azure                    : Cleaning files
+apache-airflow-providers-microsoft-mssql                    : Cleaning files
+apache-airflow-providers-microsoft-psrp                     : Cleaning files
+apache-airflow-providers-microsoft-winrm                    : Cleaning files
+apache-airflow-providers-mongo                              : Cleaning files
+apache-airflow-providers-mysql                              : Cleaning files
+apache-airflow-providers-neo4j                              : Cleaning files
+apache-airflow-providers-odbc                               : Cleaning files
+apache-airflow-providers-openai                             : Cleaning files
+apache-airflow-providers-openfaas                           : Cleaning files
+apache-airflow-providers-openlineage                        : Cleaning files
+apache-airflow-providers-opensearch                         : Cleaning files
+apache-airflow-providers-opsgenie                           : Cleaning files
+apache-airflow-providers-oracle                             : Cleaning files
+apache-airflow-providers-pagerduty                          : Cleaning files
+apache-airflow-providers-papermill                          : Cleaning files
+apache-airflow-providers-pgvector                           : Cleaning files
+apache-airflow-providers-pinecone                           : Cleaning files
+apache-airflow-providers-postgres                           : Cleaning files
+apache-airflow-providers-presto                             : Cleaning files
+apache-airflow-providers-qdrant                             : Cleaning files
+apache-airflow-providers-redis                              : Cleaning files
+apache-airflow-providers-salesforce                         : Cleaning files
+apache-airflow-providers-samba                              : Cleaning files
+apache-airflow-providers-segment                            : Cleaning files
+apache-airflow-providers-sendgrid                           : Cleaning files
+apache-airflow-providers-sftp                               : Cleaning files
+apache-airflow-providers-singularity                        : Cleaning files
+apache-airflow-providers-slack                              : Cleaning files
+apache-airflow-providers-smtp                               : Cleaning files
+apache-airflow-providers-snowflake                          : Cleaning files
+apache-airflow-providers-sqlite                             : Cleaning files
+apache-airflow-providers-ssh                                : Cleaning files
+apache-airflow-providers-standard                           : Cleaning files
+apache-airflow-providers-tableau                            : Cleaning files
+apache-airflow-providers-telegram                           : Cleaning files
+apache-airflow-providers-teradata                           : Cleaning files
+apache-airflow-providers-trino                              : Cleaning files
+apache-airflow-providers-vertica                            : Cleaning files
+apache-airflow-providers-vespa                              : Cleaning files
+apache-airflow-providers-weaviate                           : Cleaning files
+apache-airflow-providers-yandex                             : Cleaning files
+apache-airflow-providers-ydb                                : Cleaning files
+apache-airflow-providers-zendesk                            : Cleaning files
+apache-airflow-providers                                    : Cleaning files
+apache-airflow-ctl                                          : Cleaning files
+task-sdk                                                    : Cleaning files
+helm-chart                                                  : Cleaning files
+docker-stack                                                : Cleaning files
+
+##[endgroup]
+##[group]Scheduling spell checking of documentation
+
+apache-airflow                                              : Scheduling spellchecking
+apache-airflow-providers-airbyte                            : Scheduling spellchecking
+apache-airflow-providers-akeyless                           : Scheduling spellchecking
+apache-airflow-providers-alibaba                            : Scheduling spellchecking
+apache-airflow-providers-amazon                             : Scheduling spellchecking
+apache-airflow-providers-anthropic                          : Scheduling spellchecking
+apache-airflow-providers-apache-cassandra                   : Scheduling spellchecking
+apache-airflow-providers-apache-drill                       : Scheduling spellchecking
+apache-airflow-providers-apache-druid                       : Scheduling spellchecking
+apache-airflow-providers-apache-flink                       : Scheduling spellchecking
+apache-airflow-providers-apache-hdfs                        : Scheduling spellchecking
+apache-airflow-providers-apache-hive                        : Scheduling spellchecking
+apache-airflow-providers-apache-iceberg                     : Scheduling spellchecking
+apache-airflow-providers-apache-impala                      : Scheduling spellchecking
+apache-airflow-providers-apache-kafka                       : Scheduling spellchecking
+apache-airflow-providers-apache-kylin                       : Scheduling spellchecking
+apache-airflow-providers-apache-livy                        : Scheduling spellchecking
+apache-airflow-providers-apache-pig                         : Scheduling spellchecking
+apache-airflow-providers-apache-pinot                       : Scheduling spellchecking
+apache-airflow-providers-apache-spark                       : Scheduling spellchecking
+apache-airflow-providers-apache-tinkerpop                   : Scheduling spellchecking
+apache-airflow-providers-apprise                            : Scheduling spellchecking
+apache-airflow-providers-arangodb                           : Scheduling spellchecking
+apache-airflow-providers-asana                              : Scheduling spellchecking
+apache-airflow-providers-atlassian-jira                     : Scheduling spellchecking
+apache-airflow-providers-celery                             : Scheduling spellchecking
+apache-airflow-providers-clickhousedb                       : Scheduling spellchecking
+apache-airflow-providers-cloudant                           : Scheduling spellchecking
+apache-airflow-providers-cncf-kubernetes                    : Scheduling spellchecking
+apache-airflow-providers-cohere                             : Scheduling spellchecking
+apache-airflow-providers-common-ai                          : Scheduling spellchecking
+apache-airflow-providers-common-compat                      : Scheduling spellchecking
+apache-airflow-providers-common-dataquality                 : Scheduling spellchecking
+apache-airflow-providers-common-io                          : Scheduling spellchecking
+apache-airflow-providers-common-messaging                   : Scheduling spellchecking
+apache-airflow-providers-common-sql                         : Scheduling spellchecking
+apache-airflow-providers-databricks                         : Scheduling spellchecking
+apache-airflow-providers-datadog                            : Scheduling spellchecking
+apache-airflow-providers-dbt-cloud                          : Scheduling spellchecking
+apache-airflow-providers-dingding                           : Scheduling spellchecking
+apache-airflow-providers-discord                            : Scheduling spellchecking
+apache-airflow-providers-docker                             : Scheduling spellchecking
+apache-airflow-providers-edge3                              : Scheduling spellchecking
+apache-airflow-providers-elasticsearch                      : Scheduling spellchecking
+apache-airflow-providers-exasol                             : Scheduling spellchecking
+apache-airflow-providers-fab                                : Scheduling spellchecking
+apache-airflow-providers-facebook                           : Scheduling spellchecking
+apache-airflow-providers-ftp                                : Scheduling spellchecking
+apache-airflow-providers-git                                : Scheduling spellchecking
+apache-airflow-providers-github                             : Scheduling spellchecking
+apache-airflow-providers-google                             : Scheduling spellchecking
+apache-airflow-providers-grpc                               : Scheduling spellchecking
+apache-airflow-providers-hashicorp                          : Scheduling spellchecking
+apache-airflow-providers-http                               : Scheduling spellchecking
+apache-airflow-providers-ibm-mq                             : Scheduling spellchecking
+apache-airflow-providers-imap                               : Scheduling spellchecking
+apache-airflow-providers-influxdb                           : Scheduling spellchecking
+apache-airflow-providers-informatica                        : Scheduling spellchecking
+apache-airflow-providers-jdbc                               : Scheduling spellchecking
+apache-airflow-providers-jenkins                            : Scheduling spellchecking
+apache-airflow-providers-keycloak                           : Scheduling spellchecking
+apache-airflow-providers-microsoft-azure                    : Scheduling spellchecking
+apache-airflow-providers-microsoft-mssql                    : Scheduling spellchecking
+apache-airflow-providers-microsoft-psrp                     : Scheduling spellchecking
+apache-airflow-providers-microsoft-winrm                    : Scheduling spellchecking
+apache-airflow-providers-mongo                              : Scheduling spellchecking
+apache-airflow-providers-mysql                              : Scheduling spellchecking
+apache-airflow-providers-neo4j                              : Scheduling spellchecking
+apache-airflow-providers-odbc                               : Scheduling spellchecking
+apache-airflow-providers-openai                             : Scheduling spellchecking
+apache-airflow-providers-openfaas                           : Scheduling spellchecking
+apache-airflow-providers-openlineage                        : Scheduling spellchecking
+apache-airflow-providers-opensearch                         : Scheduling spellchecking
+apache-airflow-providers-opsgenie                           : Scheduling spellchecking
+apache-airflow-providers-oracle                             : Scheduling spellchecking
+apache-airflow-providers-pagerduty                          : Scheduling spellchecking
+apache-airflow-providers-papermill                          : Scheduling spellchecking
+apache-airflow-providers-pgvector                           : Scheduling spellchecking
+apache-airflow-providers-pinecone                           : Scheduling spellchecking
+apache-airflow-providers-postgres                           : Scheduling spellchecking
+apache-airflow-providers-presto                             : Scheduling spellchecking
+apache-airflow-providers-qdrant                             : Scheduling spellchecking
+apache-airflow-providers-redis                              : Scheduling spellchecking
+apache-airflow-providers-salesforce                         : Scheduling spellchecking
+apache-airflow-providers-samba                              : Scheduling spellchecking
+apache-airflow-providers-segment                            : Scheduling spellchecking
+apache-airflow-providers-sendgrid                           : Scheduling spellchecking
+apache-airflow-providers-sftp                               : Scheduling spellchecking
+apache-airflow-providers-singularity                        : Scheduling spellchecking
+apache-airflow-providers-slack                              : Scheduling spellchecking
+apache-airflow-providers-smtp                               : Scheduling spellchecking
+apache-airflow-providers-snowflake                          : Scheduling spellchecking
+apache-airflow-providers-sqlite                             : Scheduling spellchecking
+apache-airflow-providers-ssh                                : Scheduling spellchecking
+apache-airflow-providers-standard                           : Scheduling spellchecking
+apache-airflow-providers-tableau                            : Scheduling spellchecking
+apache-airflow-providers-telegram                           : Scheduling spellchecking
+apache-airflow-providers-teradata                           : Scheduling spellchecking
+apache-airflow-providers-trino                              : Scheduling spellchecking
+apache-airflow-providers-vertica                            : Scheduling spellchecking
+apache-airflow-providers-vespa                              : Scheduling spellchecking
+apache-airflow-providers-weaviate                           : Scheduling spellchecking
+apache-airflow-providers-yandex                             : Scheduling spellchecking
+apache-airflow-providers-ydb                                : Scheduling spellchecking
+apache-airflow-providers-zendesk                            : Scheduling spellchecking
+apache-airflow-providers                                    : Scheduling spellchecking
+apache-airflow-ctl                                          : Scheduling spellchecking
+task-sdk                                                    : Scheduling spellchecking
+helm-chart                                                  : Scheduling spellchecking
+docker-stack                                                : Scheduling spellchecking
+
+##[endgroup]
+##[group]Running spell checking of documentation
+
+
+apache-airflow                                              : Checking spelling started
+apache-airflow-providers-apache-kafka                       : Checking spelling started
+apache-airflow-providers-apprise                            : Checking spelling started
+apache-airflow-providers-apache-drill                       : Checking spelling started
+apache-airflow-providers-apprise                            : Finished spell-checking successfully
+apache-airflow-providers-apprise                            : Checking spelling completed
+apache-airflow-providers-arangodb                           : Checking spelling started
+apache-airflow-providers-apache-drill                       : Finished spell-checking successfully
+apache-airflow-providers-apache-drill                       : Checking spelling completed
+apache-airflow-providers-apache-druid                       : Checking spelling started
+apache-airflow-providers-apache-kafka                       : Finished spell-checking successfully
+apache-airflow-providers-apache-kafka                       : Checking spelling completed
+apache-airflow-providers-apache-kylin                       : Checking spelling started
+apache-airflow-providers-arangodb                           : Finished spell-checking successfully
+apache-airflow-providers-arangodb                           : Checking spelling completed
+apache-airflow-providers-asana                              : Checking spelling started
+apache-airflow-providers-apache-kylin                       : Finished spell-checking successfully
+apache-airflow-providers-apache-kylin                       : Checking spelling completed
+apache-airflow-providers-apache-livy                        : Checking spelling started
+apache-airflow-providers-apache-druid                       : Finished spell-checking successfully
+apache-airflow-providers-apache-druid                       : Checking spelling completed
+apache-airflow-providers-apache-flink                       : Checking spelling started
+apache-airflow-providers-asana                              : Finished spell-checking successfully
+apache-airflow-providers-asana                              : Checking spelling completed
+apache-airflow-providers-atlassian-jira                     : Checking spelling started
+apache-airflow-providers-apache-flink                       : Finished spell-checking successfully
+apache-airflow-providers-apache-flink                       : Checking spelling completed
+apache-airflow-providers-apache-hdfs                        : Checking spelling started
+apache-airflow-providers-apache-livy                        : Finished spell-checking successfully
+apache-airflow-providers-apache-livy                        : Checking spelling completed
+apache-airflow-providers-apache-pig                         : Checking spelling started
+apache-airflow-providers-atlassian-jira                     : Finished spell-checking successfully
+apache-airflow-providers-atlassian-jira                     : Checking spelling completed
+apache-airflow-providers-celery                             : Checking spelling started
+apache-airflow-providers-apache-pig                         : Finished spell-checking successfully
+apache-airflow-providers-apache-pig                         : Checking spelling completed
+apache-airflow-providers-apache-pinot                       : Checking spelling started
+apache-airflow-providers-apache-hdfs                        : Finished spell-checking successfully
+apache-airflow-providers-apache-hdfs                        : Checking spelling completed
+apache-airflow-providers-apache-hive                        : Checking spelling started
+apache-airflow-providers-celery                             : Finished spell-checking successfully
+apache-airflow-providers-celery                             : Checking spelling completed
+apache-airflow-providers-clickhousedb                       : Checking spelling started
+apache-airflow                                              : Finished spell-checking successfully
+apache-airflow                                              : Checking spelling completed
+apache-airflow-providers-airbyte                            : Checking spelling started
+apache-airflow-providers-apache-pinot                       : Finished spell-checking successfully
+apache-airflow-providers-apache-pinot                       : Checking spelling completed
+apache-airflow-providers-apache-spark                       : Checking spelling started
+apache-airflow-providers-apache-hive                        : Finished spell-checking successfully
+apache-airflow-providers-apache-hive                        : Checking spelling completed
+apache-airflow-providers-apache-iceberg                     : Checking spelling started
+apache-airflow-providers-airbyte                            : Finished spell-checking successfully
+apache-airflow-providers-airbyte                            : Checking spelling completed
+apache-airflow-providers-akeyless                           : Checking spelling started
+apache-airflow-providers-clickhousedb                       : Finished spell-checking successfully
+apache-airflow-providers-clickhousedb                       : Checking spelling completed
+apache-airflow-providers-cloudant                           : Checking spelling started
+apache-airflow-providers-apache-iceberg                     : Finished spell-checking successfully
+apache-airflow-providers-apache-iceberg                     : Checking spelling completed
+apache-airflow-providers-apache-impala                      : Checking spelling started
+apache-airflow-providers-apache-spark                       : Finished spell-checking successfully
+apache-airflow-providers-apache-spark                       : Checking spelling completed
+apache-airflow-providers-apache-tinkerpop                   : Checking spelling started
+apache-airflow-providers-cloudant                           : Finished spell-checking successfully
+apache-airflow-providers-cloudant                           : Checking spelling completed
+apache-airflow-providers-cncf-kubernetes                    : Checking spelling started
+apache-airflow-providers-akeyless                           : Finished spell-checking successfully
+apache-airflow-providers-akeyless                           : Checking spelling completed
+apache-airflow-providers-alibaba                            : Checking spelling started
+apache-airflow-providers-apache-tinkerpop                   : Finished spell-checking successfully
+apache-airflow-providers-apache-tinkerpop                   : Checking spelling completed
+apache-airflow-providers-common-sql                         : Checking spelling started
+apache-airflow-providers-apache-impala                      : Finished spell-checking successfully
+apache-airflow-providers-apache-impala                      : Checking spelling completed
+apache-airflow-providers-edge3                              : Checking spelling started
+apache-airflow-providers-alibaba                            : Finished spell-checking successfully
+apache-airflow-providers-alibaba                            : Checking spelling completed
+apache-airflow-providers-amazon                             : Checking spelling started
+apache-airflow-providers-cncf-kubernetes                    : Finished spell-checking successfully
+apache-airflow-providers-cncf-kubernetes                    : Checking spelling completed
+apache-airflow-providers-cohere                             : Checking spelling started
+apache-airflow-providers-edge3                              : Finished spell-checking successfully
+apache-airflow-providers-edge3                              : Checking spelling completed
+apache-airflow-providers-elasticsearch                      : Checking spelling started
+apache-airflow-providers-common-sql                         : Finished spell-checking successfully
+apache-airflow-providers-common-sql                         : Checking spelling completed
+apache-airflow-providers-databricks                         : Checking spelling started
+apache-airflow-providers-cohere                             : Finished spell-checking successfully
+apache-airflow-providers-cohere                             : Checking spelling completed
+apache-airflow-providers-common-ai                          : Checking spelling started
+apache-airflow-providers-elasticsearch                      : Finished spell-checking successfully
+apache-airflow-providers-elasticsearch                      : Checking spelling completed
+apache-airflow-providers-exasol                             : Checking spelling started
+apache-airflow-providers-databricks                         : Finished spell-checking successfully
+apache-airflow-providers-databricks                         : Checking spelling completed
+apache-airflow-providers-datadog                            : Checking spelling started
+apache-airflow-providers-common-ai                          : Finished spell-checking successfully
+apache-airflow-providers-common-ai                          : Checking spelling completed
+apache-airflow-providers-common-compat                      : Checking spelling started
+apache-airflow-providers-exasol                             : Finished spell-checking successfully
+apache-airflow-providers-exasol                             : Checking spelling completed
+apache-airflow-providers-fab                                : Checking spelling started
+apache-airflow-providers-datadog                            : Finished spell-checking successfully
+apache-airflow-providers-datadog                            : Checking spelling completed
+apache-airflow-providers-dbt-cloud                          : Checking spelling started
+apache-airflow-providers-common-compat                      : Finished spell-checking successfully
+apache-airflow-providers-common-compat                      : Checking spelling completed
+apache-airflow-providers-common-dataquality                 : Checking spelling started
+apache-airflow-providers-dbt-cloud                          : Finished spell-checking successfully
+apache-airflow-providers-dbt-cloud                          : Checking spelling completed
+apache-airflow-providers-dingding                           : Checking spelling started
+apache-airflow-providers-common-dataquality                 : Finished spell-checking successfully
+apache-airflow-providers-common-dataquality                 : Checking spelling completed
+apache-airflow-providers-common-io                          : Checking spelling started
+apache-airflow-providers-fab                                : Finished spell-checking successfully
+apache-airflow-providers-fab                                : Checking spelling completed
+apache-airflow-providers-facebook                           : Checking spelling started
+apache-airflow-providers-facebook                           : Finished spell-checking successfully
+apache-airflow-providers-facebook                           : Checking spelling completed
+apache-airflow-providers-ftp                                : Checking spelling started
+apache-airflow-providers-dingding                           : Finished spell-checking successfully
+apache-airflow-providers-dingding                           : Checking spelling completed
+apache-airflow-providers-discord                            : Checking spelling started
+apache-airflow-providers-amazon                             : Finished spell-checking successfully
+apache-airflow-providers-amazon                             : Checking spelling completed
+apache-airflow-providers-anthropic                          : Checking spelling started
+apache-airflow-providers-common-io                          : Finished spell-checking successfully
+apache-airflow-providers-common-io                          : Checking spelling completed
+apache-airflow-providers-common-messaging                   : Checking spelling started
+apache-airflow-providers-discord                            : Finished spell-checking successfully
+apache-airflow-providers-discord                            : Checking spelling completed
+apache-airflow-providers-docker                             : Checking spelling started
+apache-airflow-providers-ftp                                : Finished spell-checking successfully
+apache-airflow-providers-ftp                                : Checking spelling completed
+apache-airflow-providers-git                                : Checking spelling started
+apache-airflow-providers-anthropic                          : Finished spell-checking successfully
+apache-airflow-providers-anthropic                          : Checking spelling completed
+apache-airflow-providers-apache-cassandra                   : Checking spelling started
+apache-airflow-providers-common-messaging                   : Finished spell-checking successfully
+apache-airflow-providers-common-messaging                   : Checking spelling completed
+apache-airflow-providers-github                             : Checking spelling started
+apache-airflow-providers-git                                : Finished spell-checking successfully
+apache-airflow-providers-git                                : Checking spelling completed
+apache-airflow-providers-influxdb                           : Checking spelling started
+apache-airflow-providers-docker                             : Finished spell-checking successfully
+apache-airflow-providers-docker                             : Checking spelling completed
+apache-airflow-providers-microsoft-psrp                     : Checking spelling started
+apache-airflow-providers-apache-cassandra                   : Finished spell-checking successfully
+apache-airflow-providers-apache-cassandra                   : Checking spelling completed
+apache-airflow-providers-openfaas                           : Checking spelling started
+apache-airflow-providers-github                             : Finished spell-checking successfully
+apache-airflow-providers-github                             : Checking spelling completed
+apache-airflow-providers-google                             : Checking spelling started
+apache-airflow-providers-openfaas                           : Finished spell-checking successfully
+apache-airflow-providers-openfaas                           : Checking spelling completed
+apache-airflow-providers-openlineage                        : Checking spelling started
+apache-airflow-providers-influxdb                           : Finished spell-checking successfully
+apache-airflow-providers-influxdb                           : Checking spelling completed
+apache-airflow-providers-informatica                        : Checking spelling started
+apache-airflow-providers-microsoft-psrp                     : Finished spell-checking successfully
+apache-airflow-providers-microsoft-psrp                     : Checking spelling completed
+apache-airflow-providers-microsoft-winrm                    : Checking spelling started
+apache-airflow-providers-informatica                        : Finished spell-checking successfully
+apache-airflow-providers-informatica                        : Checking spelling completed
+apache-airflow-providers-jdbc                               : Checking spelling started
+apache-airflow-providers-microsoft-winrm                    : Finished spell-checking successfully
+apache-airflow-providers-microsoft-winrm                    : Checking spelling completed
+apache-airflow-providers-mongo                              : Checking spelling started
+apache-airflow-providers-openlineage                        : Finished spell-checking successfully
+apache-airflow-providers-openlineage                        : Checking spelling completed
+apache-airflow-providers-opensearch                         : Checking spelling started
+apache-airflow-providers-mongo                              : Finished spell-checking successfully
+apache-airflow-providers-mongo                              : Checking spelling completed
+apache-airflow-providers-mysql                              : Checking spelling started
+apache-airflow-providers-jdbc                               : Finished spell-checking successfully
+apache-airflow-providers-jdbc                               : Checking spelling completed
+apache-airflow-providers-jenkins                            : Checking spelling started
+apache-airflow-providers-opensearch                         : Finished spell-checking successfully
+apache-airflow-providers-opensearch                         : Checking spelling completed
+apache-airflow-providers-opsgenie                           : Checking spelling started
+apache-airflow-providers-jenkins                            : Finished spell-checking successfully
+apache-airflow-providers-jenkins                            : Checking spelling completed
+apache-airflow-providers-keycloak                           : Checking spelling started
+apache-airflow-providers-mysql                              : Finished spell-checking successfully
+apache-airflow-providers-mysql                              : Checking spelling completed
+apache-airflow-providers-neo4j                              : Checking spelling started
+apache-airflow-providers-opsgenie                           : Finished spell-checking successfully
+apache-airflow-providers-opsgenie                           : Checking spelling completed
+apache-airflow-providers-oracle                             : Checking spelling started
+apache-airflow-providers-keycloak                           : Finished spell-checking successfully
+apache-airflow-providers-keycloak                           : Checking spelling completed
+apache-airflow-providers-microsoft-azure                    : Checking spelling started
+apache-airflow-providers-neo4j                              : Finished spell-checking successfully
+apache-airflow-providers-neo4j                              : Checking spelling completed
+apache-airflow-providers-odbc                               : Checking spelling started
+apache-airflow-providers-oracle                             : Finished spell-checking successfully
+apache-airflow-providers-oracle                             : Checking spelling completed
+apache-airflow-providers-pagerduty                          : Checking spelling started
+apache-airflow-providers-odbc                               : Finished spell-checking successfully
+apache-airflow-providers-odbc                               : Checking spelling completed
+apache-airflow-providers-openai                             : Checking spelling started
+apache-airflow-providers-pagerduty                          : Finished spell-checking successfully
+apache-airflow-providers-pagerduty                          : Checking spelling completed
+apache-airflow-providers-papermill                          : Checking spelling started
+apache-airflow-providers-microsoft-azure                    : Finished spell-checking successfully
+apache-airflow-providers-microsoft-azure                    : Checking spelling completed
+apache-airflow-providers-microsoft-mssql                    : Checking spelling started
+apache-airflow-providers-openai                             : Finished spell-checking successfully
+apache-airflow-providers-openai                             : Checking spelling completed
+apache-airflow-providers-pgvector                           : Checking spelling started
+apache-airflow-providers-papermill                          : Finished spell-checking successfully
+apache-airflow-providers-papermill                          : Checking spelling completed
+apache-airflow-providers-samba                              : Checking spelling started
+apache-airflow-providers-microsoft-mssql                    : Finished spell-checking successfully
+apache-airflow-providers-microsoft-mssql                    : Checking spelling completed
+apache-airflow-providers-snowflake                          : Checking spelling started
+apache-airflow-providers-pgvector                           : Finished spell-checking successfully
+apache-airflow-providers-pgvector                           : Checking spelling completed
+apache-airflow-providers-pinecone                           : Checking spelling started
+apache-airflow-providers-samba                              : Finished spell-checking successfully
+apache-airflow-providers-samba                              : Checking spelling completed
+apache-airflow-providers-segment                            : Checking spelling started
+apache-airflow-providers-pinecone                           : Finished spell-checking successfully
+apache-airflow-providers-pinecone                           : Checking spelling completed
+apache-airflow-providers-postgres                           : Checking spelling started
+apache-airflow-providers-snowflake                          : Finished spell-checking successfully
+apache-airflow-providers-snowflake                          : Checking spelling completed
+apache-airflow-providers-sqlite                             : Checking spelling started
+apache-airflow-providers-segment                            : Finished spell-checking successfully
+apache-airflow-providers-segment                            : Checking spelling completed
+apache-airflow-providers-sendgrid                           : Checking spelling started
+apache-airflow-providers-sendgrid                           : Finished spell-checking successfully
+apache-airflow-providers-sendgrid                           : Checking spelling completed
+apache-airflow-providers-sftp                               : Checking spelling started
+apache-airflow-providers-sqlite                             : Finished spell-checking successfully
+apache-airflow-providers-sqlite                             : Checking spelling completed
+apache-airflow-providers-ssh                                : Checking spelling started
+apache-airflow-providers-postgres                           : Finished spell-checking successfully
+apache-airflow-providers-postgres                           : Checking spelling completed
+apache-airflow-providers-presto                             : Checking spelling started
+apache-airflow-providers-google                             : Finished spell-checking successfully
+apache-airflow-providers-google                             : Checking spelling completed
+apache-airflow-providers-grpc                               : Checking spelling started
+apache-airflow-providers-sftp                               : Finished spell-checking successfully
+apache-airflow-providers-sftp                               : Checking spelling completed
+apache-airflow-providers-singularity                        : Checking spelling started
+apache-airflow-providers-grpc                               : Finished spell-checking successfully
+apache-airflow-providers-grpc                               : Checking spelling completed
+apache-airflow-providers-hashicorp                          : Checking spelling started
+apache-airflow-providers-ssh                                : Finished spell-checking successfully
+apache-airflow-providers-ssh                                : Checking spelling completed
+apache-airflow-providers-standard                           : Checking spelling started
+apache-airflow-providers-presto                             : Finished spell-checking successfully
+apache-airflow-providers-presto                             : Checking spelling completed
+apache-airflow-providers-qdrant                             : Checking spelling started
+apache-airflow-providers-hashicorp                          : Finished spell-checking successfully
+apache-airflow-providers-hashicorp                          : Checking spelling completed
+apache-airflow-providers-http                               : Checking spelling started
+apache-airflow-providers-singularity                        : Finished spell-checking successfully
+apache-airflow-providers-singularity                        : Checking spelling completed
+apache-airflow-providers-slack                              : Checking spelling started
+apache-airflow-providers-qdrant                             : Finished spell-checking successfully
+apache-airflow-providers-qdrant                             : Checking spelling completed
+apache-airflow-providers-redis                              : Checking spelling started
+apache-airflow-providers-standard                           : Finished spell-checking successfully
+apache-airflow-providers-standard                           : Checking spelling completed
+apache-airflow-providers-tableau                            : Checking spelling started
+apache-airflow-providers-http                               : Finished spell-checking successfully
+apache-airflow-providers-http                               : Checking spelling completed
+apache-airflow-providers-ibm-mq                             : Checking spelling started
+apache-airflow-providers-slack                              : Finished spell-checking successfully
+apache-airflow-providers-slack                              : Checking spelling completed
+apache-airflow-providers-smtp                               : Checking spelling started
+apache-airflow-providers-redis                              : Finished spell-checking successfully
+apache-airflow-providers-redis                              : Checking spelling completed
+apache-airflow-providers-salesforce                         : Checking spelling started
+apache-airflow-providers-tableau                            : Finished spell-checking successfully
+apache-airflow-providers-tableau                            : Checking spelling completed
+apache-airflow-providers-telegram                           : Checking spelling started
+apache-airflow-providers-ibm-mq                             : Finished spell-checking successfully
+apache-airflow-providers-ibm-mq                             : Checking spelling completed
+apache-airflow-providers-imap                               : Checking spelling started
+apache-airflow-providers-smtp                               : Finished spell-checking successfully
+apache-airflow-providers-smtp                               : Checking spelling completed
+apache-airflow-providers-trino                              : Checking spelling started
+apache-airflow-providers-salesforce                         : Finished spell-checking successfully
+apache-airflow-providers-salesforce                         : Checking spelling completed
+apache-airflow-providers                                    : Checking spelling started
+apache-airflow-providers-telegram                           : Finished spell-checking successfully
+apache-airflow-providers-telegram                           : Checking spelling completed
+apache-airflow-providers-teradata                           : Checking spelling started
+apache-airflow-providers-imap                               : Finished spell-checking successfully
+apache-airflow-providers-imap                               : Checking spelling completed
+apache-airflow-providers-trino                              : Finished spell-checking successfully
+apache-airflow-providers-trino                              : Checking spelling completed
+apache-airflow-providers-vertica                            : Checking spelling started
+apache-airflow-providers                                    : Finished spell-checking successfully
+apache-airflow-providers                                    : Checking spelling completed
+apache-airflow-ctl                                          : Checking spelling started
+apache-airflow-providers-teradata                           : Finished spell-checking successfully
+apache-airflow-providers-teradata                           : Checking spelling completed
+apache-airflow-providers-vertica                            : Finished spell-checking successfully
+apache-airflow-providers-vertica                            : Checking spelling completed
+apache-airflow-providers-vespa                              : Checking spelling started
+apache-airflow-ctl                                          : Finished spell-checking successfully
+apache-airflow-ctl                                          : Checking spelling completed
+task-sdk                                                    : Checking spelling started
+apache-airflow-providers-vespa                              : Finished spell-checking successfully
+apache-airflow-providers-vespa                              : Checking spelling completed
+apache-airflow-providers-weaviate                           : Checking spelling started
+task-sdk                                                    : Finished spell-checking successfully
+task-sdk                                                    : Checking spelling completed
+helm-chart                                                  : Checking spelling started
+apache-airflow-providers-weaviate                           : Finished spell-checking successfully
+apache-airflow-providers-weaviate                           : Checking spelling completed
+apache-airflow-providers-yandex                             : Checking spelling started
+helm-chart                                                  : Finished spell-checking successfully
+helm-chart                                                  : Checking spelling completed
+docker-stack                                                : Checking spelling started
+docker-stack                                                : Finished spell-checking successfully
+docker-stack                                                : Checking spelling completed
+apache-airflow-providers-yandex                             : Finished spell-checking successfully
+apache-airflow-providers-yandex                             : Checking spelling completed
+apache-airflow-providers-ydb                                : Checking spelling started
+apache-airflow-providers-ydb                                : Finished spell-checking successfully
+apache-airflow-providers-ydb                                : Checking spelling completed
+apache-airflow-providers-zendesk                            : Checking spelling started
+apache-airflow-providers-zendesk                            : Finished spell-checking successfully
+apache-airflow-providers-zendesk                            : Checking spelling completed
+
+##[endgroup]
+No packages to retry. No more passes are needed.
+No packages to retry. No more passes are needed.
+No packages to retry. No more passes are needed.
+
+Tired of waiting for documentation to be built?
+
+You can quickly build documentation locally with just one command.
+
+    cd DISTRIBUTION_FOLDER
+    uv run --group docs build-docs
+
+If you want to interactively work on your documentation you can add --autobuild flag.
+
+    cd DISTRIBUTION_FOLDER
+    uv run --group docs build-docs --autobuild
+
+You can build several documentation packages together if they are modified together:
+    uv run --group docs build-docs PACKAGE1 PACKAGE2
+
+In the root of Airflow repo, you can build all packages together:
+    uv run --group docs build-docs
+
+You can also use other extra flags to iterate faster:
+   --docs-only       - Only build documentation
+   --spellcheck-only - Only perform spellchecking
+
+You can list all packages you can build:
+
+   --list-packages   - Shows the list of packages you can build
+
+You can run clean build - refreshing inter-sphinx inventories or refresh airflow ones.
+
+   --clean-build                 - Clean build files (without cleaning inventory cache)
+   --clean-inventory-cache        - Clean inventory cache before fetching
+   --refresh-airflow-inventories - Force refresh only airflow inventories (without cleaning build files or external inventories).
+
+For more info:
+   uv run build-docs --help
+
+There were some build errors remaining.
+
+
+############################## Start spelling errors summary ##############################
+
+==============================  apache-airflow-providers-oci  ==============================
+------------------------------ Error   1 ------------------------------
+Sphinx spellcheck returned non-zero exit status: 1.
+
+------------------------------ Error   2 ------------------------------
+providers/oci/docs/_api/tests/system/oci/index.rst:2: (oci)  tests.system.oci
+
+File path: /opt/airflow/providers/oci/docs/providers/oci/docs/_api/tests/system/oci/index.rst
+Incorrect Spelling: 'oci'
+Line with Error: 'tests.system.oci'
+------------------------------ Error   3 ------------------------------
+providers/oci/docs/commits.rst:26: (oci)  Package apache-airflow-providers-oci
+
+File path: /opt/airflow/providers/oci/docs/providers/oci/docs/commits.rst
+Incorrect Spelling: 'oci'
+Line with Error: 'Package apache-airflow-providers-oci'
+------------------------------ Error   4 ------------------------------
+providers/oci/docs/index.rst:70: (oci)  apache-airflow-providers-oci package
+
+File path: /opt/airflow/providers/oci/docs/providers/oci/docs/index.rst
+Incorrect Spelling: 'oci'
+Line with Error: 'apache-airflow-providers-oci package'
+====================================================================================================
+
+
+If there are spelling errors related to class or function name, make sure
+those names are quoted with backticks '`' - this should exclude it from spellcheck process.
+If there are spelling errors in the summary above, and the spelling is
+correct, add the spelling to docs/spelling_wordlist.txt or use the
+spelling directive.
+Check https://sphinxcontrib-spelling.readthedocs.io/en/latest/customize.html#private-dictionaries
+for more details.
+
+If there are no spelling errors in the summary above, there might be an
+issue unrelated to spelling. Please review the traceback.
+    
+
+############################## End docs build errors summary ##############################
+
+The documentation has errors.
+####################  Packages errors summary  ####################
+Package name                                    Count of doc build errors    Count of spelling errors
+--------------------------------------------  ---------------------------  --------------------------
+apache-airflow-providers-oci                          429                           4
+##################################################
+
+If you need help, write to #documentation channel on Airflow's Slack.
+Channel link: https://apache-airflow.slack.com/archives/CJ1LVREHX
+Invitation link: https://s.apache.org/airflow-slack
+
+##[endgroup]
+Error 1 returned
+None
+
+────────────────────────────────────────────────────────────────────────────────
+HOW TO REPRODUCE LOCALLY
+
+# 1. Fetch the same code as CI (pull request merge ref) — or: gh pr checkout 70160
+git fetch https://github.com/apache/airflow.git refs/pull/70160/merge
+git checkout f595ac4feafa41183d2e99aa0d2f3b6bebd7aa0d
+
+# 2. Build the CI image locally
+breeze ci-image build --platform linux/amd64 --python 3.10
+
+# 3. Run the same Breeze command locally
+breeze build-docs --refresh-airflow-inventories --github-repository apache/airflow --include-not-ready-providers --spellcheck-only
+
+────────────────────────────────────────────────────────────────────────────────
+
+##[error]Process completed with exit code 1.
+##[group]Run MARKER_FILE="./generated/_inventory_cache/.missing_third_party_inventories"
+MARKER_FILE="./generated/_inventory_cache/.missing_third_party_inventories"
+if [[ -f "${MARKER_FILE}" ]]; then
+  echo "missing=true" >> "${GITHUB_OUTPUT}"
+  echo "::warning::Missing third-party inventories:"
+  cat "${MARKER_FILE}"
+  echo "packages<<EOF" >> "${GITHUB_OUTPUT}"
+  cat "${MARKER_FILE}" >> "${GITHUB_OUTPUT}"
+  echo "EOF" >> "${GITHUB_OUTPUT}"
+else
+  echo "missing=false" >> "${GITHUB_OUTPUT}"
+fi
+shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+env:
+  GITHUB_REPOSITORY: apache/airflow
+  GITHUB_TOKEN: ***
+  GITHUB_USERNAME: AlejandroMorgante
+  INCLUDE_NOT_READY_PROVIDERS: true
+  INCLUDE_SUCCESS_OUTPUTS: false
+  PYTHON_MAJOR_MINOR_VERSION: 3.10
+  VERBOSE: true
+  pythonLocation: /opt/hostedtoolcache/Python/3.10.20/x64
+  PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.10.20/x64/lib/pkgconfig
+  Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.20/x64
+  Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.20/x64
+  Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.10.20/x64
+  LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.10.20/x64/lib
+##[endgroup]
+Post job cleanup.
+##[start-action display=Setup python;id=__e07cfef1-37cb-4c19-9d56-d82e8c8d4cfd.__actions_setup-python]
+##[end-action id=__e07cfef1-37cb-4c19-9d56-d82e8c8d4cfd.__actions_setup-python;outcome=skipped;conclusion=skipped;duration_ms=0]
+Post job cleanup.
+[command]/usr/bin/git version
+git version 2.54.0
+Temporarily overriding HOME='/home/runner/work/_temp/99adb9c4-982d-4f98-91d9-59349c8b30b4' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+[command]/usr/bin/git config --global --add safe.directory /home/runner/work/airflow/airflow
+Removing SSH command configuration
+[command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Removing HTTP extra header
+[command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+[command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Removing includeIf entries pointing to credentials config files
+[command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+[command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Cleaning up orphan processes
