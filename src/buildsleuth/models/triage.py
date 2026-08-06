@@ -31,3 +31,21 @@ class Localization(BaseModel):
     """
 
     ranked_files: list[FileCandidate] = Field(default_factory=list)
+
+
+class FixProposal(BaseModel):
+    """A candidate patch, which nothing has verified yet.
+
+    An empty patch is a legitimate answer, not a failure. A model that cannot
+    fix the cause should say so rather than produce something that makes the
+    red turn green by removing the check.
+    """
+
+    patch: str = ""
+    strategy: str = ""
+    expected_effect: str = ""
+    touched_files: list[str] = Field(default_factory=list)
+
+    @property
+    def is_empty(self) -> bool:
+        return not self.patch.strip()
