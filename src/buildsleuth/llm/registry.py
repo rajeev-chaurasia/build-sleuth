@@ -178,6 +178,27 @@ MODEL_SPECS: tuple[ModelSpec, ...] = (
         list_usd_per_million_input=0.03,
         list_usd_per_million_output=0.13,
     ),
+    # Same provider and free tier as the 20b entry, roughly six times the
+    # parameters, so the pair answers whether size helps on this task.
+    ModelSpec(
+        name="openrouter-nemotron-120b",
+        api_model="nvidia/nemotron-3-super-120b-a12b:free",
+        provider=Provider.OPENROUTER,
+        base_url=OPENROUTER_BASE_URL,
+        quirks=ProviderQuirks(
+            native_json_schema=True,
+            supports_tools=True,
+            rpm=20,
+            rpd=50,
+            tpd=None,
+            context_window=262_144,
+            max_retries=2,
+        ),
+        usd_per_million_input=FREE,
+        usd_per_million_output=FREE,
+        list_usd_per_million_input=0.10,
+        list_usd_per_million_output=0.40,
+    ),
     ModelSpec(
         name="ollama-llama3.1-8b",
         api_model="llama3.1:8b",

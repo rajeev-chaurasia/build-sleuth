@@ -12,11 +12,12 @@ Classification works end to end against real models. Localization and fix genera
 
 Current scorecard, 6 cases, every model scored through the same code path:
 
-| model | coverage | accuracy | macro F1 | cost weighted error | subcategory | usd per triage |
-| --- | --- | --- | --- | --- | --- | --- |
-| gemini-3.1-flash-lite | 6/6 | 0.667 | **0.438** | 0.500 | **0.500** | 0.0003 |
-| regex baseline | 6/6 | 0.667 | 0.200 | **0.417** | 0.000 | 0.0000 |
-| majority baseline | 6/6 | 0.667 | 0.200 | **0.417** | 0.000 | 0.0000 |
+| model | coverage | accuracy | macro F1 | cost weighted error | subcategory | usd per triage | seconds |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| gemini-3.1-flash-lite | 6/6 | 0.667 | **0.438** | 0.500 | **0.500** | 0.0003 | 8.9 |
+| nemotron-3-super-120b | 6/6 | 0.333 | 0.333 | 0.833 | 0.333 | 0.0003 | 25.4 |
+| regex baseline | 6/6 | 0.667 | 0.200 | **0.417** | 0.000 | 0.0000 | 0.0 |
+| gpt-oss-20b | 5/6 | not comparable | | | | 0.0001 | 231.1 |
 
 Cost is at the provider's list price; the actual runs were free-tier and billed nothing.
 
@@ -27,6 +28,8 @@ Read that table carefully, because it is the argument for having an eval harness
 - **Cost weighted error says the model is worse**, and that is not a bug in the metric. The baseline never guesses anything but `code_change`, so it never makes an expensive mistake. The model misread one code failure as infrastructure, which is the kind of error that sends someone hunting a runner outage that never happened.
 
 One metric alone would have told you the wrong story three different ways.
+
+**Bigger did not mean better.** A 120B model scored roughly half the accuracy of a small Flash model on the same six cases, and its cost weighted error was the worst of anything measured: it reached for `pipeline_config` on two failures that were plainly code defects. Parameter count is not a proxy for reading a build log correctly, which is the sort of claim that needs a harness rather than an opinion.
 
 Compare models yourself, on every axis at once:
 

@@ -1,23 +1,23 @@
 {
   "schema_version": 1,
-  "git_sha": "ad77ac2",
-  "model": "baseline-majority",
-  "prompt_hash": "none",
+  "git_sha": "55e4eb6",
+  "model": "openrouter-nemotron-120b",
+  "prompt_hash": "376df4b55ab1",
   "dataset_hash": "89c740280243",
   "subset": "full",
-  "created_at": "2026-08-06T05:34:43.475445Z",
+  "created_at": "2026-08-06T05:51:00.481130Z",
   "classification": {
     "per_class": {
       "code_change": {
-        "precision": 0.6666666666666666,
-        "recall": 1.0,
-        "f1": 0.8,
+        "precision": 0.5,
+        "recall": 0.25,
+        "f1": 0.3333333333333333,
         "support": 4
       },
       "flaky_test": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
         "support": 1
       },
       "infra_environment": {
@@ -33,43 +33,45 @@
         "support": 1
       }
     },
-    "macro_f1": 0.2,
-    "accuracy": 0.6666666666666666,
+    "macro_f1": 0.3333333333333333,
+    "accuracy": 0.3333333333333333,
     "confusion": {
       "counts": {
         "code_change": {
-          "code_change": 4
+          "pipeline_config": 2,
+          "code_change": 1,
+          "infra_environment": 1
         },
         "pipeline_config": {
           "code_change": 1
         },
         "flaky_test": {
-          "code_change": 1
+          "flaky_test": 1
         }
       }
     },
-    "cost_weighted_error": 0.4166666666666667
+    "cost_weighted_error": 0.8333333333333334
   },
   "localization": null,
   "cost": {
-    "total_input_tokens": 0,
-    "total_output_tokens": 0,
+    "total_input_tokens": 13488,
+    "total_output_tokens": 632,
     "total_requests": 6,
-    "wall_seconds": 0.01802800002042204,
+    "wall_seconds": 25.361834400013322,
     "estimated_usd": 0.0,
-    "list_price_usd": 0.0,
+    "list_price_usd": 0.0016016000000000001,
     "schema_failure_rate": 0.0
   },
   "per_case": [
     {
       "case_id": "gm-0001",
       "truth_class": "code_change",
-      "predicted_class": "code_change",
-      "correct": true,
+      "predicted_class": "pipeline_config",
+      "correct": false,
       "subcategory_correct": false,
       "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": 1.3439000176731497,
+      "latency_ms": 3868.124299973715,
       "error": null
     },
     {
@@ -77,10 +79,10 @@
       "truth_class": "code_change",
       "predicted_class": "code_change",
       "correct": true,
-      "subcategory_correct": false,
+      "subcategory_correct": true,
       "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": 1.3096000184305012,
+      "latency_ms": 3309.1182000061963,
       "error": null
     },
     {
@@ -91,40 +93,40 @@
       "subcategory_correct": false,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 1.779000012902543,
+      "latency_ms": 4959.186399995815,
       "error": null
     },
     {
       "case_id": "gm-0004",
       "truth_class": "code_change",
-      "predicted_class": "code_change",
-      "correct": true,
+      "predicted_class": "pipeline_config",
+      "correct": false,
       "subcategory_correct": false,
       "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": 1.2326000141911209,
+      "latency_ms": 2011.503999994602,
       "error": null
     },
     {
       "case_id": "gm-0005",
       "truth_class": "code_change",
-      "predicted_class": "code_change",
-      "correct": true,
+      "predicted_class": "infra_environment",
+      "correct": false,
       "subcategory_correct": false,
       "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": 2.1109000081196427,
+      "latency_ms": 4088.732300006086,
       "error": null
     },
     {
       "case_id": "sy-0001",
       "truth_class": "flaky_test",
-      "predicted_class": "code_change",
-      "correct": false,
-      "subcategory_correct": false,
+      "predicted_class": "flaky_test",
+      "correct": true,
+      "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 1.2106999929528683,
+      "latency_ms": 7116.13780001062,
       "error": null
     }
   ]

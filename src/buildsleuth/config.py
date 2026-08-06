@@ -4,19 +4,38 @@ Every secret enters the process here and nowhere else. Values are SecretStr so
 an accidental log or repr prints a placeholder instead of the key.
 """
 
-from pydantic import SecretStr
+from pydantic import AliasChoices, Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from buildsleuth.llm.registry import Provider
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_prefix="BUILDSLEUTH_", env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_prefix="BUILDSLEUTH_",
+        env_file=".env",
+        extra="ignore",
+        case_sensitive=False,
+    )
 
     github_token: SecretStr | None = None
-    gemini_api_key: SecretStr | None = None
+    gemini_api_key: SecretStr | None = Field(
+        default=None,
+        validation_alias=AliasChoices(
+            "BUILDSLEUTH_GEMINI_API_KEY",
+            "BUILDSLEUTH_GOOGLE_API_KEY",
+        ),
+    )
     groq_api_key: SecretStr | None = None
-    openrouter_api_key: SecretStr | None = None
+    # Provider names get spelled with and without a separator, and a key that
+    # is present but ignored is a confusing way to fail.
+    openrouter_api_key: SecretStr | None = Field(
+        default=None,
+        validation_alias=AliasChoices(
+            "BUILDSLEUTH_OPENROUTER_API_KEY",
+            "BUILDSLEUTH_OPEN_ROUTER_API_KEY",
+        ),
+    )
 
     def api_key_for(self, provider: Provider) -> str | None:
         """Key for a provider, or None when it has none configured or needs none."""
