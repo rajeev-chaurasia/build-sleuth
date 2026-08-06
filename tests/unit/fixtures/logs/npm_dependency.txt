@@ -1,0 +1,70 @@
+2026-08-05T10:30:00.1000000Z ##[group]Run actions/checkout@v4
+2026-08-05T10:30:01.1000137Z Syncing repository: acme/dashboard
+2026-08-05T10:30:02.1000274Z ##[endgroup]
+2026-08-05T10:30:03.100Z ##[group]Run actions/setup-node@v4
+2026-08-05T10:30:04.1000548Z Found in cache @ /opt/hostedtoolcache/node/20.15.1/x64
+2026-08-05T10:30:05.1Z ##[endgroup]
+2026-08-05T10:30:06.1000822Z ##[group]Run npm ci
+2026-08-05T10:30:07.1000959Z npm WARN deprecated inflight@1.0.6: This module is not supported
+2026-08-05T10:30:08.1001096Z npm WARN deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2026-08-05T10:30:09.1001233Z npm http fetch GET 200 https://registry.npmjs.org/react 23ms (cache miss)
+2026-08-05T10:30:10.1001370Z npm http fetch GET 200 https://registry.npmjs.org/react-dom 26ms (cache hit)
+2026-08-05T10:30:11.1001507Z npm http fetch GET 200 https://registry.npmjs.org/next 29ms (cache hit)
+2026-08-05T10:30:12.1001644Z npm http fetch GET 200 https://registry.npmjs.org/swr 32ms (cache miss)
+2026-08-05T10:30:13.1001781Z npm http fetch GET 200 https://registry.npmjs.org/zod 35ms (cache hit)
+2026-08-05T10:30:14.100Z npm http fetch GET 200 https://registry.npmjs.org/clsx 38ms (cache hit)
+2026-08-05T10:30:15.1002055Z npm http fetch GET 200 https://registry.npmjs.org/date-fns 41ms (cache miss)
+2026-08-05T10:30:16.1002192Z npm http fetch GET 200 https://registry.npmjs.org/recharts 44ms (cache hit)
+2026-08-05T10:30:17.1002329Z npm http fetch GET 200 https://registry.npmjs.org/lodash-es 47ms (cache hit)
+2026-08-05T10:30:18.1002466Z npm http fetch GET 200 https://registry.npmjs.org/framer-motion 50ms (cache miss)
+2026-08-05T10:30:19.1002603Z npm http fetch GET 200 https://registry.npmjs.org/tailwindcss 53ms (cache hit)
+2026-08-05T10:30:20.1002740Z npm http fetch GET 200 https://registry.npmjs.org/postcss 56ms (cache hit)
+2026-08-05T10:30:21.1002877Z npm http fetch GET 200 https://registry.npmjs.org/autoprefixer 59ms (cache miss)
+2026-08-05T10:30:22.1Z npm http fetch GET 200 https://registry.npmjs.org/typescript 62ms (cache hit)
+2026-08-05T10:30:23.1003151Z npm http fetch GET 200 https://registry.npmjs.org/eslint 65ms (cache hit)
+2026-08-05T10:30:24.1003288Z npm http fetch GET 200 https://registry.npmjs.org/prettier 68ms (cache miss)
+2026-08-05T10:30:25.100Z npm http fetch GET 200 https://registry.npmjs.org/vitest 71ms (cache hit)
+2026-08-05T10:30:26.1003562Z npm http fetch GET 200 https://registry.npmjs.org/jsdom 74ms (cache hit)
+2026-08-05T10:30:27.1003699Z npm http fetch GET 200 https://registry.npmjs.org/msw 77ms (cache miss)
+2026-08-05T10:30:28.1003836Z npm http fetch GET 200 https://registry.npmjs.org/zustand 80ms (cache hit)
+2026-08-05T10:30:29.1003973Z npm http fetch GET 200 https://registry.npmjs.org/immer 83ms (cache hit)
+2026-08-05T10:30:30.1004110Z npm http fetch GET 200 https://registry.npmjs.org/axios 86ms (cache miss)
+2026-08-05T10:30:31.1004247Z npm http fetch GET 200 https://registry.npmjs.org/d3-scale 89ms (cache hit)
+2026-08-05T10:30:32.1004384Z npm http fetch GET 200 https://registry.npmjs.org/d3-shape 92ms (cache hit)
+2026-08-05T10:30:33.1004521Z npm http fetch GET 200 https://registry.npmjs.org/classnames 95ms (cache miss)
+2026-08-05T10:30:34.1004658Z npm http fetch GET 200 https://registry.npmjs.org/uuid 98ms (cache hit)
+2026-08-05T10:30:35.1004795Z npm http fetch GET 200 https://registry.npmjs.org/nanoid 101ms (cache hit)
+2026-08-05T10:30:36.100Z npm http fetch GET 200 https://registry.npmjs.org/yargs 104ms (cache miss)
+2026-08-05T10:30:37.1005069Z npm http fetch GET 200 https://registry.npmjs.org/chalk 107ms (cache hit)
+2026-08-05T10:30:38.1005206Z npm http fetch GET 200 https://registry.npmjs.org/semver 110ms (cache hit)
+2026-08-05T10:30:39.1Z npm http fetch GET 200 https://registry.npmjs.org/picocolors 113ms (cache miss)
+2026-08-05T10:30:40.1005480Z npm http fetch GET 200 https://registry.npmjs.org/esbuild 116ms (cache hit)
+2026-08-05T10:30:41.1005617Z npm http fetch GET 200 https://registry.npmjs.org/rollup 119ms (cache hit)
+2026-08-05T10:30:42.1005754Z npm http fetch GET 200 https://registry.npmjs.org/vite 122ms (cache miss)
+2026-08-05T10:30:43.1005891Z npm http fetch GET 200 https://registry.npmjs.org/@types/node 125ms (cache hit)
+2026-08-05T10:30:44.1006028Z npm http fetch GET 200 https://registry.npmjs.org/@types/react 128ms (cache hit)
+2026-08-05T10:30:45.1006165Z npm http fetch GET 200 https://registry.npmjs.org/@types/lodash-es 131ms (cache miss)
+2026-08-05T10:30:46.1006302Z npm http fetch GET 200 https://registry.npmjs.org/husky 134ms (cache hit)
+2026-08-05T10:30:47.100Z npm http fetch GET 200 https://registry.npmjs.org/lint-staged 137ms (cache hit)
+2026-08-05T10:30:48.1006576Z npm http fetch GET 200 https://registry.npmjs.org/commitizen 140ms (cache miss)
+2026-08-05T10:30:49.1006713Z npm ERR! code ERESOLVE
+2026-08-05T10:30:50.1006850Z npm ERR! ERESOLVE unable to resolve dependency tree
+2026-08-05T10:30:51.1006987Z npm ERR!
+2026-08-05T10:30:52.1007124Z npm ERR! While resolving: dashboard@2.1.0
+2026-08-05T10:30:53.1007261Z npm ERR! Found: react@18.3.1
+2026-08-05T10:30:54.1007398Z npm ERR! node_modules/react
+2026-08-05T10:30:55.1007535Z npm ERR!   react@"^18.3.1" from the root project
+2026-08-05T10:30:56.1Z npm ERR!
+2026-08-05T10:30:57.1007809Z npm ERR! Could not resolve dependency:
+2026-08-05T10:30:58.100Z npm ERR! peer react@"^17.0.0" from react-legacy-grid@1.4.2
+2026-08-05T10:30:59.1008083Z npm ERR! node_modules/react-legacy-grid
+2026-08-05T10:31:00.1008220Z npm ERR!   react-legacy-grid@"^1.4.2" from the root project
+2026-08-05T10:31:01.1008357Z npm ERR!
+2026-08-05T10:31:02.1008494Z npm ERR! Fix the upstream dependency conflict, or retry
+2026-08-05T10:31:03.1008631Z npm ERR! this command with --force or --legacy-peer-deps
+2026-08-05T10:31:04.1008768Z npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
+2026-08-05T10:31:05.1008905Z npm ERR!
+2026-08-05T10:31:06.1009042Z npm ERR! A complete log of this run can be found in:
+2026-08-05T10:31:07.1009179Z npm ERR! /home/runner/.npm/_logs/2026-08-05T10_31_12_345Z-debug-0.log
+2026-08-05T10:31:08.1009316Z ##[endgroup]
+2026-08-05T10:31:09.100Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,60 @@
+2026-08-05T10:30:00.1000000Z ##[group]Run actions/checkout@v4
+2026-08-05T10:30:01.1000137Z Syncing repository: acme/ingest-worker
+2026-08-05T10:30:02.1000274Z ##[endgroup]
+2026-08-05T10:30:03.100Z ##[group]Run ./gradlew test --no-daemon
+2026-08-05T10:30:04.1000548Z Downloading https://services.gradle.org/distributions/gradle-8.9-bin.zip
+2026-08-05T10:30:05.1Z .........10%.........20%.........30%.........40%.........50%.........60%
+2026-08-05T10:30:06.1000822Z Welcome to Gradle 8.9!
+2026-08-05T10:30:07.1000959Z To honour the JVM settings for this build a single-use daemon process will be forked.
+2026-08-05T10:30:08.1001096Z Daemon will be stopped at the end of the build
+2026-08-05T10:30:09.1001233Z > Task :compileJava
+2026-08-05T10:30:10.1001370Z > Task :processResources
+2026-08-05T10:30:11.1001507Z > Task :classes
+2026-08-05T10:30:12.1001644Z > Task :compileTestJava
+2026-08-05T10:30:13.1001781Z > Task :processTestResources NO-SOURCE
+2026-08-05T10:30:14.100Z > Task :testClasses
+2026-08-05T10:30:15.1002055Z > Task :test
+2026-08-05T10:30:16.1002192Z IngestPipelineTest > handlesBackpressure STARTED
+2026-08-05T10:30:17.1002329Z IngestPipelineTest > handlesBackpressure PASSED
+2026-08-05T10:30:18.1002466Z IngestPipelineTest > replaysFromCheckpoint STARTED
+2026-08-05T10:30:19.1002603Z IngestPipelineTest > replaysFromCheckpoint PASSED
+2026-08-05T10:30:20.1002740Z IngestPipelineTest > dedupesByOffset STARTED
+2026-08-05T10:30:21.1002877Z IngestPipelineTest > dedupesByOffset PASSED
+2026-08-05T10:30:22.1Z IngestPipelineTest > flushesOnShutdown STARTED
+2026-08-05T10:30:23.1003151Z IngestPipelineTest > flushesOnShutdown PASSED
+2026-08-05T10:30:24.1003288Z IngestPipelineTest > rotatesPartitions STARTED
+2026-08-05T10:30:25.100Z IngestPipelineTest > rotatesPartitions PASSED
+2026-08-05T10:30:26.1003562Z IngestPipelineTest > honorsRetentionWindow STARTED
+2026-08-05T10:30:27.1003699Z IngestPipelineTest > honorsRetentionWindow PASSED
+2026-08-05T10:30:28.1003836Z IngestPipelineTest > compactsIdempotently STARTED
+2026-08-05T10:30:29.1003973Z IngestPipelineTest > compactsIdempotently PASSED
+2026-08-05T10:30:30.1004110Z IngestPipelineTest > mergesLateArrivals STARTED
+2026-08-05T10:30:31.1004247Z IngestPipelineTest > mergesLateArrivals PASSED
+2026-08-05T10:30:32.1004384Z IngestPipelineTest > tracksWatermarks STARTED
+2026-08-05T10:30:33.1004521Z IngestPipelineTest > tracksWatermarks PASSED
+2026-08-05T10:30:34.1004658Z IngestPipelineTest > recoversFromRestart STARTED
+2026-08-05T10:30:35.1004795Z IngestPipelineTest > recoversFromRestart PASSED
+2026-08-05T10:30:36.100Z IngestPipelineTest > batchesBySize STARTED
+2026-08-05T10:30:37.1005069Z IngestPipelineTest > batchesBySize PASSED
+2026-08-05T10:30:38.1005206Z IngestPipelineTest > propagatesHeaders STARTED
+2026-08-05T10:30:39.1Z IngestPipelineTest > propagatesHeaders PASSED
+2026-08-05T10:30:40.1005480Z IngestPipelineTest > loadsFullSnapshot STARTED
+2026-08-05T10:30:41.1005617Z java.lang.OutOfMemoryError: Java heap space
+2026-08-05T10:30:42.1005754Z 	at java.base/java.util.Arrays.copyOf(Arrays.java:3537)
+2026-08-05T10:30:43.1005891Z 	at java.base/java.util.ArrayList.grow(ArrayList.java:237)
+2026-08-05T10:30:44.1006028Z 	at java.base/java.util.ArrayList.add(ArrayList.java:499)
+2026-08-05T10:30:45.1006165Z 	at com.acme.ingest.SnapshotLoader.readAll(SnapshotLoader.java:88)
+2026-08-05T10:30:46.1006302Z 	at com.acme.ingest.IngestPipelineTest.loadsFullSnapshot(IngestPipelineTest.java:141)
+2026-08-05T10:30:47.100Z > Task :test FAILED
+2026-08-05T10:30:48.1006576Z FAILURE: Build failed with an exception.
+2026-08-05T10:30:49.1006713Z * What went wrong:
+2026-08-05T10:30:50.1006850Z Execution failed for task ':test'.
+2026-08-05T10:30:51.1006987Z > Process 'Gradle Test Executor 2' finished with non-zero exit value 137
+2026-08-05T10:30:52.1007124Z * Try:
+2026-08-05T10:30:53.1007261Z > Run with --stacktrace option to get the stack trace.
+2026-08-05T10:30:54.1007398Z > Run with --info or --debug option to get more log output.
+2026-08-05T10:30:55.1007535Z BUILD FAILED in 3m 12s
+2026-08-05T10:30:56.1Z 5 actionable tasks: 5 executed
+2026-08-05T10:30:57.1007809Z Killed
+2026-08-05T10:30:58.100Z ##[endgroup]
+2026-08-05T10:30:59.1008083Z ##[error]Process completed with exit code 137.

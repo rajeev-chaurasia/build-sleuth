@@ -15,8 +15,9 @@ build/
 .pytest_cache/
 .coverage
 
-# Eval transcripts (scorecards in results/ are committed, raw logs are not)
-logs/
+# Eval transcripts (scorecards in results/ are committed, raw logs are not).
+# Anchored to the repo root so test fixture logs stay tracked.
+/logs/
 *.eval
 
 # OS

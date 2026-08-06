@@ -1,0 +1,283 @@
+2026-08-05T10:30:00.1000000Z ##[group]Run ./scripts/integration-prep.sh
+2026-08-05T10:30:01.1000137Z Preparing workspace for the integration suite
+2026-08-05T10:30:02.1000274Z Using compose profile: full-stack
+2026-08-05T10:30:03.100Z [setup] pulling image registry.acme.dev/service-01:latest
+2026-08-05T10:30:04.1000548Z [setup] layer sha256:00009e3779b1 already present, skipping
+2026-08-05T10:30:05.1Z [setup] image ready in 187ms
+2026-08-05T10:30:06.1000822Z [setup] starting container service-01 on port 7001
+2026-08-05T10:30:07.1000959Z [healthcheck] service-01 responded 200 in 13ms
+2026-08-05T10:30:08.1001096Z [setup] container service-01 healthy
+2026-08-05T10:30:09.1001233Z [setup] pulling image registry.acme.dev/service-02:latest
+2026-08-05T10:30:10.1001370Z [setup] layer sha256:00013c6ef362 already present, skipping
+2026-08-05T10:30:11.1001507Z [setup] image ready in 194ms
+2026-08-05T10:30:12.1001644Z [setup] starting container service-02 on port 7002
+2026-08-05T10:30:13.1001781Z [healthcheck] service-02 responded 200 in 14ms
+2026-08-05T10:30:14.100Z [setup] container service-02 healthy
+2026-08-05T10:30:15.1002055Z [setup] pulling image registry.acme.dev/service-03:latest
+2026-08-05T10:30:16.1002192Z [setup] layer sha256:0001daa66d13 already present, skipping
+2026-08-05T10:30:17.1002329Z [setup] image ready in 201ms
+2026-08-05T10:30:18.1002466Z [setup] starting container service-03 on port 7003
+2026-08-05T10:30:19.1002603Z [healthcheck] service-03 responded 200 in 15ms
+2026-08-05T10:30:20.1002740Z [setup] container service-03 healthy
+2026-08-05T10:30:21.1002877Z [setup] pulling image registry.acme.dev/service-04:latest
+2026-08-05T10:30:22.1Z [setup] layer sha256:000278dde6c4 already present, skipping
+2026-08-05T10:30:23.1003151Z [setup] image ready in 208ms
+2026-08-05T10:30:24.1003288Z [setup] starting container service-04 on port 7004
+2026-08-05T10:30:25.100Z [healthcheck] service-04 responded 200 in 16ms
+2026-08-05T10:30:26.1003562Z [setup] container service-04 healthy
+2026-08-05T10:30:27.1003699Z [setup] pulling image registry.acme.dev/service-05:latest
+2026-08-05T10:30:28.1003836Z [setup] layer sha256:000317156075 already present, skipping
+2026-08-05T10:30:29.1003973Z [setup] image ready in 215ms
+2026-08-05T10:30:30.1004110Z [setup] starting container service-05 on port 7005
+2026-08-05T10:30:31.1004247Z [healthcheck] service-05 responded 200 in 17ms
+2026-08-05T10:30:32.1004384Z [setup] container service-05 healthy
+2026-08-05T10:30:33.1004521Z [setup] pulling image registry.acme.dev/service-06:latest
+2026-08-05T10:30:34.1004658Z [setup] layer sha256:0003b54cda26 already present, skipping
+2026-08-05T10:30:35.1004795Z [setup] image ready in 222ms
+2026-08-05T10:30:36.100Z [setup] starting container service-06 on port 7006
+2026-08-05T10:30:37.1005069Z [healthcheck] service-06 responded 200 in 18ms
+2026-08-05T10:30:38.1005206Z [setup] container service-06 healthy
+2026-08-05T10:30:39.1Z [setup] pulling image registry.acme.dev/service-07:latest
+2026-08-05T10:30:40.1005480Z [setup] layer sha256:0004538453d7 already present, skipping
+2026-08-05T10:30:41.1005617Z [setup] image ready in 229ms
+2026-08-05T10:30:42.1005754Z [setup] starting container service-07 on port 7007
+2026-08-05T10:30:43.1005891Z [healthcheck] service-07 responded 200 in 19ms
+2026-08-05T10:30:44.1006028Z [setup] container service-07 healthy
+2026-08-05T10:30:45.1006165Z [setup] pulling image registry.acme.dev/service-08:latest
+2026-08-05T10:30:46.1006302Z [setup] layer sha256:0004f1bbcd88 already present, skipping
+2026-08-05T10:30:47.100Z [setup] image ready in 236ms
+2026-08-05T10:30:48.1006576Z [setup] starting container service-08 on port 7008
+2026-08-05T10:30:49.1006713Z [healthcheck] service-08 responded 200 in 20ms
+2026-08-05T10:30:50.1006850Z [setup] container service-08 healthy
+2026-08-05T10:30:51.1006987Z [setup] pulling image registry.acme.dev/service-09:latest
+2026-08-05T10:30:52.1007124Z [setup] layer sha256:00058ff34739 already present, skipping
+2026-08-05T10:30:53.1007261Z [setup] image ready in 243ms
+2026-08-05T10:30:54.1007398Z [setup] starting container service-09 on port 7009
+2026-08-05T10:30:55.1007535Z [healthcheck] service-09 responded 200 in 21ms
+2026-08-05T10:30:56.1Z [setup] container service-09 healthy
+2026-08-05T10:30:57.1007809Z [setup] pulling image registry.acme.dev/service-10:latest
+2026-08-05T10:30:58.100Z [setup] layer sha256:00062e2ac0ea already present, skipping
+2026-08-05T10:30:59.1008083Z [setup] image ready in 250ms
+2026-08-05T10:31:00.1008220Z [setup] starting container service-10 on port 7010
+2026-08-05T10:31:01.1008357Z [healthcheck] service-10 responded 200 in 22ms
+2026-08-05T10:31:02.1008494Z [setup] container service-10 healthy
+2026-08-05T10:31:03.1008631Z [setup] pulling image registry.acme.dev/service-11:latest
+2026-08-05T10:31:04.1008768Z [setup] layer sha256:0006cc623a9b already present, skipping
+2026-08-05T10:31:05.1008905Z [setup] image ready in 257ms
+2026-08-05T10:31:06.1009042Z [setup] starting container service-11 on port 7011
+2026-08-05T10:31:07.1009179Z [healthcheck] service-11 responded 200 in 23ms
+2026-08-05T10:31:08.1009316Z [setup] container service-11 healthy
+2026-08-05T10:31:09.100Z [setup] pulling image registry.acme.dev/service-12:latest
+2026-08-05T10:31:10.1009590Z [setup] layer sha256:00076a99b44c already present, skipping
+2026-08-05T10:31:11.1009727Z [setup] image ready in 264ms
+2026-08-05T10:31:12.1009864Z [setup] starting container service-12 on port 7012
+2026-08-05T10:31:13.1Z [healthcheck] service-12 responded 200 in 24ms
+2026-08-05T10:31:14.1010138Z [setup] container service-12 healthy
+2026-08-05T10:31:15.1010275Z [setup] pulling image registry.acme.dev/service-13:latest
+2026-08-05T10:31:16.1010412Z [setup] layer sha256:000808d12dfd already present, skipping
+2026-08-05T10:31:17.1010549Z [setup] image ready in 271ms
+2026-08-05T10:31:18.1010686Z [setup] starting container service-13 on port 7013
+2026-08-05T10:31:19.1010823Z [healthcheck] service-13 responded 200 in 25ms
+2026-08-05T10:31:20.101Z [setup] container service-13 healthy
+2026-08-05T10:31:21.1011097Z [setup] pulling image registry.acme.dev/service-14:latest
+2026-08-05T10:31:22.1011234Z [setup] layer sha256:0008a708a7ae already present, skipping
+2026-08-05T10:31:23.1011371Z [setup] image ready in 278ms
+2026-08-05T10:31:24.1011508Z [setup] starting container service-14 on port 7014
+2026-08-05T10:31:25.1011645Z [healthcheck] service-14 responded 200 in 26ms
+2026-08-05T10:31:26.1011782Z [setup] container service-14 healthy
+2026-08-05T10:31:27.1011919Z [setup] pulling image registry.acme.dev/service-15:latest
+2026-08-05T10:31:28.1012056Z [setup] layer sha256:00094540215f already present, skipping
+2026-08-05T10:31:29.1012193Z [setup] image ready in 285ms
+2026-08-05T10:31:30.1Z [setup] starting container service-15 on port 7015
+2026-08-05T10:31:31.101Z [healthcheck] service-15 responded 200 in 27ms
+2026-08-05T10:31:32.1012604Z [setup] container service-15 healthy
+2026-08-05T10:31:33.1012741Z [setup] pulling image registry.acme.dev/service-16:latest
+2026-08-05T10:31:34.1012878Z [setup] layer sha256:0009e3779b10 already present, skipping
+2026-08-05T10:31:35.1013015Z [setup] image ready in 292ms
+2026-08-05T10:31:36.1013152Z [setup] starting container service-16 on port 7016
+2026-08-05T10:31:37.1013289Z [healthcheck] service-16 responded 200 in 28ms
+2026-08-05T10:31:38.1013426Z [setup] container service-16 healthy
+2026-08-05T10:31:39.1013563Z [setup] pulling image registry.acme.dev/service-17:latest
+2026-08-05T10:31:40.1013700Z [setup] layer sha256:000a81af14c1 already present, skipping
+2026-08-05T10:31:41.1013837Z [setup] image ready in 299ms
+2026-08-05T10:31:42.101Z [setup] starting container service-17 on port 7017
+2026-08-05T10:31:43.1014111Z [healthcheck] service-17 responded 200 in 29ms
+2026-08-05T10:31:44.1014248Z [setup] container service-17 healthy
+2026-08-05T10:31:45.1014385Z [setup] pulling image registry.acme.dev/service-18:latest
+2026-08-05T10:31:46.1014522Z [setup] layer sha256:000b1fe68e72 already present, skipping
+2026-08-05T10:31:47.1Z [setup] image ready in 306ms
+2026-08-05T10:31:48.1014796Z [setup] starting container service-18 on port 7018
+2026-08-05T10:31:49.1014933Z [healthcheck] service-18 responded 200 in 30ms
+2026-08-05T10:31:50.1015070Z [setup] container service-18 healthy
+2026-08-05T10:31:51.1015207Z [setup] pulling image registry.acme.dev/service-19:latest
+2026-08-05T10:31:52.1015344Z [setup] layer sha256:000bbe1e0823 already present, skipping
+2026-08-05T10:31:53.101Z [setup] image ready in 313ms
+2026-08-05T10:31:54.1015618Z [setup] starting container service-19 on port 7019
+2026-08-05T10:31:55.1015755Z [healthcheck] service-19 responded 200 in 31ms
+2026-08-05T10:31:56.1015892Z [setup] container service-19 healthy
+2026-08-05T10:31:57.1016029Z [setup] pulling image registry.acme.dev/service-20:latest
+2026-08-05T10:31:58.1016166Z [setup] layer sha256:000c5c5581d4 already present, skipping
+2026-08-05T10:31:59.1016303Z [setup] image ready in 320ms
+2026-08-05T10:32:00.1016440Z [setup] starting container service-20 on port 7020
+2026-08-05T10:32:01.1016577Z [healthcheck] service-20 responded 200 in 32ms
+2026-08-05T10:32:02.1016714Z [setup] container service-20 healthy
+2026-08-05T10:32:03.1016851Z [setup] pulling image registry.acme.dev/service-21:latest
+2026-08-05T10:32:04.101Z [setup] layer sha256:000cfa8cfb85 already present, skipping
+2026-08-05T10:32:05.1017125Z [setup] image ready in 327ms
+2026-08-05T10:32:06.1017262Z [setup] starting container service-21 on port 7021
+2026-08-05T10:32:07.1017399Z [healthcheck] service-21 responded 200 in 33ms
+2026-08-05T10:32:08.1017536Z [setup] container service-21 healthy
+2026-08-05T10:32:09.1017673Z [setup] pulling image registry.acme.dev/service-22:latest
+2026-08-05T10:32:10.1017810Z [setup] layer sha256:000d98c47536 already present, skipping
+2026-08-05T10:32:11.1017947Z [setup] image ready in 334ms
+2026-08-05T10:32:12.1018084Z [setup] starting container service-22 on port 7022
+2026-08-05T10:32:13.1018221Z [healthcheck] service-22 responded 200 in 34ms
+2026-08-05T10:32:14.1018358Z [setup] container service-22 healthy
+2026-08-05T10:32:15.101Z [setup] pulling image registry.acme.dev/service-23:latest
+2026-08-05T10:32:16.1018632Z [setup] layer sha256:000e36fbeee7 already present, skipping
+2026-08-05T10:32:17.1018769Z [setup] image ready in 341ms
+2026-08-05T10:32:18.1018906Z [setup] starting container service-23 on port 7023
+2026-08-05T10:32:19.1019043Z [healthcheck] service-23 responded 200 in 35ms
+2026-08-05T10:32:20.1019180Z [setup] container service-23 healthy
+2026-08-05T10:32:21.1Z [setup] pulling image registry.acme.dev/service-24:latest
+2026-08-05T10:32:22.1019454Z [setup] layer sha256:000ed5336898 already present, skipping
+2026-08-05T10:32:23.1019591Z [setup] image ready in 348ms
+2026-08-05T10:32:24.1019728Z [setup] starting container service-24 on port 7024
+2026-08-05T10:32:25.1019865Z [healthcheck] service-24 responded 200 in 36ms
+2026-08-05T10:32:26.102Z [setup] container service-24 healthy
+2026-08-05T10:32:27.1020139Z [setup] pulling image registry.acme.dev/service-25:latest
+2026-08-05T10:32:28.1020276Z [setup] layer sha256:000f736ae249 already present, skipping
+2026-08-05T10:32:29.1020413Z [setup] image ready in 355ms
+2026-08-05T10:32:30.1020550Z [setup] starting container service-25 on port 7025
+2026-08-05T10:32:31.1020687Z [healthcheck] service-25 responded 200 in 37ms
+2026-08-05T10:32:32.1020824Z [setup] container service-25 healthy
+2026-08-05T10:32:33.1020961Z [setup] pulling image registry.acme.dev/service-26:latest
+2026-08-05T10:32:34.1021098Z [setup] layer sha256:001011a25bfa already present, skipping
+2026-08-05T10:32:35.1021235Z [setup] image ready in 362ms
+2026-08-05T10:32:36.1021372Z [setup] starting container service-26 on port 7026
+2026-08-05T10:32:37.102Z [healthcheck] service-26 responded 200 in 38ms
+2026-08-05T10:32:38.1Z [setup] container service-26 healthy
+2026-08-05T10:32:39.1021783Z [setup] pulling image registry.acme.dev/service-27:latest
+2026-08-05T10:32:40.1021920Z [setup] layer sha256:0010afd9d5ab already present, skipping
+2026-08-05T10:32:41.1022057Z [setup] image ready in 369ms
+2026-08-05T10:32:42.1022194Z [setup] starting container service-27 on port 7027
+2026-08-05T10:32:43.1022331Z [healthcheck] service-27 responded 200 in 39ms
+2026-08-05T10:32:44.1022468Z [setup] container service-27 healthy
+2026-08-05T10:32:45.1022605Z [setup] pulling image registry.acme.dev/service-28:latest
+2026-08-05T10:32:46.1022742Z [setup] layer sha256:00114e114f5c already present, skipping
+2026-08-05T10:32:47.1022879Z [setup] image ready in 376ms
+2026-08-05T10:32:48.102Z [setup] starting container service-28 on port 7028
+2026-08-05T10:32:49.1023153Z [healthcheck] service-28 responded 200 in 40ms
+2026-08-05T10:32:50.1023290Z [setup] container service-28 healthy
+2026-08-05T10:32:51.1023427Z [setup] pulling image registry.acme.dev/service-29:latest
+2026-08-05T10:32:52.1023564Z [setup] layer sha256:0011ec48c90d already present, skipping
+2026-08-05T10:32:53.1023701Z [setup] image ready in 383ms
+2026-08-05T10:32:54.1023838Z [setup] starting container service-29 on port 7029
+2026-08-05T10:32:55.1Z [healthcheck] service-29 responded 200 in 41ms
+2026-08-05T10:32:56.1024112Z [setup] container service-29 healthy
+2026-08-05T10:32:57.1024249Z [setup] pulling image registry.acme.dev/service-30:latest
+2026-08-05T10:32:58.1024386Z [setup] layer sha256:00128a8042be already present, skipping
+2026-08-05T10:32:59.102Z [setup] image ready in 390ms
+2026-08-05T10:33:00.1024660Z [setup] starting container service-30 on port 7030
+2026-08-05T10:33:01.1024797Z [healthcheck] service-30 responded 200 in 42ms
+2026-08-05T10:33:02.1024934Z [setup] container service-30 healthy
+2026-08-05T10:33:03.1025071Z [setup] all 30 services healthy
+2026-08-05T10:33:04.1025208Z [seed] loading fixtures into postgres
+2026-08-05T10:33:05.1025345Z [seed] applied 120 migrations in 8.4s
+2026-08-05T10:33:06.1025482Z [seed] inserted 4200 rows across 18 tables
+2026-08-05T10:33:07.1025619Z [assets] synced bundle 01 of 90 in 53ms
+2026-08-05T10:33:08.1025756Z [assets] synced bundle 02 of 90 in 66ms
+2026-08-05T10:33:09.1025893Z [assets] synced bundle 03 of 90 in 79ms
+2026-08-05T10:33:10.102Z [assets] synced bundle 04 of 90 in 92ms
+2026-08-05T10:33:11.1026167Z [assets] synced bundle 05 of 90 in 105ms
+2026-08-05T10:33:12.1Z [assets] synced bundle 06 of 90 in 118ms
+2026-08-05T10:33:13.1026441Z [assets] synced bundle 07 of 90 in 41ms
+2026-08-05T10:33:14.1026578Z [assets] synced bundle 08 of 90 in 54ms
+2026-08-05T10:33:15.1026715Z [assets] synced bundle 09 of 90 in 67ms
+2026-08-05T10:33:16.1026852Z [assets] synced bundle 10 of 90 in 80ms
+2026-08-05T10:33:17.1026989Z [assets] synced bundle 11 of 90 in 93ms
+2026-08-05T10:33:18.1027126Z [assets] synced bundle 12 of 90 in 106ms
+2026-08-05T10:33:19.1027263Z [assets] synced bundle 13 of 90 in 119ms
+2026-08-05T10:33:20.1027400Z [assets] synced bundle 14 of 90 in 42ms
+2026-08-05T10:33:21.102Z [assets] synced bundle 15 of 90 in 55ms
+2026-08-05T10:33:22.1027674Z [assets] synced bundle 16 of 90 in 68ms
+2026-08-05T10:33:23.1027811Z [assets] synced bundle 17 of 90 in 81ms
+2026-08-05T10:33:24.1027948Z [assets] synced bundle 18 of 90 in 94ms
+2026-08-05T10:33:25.1028085Z [assets] synced bundle 19 of 90 in 107ms
+2026-08-05T10:33:26.1028222Z [assets] synced bundle 20 of 90 in 120ms
+2026-08-05T10:33:27.1028359Z [assets] synced bundle 21 of 90 in 43ms
+2026-08-05T10:33:28.1028496Z [assets] synced bundle 22 of 90 in 56ms
+2026-08-05T10:33:29.1Z [assets] synced bundle 23 of 90 in 69ms
+2026-08-05T10:33:30.1028770Z [assets] synced bundle 24 of 90 in 82ms
+2026-08-05T10:33:31.1028907Z [assets] synced bundle 25 of 90 in 95ms
+2026-08-05T10:33:32.102Z [assets] synced bundle 26 of 90 in 108ms
+2026-08-05T10:33:33.1029181Z [assets] synced bundle 27 of 90 in 121ms
+2026-08-05T10:33:34.1029318Z [assets] synced bundle 28 of 90 in 44ms
+2026-08-05T10:33:35.1029455Z [assets] synced bundle 29 of 90 in 57ms
+2026-08-05T10:33:36.1029592Z [assets] synced bundle 30 of 90 in 70ms
+2026-08-05T10:33:37.1029729Z [assets] synced bundle 31 of 90 in 83ms
+2026-08-05T10:33:38.1029866Z [assets] synced bundle 32 of 90 in 96ms
+2026-08-05T10:33:39.1030003Z [assets] synced bundle 33 of 90 in 109ms
+2026-08-05T10:33:40.1030140Z [assets] synced bundle 34 of 90 in 122ms
+2026-08-05T10:33:41.1030277Z [assets] synced bundle 35 of 90 in 45ms
+2026-08-05T10:33:42.1030414Z [assets] synced bundle 36 of 90 in 58ms
+2026-08-05T10:33:43.103Z [assets] synced bundle 37 of 90 in 71ms
+2026-08-05T10:33:44.1030688Z [assets] synced bundle 38 of 90 in 84ms
+2026-08-05T10:33:45.1030825Z [assets] synced bundle 39 of 90 in 97ms
+2026-08-05T10:33:46.1Z [assets] synced bundle 40 of 90 in 110ms
+2026-08-05T10:33:47.1031099Z [assets] synced bundle 41 of 90 in 123ms
+2026-08-05T10:33:48.1031236Z [assets] synced bundle 42 of 90 in 46ms
+2026-08-05T10:33:49.1031373Z [assets] synced bundle 43 of 90 in 59ms
+2026-08-05T10:33:50.1031510Z [assets] synced bundle 44 of 90 in 72ms
+2026-08-05T10:33:51.1031647Z [assets] synced bundle 45 of 90 in 85ms
+2026-08-05T10:33:52.1031784Z [assets] synced bundle 46 of 90 in 98ms
+2026-08-05T10:33:53.1031921Z [assets] synced bundle 47 of 90 in 111ms
+2026-08-05T10:33:54.103Z [assets] synced bundle 48 of 90 in 124ms
+2026-08-05T10:33:55.1032195Z [assets] synced bundle 49 of 90 in 47ms
+2026-08-05T10:33:56.1032332Z [assets] synced bundle 50 of 90 in 60ms
+2026-08-05T10:33:57.1032469Z [assets] synced bundle 51 of 90 in 73ms
+2026-08-05T10:33:58.1032606Z [assets] synced bundle 52 of 90 in 86ms
+2026-08-05T10:33:59.1032743Z [assets] synced bundle 53 of 90 in 99ms
+2026-08-05T10:34:00.1032880Z [assets] synced bundle 54 of 90 in 112ms
+2026-08-05T10:34:01.1033017Z [assets] synced bundle 55 of 90 in 125ms
+2026-08-05T10:34:02.1033154Z [assets] synced bundle 56 of 90 in 48ms
+2026-08-05T10:34:03.1Z [assets] synced bundle 57 of 90 in 61ms
+2026-08-05T10:34:04.1033428Z [assets] synced bundle 58 of 90 in 74ms
+2026-08-05T10:34:05.103Z [assets] synced bundle 59 of 90 in 87ms
+2026-08-05T10:34:06.1033702Z [assets] synced bundle 60 of 90 in 100ms
+2026-08-05T10:34:07.1033839Z [assets] synced bundle 61 of 90 in 113ms
+2026-08-05T10:34:08.1033976Z [assets] synced bundle 62 of 90 in 126ms
+2026-08-05T10:34:09.1034113Z [assets] synced bundle 63 of 90 in 49ms
+2026-08-05T10:34:10.1034250Z [assets] synced bundle 64 of 90 in 62ms
+2026-08-05T10:34:11.1034387Z [assets] synced bundle 65 of 90 in 75ms
+2026-08-05T10:34:12.1034524Z [assets] synced bundle 66 of 90 in 88ms
+2026-08-05T10:34:13.1034661Z [assets] synced bundle 67 of 90 in 101ms
+2026-08-05T10:34:14.1034798Z [assets] synced bundle 68 of 90 in 114ms
+2026-08-05T10:34:15.1034935Z [assets] synced bundle 69 of 90 in 127ms
+2026-08-05T10:34:16.103Z [assets] synced bundle 70 of 90 in 50ms
+2026-08-05T10:34:17.1035209Z [assets] synced bundle 71 of 90 in 63ms
+2026-08-05T10:34:18.1035346Z [assets] synced bundle 72 of 90 in 76ms
+2026-08-05T10:34:19.1035483Z [assets] synced bundle 73 of 90 in 89ms
+2026-08-05T10:34:20.1Z [assets] synced bundle 74 of 90 in 102ms
+2026-08-05T10:34:21.1035757Z [assets] synced bundle 75 of 90 in 115ms
+2026-08-05T10:34:22.1035894Z [assets] synced bundle 76 of 90 in 128ms
+2026-08-05T10:34:23.1036031Z [assets] synced bundle 77 of 90 in 51ms
+2026-08-05T10:34:24.1036168Z [assets] synced bundle 78 of 90 in 64ms
+2026-08-05T10:34:25.1036305Z [assets] synced bundle 79 of 90 in 77ms
+2026-08-05T10:34:26.1036442Z [assets] synced bundle 80 of 90 in 90ms
+2026-08-05T10:34:27.103Z [assets] synced bundle 81 of 90 in 103ms
+2026-08-05T10:34:28.1036716Z [assets] synced bundle 82 of 90 in 116ms
+2026-08-05T10:34:29.1036853Z [assets] synced bundle 83 of 90 in 129ms
+2026-08-05T10:34:30.1036990Z [assets] synced bundle 84 of 90 in 52ms
+2026-08-05T10:34:31.1037127Z [assets] synced bundle 85 of 90 in 65ms
+2026-08-05T10:34:32.1037264Z [assets] synced bundle 86 of 90 in 78ms
+2026-08-05T10:34:33.1037401Z [assets] synced bundle 87 of 90 in 91ms
+2026-08-05T10:34:34.1037538Z [assets] synced bundle 88 of 90 in 104ms
+2026-08-05T10:34:35.1037675Z [assets] synced bundle 89 of 90 in 117ms
+2026-08-05T10:34:36.1037812Z [assets] synced bundle 90 of 90 in 40ms
+2026-08-05T10:34:37.1Z [assets] bundle sync complete, 90 of 90 verified
+2026-08-05T10:34:38.103Z [warmup] priming caches for 30 services
+2026-08-05T10:34:39.1038223Z [warmup] cache prime complete in 6.1s
+2026-08-05T10:34:40.1038360Z [teardown] leaving containers running for the next stage
+2026-08-05T10:34:41.1038497Z ##[endgroup]
+2026-08-05T10:34:42.1038634Z Build finished cleanly in 92s

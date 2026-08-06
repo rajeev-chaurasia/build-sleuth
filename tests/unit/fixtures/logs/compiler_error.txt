@@ -1,0 +1,69 @@
+2026-08-05T10:30:00.1000000Z ##[group]Run actions/checkout@v4
+2026-08-05T10:30:01.1000137Z Syncing repository: acme/telemetry-agent
+2026-08-05T10:30:02.1000274Z ##[endgroup]
+2026-08-05T10:30:03.100Z ##[group]Run cargo build --release
+2026-08-05T10:30:04.1000548Z     Updating crates.io index
+2026-08-05T10:30:05.1Z      Locking 41 packages to latest compatible versions
+2026-08-05T10:30:06.1000822Z   Downloaded proc-macro2 v1.0.86
+2026-08-05T10:30:07.1000959Z   Downloaded unicode-ident v1.0.12
+2026-08-05T10:30:08.1001096Z   Downloaded quote v1.0.36
+2026-08-05T10:30:09.1001233Z   Downloaded syn v2.0.72
+2026-08-05T10:30:10.1001370Z   Downloaded serde v1.0.204
+2026-08-05T10:30:11.1001507Z   Downloaded serde_derive v1.0.204
+2026-08-05T10:30:12.1001644Z   Downloaded serde_json v1.0.121
+2026-08-05T10:30:13.1001781Z   Downloaded itoa v1.0.11
+2026-08-05T10:30:14.100Z   Downloaded ryu v1.0.18
+2026-08-05T10:30:15.1002055Z   Downloaded memchr v2.7.4
+2026-08-05T10:30:16.1002192Z   Downloaded libc v0.2.155
+2026-08-05T10:30:17.1002329Z   Downloaded cfg-if v1.0.0
+2026-08-05T10:30:18.1002466Z   Downloaded once_cell v1.19.0
+2026-08-05T10:30:19.1002603Z   Downloaded log v0.4.22
+2026-08-05T10:30:20.1002740Z   Downloaded hashbrown v0.14.5
+2026-08-05T10:30:21.1002877Z   Downloaded smallvec v1.13.2
+2026-08-05T10:30:22.1Z   Downloaded parking_lot v0.12.3
+2026-08-05T10:30:23.1003151Z   Downloaded crossbeam-channel v0.5.13
+2026-08-05T10:30:24.1003288Z   Downloaded tokio v1.39.2
+2026-08-05T10:30:25.100Z   Downloaded bytes v1.6.1
+2026-08-05T10:30:26.1003562Z    Compiling proc-macro2 v1.0.86
+2026-08-05T10:30:27.1003699Z    Compiling unicode-ident v1.0.12
+2026-08-05T10:30:28.1003836Z    Compiling quote v1.0.36
+2026-08-05T10:30:29.1003973Z    Compiling syn v2.0.72
+2026-08-05T10:30:30.1004110Z    Compiling serde v1.0.204
+2026-08-05T10:30:31.1004247Z    Compiling serde_derive v1.0.204
+2026-08-05T10:30:32.1004384Z    Compiling serde_json v1.0.121
+2026-08-05T10:30:33.1004521Z    Compiling itoa v1.0.11
+2026-08-05T10:30:34.1004658Z    Compiling ryu v1.0.18
+2026-08-05T10:30:35.1004795Z    Compiling memchr v2.7.4
+2026-08-05T10:30:36.100Z    Compiling libc v0.2.155
+2026-08-05T10:30:37.1005069Z    Compiling cfg-if v1.0.0
+2026-08-05T10:30:38.1005206Z    Compiling once_cell v1.19.0
+2026-08-05T10:30:39.1Z    Compiling log v0.4.22
+2026-08-05T10:30:40.1005480Z    Compiling hashbrown v0.14.5
+2026-08-05T10:30:41.1005617Z    Compiling smallvec v1.13.2
+2026-08-05T10:30:42.1005754Z    Compiling parking_lot v0.12.3
+2026-08-05T10:30:43.1005891Z    Compiling crossbeam-channel v0.5.13
+2026-08-05T10:30:44.1006028Z    Compiling tokio v1.39.2
+2026-08-05T10:30:45.1006165Z    Compiling bytes v1.6.1
+2026-08-05T10:30:46.1006302Z    Compiling telemetry-agent v0.4.1 (/home/runner/work/telemetry-agent/telemetry-agent)
+2026-08-05T10:30:47.100Z error[E0308]: mismatched types
+2026-08-05T10:30:48.1006576Z   --> src/exporter.rs:118:34
+2026-08-05T10:30:49.1006713Z    |
+2026-08-05T10:30:50.1006850Z 118 |         let batch = Batch::new(events);
+2026-08-05T10:30:51.1006987Z    |                     ---------- ^^^^^^ expected `Vec<Event>`, found `&[Event]`
+2026-08-05T10:30:52.1007124Z    |                     |
+2026-08-05T10:30:53.1007261Z    |                     arguments to this function are incorrect
+2026-08-05T10:30:54.1007398Z    |
+2026-08-05T10:30:55.1007535Z note: associated function defined here
+2026-08-05T10:30:56.1Z   --> src/batch.rs:27:12
+2026-08-05T10:30:57.1007809Z    |
+2026-08-05T10:30:58.100Z 27 |     pub fn new(events: Vec<Event>) -> Self {
+2026-08-05T10:30:59.1008083Z    |            ^^^
+2026-08-05T10:31:00.1008220Z help: consider using `.to_vec()` to convert the slice
+2026-08-05T10:31:01.1008357Z    |
+2026-08-05T10:31:02.1008494Z 118 |         let batch = Batch::new(events.to_vec());
+2026-08-05T10:31:03.1008631Z    |                                      +++++++++
+2026-08-05T10:31:04.1008768Z error: aborting due to 1 previous error
+2026-08-05T10:31:05.1008905Z For more information about this diagnostic, try `rustc --explain E0308`.
+2026-08-05T10:31:06.1009042Z error: could not compile `telemetry-agent` (bin "telemetry-agent") due to 1 previous error
+2026-08-05T10:31:07.1009179Z ##[endgroup]
+2026-08-05T10:31:08.1009316Z ##[error]Process completed with exit code 101.
