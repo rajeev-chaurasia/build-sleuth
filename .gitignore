@@ -22,3 +22,6 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+
+# Local run snapshots (fetched artifacts, not source)
+snapshots/
