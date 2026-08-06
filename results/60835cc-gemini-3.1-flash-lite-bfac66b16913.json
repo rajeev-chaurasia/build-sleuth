@@ -1,0 +1,604 @@
+{
+  "schema_version": 1,
+  "git_sha": "60835cc",
+  "model": "gemini-3.1-flash-lite",
+  "prompt_hash": "bfac66b16913",
+  "dataset_hash": "7c81d9be36b6",
+  "subset": "full",
+  "created_at": "2026-08-06T08:34:21.046820Z",
+  "classification": {
+    "per_class": {
+      "code_change": {
+        "precision": 0.9285714285714286,
+        "recall": 0.896551724137931,
+        "f1": 0.912280701754386,
+        "support": 29
+      },
+      "flaky_test": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "support": 2
+      },
+      "infra_environment": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "support": 3
+      },
+      "pipeline_config": {
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8,
+        "support": 3
+      }
+    },
+    "macro_f1": 0.7614035087719299,
+    "accuracy": 0.8648648648648649,
+    "confusion": {
+      "counts": {
+        "code_change": {
+          "code_change": 26,
+          "infra_environment": 3
+        },
+        "pipeline_config": {
+          "pipeline_config": 2,
+          "code_change": 1
+        },
+        "flaky_test": {
+          "code_change": 1,
+          "flaky_test": 1
+        },
+        "infra_environment": {
+          "infra_environment": 3
+        }
+      }
+    },
+    "cost_weighted_error": 0.22972972972972974
+  },
+  "localization": {
+    "hit_at_1": 0.5,
+    "hit_at_5": 0.5416666666666666,
+    "mrr": 0.5208333333333334,
+    "n_evaluated": 24
+  },
+  "cost": {
+    "total_input_tokens": 268606,
+    "total_output_tokens": 9496,
+    "total_requests": 48,
+    "wall_seconds": 253.62867270002607,
+    "estimated_usd": 0.0,
+    "list_price_usd": 0.030659000000000002,
+    "schema_failure_rate": 0.0
+  },
+  "per_case": [
+    {
+      "case_id": "gm-0001",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 3945.3402000071947,
+      "error": null
+    },
+    {
+      "case_id": "gm-0002",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 2322.635499993339,
+      "error": null
+    },
+    {
+      "case_id": "gm-0003",
+      "truth_class": "pipeline_config",
+      "predicted_class": "pipeline_config",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": 1,
+      "latency_ms": 2189.3326000135858,
+      "error": null
+    },
+    {
+      "case_id": "gm-0004",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 2021.2774999963585,
+      "error": null
+    },
+    {
+      "case_id": "gm-0005",
+      "truth_class": "code_change",
+      "predicted_class": "infra_environment",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 1180.6281000026502,
+      "error": null
+    },
+    {
+      "case_id": "gm-0100",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": 1,
+      "latency_ms": 2172.3236000107136,
+      "error": null
+    },
+    {
+      "case_id": "gm-0101",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": 1,
+      "latency_ms": 2260.138600016944,
+      "error": null
+    },
+    {
+      "case_id": "gm-0102",
+      "truth_class": "code_change",
+      "predicted_class": "infra_environment",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 1364.667299989378,
+      "error": null
+    },
+    {
+      "case_id": "gm-0103",
+      "truth_class": "code_change",
+      "predicted_class": "infra_environment",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 1252.8606000123546,
+      "error": null
+    },
+    {
+      "case_id": "gm-0104",
+      "truth_class": "code_change",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+    },
+    {
+      "case_id": "gm-0105",
+      "truth_class": "code_change",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+    },
+    {
+      "case_id": "gm-0106",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 2207.5231000198983,
+      "error": null
+    },
+    {
+      "case_id": "gm-0107",
+      "truth_class": "code_change",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+    },
+    {
+      "case_id": "gm-0108",
+      "truth_class": "code_change",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+    },
+    {
+      "case_id": "gm-0109",
+      "truth_class": "code_change",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+    },
+    {
+      "case_id": "gm-0110",
+      "truth_class": "code_change",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+    },
+    {
+      "case_id": "gm-0111",
+      "truth_class": "flaky_test",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+    },
+    {
+      "case_id": "gm-0112",
+      "truth_class": "code_change",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+    },
+    {
+      "case_id": "gm-0113",
+      "truth_class": "flaky_test",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+    },
+    {
+      "case_id": "gm-0114",
+      "truth_class": "code_change",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+    },
+    {
+      "case_id": "gm-0115",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 8222.991799993906,
+      "error": null
+    },
+    {
+      "case_id": "gm-0116",
+      "truth_class": "code_change",
+      "predicted_class": null,
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": null,
+      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+    },
+    {
+      "case_id": "gm-0117",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": 1,
+      "latency_ms": 8908.680799999274,
+      "error": null
+    },
+    {
+      "case_id": "gm-0118",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": 1,
+      "latency_ms": 7862.655800010543,
+      "error": null
+    },
+    {
+      "case_id": "gm-0119",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": 1,
+      "latency_ms": 8059.765599988168,
+      "error": null
+    },
+    {
+      "case_id": "gm-0120",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 7926.65360000683,
+      "error": null
+    },
+    {
+      "case_id": "gm-0121",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": 1,
+      "latency_ms": 8067.8594000055455,
+      "error": null
+    },
+    {
+      "case_id": "gm-0122",
+      "truth_class": "pipeline_config",
+      "predicted_class": "pipeline_config",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 7978.211000008741,
+      "error": null
+    },
+    {
+      "case_id": "gm-0123",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": 1,
+      "latency_ms": 8024.701300018933,
+      "error": null
+    },
+    {
+      "case_id": "gm-0124",
+      "truth_class": "flaky_test",
+      "predicted_class": "code_change",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 8328.922600019723,
+      "error": null
+    },
+    {
+      "case_id": "gm-0125",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 8040.2179999800865,
+      "error": null
+    },
+    {
+      "case_id": "gm-0126",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 7583.396300004097,
+      "error": null
+    },
+    {
+      "case_id": "gm-0127",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": 1,
+      "latency_ms": 7817.46540000313,
+      "error": null
+    },
+    {
+      "case_id": "gm-0128",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 8498.744199983776,
+      "error": null
+    },
+    {
+      "case_id": "gm-0129",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": 1,
+      "latency_ms": 7900.25439998135,
+      "error": null
+    },
+    {
+      "case_id": "gm-0130",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": 1,
+      "latency_ms": 7584.892600018065,
+      "error": null
+    },
+    {
+      "case_id": "gm-0131",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": 2,
+      "latency_ms": 8241.92969998694,
+      "error": null
+    },
+    {
+      "case_id": "gm-0132",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 7545.158699998865,
+      "error": null
+    },
+    {
+      "case_id": "gm-0133",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": 1,
+      "latency_ms": 8261.139799986267,
+      "error": null
+    },
+    {
+      "case_id": "gm-0134",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 7793.2365000015125,
+      "error": null
+    },
+    {
+      "case_id": "gm-0135",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 8036.156599991955,
+      "error": null
+    },
+    {
+      "case_id": "gm-0200",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 8129.01229999261,
+      "error": null
+    },
+    {
+      "case_id": "gm-0201",
+      "truth_class": "infra_environment",
+      "predicted_class": "infra_environment",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 4205.975299992133,
+      "error": null
+    },
+    {
+      "case_id": "gm-0202",
+      "truth_class": "pipeline_config",
+      "predicted_class": "code_change",
+      "correct": false,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 7775.701000005938,
+      "error": null
+    },
+    {
+      "case_id": "gm-0203",
+      "truth_class": "infra_environment",
+      "predicted_class": "infra_environment",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 4138.302399980603,
+      "error": null
+    },
+    {
+      "case_id": "gm-0204",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": null,
+      "localization_rank": null,
+      "latency_ms": 7910.932900005719,
+      "error": null
+    },
+    {
+      "case_id": "gm-0205",
+      "truth_class": "infra_environment",
+      "predicted_class": "infra_environment",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 4087.44459997979,
+      "error": null
+    },
+    {
+      "case_id": "sy-0001",
+      "truth_class": "flaky_test",
+      "predicted_class": "flaky_test",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
+      "localization_rank": null,
+      "latency_ms": 4344.153799989726,
+      "error": null
+    }
+  ]
+}

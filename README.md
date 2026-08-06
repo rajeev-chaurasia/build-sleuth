@@ -10,25 +10,25 @@ The differentiator is the eval harness. Explaining a failed build is a commodity
 
 Classification works end to end against real models. Localization and fix generation are next.
 
-Current scorecard, 6 cases, every model scored through the same code path:
+Current scorecard, 48 cases, every model scored through the same code path:
 
-| model | coverage | accuracy | macro F1 | cost weighted error | subcategory | usd per triage | seconds |
+| model | coverage | accuracy | macro F1 | cost weighted error | subcategory | hit@1 | usd per triage |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| nemotron-3-ultra-550b | 6/6 | **0.833** | **0.472** | **0.250** | **0.833** | 0.0043 | 287.5 |
-| gemini-3.1-flash-lite | 6/6 | 0.667 | 0.438 | 0.500 | 0.500 | 0.0003 | 8.9 |
-| regex baseline | 6/6 | 0.667 | 0.200 | 0.417 | 0.000 | 0.0000 | 0.0 |
-| nemotron-3-super-120b | 6/6 | 0.333 | 0.333 | 0.833 | 0.333 | 0.0003 | 25.4 |
-| gpt-oss-20b | 5/6 | not comparable | | | | 0.0001 | 231.1 |
+| gemini-3.1-flash-lite | 37/48 | 0.865 | 0.761 | 0.230 | 0.730 | 0.500 | 0.0006 |
+| majority baseline | 48/48 | 0.792 | 0.221 | 0.250 | 0.271 | n/a | 0.0000 |
+| regex baseline | 48/48 | 0.714 | 0.208 | 0.619 | 0.190 | n/a | 0.0000 |
 
-Cost is at the provider's list price; the actual runs were free-tier and billed nothing. Thirty two times slower for the best answers is a real tradeoff, not a rounding error, and which end of it you want depends on whether a human is waiting.
+**The model row is not directly comparable to the baselines.** It answered 37 of 48 cases before the day's free-tier quota ran out, and metrics computed over the cases a model managed always flatter it. Read the coverage column first; that is what it is there for.
+
+Cost is at the provider's list price. The runs themselves were free-tier and billed nothing.
 
 Read that table carefully, because it is the argument for having an eval harness at all:
 
-- **Accuracy says all three are identical.** They are not. Four of six cases are `code_change`, so a classifier that answers `code_change` every time scores 0.667 while understanding nothing.
-- **Macro F1 separates them**, because it refuses to let the majority class carry the score. The model more than doubles the floor.
-- **Cost weighted error says the model is worse**, and that is not a bug in the metric. The baseline never guesses anything but `code_change`, so it never makes an expensive mistake. The model misread one code failure as infrastructure, which is the kind of error that sends someone hunting a runner outage that never happened.
+- **Accuracy barely separates the model from a classifier that thinks nothing.** The majority baseline answers `code_change` every time and scores 0.792, because 38 of 48 cases are that class. Accuracy on this data is close to a measure of the class distribution.
+- **Macro F1 separates them decisively**, 0.761 against 0.221, because it refuses to let the majority class carry the score.
+- **Coverage decides whether any of it counts.** The model's numbers cover 37 cases; the baselines' cover 48. A model that answers only the cases it finds easy would post the best numbers in the table.
 
-One metric alone would have told you the wrong story three different ways.
+One metric alone would tell you the wrong story three different ways.
 
 **Bigger is not reliably better either.** The 550B model leads on every quality axis, but the 120B from the same family scores half the accuracy of a small Flash model and posts the worst cost weighted error measured, reaching for `pipeline_config` on two failures that were plainly code defects. Parameter count predicts neither result.
 
@@ -66,7 +66,9 @@ The real fix is more cases: with six, one case flipping moves accuracy by 17 poi
 
 Honest caveats, kept current:
 
-- 6 cases so far, target is 80. Numbers this small are directional, not conclusive, and the trial spread above is the proof.
+- 48 cases, target is 80. Better than six, still small enough that a handful of cases moves a number.
+- **The dataset has outgrown the free tier.** Forty eight cases cost roughly ninety model calls with localization on, and the day's quota ran out mid-run. Full-suite runs now need batching across days, a paid key, or a local model. The rate limiter refuses a run it has counted itself out of, but it cannot see quota an account spent elsewhere.
+- The class balance is still skewed: 38 of 48 cases are `code_change`, 4 flaky, 3 infrastructure, 3 pipeline config. That is roughly what mining public repositories yields, and it is why macro F1 rather than accuracy is the headline.
 - **The model choice is not settled on quality.** `gemini-3.1-flash-lite` is the default because it is the only model that has answered all six cases. `gemini-3.5-flash` looked stronger on the four it finished before running out of free quota, but four of six is exactly the partial number this harness exists to distrust. That comparison is open.
 - `gemini-3.6-flash` is in the registry but has no free tier: an unbilled key gets a 429 on the first request.
 
