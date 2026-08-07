@@ -70,9 +70,16 @@ class GitHubClient:
         """Close the underlying HTTP connection pool."""
         self._http.close()
 
-    def get_run(self, repo: str, run_id: int) -> JsonDict:
-        """Fetch one workflow run."""
-        data: JsonDict = self._get(f"/repos/{repo}/actions/runs/{run_id}").json()
+    def get_run(self, repo: str, run_id: int, attempt: int | None = None) -> JsonDict:
+        """Fetch one workflow run, or one specific attempt of it.
+
+        The plain run endpoint always answers with the latest attempt, so a
+        URL naming attempt two would otherwise triage attempt three.
+        """
+        path = f"/repos/{repo}/actions/runs/{run_id}"
+        if attempt is not None:
+            path = f"{path}/attempts/{attempt}"
+        data: JsonDict = self._get(path).json()
         return data
 
     def get_jobs(self, repo: str, run_id: int) -> list[JsonDict]:

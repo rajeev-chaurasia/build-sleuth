@@ -111,8 +111,10 @@ def attach_cost(card: Scorecard, classifier: Classifier) -> None:
         card.cost.estimated_usd = estimate_cost_usd(spec, usage)
         card.cost.list_price_usd = estimate_list_cost_usd(spec, usage)
 
-    requests = card.cost.total_requests or 1
-    card.cost.schema_failure_rate = classifier.repairs / requests
+    # Recorded as a count, not folded into schema_failure_rate. They measure
+    # different things, and the rate the runner computed is the one that says
+    # how often the model produced nothing usable.
+    card.cost.repairs = classifier.repairs
 
 
 if __name__ == "__main__":

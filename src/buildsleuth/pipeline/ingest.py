@@ -4,6 +4,8 @@ This is the only stage that talks to the CI provider. Everything after it
 works from the snapshot, which is what makes eval cases replayable.
 """
 
+from typing import Protocol, runtime_checkable
+
 from buildsleuth.condense.clean import clean_log
 from buildsleuth.models.run import Conclusion, Job, RunSnapshot
 from buildsleuth.providers.base import CIProvider
@@ -19,11 +21,25 @@ class NoFailedJobError(Exception):
 
 
 def pick_failed_job(jobs: list[Job]) -> Job:
+    """The job to triage, preferring an outright failure over a timeout or cancellation."""
     for wanted in _TRIAGE_TARGETS:
         for job in jobs:
             if job.conclusion == wanted:
                 return job
     raise NoFailedJobError("no failed, timed out, or cancelled job in this run")
+
+
+@runtime_checkable
+class CommitPinnedDiffProvider(Protocol):
+    """A provider that can produce the diff as of one commit.
+
+    Declared as a protocol rather than probed with getattr so that renaming
+    the method on a provider becomes a type error. Silently falling back to
+    the branch tip diff would reintroduce exactly the disagreement between a
+    diff and the log beside it that this exists to prevent.
+    """
+
+    def get_diff_at(self, repo: str, pr_number: int, head_sha: str) -> str: ...
 
 
 def _diff_at_failure(
@@ -32,17 +48,13 @@ def _diff_at_failure(
     """Diff as it stood at the failing commit, not as the branch stands today.
 
     A pull request diff follows the branch tip, so by the time a run is
-    curated it can show code that did not exist when the log was written. That
-    makes the diff disagree with the log it is paired with.
+    curated it can show code that did not exist when the log was written.
     """
     if pr_number is None:
         return None
-
-    at_sha = getattr(provider, "get_diff_at", None)
-    if at_sha is None:
-        return provider.get_diff(repo, pr_number)
-    diff: str = at_sha(repo, pr_number, head_sha)
-    return diff
+    if isinstance(provider, CommitPinnedDiffProvider):
+        return provider.get_diff_at(repo, pr_number, head_sha)
+    return provider.get_diff(repo, pr_number)
 
 
 def ingest(url: str, provider: CIProvider) -> RunSnapshot:
@@ -58,7 +70,11 @@ def ingest(url: str, provider: CIProvider) -> RunSnapshot:
 
     prior_attempt_log: str | None = None
     if run.run_attempt > FIRST_ATTEMPT:
-        raw = provider.get_attempt_log(ref, FIRST_ATTEMPT, failed_job.name)
+        # The attempt immediately before this one, not the first ever. On a
+        # third attempt, attempt one is two reruns of history away and says
+        # little about whether this failure repeats.
+        previous = run.run_attempt - 1
+        raw = provider.get_attempt_log(ref, previous, failed_job.name)
         prior_attempt_log = clean_log(raw) if raw is not None else None
 
     pr_number = provider.get_pr_for_commit(ref.repo, run.head_sha)

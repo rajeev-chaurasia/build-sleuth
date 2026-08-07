@@ -35,7 +35,12 @@ class CostSummary(BaseModel):
     # What the same run would cost at the provider's paid rate. Free-tier runs
     # bill nothing, and "$0.00 per triage" alone tells a reader very little.
     list_price_usd: float = 0.0
+    # Two different things, kept apart because they were once the same field
+    # and the second silently overwrote the first. A repair is an answer that
+    # was reparsed successfully; a hard failure is a case with no verdict at
+    # all. Reporting one under the other's name flatters a model that failed.
     schema_failure_rate: float = 0.0
+    repairs: int = 0
 
 
 class CaseResult(BaseModel):
@@ -225,7 +230,8 @@ def render_markdown(card: Scorecard) -> str:
         headline.append(["hit@5", _num(card.localization.hit_at_5)])
         headline.append(["mrr", _num(card.localization.mrr)])
         headline.append(["localized cases", str(card.localization.n_evaluated)])
-    headline.append(["schema failure rate", _num(card.cost.schema_failure_rate)])
+    headline.append(["cases with no verdict", _num(card.cost.schema_failure_rate)])
+    headline.append(["schema repairs", str(card.cost.repairs)])
     headline.append(["estimated usd", f"{card.cost.estimated_usd:.4f}"])
     headline.append(["usd at list price", f"{card.cost.list_price_usd:.4f}"])
     headline.append(["usd per triage at list price", f"{_per_triage(card):.4f}"])

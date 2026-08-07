@@ -21,8 +21,12 @@ class GitHubProvider:
         return parse_run_url(url)
 
     def get_run(self, ref: RunRef) -> WorkflowRun:
-        """Fetch a workflow run and map it into the domain model."""
-        data = self._client.get_run(ref.repo, ref.run_id)
+        """Fetch a workflow run and map it into the domain model.
+
+        Honours the attempt in the ref when the URL named one, so pasting a
+        link to attempt two does not quietly triage the latest attempt.
+        """
+        data = self._client.get_run(ref.repo, ref.run_id, ref.attempt)
         return WorkflowRun(
             ref=ref,
             workflow_name=data.get("name") or data.get("path") or "",

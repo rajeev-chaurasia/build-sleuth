@@ -12,6 +12,9 @@ from buildsleuth.providers.github.client import GitHubClient
 
 AI_LABEL = "ai-generated"
 BRANCH_PREFIX = "buildsleuth/fix"
+MAX_EVIDENCE_LINES = 3
+MAX_EVIDENCE_CHARS = 300
+NO_EVIDENCE = "none recorded"
 BLOB_ENCODING = "base64"
 FILE_MODE = "100644"
 BLOB_TYPE = "blob"
@@ -26,6 +29,27 @@ class DraftPullRequest:
 
 def branch_name(run_id: int) -> str:
     return f"{BRANCH_PREFIX}-{run_id}"
+
+
+def quote_evidence(lines: list[str]) -> str:
+    """Render log lines as a blockquote that their content cannot escape.
+
+    Evidence is model output quoted from a CI log, and on a pull request from
+    a fork the log content is written by whoever opened it. Left raw, a
+    newline breaks out of the blockquote and unbalanced backticks swallow the
+    text below, including the line saying a machine wrote this patch. So each
+    line is flattened, fenced characters are neutralised, and the length is
+    capped.
+    """
+    if not lines:
+        return f"> {NO_EVIDENCE}"
+
+    rendered: list[str] = []
+    for raw in lines[:MAX_EVIDENCE_LINES]:
+        flattened = " ".join(raw.replace("\r", "\n").split("\n"))
+        safe = flattened.replace("`", "'").strip()[:MAX_EVIDENCE_CHARS]
+        rendered.append(f"> {safe}" if safe else f"> {NO_EVIDENCE}")
+    return "\n".join(rendered)
 
 
 def build_pr_body(
@@ -43,7 +67,7 @@ def build_pr_body(
     States what was changed, what was checked, and what was not, because a
     patch whose provenance is unclear costs more to review than it saves.
     """
-    quoted = "\n".join(f"> {line}" for line in evidence[:3]) or "> none recorded"
+    quoted = quote_evidence(evidence)
     return "\n".join(
         [
             "## Automated triage",
