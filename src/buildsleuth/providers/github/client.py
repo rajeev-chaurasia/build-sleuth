@@ -27,6 +27,10 @@ SERVER_ERROR_STATUSES = frozenset(
     {httpx.codes.BAD_GATEWAY, httpx.codes.SERVICE_UNAVAILABLE, httpx.codes.GATEWAY_TIMEOUT}
 )
 ERROR_PREVIEW_CHARS = 200
+# A commit GitHub cannot resolve answers 422 with "No commit found for SHA",
+# and a private or moved repository answers 404. Neither is an error worth
+# aborting a triage over.
+_NO_COMMIT_STATUSES = frozenset({httpx.codes.NOT_FOUND, httpx.codes.UNPROCESSABLE_ENTITY})
 
 JsonDict = dict[str, Any]
 
@@ -119,8 +123,18 @@ class GitHubClient:
         return self._get(f"/repos/{repo}/actions/runs/{run_id}/attempts/{attempt}/logs").content
 
     def get_pulls_for_commit(self, repo: str, sha: str) -> list[JsonDict]:
-        """Fetch the pull requests associated with a commit."""
-        data: list[JsonDict] = self._get(f"/repos/{repo}/commits/{sha}/pulls").json()
+        """Pull requests associated with a commit, empty when there are none.
+
+        A commit the repository cannot resolve answers 422, not an empty list,
+        which happens whenever a branch was force pushed or a fork removed
+        after the run. Treated as no pull request rather than an error, since
+        the alternative is losing a triage over a commit that moved.
+        """
+        response = self._request(f"/repos/{repo}/commits/{sha}/pulls")
+        if response.status_code in _NO_COMMIT_STATUSES:
+            return []
+        _ensure_success(response)
+        data: list[JsonDict] = response.json()
         return data
 
     def create_blob(self, repo: str, content: str, encoding: str) -> JsonDict:
