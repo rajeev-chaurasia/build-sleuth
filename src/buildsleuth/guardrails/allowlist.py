@@ -32,6 +32,7 @@ def check_write_target(repo: str, settings: Settings) -> None:
             " BUILDSLEUTH_PR_ALLOWLIST to the repositories this may open pull requests against."
         )
     if repo.strip().lower() not in allowed:
+        listed = ", ".join(sorted(allowed))
         raise GuardrailViolation(
-            f"refusing to write to {repo}: it is not in the allowlist ({', '.join(sorted(allowed))})"
+            f"refusing to write to {repo}: it is not in the allowlist ({listed})"
         )
