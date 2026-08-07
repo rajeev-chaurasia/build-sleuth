@@ -47,9 +47,8 @@ def main() -> int:
         TriageContext.from_log(log_text, repo=args.repo, failed_job=args.job),
     )
     verdict = triaged.value
-    print(
-        f"1 classify   {verdict.failure_class}/{verdict.subcategory} (confidence {verdict.confidence})"
-    )
+    label = f"{verdict.failure_class}/{verdict.subcategory}"
+    print(f"1 classify   {label} (confidence {verdict.confidence})")
     print(f"             {verdict.reasoning[:150]}")
 
     located = localize(client, args.model, verdict, evidence, repo=args.repo)

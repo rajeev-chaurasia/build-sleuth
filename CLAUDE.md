@@ -10,7 +10,11 @@ These rules apply to every session and every subagent working in this repo.
 - No em-dashes anywhere: code, docs, README, commit messages. Use plain hyphens or restructure the sentence.
 - No magic strings or numbers. Use StrEnum, module-level constants, or Settings fields.
 - Python 3.12+, pydantic v2 models at every stage boundary, full type annotations, mypy strict must pass.
-- Run `uv run ruff check . && uv run ruff format --check . && uv run mypy && uv run pytest` before declaring any work done.
+- Before declaring any work done, run the gates in this order, because the formatter can produce lines the linter rejects and running them the other way round lets that reach CI:
+
+```
+uv run ruff format . && uv run ruff check . && uv run mypy && uv run pytest
+```
 
 ## Architecture invariants
 
