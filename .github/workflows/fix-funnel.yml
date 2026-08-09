@@ -1,0 +1,125 @@
+name: fix-funnel
+
+# Measures how far proposed patches actually get, by applying each one inside
+# the artifact image and rerunning the build that failed.
+#
+# It runs here rather than on a laptop for the same reason the imports do:
+# each image is gigabytes, and two of them will not fit on one disk. One case
+# gets one runner, and the funnel is assembled at the end.
+#
+# Needs a model key in the BUILDSLEUTH_GEMINI_API_KEY repository secret.
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Model to measure"
+        required: false
+        default: "gemini-3.1-flash-lite"
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.pick.outputs.matrix }}
+      count: ${{ steps.pick.outputs.count }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - id: pick
+        # The case list comes from the dataset, so adding cases widens the
+        # matrix without anybody editing this file.
+        run: |
+          uv sync --all-groups
+          uv run python - <<'EOF' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          from buildsleuth.dataset.loader import load_cases
+          from evals.fix_funnel import executable_cases
+
+          cases = executable_cases(load_cases(Path("dataset")))
+          print("matrix=" + json.dumps({"include": [{"case_id": c.case_id} for c in cases]}))
+          print(f"count={len(cases)}")
+          EOF
+
+  measure:
+    needs: plan
+    if: needs.plan.outputs.count != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix: ${{ fromJson(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc \
+                      /usr/local/share/boost "$AGENT_TOOLSDIRECTORY" || true
+          sudo docker image prune -af || true
+          df -h / | tail -1
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: uv sync --all-groups
+
+      - name: Measure ${{ matrix.case_id }}
+        env:
+          BUILDSLEUTH_GEMINI_API_KEY: ${{ secrets.BUILDSLEUTH_GEMINI_API_KEY }}
+        run: |
+          uv run python -m evals.fix_funnel \
+            --model "${{ inputs.model }}" \
+            --only "${{ matrix.case_id }}" \
+            --out "attempts/${{ matrix.case_id }}.json"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: attempt-${{ matrix.case_id }}
+          path: attempts/${{ matrix.case_id }}.json
+          if-no-files-found: error
+
+  report:
+    needs: measure
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          path: attempts
+          pattern: attempt-*
+
+      - name: Assemble the funnel
+        # A case whose runner died is missing from the artifacts entirely, so
+        # the count here is the honest denominator rather than the planned one.
+        run: |
+          uv sync --all-groups
+          uv run python -m evals.fix_funnel \
+            --aggregate attempts --out results/fix-funnel.json | tee funnel.txt
+          {
+            echo '### Fix funnel'
+            echo
+            echo '```'
+            cat funnel.txt
+            echo '```'
+            echo
+            echo "Planned ${{ needs.plan.outputs.count }} cases."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fix-funnel
+          path: results/fix-funnel.json
