@@ -34,6 +34,11 @@ OUTPUT_TAIL_CHARS = 800
 APPLY_MARKER = "=====BUILDSLEUTH_APPLIED====="
 # Enough for a rejected-hunk report, which is what git prints on failure.
 APPLY_OUTPUT_LINES = 20
+FILE_MARKER = "=====BUILDSLEUTH_FILE:"
+READ_TIMEOUT_SECONDS = 600
+# checkout_resolution_lines quotes what it is given, so the repository is
+# substituted after the script is built rather than interpolated into it.
+REPO_PLACEHOLDER = "BUILDSLEUTH_REPO_PLACEHOLDER"
 
 
 def terminate(patch: str) -> str:
@@ -97,6 +102,72 @@ def verification_script(patch: str, repo_name: str) -> str:
             f"bash {shlex.quote(RUN_FAILED)} 2>&1",
         ]
     )
+
+
+def read_script(paths: list[str]) -> str:
+    """Print the named files as they exist in the failing checkout."""
+    lines = [
+        "set +e",
+        'LOG=$(find / -maxdepth 6 -name "*-orig.log" 2>/dev/null | head -1)',
+        'ROOT=$(dirname "$LOG" 2>/dev/null)',
+        f'[ -d "$ROOT/failed" ] || ROOT={BUILD_ROOT}',
+        'FAILED="$ROOT/failed"',
+    ]
+    lines.extend(checkout_resolution_lines(REPO_PLACEHOLDER))
+    lines.append('cd "$FAILED/$PROJ" || exit 90')
+    for path in paths:
+        quoted = shlex.quote(path)
+        lines.append(f'echo "{FILE_MARKER}{path}"')
+        lines.append(f"cat {quoted} 2>/dev/null")
+    return "\n".join(lines)
+
+
+def parse_files(output: str) -> dict[str, str]:
+    """Split the printed files back apart, keeping their line endings."""
+    files: dict[str, str] = {}
+    current = ""
+    for line in output.splitlines(keepends=True):
+        stripped = line.rstrip("\r\n")
+        if stripped.startswith(FILE_MARKER):
+            current = stripped[len(FILE_MARKER) :]
+            files[current] = ""
+            continue
+        if current:
+            files[current] += line
+    return {path: body for path, body in files.items() if body.strip()}
+
+
+def read_files_in_image(
+    tag: str, repo_name: str, paths: list[str], timeout: int = READ_TIMEOUT_SECONDS
+) -> dict[str, str]:
+    """Read files out of the artifact, not out of the upstream repository.
+
+    These images are not a plain checkout. BugSwarm patches a repository so
+    the build reproduces, so the file at the same commit on GitHub can differ
+    from the file the patch will be applied to. Handing the model the GitHub
+    copy made it write patches whose context matched nothing, and two cases
+    that had been fixed cleanly stopped applying at all.
+    """
+    if not paths:
+        return {}
+    script = read_script(paths).replace(REPO_PLACEHOLDER, repo_name)
+    completed = subprocess.run(
+        [
+            DOCKER,
+            "run",
+            "--rm",
+            f"--memory={CONTAINER_MEMORY}",
+            f"--cpus={CONTAINER_CPUS}",
+            f"{IMAGE_PREFIX}:{tag}",
+            "bash",
+            "-lc",
+            script,
+        ],
+        capture_output=True,
+        timeout=timeout,
+        check=False,
+    )
+    return parse_files(completed.stdout.decode("utf-8", errors="replace"))
 
 
 def parse_result(returncode: int, output: str) -> ReproductionResult:

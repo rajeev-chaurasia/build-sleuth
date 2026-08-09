@@ -10,18 +10,17 @@ from pathlib import Path
 
 from evals.fix_funnel import (
     IMAGE_TAG_PREFIX,
-    UNKNOWN_SHA,
     aggregate,
     executable_cases,
     image_tag,
     read_attempts,
-    read_files_at_commit,
+    read_files_for,
 )
 from evals.verifier_control import summarize
 
-from buildsleuth.config import Settings
 from buildsleuth.dataset.loader import load_cases
 from buildsleuth.pipeline.verify import VerificationLevel
+from buildsleuth.sandbox.bugswarm_runner import FILE_MARKER, parse_files, read_script
 
 DATASET = Path("dataset")
 
@@ -148,28 +147,28 @@ class TestControlSummary:
 
 class TestFilesReachTheModel:
     """The funnel once passed an empty mapping, so the model was asked to
-    write a unified diff for a file it had never seen. Its context lines
-    could only match by luck, and most patches were rejected at apply time
-    for a reason that was the harness rather than the model."""
+    write a unified diff for a file it had never seen, and its context lines
+    could only match by luck. Fetching the upstream copy at the same commit
+    was no better: these images are patched for reproducibility, so upstream
+    and artifact disagree."""
 
-    def test_no_paths_means_no_fetch(self) -> None:
+    def test_no_paths_means_no_container(self) -> None:
         case = executable_cases(load_cases(DATASET))[0]
-        assert read_files_at_commit(case, [], Settings()) == {}
+        assert read_files_for(case, []) == {}
 
-    def test_an_unknown_commit_is_not_guessed_at(self) -> None:
-        # Reading the default branch instead would hand the model code that
-        # may already contain the fix.
-        case = executable_cases(load_cases(DATASET))[0].model_copy(
-            update={
-                "inputs": executable_cases(load_cases(DATASET))[0].inputs.model_copy(
-                    update={"head_sha": UNKNOWN_SHA}
-                )
-            }
-        )
-        assert read_files_at_commit(case, ["a.py"], Settings()) == {}
+    def test_files_are_split_on_the_marker(self) -> None:
+        output = f"{FILE_MARKER}a.py\nline one\n{FILE_MARKER}b.py\nline two\n"
+        assert parse_files(output) == {"a.py": "line one\n", "b.py": "line two\n"}
 
-    def test_every_executable_case_records_a_real_commit(self) -> None:
-        # Otherwise the fetch is skipped and the model patches blind again.
-        for case in executable_cases(load_cases(DATASET)):
-            assert case.inputs.head_sha != UNKNOWN_SHA, case.case_id
-            assert len(case.inputs.head_sha) >= 7
+    def test_a_missing_file_is_left_out_rather_than_reported_empty(self) -> None:
+        # cat prints nothing for a path that is not there, and an empty
+        # string would read as a file whose contents are blank.
+        assert parse_files(f"{FILE_MARKER}gone.py\n") == {}
+
+    def test_reading_preserves_line_endings(self) -> None:
+        # A CRLF file handed to the model as LF produces a patch that cannot
+        # apply to it.
+        assert parse_files(f"{FILE_MARKER}a.py\r\nx = 1\r\n")["a.py"] == "x = 1\r\n"
+
+    def test_the_read_happens_inside_the_checkout(self) -> None:
+        assert 'cd "$FAILED/$PROJ"' in read_script(["a.py"])

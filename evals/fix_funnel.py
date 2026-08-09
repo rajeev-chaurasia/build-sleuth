@@ -19,7 +19,7 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 
-from buildsleuth.config import Settings, load_settings
+from buildsleuth.config import load_settings
 from buildsleuth.dataset.loader import case_dir_for, load_cases, read_case_log
 from buildsleuth.llm.client import OpenAICompatClient
 from buildsleuth.llm.registry import Provider, get_model_spec
@@ -28,9 +28,7 @@ from buildsleuth.pipeline.fix import SkipReason, propose_fix
 from buildsleuth.pipeline.localize import localize, ranked_paths
 from buildsleuth.pipeline.triage import TriageContext, classify
 from buildsleuth.pipeline.verify import VerificationLevel
-from buildsleuth.providers.github.client import GitHubClient
-from buildsleuth.providers.github.provider import GitHubProvider
-from buildsleuth.sandbox.bugswarm_runner import verify_in_image
+from buildsleuth.sandbox.bugswarm_runner import read_files_in_image, verify_in_image
 from buildsleuth.tools.evidence import Evidence
 from evals.scorers.fix_quality import FixAttempt, fix_metrics, render_funnel
 
@@ -75,39 +73,22 @@ def image_tag(case: TriageCase) -> str:
     return (image or "").removeprefix(IMAGE_TAG_PREFIX)
 
 
-def read_files_at_commit(case: TriageCase, paths: list[str], settings: Settings) -> dict[str, str]:
-    """Fetch the files the model wants to edit, as they were when it broke.
+def read_files_for(case: TriageCase, paths: list[str]) -> dict[str, str]:
+    """The files the model wants to edit, taken from the artifact itself.
 
-    Without this the model is asked to write a unified diff for a file it has
-    never seen, and its context lines can only match by luck. That measures
-    whether it can guess the surrounding source, not whether it can fix the
-    bug, and it is why most patches were being rejected at apply time.
+    Not from GitHub at the same commit. BugSwarm patches a repository so its
+    build reproduces, so the upstream file can differ from the one the patch
+    will be applied to. Fetching the upstream copy made the model write
+    patches whose context matched nothing, and two cases that had been fixed
+    cleanly stopped applying at all.
 
-    Over HTTP rather than out of the image, because starting a container per
-    case before knowing there is a patch worth running costs minutes each.
+    Without this the model is handed no source and asked to write a unified
+    diff anyway, which measures whether it can guess the surrounding lines.
     """
-    if not paths or case.inputs.head_sha == UNKNOWN_SHA:
-        return {}
-
-    token = settings.github_token.get_secret_value() if settings.github_token else None
-    client = GitHubClient(token=token)
-    try:
-        provider = GitHubProvider(client)
-        found = {
-            path: provider.get_file(case.inputs.repo, path, case.inputs.head_sha) for path in paths
-        }
-    finally:
-        client.close()
-    return {path: body for path, body in found.items() if body is not None}
+    return read_files_in_image(image_tag(case), case.inputs.repo, paths)
 
 
-def attempt_one(
-    client: OpenAICompatClient,
-    model: str,
-    case: TriageCase,
-    log: str,
-    settings: Settings,
-) -> FixAttempt:
+def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: str) -> FixAttempt:
     """Run the pipeline for one case and record how far the patch got."""
     evidence = Evidence(log_text=log)
     triaged = classify(
@@ -118,7 +99,7 @@ def attempt_one(
     located = localize(client, model, verdict, evidence, repo=case.inputs.repo)
     paths = ranked_paths(located.value) if located is not None else []
 
-    contents = read_files_at_commit(case, paths, settings)
+    contents = read_files_for(case, paths)
     proposed = propose_fix(
         client, model, verdict, evidence, list(contents), contents, repo=case.inputs.repo
     )
@@ -247,7 +228,7 @@ def main() -> int:
     for case in runnable:
         log = read_case_log(case_dir_for(args.dataset, case), case)
         try:
-            attempt = attempt_one(client, args.model, case, log, settings)
+            attempt = attempt_one(client, args.model, case, log)
         except Exception as error:
             # A case that blew up is a case with no result, not a pass.
             attempt = FixAttempt(
@@ -287,7 +268,9 @@ def main() -> int:
         encoding="utf-8",
     )
     print(f"\nwrote {out}")
-    return 0 if report.n_attempted or not runnable else 1
+    # A model that declines to patch is a recorded outcome, not a failed
+    # run. Returning non-zero there failed two jobs that had worked.
+    return 0
 
 
 if __name__ == "__main__":
