@@ -1,68 +1,95 @@
 {
-  "generated_at": "2026-08-09T13:18:17.113546+00:00",
+  "generated_at": "2026-08-09T14:27:34.990095+00:00",
   "report": {
     "n_cases": 9,
     "n_attempted": 9,
     "n_skipped": 0,
-    "applies": 2,
-    "lints": 2,
-    "failing_test_passes": 2,
-    "nothing_else_broke": 2
+    "applies": 1,
+    "lints": 0,
+    "failing_test_passes": 0,
+    "nothing_else_broke": 0
   },
   "attempts": [
     {
       "case_id": "bs-0010",
       "attempted": true,
       "level": "NOTHING",
-      "skip_reason": ""
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "error: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\nerror: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\nerror: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\nerror: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\npatching file verktyg/requests.py\nHunk #1 FAILED at 235.\n1 out of 1 hunk FAILED -- saving rejects to file verktyg/requests.py.rej",
+      "localized": true
     },
     {
       "case_id": "bs-0011",
       "attempted": true,
       "level": "NOTHING",
-      "skip_reason": ""
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "fatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\npatch: **** Only garbage was found in the patch input.",
+      "localized": false
     },
     {
       "case_id": "bs-0012",
       "attempted": true,
-      "level": "NOTHING_ELSE_BROKE",
-      "skip_reason": ""
+      "level": "NOTHING",
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "fatal: corrupt patch at line 5\nfatal: corrupt patch at line 5\nfatal: corrupt patch at line 5\nfatal: corrupt patch at line 5\npatching file findspam.py\npatch: **** unexpected end of file in patch",
+      "localized": true
     },
     {
       "case_id": "bs-0015",
       "attempted": true,
       "level": "NOTHING",
-      "skip_reason": ""
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "fatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\npatch: **** Only garbage was found in the patch input.",
+      "localized": false
     },
     {
       "case_id": "bs-0016",
       "attempted": true,
-      "level": "NOTHING",
-      "skip_reason": ""
+      "level": "APPLIES",
+      "skip_reason": "",
+      "detail": "patch applies but the build still fails",
+      "evidence": "new archive\u001b[0m\n/home/travis/.casher/bin/casher:213:in `cache_archive_name': undefined method `[]' for nil:NilClass (NoMethodError)\n\tfrom /home/travis/.casher/bin/casher:143:in `push'\n\tfrom /home/travis/.casher/bin/casher:53:in `block in run'\n\tfrom /home/travis/.rvm/rubies/ruby-1.9.3-p551/lib/ruby/1.9.1/timeout.rb:69:in `timeout'\n\tfrom /home/travis/.casher/bin/casher:53:in `run'\n\tfrom /home/travis/.casher/bin/casher:263:in `<main>'\n\ntravis_time:end:0326c8de:start=1786285253220816661,finish=1786285254630066970,duration=1409250309\n\u001b[0Ktravis_fold:end:cache.2\n\u001b[0K\nDone. Your build exited with 1.\n",
+      "localized": true
     },
     {
       "case_id": "bs-0017",
       "attempted": true,
       "level": "NOTHING",
-      "skip_reason": ""
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "fatal: corrupt patch at line 11\nfatal: corrupt patch at line 11\nfatal: corrupt patch at line 11\nfatal: corrupt patch at line 11\npatching file gluon/validators.py\nHunk #1 FAILED at 2847.\n1 out of 1 hunk FAILED -- saving rejects to file gluon/validators.py.rej",
+      "localized": true
     },
     {
       "case_id": "bs-0018",
       "attempted": true,
       "level": "NOTHING",
-      "skip_reason": ""
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "error: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\nerror: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\nerror: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\nerror: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\npatching file src/appier/typesf.py\nHunk #1 FAILED at 355.\nHunk #2 FAILED at 405.\nHunk #3 FAILED at 414.\n3 out of 3 hunks FAILED -- saving rejects to file src/appier/typesf.py.rej",
+      "localized": true
     },
     {
       "case_id": "bs-0020",
       "attempted": true,
-      "level": "NOTHING_ELSE_BROKE",
-      "skip_reason": ""
+      "level": "NOTHING",
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "error: corrupt patch at line 11\nerror: corrupt patch at line 11\nerror: corrupt patch at line 11\nerror: corrupt patch at line 11\npatching file nikola/plugin_categories.py\nHunk #1 FAILED at 415.\n1 out of 1 hunk FAILED -- saving rejects to file nikola/plugin_categories.py.rej",
+      "localized": false
     },
     {
       "case_id": "bs-0021",
       "attempted": true,
       "level": "NOTHING",
-      "skip_reason": ""
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "error: corrupt patch at line 9\nerror: corrupt patch at line 9\nerror: corrupt patch at line 9\nerror: corrupt patch at line 9\npatching file numpy/core/arrayprint.py\nHunk #1 FAILED at 781.\n1 out of 1 hunk FAILED -- saving rejects to file numpy/core/arrayprint.py.rej",
+      "localized": true
     }
   ]
 }

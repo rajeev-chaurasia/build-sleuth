@@ -50,7 +50,9 @@ Each of these was a real defect found by running the thing rather than reasoning
 
 **Ground truth that looked fine and described a virtualenv.** The artifact extractor took the first directory in the image, which is the build cache, so three imported cases arrived with a "maintainer fix" that was a 479KB diff of a rebuilt Python environment. Later it resolved the owner directory instead of the checkout, and every culprit path came out as `numpy/numpy/core/arrayprint.py`, which scores a correct answer as a miss. Both passed silently. Resolving to the cache is now an error rather than a case.
 
-**Five benchmark cases that cannot measure anything.** Running each maintainer fix through the verifier before trusting it showed that five of thirteen do not pass their own fix. Had they stayed in, the reported fix rate would have been 7.7% instead of 12.5%, and the difference would have been the harness, not the model.
+**Benchmark cases that cannot measure anything.** Running each maintainer fix through the verifier before trusting it showed that four of thirteen do not pass their own fix. Had they stayed in, the reported rate would have been computed over cases where no patch could ever have succeeded.
+
+**A fix rate that was measuring my own harness.** The funnel's first numbers came from a fix stage handed an empty set of file contents, so the model was writing a unified diff for source it had never read and its context lines could only match by accident. Supplying the file upstream at the same commit was no better, because these artifacts are patched for reproducibility and upstream disagrees with the image. Reading the file out of the artifact itself is the version now reported, and it scores worse than either: the earlier apply rate was luck, not capability.
 
 **A benchmark my own mining had skewed.** Filtering to pull request events produced 42 cases with zero infrastructure failures, where guessing `code_change` scored 0.857. Re-mining across all event types found the missing class.
 
@@ -65,26 +67,37 @@ run url -> ingest -> condense -> classify -> localize -> fix -> policy -> verify
 
 ### The fix funnel
 
-Measured on the eight executable cases the control below found sound, with `gemini-3.1-flash-lite`.
+Measured on the nine executable cases the control below found sound, with `gemini-3.1-flash-lite`. The model is shown the file it asked to edit, read out of the artifact itself.
 
 | stage | cases | share of attempted |
 | --- | --- | --- |
-| patch attempted | 8 | 1.00 |
-| applies cleanly | 4 | 0.50 |
-| failing test passes | 1 | 0.125 |
-| nothing else broke | 1 | 0.125 |
+| patch attempted | 9 | 1.00 |
+| applies cleanly | 1 | 0.11 |
+| failing test passes | 0 | 0.00 |
+| nothing else broke | 0 | 0.00 |
 
-**Half the patches do not survive `git apply`.** That is the single most useful number here, and no LLM judge would ever produce it: a judge reading those four patches would have seen confident prose and plausible-looking diffs. One patch in eight actually fixed the build.
+**Eight of nine patches are rejected before anything is run.** Splitting that by cause is the useful part, and it needs the localization result alongside the patch:
 
-Reporting one rate would have hidden this. "12.5% fix rate" reads as a weak model. The funnel says something more specific and more actionable: the model is not mostly wrong about the bug, it is mostly unable to emit a valid diff, and those need completely different fixes.
+| why it failed | cases |
+| --- | --- |
+| patched a file that was not the culprit | 3 |
+| malformed diff, `corrupt patch at line N` | 3 |
+| well formed, context did not match the file | 2 |
+| applied, did not fix the failure | 1 |
+
+Localization was on target for 6 of 9. So the model is usually looking at the right file, has been handed that file's exact contents, and still emits a diff git will not take. Three of those are not near-misses: the hunk header disagrees with the hunk body, which is a formatting failure rather than a reasoning one.
+
+No LLM judge produces this table. A judge reading those eight patches would have seen a correct explanation and a plausible-looking diff, and the three malformed ones would have scored well. `git apply` disagreed with all of them.
 
 ### Checking the checker
 
 A funnel of near-zeros has two explanations, a model that writes bad patches or a verifier that cannot recognise a good one, and they need opposite responses. So every case is first verified twice with no model involved: once with the maintainer's own fix, which must reach the top rung, and once with that fix deliberately corrupted, which must not.
 
-**Eight of thirteen executable cases pass that control.** The other five are excluded from the funnel rather than scored: three where the reference fix applies but the build still fails, two where it does not apply at all. Counting them would have blamed the model for a broken case, and would have quietly turned a 12.5% fix rate into 7.7%.
+**Nine of thirteen executable cases pass that control.** The other four are excluded from the funnel rather than scored: three fail at dependency install or package download inside the image, one fails two of its own tests with the maintainer's fix applied. Counting them would have blamed the model for a case the harness cannot run.
 
 That exclusion is published, in [`results/verifier-control.json`](results/verifier-control.json), rather than being a quiet narrowing of the denominator.
+
+The control also earns its keep by catching the harness. A case whose reference fix stopped applying was not a bad artifact: the repository is CRLF throughout, and four separate layers were stripping the carriage returns out of its patch, one of them `.gitattributes` normalising the file on commit. It came back clean once they were preserved.
 
 Ingest snapshots a run so triage is offline and eval cases stay replayable after GitHub deletes the logs at ninety days. Condensation reduces real logs, which run from 39 to 36,000 lines here, to a few kilobytes around the error. Localization is skipped entirely for flakes and infrastructure failures, which have no culprit file; a guess there sends somebody to read a file that was never at fault.
 
@@ -138,7 +151,8 @@ The annotators also refused to judge whether a failure followed the diff on case
 ## Caveats, kept current
 
 - 61 cases, target is 80. Small enough that a handful of cases moves a number.
-- **The fix funnel rests on eight cases.** Eight is enough to say half the patches do not apply, which is a large effect. It is not enough to rank two models on fix quality, and the 12.5% figure carries an interval wide enough to be worth stating plainly rather than quoting as a headline.
+- **The fix funnel rests on nine cases, and single runs move.** Nine is enough to say most patches are rejected before execution, which is a large and repeatable effect across every configuration tried. It is not enough to rank models on fix quality, and individual cases flip between runs. Treat the funnel shape as the result and the exact counts as noisy.
+- **Zero fixes is a real number, not a rounding of one.** The one case that passed in an earlier run did so while the model was patching a file it had not read.
 - Class balance is skewed: 38 `code_change`, 4 flaky, 3 infrastructure, 3 pipeline config. That is roughly what mining public repositories yields, and it is why macro F1 rather than accuracy is the headline.
 - **The dataset has outgrown the free tier.** A full run is about ninety model calls and the daily quota ran out mid-run. Full-suite runs need batching, a paid key, or a local model.
 - **The model choice is not settled on quality.** `gemini-3.1-flash-lite` is the default because it completed a run, not because it won a fair comparison. `gemini-3.5-flash` looked stronger on the cases it finished before running out of quota, which is exactly the partial number this harness exists to distrust.
