@@ -13,8 +13,10 @@ These rules apply to every session and every subagent working in this repo.
 - Before declaring any work done, run the gates in this order, because the formatter can produce lines the linter rejects and running them the other way round lets that reach CI:
 
 ```
-uv run ruff format . && uv run ruff check . && uv run mypy && uv run pytest
+uv run ruff format . && uv run ruff check . && uv run mypy && uv run pytest --cov
 ```
+
+- `--cov` matters: CI runs it and fails under 90 percent. Running plain `uv run pytest` passes locally while CI fails, which has already happened once after new modules landed with tests that covered their logic but not their entry points.
 
 ## Architecture invariants
 
