@@ -77,3 +77,20 @@ class TestToVerification:
     def test_keeps_a_tail_of_the_output_for_diagnosis(self) -> None:
         result = to_verification(ReproductionResult(True, False, "x" * 5000))
         assert 0 < len(result.stdout_tail) <= 800
+
+
+class TestApplyOutput:
+    def test_keeps_what_the_apply_step_said(self) -> None:
+        output = f"noise\nerror: patch failed: src/a.py:12\n{APPLY_MARKER}1\nlater build noise\n"
+        assert "patch failed: src/a.py:12" in parse_result(91, output).apply_output
+
+    def test_a_rejection_reports_the_apply_error_not_the_build_tail(self) -> None:
+        # A rerun prints thousands of lines afterwards and the reason a patch
+        # was rejected is four words near the start.
+        output = f"error: corrupt patch at line 9\n{APPLY_MARKER}1\n" + "build noise\n" * 500
+        result = to_verification(parse_result(91, output))
+        assert "corrupt patch at line 9" in result.stdout_tail
+        assert "build noise" not in result.stdout_tail
+
+    def test_excludes_the_marker_itself(self) -> None:
+        assert APPLY_MARKER not in parse_result(0, f"a\n{APPLY_MARKER}0\n").apply_output

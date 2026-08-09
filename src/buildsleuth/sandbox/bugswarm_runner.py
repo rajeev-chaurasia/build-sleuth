@@ -30,6 +30,8 @@ PATCH_PATH = "/tmp/buildsleuth.patch"
 DEFAULT_TIMEOUT_SECONDS = 1800
 OUTPUT_TAIL_CHARS = 800
 APPLY_MARKER = "=====BUILDSLEUTH_APPLIED====="
+# Enough for a rejected-hunk report, which is what git prints on failure.
+APPLY_OUTPUT_LINES = 20
 
 
 @dataclass(frozen=True)
@@ -39,6 +41,10 @@ class ReproductionResult:
     applied: bool
     build_passed: bool
     output: str
+    # What the apply step itself said. Kept apart from the rest because a
+    # rerun prints thousands of lines afterwards and the reason a patch was
+    # rejected is four words near the start.
+    apply_output: str = ""
 
 
 def verification_script(patch: str, repo_name: str) -> str:
@@ -79,13 +85,22 @@ def parse_result(returncode: int, output: str) -> ReproductionResult:
     model. The marker says whether the patch itself went in.
     """
     applied = False
-    for line in output.splitlines():
+    lines = output.splitlines()
+    marker_at = -1
+    for index, line in enumerate(lines):
         if line.startswith(APPLY_MARKER):
             applied = line[len(APPLY_MARKER) :].strip() == "0"
+            marker_at = index
+
+    apply_output = ""
+    if marker_at > 0:
+        apply_output = "\n".join(lines[max(0, marker_at - APPLY_OUTPUT_LINES) : marker_at])
+
     return ReproductionResult(
         applied=applied,
         build_passed=applied and returncode == 0,
         output=output,
+        apply_output=apply_output.strip(),
     )
 
 
@@ -93,7 +108,13 @@ def to_verification(result: ReproductionResult) -> VerificationResult:
     """Map a rerun onto the hierarchy the rest of the eval reports."""
     tail = result.output[-OUTPUT_TAIL_CHARS:]
     if not result.applied:
-        return VerificationResult(VerificationLevel.NOTHING, "patch does not apply", tail)
+        # The apply output rather than the tail: a rerun prints thousands of
+        # lines afterwards and buries the four words that say why.
+        return VerificationResult(
+            VerificationLevel.NOTHING,
+            "patch does not apply",
+            result.apply_output[-OUTPUT_TAIL_CHARS:],
+        )
     if not result.build_passed:
         # APPLIES rather than LINTS: this path reruns the job and never lints,
         # so claiming the patch linted would report a check that never ran.
@@ -130,5 +151,8 @@ def verify_in_image(
         timeout=timeout,
         check=False,
     )
-    output = completed.stdout + completed.stderr
+    # stderr first, because docker writes image pull progress there and the
+    # tail is what gets kept. Putting it last buried every real error under a
+    # list of downloaded layers.
+    output = completed.stderr + completed.stdout
     return to_verification(parse_result(completed.returncode, output))
