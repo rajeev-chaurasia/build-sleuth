@@ -14,21 +14,21 @@ The first failure it ever triaged was not the one staged for it. GitHub Actions 
 
 ## Scorecard
 
-61 cases: 48 failures mined and labelled from ten public repositories, plus 13 imported as executable artifacts. The table below is classification, scored on the 48; the fix funnel further down is scored on the executable subset. Every model runs through the same code path.
+71 cases: 48 failures mined and labelled from ten public repositories, plus 23 imported as executable artifacts. The table below is classification; the fix funnel further down is scored on the executable subset. Every model runs through the same code path, over the whole dataset.
 
 | model | coverage | accuracy | macro F1 | cost weighted error | subcategory | hit@1 | usd per triage |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| gemini-3.1-flash-lite | 37/48 | 0.865 | **0.761** | 0.230 | 0.730 | 0.500 | 0.0006 |
-| majority baseline | 48/48 | 0.792 | 0.221 | 0.250 | 0.271 | n/a | 0.0000 |
-| regex baseline | 48/48 | 0.714 | 0.208 | 0.619 | 0.190 | n/a | 0.0000 |
+| gemini-3.1-flash-lite | 71/71 | 0.915 | **0.771** | 0.141 | 0.648 | 0.509 | 0.0008 |
+| majority baseline | 71/71 | 0.859 | 0.231 | 0.169 | 0.507 | n/a | 0.0000 |
+| regex baseline | 71/71 | 0.775 | 0.218 | 0.423 | 0.338 | n/a | 0.0000 |
 
-**Read the coverage column first.** The model answered 37 of 48 before the day's free-tier quota ran out, so its row is not directly comparable to the baselines. Metrics computed over the cases a model managed always flatter it. Cost is at list price; the runs were free-tier and billed nothing.
+Every row is a complete pass, so they are directly comparable. Cost is at list price; the run was free-tier and billed nothing.
 
 That table is the argument for the whole project:
 
-- **Accuracy barely separates a working model from one that thinks nothing.** The majority baseline answers `code_change` unconditionally and scores 0.792, because that is what 38 of 48 cases are. On this data accuracy mostly measures the class distribution.
-- **Macro F1 separates them decisively**, 0.761 against 0.221, by refusing to let the majority class carry the score.
-- **Coverage decides whether any of it counts.** A model that answers only the easy cases would top every other column.
+- **Accuracy barely separates a working model from one that thinks nothing.** The majority baseline answers `code_change` unconditionally and scores 0.859, because that is what most of these cases are. On this data accuracy mostly measures the class distribution.
+- **Macro F1 separates them decisively**, 0.771 against 0.231, by refusing to let the majority class carry the score. The gap between the two columns is the point: 6 accuracy points and 54 macro F1 points describe the same pair of models.
+- **Coverage decides whether any of it counts.** Getting these three rows to a full pass took finding a bug that had been quietly discarding a fifth of the dataset, described below.
 
 One metric would have told you the wrong story three different ways.
 
@@ -43,6 +43,12 @@ Each of these was a real defect found by running the thing rather than reasoning
 **A model written off for a bug in the harness.** That 550B first scored 3 of 6 and was reported unrankable. It is a reasoning model: its hidden thinking tokens are billed against the output budget, and a budget sized for a short verdict left it nothing to answer with. One number changed, and it went from unrankable to best in class.
 
 **Retries that burned the quota they were waiting on.** A 429 can mean "slow down" or "your allowance is gone". Retrying the second kind spent three more requests against the exhausted quota, turning one failed case into four wasted calls.
+
+**A fifth of the benchmark discarded by the fix for the line above.** Telling those two 429s apart is harder than it looks: Gemini returns the same "exceeded your current quota" wording for a per-minute limit as for a spent day, and only the quota id distinguishes them. Both were treated as fatal, so a limit that clears in twenty six seconds was throwing the case away.
+
+It cost 13 of 61 cases on every full run, and the coverage caveat that sat on this scorecard for weeks was reporting it. The tell was that the missing cases were **identical across runs**: a genuinely spent daily quota cannot produce the same boundary twice, and the cases after the gap answered fine. Deterministic request pacing, deterministic loss. Coverage went from 48/61 to 71/71.
+
+The lesson generalises past this bug: a metric that looks like a limitation of the world was a defect in the harness, and only reporting coverage as a first-class number made it visible at all.
 
 **Diffs that disagreed with their own logs.** A pull request diff follows the branch tip, so curated cases were paired with code that did not exist when the log was written. One contained the very fix the log complained was missing.
 
@@ -169,12 +175,12 @@ The annotators also refused to judge whether a failure followed the diff on case
 
 ## Caveats, kept current
 
-- 61 cases, target is 80. Small enough that a handful of cases moves a number.
+- 71 cases, target is 80. Small enough that a handful of cases moves a number.
 - **The fix funnel rests on nine cases, and single runs move.** Nine is enough to say most patches are rejected before execution, which is a large and repeatable effect across every configuration tried. It is not enough to rank models on fix quality, and individual cases flip between runs. Treat the funnel shape as the result and the exact counts as noisy.
 - **One fix out of nine is an anecdote with error bars, not a rate.** It is reported because the funnel shape around it is informative, not because the number is stable.
 - **The patch repair is deterministic and narrow.** It recomputes counts and restores missing markers. It cannot rescue a patch whose context does not match the file, which is now the largest remaining failure at four of nine.
 - Class balance is skewed: 38 `code_change`, 4 flaky, 3 infrastructure, 3 pipeline config. That is roughly what mining public repositories yields, and it is why macro F1 rather than accuracy is the headline.
-- **The dataset has outgrown the free tier.** A full run is about ninety model calls and the daily quota ran out mid-run. Full-suite runs need batching, a paid key, or a local model.
+- A full run is about 140 model calls and takes roughly twelve minutes, most of it waiting out per-minute rate limits. That is the free tier working as intended, not a failure.
 - **The model choice is not settled on quality.** `gemini-3.1-flash-lite` is the default because it completed a run, not because it won a fair comparison. `gemini-3.5-flash` looked stronger on the cases it finished before running out of quota, which is exactly the partial number this harness exists to distrust.
 - Regression tolerances are deliberately loose, because measured run-to-run noise is larger than the drift worth catching. They tighten when the dataset does.
 - **Five executable cases are excluded because their own reference fix does not pass the verifier.** Two of those do not even apply, which points at the extraction rather than at the cases. That is unfinished work, and until it is finished the measurable subset is smaller than the importable one.
