@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-08-09T10:54:57.262823+00:00",
+  "report": {
+    "n_cases": 8,
+    "n_attempted": 8,
+    "n_skipped": 0,
+    "applies": 4,
+    "lints": 1,
+    "failing_test_passes": 1,
+    "nothing_else_broke": 1
+  },
+  "attempts": [
+    {
+      "case_id": "bs-0010",
+      "attempted": true,
+      "level": "APPLIES",
+      "skip_reason": ""
+    },
+    {
+      "case_id": "bs-0011",
+      "attempted": true,
+      "level": "APPLIES",
+      "skip_reason": ""
+    },
+    {
+      "case_id": "bs-0012",
+      "attempted": true,
+      "level": "NOTHING",
+      "skip_reason": ""
+    },
+    {
+      "case_id": "bs-0015",
+      "attempted": true,
+      "level": "APPLIES",
+      "skip_reason": ""
+    },
+    {
+      "case_id": "bs-0016",
+      "attempted": true,
+      "level": "NOTHING",
+      "skip_reason": ""
+    },
+    {
+      "case_id": "bs-0017",
+      "attempted": true,
+      "level": "NOTHING",
+      "skip_reason": ""
+    },
+    {
+      "case_id": "bs-0020",
+      "attempted": true,
+      "level": "NOTHING_ELSE_BROKE",
+      "skip_reason": ""
+    },
+    {
+      "case_id": "bs-0021",
+      "attempted": true,
+      "level": "NOTHING",
+      "skip_reason": ""
+    }
+  ],
+  "model": "gemini-3.1-flash-lite",
+  "note": "Measured on the eight executable cases the verifier control found sound. The other five are excluded, not scored: see results/verifier-control.json."
+}

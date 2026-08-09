@@ -14,7 +14,7 @@ The first failure it ever triaged was not the one staged for it. GitHub Actions 
 
 ## Scorecard
 
-48 curated failures from ten public repositories. Every model scored through the same code path.
+61 cases: 48 failures mined and labelled from ten public repositories, plus 13 imported as executable artifacts. The table below is classification, scored on the 48; the fix funnel further down is scored on the executable subset. Every model runs through the same code path.
 
 | model | coverage | accuracy | macro F1 | cost weighted error | subcategory | hit@1 | usd per triage |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -48,6 +48,10 @@ Each of these was a real defect found by running the thing rather than reasoning
 
 **Correct patches rejected as corrupt.** A model named exactly the right change and git refused it, because the trailing newline it requires was missing. Without normalization most correct patches would be discarded as wrong.
 
+**Ground truth that looked fine and described a virtualenv.** The artifact extractor took the first directory in the image, which is the build cache, so three imported cases arrived with a "maintainer fix" that was a 479KB diff of a rebuilt Python environment. Later it resolved the owner directory instead of the checkout, and every culprit path came out as `numpy/numpy/core/arrayprint.py`, which scores a correct answer as a miss. Both passed silently. Resolving to the cache is now an error rather than a case.
+
+**Five benchmark cases that cannot measure anything.** Running each maintainer fix through the verifier before trusting it showed that five of thirteen do not pass their own fix. Had they stayed in, the reported fix rate would have been 7.7% instead of 12.5%, and the difference would have been the harness, not the model.
+
 **A benchmark my own mining had skewed.** Filtering to pull request events produced 42 cases with zero infrastructure failures, where guessing `code_change` scored 0.857. Re-mining across all event types found the missing class.
 
 ## How it works
@@ -57,13 +61,30 @@ run url -> ingest -> condense -> classify -> localize -> fix -> policy -> verify
            [det]     [det]       [model]     [model]     [model] [det]    [det]     [det, guarded]
 ```
 
-**What `verify` means today, precisely.** It has four rungs: the patch applies, it lints, the failing test passes, nothing else broke. The container runner executes all four and has been run end to end against one real reproducible case, this repository at a commit with a known bug. The other 48 benchmark cases are marked `verification: none`, because checking whether a patch works needs the repository checked out at the failing commit and the benchmark stores logs and diffs.
+**What `verify` means today, precisely.** It has four rungs: the patch applies, it lints, the failing test passes, nothing else broke. For the executable cases the whole original job is rerun, so a pass means the failure stopped and nothing else in the suite broke, with no judgement call left. The 48 mined cases are marked `verification: none`, because checking whether a patch works needs the repository at the failing commit and those store logs and diffs.
 
-**The one case that has been executed is worth reporting honestly, because the patch failed.** The model diagnosed the bug correctly, in words: the timestamp pattern was anchored to the start of the string rather than each line. Its diff then claimed seven lines in the hunk header and supplied five, so git rejected it as corrupt and nothing changed. Right diagnosis, malformed patch.
+### The fix funnel
 
-That is the argument for execution-based verification in one example. An LLM judge reading that patch would have seen a correct explanation and a plausible-looking diff and passed it. `git apply` did not.
+Measured on the eight executable cases the control below found sound, with `gemini-3.1-flash-lite`.
 
-So **fix quality has an N of one and a pass rate of zero**. Classification and localization have real numbers; the fix stage does not yet. Building more reproducible cases, by importing BugSwarm artifacts or pinning a few repositories, is the next real piece of work.
+| stage | cases | share of attempted |
+| --- | --- | --- |
+| patch attempted | 8 | 1.00 |
+| applies cleanly | 4 | 0.50 |
+| failing test passes | 1 | 0.125 |
+| nothing else broke | 1 | 0.125 |
+
+**Half the patches do not survive `git apply`.** That is the single most useful number here, and no LLM judge would ever produce it: a judge reading those four patches would have seen confident prose and plausible-looking diffs. One patch in eight actually fixed the build.
+
+Reporting one rate would have hidden this. "12.5% fix rate" reads as a weak model. The funnel says something more specific and more actionable: the model is not mostly wrong about the bug, it is mostly unable to emit a valid diff, and those need completely different fixes.
+
+### Checking the checker
+
+A funnel of near-zeros has two explanations, a model that writes bad patches or a verifier that cannot recognise a good one, and they need opposite responses. So every case is first verified twice with no model involved: once with the maintainer's own fix, which must reach the top rung, and once with that fix deliberately corrupted, which must not.
+
+**Eight of thirteen executable cases pass that control.** The other five are excluded from the funnel rather than scored: three where the reference fix applies but the build still fails, two where it does not apply at all. Counting them would have blamed the model for a broken case, and would have quietly turned a 12.5% fix rate into 7.7%.
+
+That exclusion is published, in [`results/verifier-control.json`](results/verifier-control.json), rather than being a quiet narrowing of the denominator.
 
 Ingest snapshots a run so triage is offline and eval cases stay replayable after GitHub deletes the logs at ninety days. Condensation reduces real logs, which run from 39 to 36,000 lines here, to a few kilobytes around the error. Localization is skipped entirely for flakes and infrastructure failures, which have no culprit file; a guess there sends somebody to read a file that was never at fault.
 
@@ -79,6 +100,14 @@ uv run python -m evals.run_eval                                # regex baseline,
 uv run python -m evals.run_eval --model gemini-3.1-flash-lite  # needs a free Gemini key
 uv run python -m evals.compare_models --models a,b,c           # every axis at once
 uv run python -m evals.trials --model M --trials 3             # measure the run to run noise
+uv run python -m evals.verifier_control                        # can these cases measure a fix?
+uv run python -m evals.fix_funnel --model M                    # how far do the patches get?
+```
+
+The last two start containers holding a whole CI environment, so they run on disposable machines rather than a laptop: `gh workflow run fix-funnel.yml`. Importing new executable cases works the same way, one artifact per runner:
+
+```bash
+uv run python scripts/select_bugswarm.py --limit 12
 ```
 
 Credentials go in `.env`, which is gitignored:
@@ -108,12 +137,14 @@ The annotators also refused to judge whether a failure followed the diff on case
 
 ## Caveats, kept current
 
-- 48 cases, target is 80. Small enough that a handful of cases moves a number.
+- 61 cases, target is 80. Small enough that a handful of cases moves a number.
+- **The fix funnel rests on eight cases.** Eight is enough to say half the patches do not apply, which is a large effect. It is not enough to rank two models on fix quality, and the 12.5% figure carries an interval wide enough to be worth stating plainly rather than quoting as a headline.
 - Class balance is skewed: 38 `code_change`, 4 flaky, 3 infrastructure, 3 pipeline config. That is roughly what mining public repositories yields, and it is why macro F1 rather than accuracy is the headline.
 - **The dataset has outgrown the free tier.** A full run is about ninety model calls and the daily quota ran out mid-run. Full-suite runs need batching, a paid key, or a local model.
 - **The model choice is not settled on quality.** `gemini-3.1-flash-lite` is the default because it completed a run, not because it won a fair comparison. `gemini-3.5-flash` looked stronger on the cases it finished before running out of quota, which is exactly the partial number this harness exists to distrust.
 - Regression tolerances are deliberately loose, because measured run-to-run noise is larger than the drift worth catching. They tighten when the dataset does.
-- **Fix quality is measured on exactly one case, and the patch failed it.** The diagnosis was right and the diff was malformed. One case is an anecdote, not a rate; the honest reading is that fix generation is unproven, not that it is bad.
+- **Five executable cases are excluded because their own reference fix does not pass the verifier.** Two of those do not even apply, which points at the extraction rather than at the cases. That is unfinished work, and until it is finished the measurable subset is smaller than the importable one.
+- Class balance is unchanged by the import: the 13 executable cases are all `code_change`, so they widen fix coverage and not class coverage.
 
 ## Documentation
 
