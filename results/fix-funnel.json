@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-09T17:00:55.163052+00:00",
+  "generated_at": "2026-08-09T17:19:23.175642+00:00",
   "report": {
     "n_cases": 9,
     "n_attempted": 9,
@@ -56,7 +56,7 @@
       "level": "APPLIES",
       "skip_reason": "",
       "detail": "patch applies but the build still fails",
-      "evidence": "new archive\u001b[0m\n/home/travis/.casher/bin/casher:213:in `cache_archive_name': undefined method `[]' for nil:NilClass (NoMethodError)\n\tfrom /home/travis/.casher/bin/casher:143:in `push'\n\tfrom /home/travis/.casher/bin/casher:53:in `block in run'\n\tfrom /home/travis/.rvm/rubies/ruby-1.9.3-p551/lib/ruby/1.9.1/timeout.rb:69:in `timeout'\n\tfrom /home/travis/.casher/bin/casher:53:in `run'\n\tfrom /home/travis/.casher/bin/casher:263:in `<main>'\n\ntravis_time:end:1352305a:start=1786294461153295474,finish=1786294462563117296,duration=1409821822\n\u001b[0Ktravis_fold:end:cache.2\n\u001b[0K\nDone. Your build exited with 1.\n",
+      "evidence": "new archive\u001b[0m\n/home/travis/.casher/bin/casher:213:in `cache_archive_name': undefined method `[]' for nil:NilClass (NoMethodError)\n\tfrom /home/travis/.casher/bin/casher:143:in `push'\n\tfrom /home/travis/.casher/bin/casher:53:in `block in run'\n\tfrom /home/travis/.rvm/rubies/ruby-1.9.3-p551/lib/ruby/1.9.1/timeout.rb:69:in `timeout'\n\tfrom /home/travis/.casher/bin/casher:53:in `run'\n\tfrom /home/travis/.casher/bin/casher:263:in `<main>'\n\ntravis_time:end:36b61c9c:start=1786295534259643709,finish=1786295535636741913,duration=1377098204\n\u001b[0Ktravis_fold:end:cache.2\n\u001b[0K\nDone. Your build exited with 1.\n",
       "localized": true,
       "needed_repair": false
     },
@@ -86,7 +86,7 @@
       "level": "NOTHING_ELSE_BROKE",
       "skip_reason": "",
       "detail": "the original job passes with the patch applied after repairing its hunk headers",
-      "evidence": "ome/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:32:in `block in catch'\n\tfrom /home/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:32:in `catch'\n\tfrom /home/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:32:in `catch'\n\tfrom /home/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:103:in `timeout'\n\tfrom /home/travis/.casher/bin/casher:53:in `run'\n\tfrom /home/travis/.casher/bin/casher:263:in `<main>'\n\ntravis_time:end:2823e534:start=1786294841873844175,finish=1786294843348923920,duration=1475079745\n\u001b[0Ktravis_fold:end:cache.2\n\u001b[0K\nDone. Your build exited with 0.\n",
+      "evidence": "ome/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:32:in `block in catch'\n\tfrom /home/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:32:in `catch'\n\tfrom /home/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:32:in `catch'\n\tfrom /home/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:103:in `timeout'\n\tfrom /home/travis/.casher/bin/casher:53:in `run'\n\tfrom /home/travis/.casher/bin/casher:263:in `<main>'\n\ntravis_time:end:1950cd50:start=1786295911054420290,finish=1786295912491189276,duration=1436768986\n\u001b[0Ktravis_fold:end:cache.2\n\u001b[0K\nDone. Your build exited with 0.\n",
       "localized": false,
       "needed_repair": true
     },

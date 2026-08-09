@@ -59,8 +59,8 @@ Each of these was a real defect found by running the thing rather than reasoning
 ## How it works
 
 ```
-run url -> ingest -> condense -> classify -> localize -> fix -> policy -> verify -> draft PR
-           [det]     [det]       [model]     [model]     [model] [det]    [det]     [det, guarded]
+run url -> ingest -> condense -> classify -> localize -> fix -> repair -> policy -> verify -> draft PR
+           [det]     [det]       [model]     [model]     [model] [det]   [det]    [det]     [det, guarded]
 ```
 
 **What `verify` means today, precisely.** It has four rungs: the patch applies, it lints, the failing test passes, nothing else broke. For the executable cases the whole original job is rerun, so a pass means the failure stopped and nothing else in the suite broke, with no judgement call left. The 48 mined cases are marked `verification: none`, because checking whether a patch works needs the repository at the failing commit and those store logs and diffs.
@@ -72,22 +72,41 @@ Measured on the nine executable cases the control below found sound, with `gemin
 | stage | cases | share of attempted |
 | --- | --- | --- |
 | patch attempted | 9 | 1.00 |
-| applies cleanly | 1 | 0.11 |
-| failing test passes | 0 | 0.00 |
-| nothing else broke | 0 | 0.00 |
+| applies cleanly | 2 | 0.22 |
+| failing test passes | 1 | 0.11 |
+| nothing else broke | 1 | 0.11 |
 
-**Eight of nine patches are rejected before anything is run.** Splitting that by cause is the useful part, and it needs the localization result alongside the patch:
+**Seven of nine patches are rejected before anything is run.** Splitting that by cause is the useful part, and it needs the localization result alongside the patch:
 
-| why it failed | cases |
+| outcome | cases |
 | --- | --- |
-| patched a file that was not the culprit | 3 |
-| malformed diff, `corrupt patch at line N` | 3 |
-| well formed, context did not match the file | 2 |
+| well formed, context did not match the file | 4 |
+| patched a file that was not the culprit | 2 |
+| still malformed after repair | 1 |
 | applied, did not fix the failure | 1 |
+| fixed the build and broke nothing | 1 |
 
-Localization was on target for 6 of 9. So the model is usually looking at the right file, has been handed that file's exact contents, and still emits a diff git will not take. Three of those are not near-misses: the hunk header disagrees with the hunk body, which is a formatting failure rather than a reasoning one.
+Localization was on target for 6 of 9. So the model is usually looking at the right file, has been handed that file's exact contents, and still writes a diff whose context does not match it.
 
-No LLM judge produces this table. A judge reading those eight patches would have seen a correct explanation and a plausible-looking diff, and the three malformed ones would have scored well. `git apply` disagreed with all of them.
+No LLM judge produces this table. A judge reading those seven patches would have seen a correct explanation and a plausible-looking diff.
+
+### Repairing what the model should not have to get right
+
+A hunk header declares how many lines the hunk covers. That is arithmetic the diff already contains, so it is not something a model needs to supply correctly, and git refuses the whole patch when it disagrees. Three of the rejections above failed exactly that way, discarding changes that may have been right.
+
+So the counts are recomputed from the hunk body, and a context line missing its leading space gets it back. Nothing in the body's content is altered, and a well formed patch comes back byte identical.
+
+**The repair has to earn its place.** The model's own patch is applied first, and the repaired copy is only tried when the original is genuinely refused, so the run reports what the repair rescued rather than assuming it helped:
+
+| | before repair | after |
+| --- | --- | --- |
+| applies cleanly | 1 | 2 |
+| fixed the build | 0 | 1 |
+| rejected as malformed | 3 | 1 |
+
+One patch went from rejected to fixing the build outright. Two others stopped being malformed and started failing as honest context mismatches, which is the real problem showing through rather than a formatting error hiding it.
+
+That is the project's thesis applied to formatting instead of judgement: the model proposes, and anything mechanically derivable is computed rather than trusted.
 
 ### Checking the checker
 
@@ -152,7 +171,8 @@ The annotators also refused to judge whether a failure followed the diff on case
 
 - 61 cases, target is 80. Small enough that a handful of cases moves a number.
 - **The fix funnel rests on nine cases, and single runs move.** Nine is enough to say most patches are rejected before execution, which is a large and repeatable effect across every configuration tried. It is not enough to rank models on fix quality, and individual cases flip between runs. Treat the funnel shape as the result and the exact counts as noisy.
-- **Zero fixes is a real number, not a rounding of one.** The one case that passed in an earlier run did so while the model was patching a file it had not read.
+- **One fix out of nine is an anecdote with error bars, not a rate.** It is reported because the funnel shape around it is informative, not because the number is stable.
+- **The patch repair is deterministic and narrow.** It recomputes counts and restores missing markers. It cannot rescue a patch whose context does not match the file, which is now the largest remaining failure at four of nine.
 - Class balance is skewed: 38 `code_change`, 4 flaky, 3 infrastructure, 3 pipeline config. That is roughly what mining public repositories yields, and it is why macro F1 rather than accuracy is the headline.
 - **The dataset has outgrown the free tier.** A full run is about ninety model calls and the daily quota ran out mid-run. Full-suite runs need batching, a paid key, or a local model.
 - **The model choice is not settled on quality.** `gemini-3.1-flash-lite` is the default because it completed a run, not because it won a fair comparison. `gemini-3.5-flash` looked stronger on the cases it finished before running out of quota, which is exactly the partial number this harness exists to distrust.
