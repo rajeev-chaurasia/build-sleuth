@@ -24,6 +24,11 @@ PASSED_DIR = f"{BUILD_ROOT}/passed"
 RUN_FAILED = "/usr/local/bin/run_failed.sh"
 DOCKER = "docker"
 DEFAULT_TIMEOUT_SECONDS = 900
+# These images carry a whole Travis environment. Left uncapped on Docker
+# Desktop a container can grow until the host is starved.
+CONTAINER_MEMORY = "2g"
+CONTAINER_CPUS = "2"
+IMAGE_REMOVE_TIMEOUT_SECONDS = 300
 # A tag looks like owner-repo-jobid, and only the job id is reliably numeric.
 _TAG_RE = re.compile(r"^(?P<slug>.+)-(?P<job_id>\d+)$")
 
@@ -57,9 +62,25 @@ def parse_tag(tag: str) -> tuple[str, int]:
 
 
 def in_image(tag: str, script: str, timeout: int = DEFAULT_TIMEOUT_SECONDS) -> str:
-    """Run a shell script inside the artifact image and return its output."""
+    """Run a shell script inside the artifact image and return its output.
+
+    Memory is capped because these images carry a whole Travis environment,
+    and an uncapped container on Docker Desktop can grow until the host has
+    nothing left. The images themselves are removed by `discard_image` once
+    the case has been extracted.
+    """
     completed = subprocess.run(
-        [DOCKER, "run", "--rm", f"{IMAGE_PREFIX}:{tag}", "bash", "-lc", script],
+        [
+            DOCKER,
+            "run",
+            "--rm",
+            f"--memory={CONTAINER_MEMORY}",
+            f"--cpus={CONTAINER_CPUS}",
+            f"{IMAGE_PREFIX}:{tag}",
+            "bash",
+            "-lc",
+            script,
+        ],
         capture_output=True,
         text=True,
         errors="replace",
@@ -69,6 +90,23 @@ def in_image(tag: str, script: str, timeout: int = DEFAULT_TIMEOUT_SECONDS) -> s
     if completed.returncode != 0 and not completed.stdout:
         raise ArtifactError(f"{tag}: {completed.stderr.strip()[:200]}")
     return completed.stdout
+
+
+def discard_image(tag: str, timeout: int = IMAGE_REMOVE_TIMEOUT_SECONDS) -> bool:
+    """Delete the pulled image once its case has been written.
+
+    A BugSwarm artifact is gigabytes. Importing a batch without removing each
+    one fills the disk, and on Docker Desktop that surfaces as the host
+    getting into trouble rather than as a clear docker error.
+    """
+    completed = subprocess.run(
+        [DOCKER, "rmi", "-f", f"{IMAGE_PREFIX}:{tag}"],
+        capture_output=True,
+        text=True,
+        timeout=timeout,
+        check=False,
+    )
+    return completed.returncode == 0
 
 
 def extract_script(job_id: int) -> str:
