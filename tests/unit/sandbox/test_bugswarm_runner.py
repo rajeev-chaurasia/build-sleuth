@@ -5,9 +5,8 @@ import base64
 from buildsleuth.pipeline.verify import VerificationLevel
 from buildsleuth.sandbox.bugswarm_runner import (
     APPLY_MARKER,
-    PATCH_CRLF,
-    PATCH_LF,
     PATCH_PATH,
+    REPAIRED_PATH,
     ReproductionResult,
     parse_result,
     terminate,
@@ -127,7 +126,7 @@ class TestLineEndings:
         # measures the repository rather than the patch.
         script = verification_script(CRLF_PATCH, "repo")
         assert "--ignore-whitespace" in script
-        assert script.index("git apply --whitespace=nowarn /tmp") < script.index(
+        assert script.index('git apply --whitespace=nowarn "$P"') < script.index(
             "--ignore-whitespace"
         )
 
@@ -139,18 +138,70 @@ class TestBothLineEndingConventions:
 
     def test_tries_the_patch_as_written_first(self) -> None:
         script = verification_script(PATCH, "repo")
-        assert script.index(f"git apply --whitespace=nowarn {PATCH_PATH}") < script.index(
-            f"git apply --whitespace=nowarn {PATCH_LF}"
+        assert script.index('git apply --whitespace=nowarn "$P"') < script.index(
+            'git apply --whitespace=nowarn "$P.lf"'
         )
 
     def test_tries_an_lf_and_a_crlf_copy(self) -> None:
         script = verification_script(PATCH, "repo")
-        assert PATCH_LF in script
-        assert PATCH_CRLF in script
+        assert '"$P.lf"' in script
+        assert '"$P.crlf"' in script
 
     def test_builds_the_crlf_copy_from_the_lf_one(self) -> None:
         # Deriving it from the original would double the carriage returns on
         # a patch that already had them.
         script = verification_script(PATCH, "repo")
         # sed needs the two characters backslash and r, not a carriage return.
-        assert rf"sed 's/$/\r/' {PATCH_LF} > {PATCH_CRLF}" in script
+        assert 'sed \'s/$/\\r/\' "$P.lf" > "$P.crlf"' in script
+
+    def test_both_patches_get_the_same_attempts(self) -> None:
+        # One shared function, so the repaired copy is neither favoured nor
+        # given a weaker set of tries than the model's own patch.
+        assert verification_script(PATCH, "repo").count("try_apply() {") == 1
+
+
+BROKEN_HEADER = "--- a/x.py\n+++ b/x.py\n@@ -1,7 +1,5 @@\n a\n-b\n+c\n"
+
+
+class TestRepairIsEarnedNotAssumed:
+    """Three of eight rejected patches failed with corrupt patch at line N,
+    which is arithmetic the diff already contains. Repairing it is only
+    credited when the model's own patch was tried first and refused."""
+
+    def test_the_model_patch_is_tried_before_the_repaired_one(self) -> None:
+        script = verification_script(BROKEN_HEADER, "repo")
+        assert script.index(f"try_apply {PATCH_PATH}") < script.index(f"try_apply {REPAIRED_PATH}")
+
+    def test_both_patches_are_carried_into_the_container(self) -> None:
+        script = verification_script(BROKEN_HEADER, "repo")
+        assert PATCH_PATH in script
+        assert REPAIRED_PATH in script
+
+    def test_the_repaired_copy_has_corrected_counts(self) -> None:
+        script = verification_script(BROKEN_HEADER, "repo")
+        encoded = script.split("| base64 -d > " + REPAIRED_PATH)[0].split("echo ")[-1].strip()
+        assert "@@ -1,2 +1,2 @@" in base64.b64decode(encoded).decode()
+
+    def test_a_partial_apply_is_undone_before_retrying(self) -> None:
+        # patch is not atomic, so leftovers would corrupt the second attempt.
+        script = verification_script(BROKEN_HEADER, "repo")
+        assert "git checkout -- ." in script
+
+    def test_a_repaired_apply_is_reported_distinctly(self) -> None:
+        result = parse_result(0, f"{APPLY_MARKER}2\n")
+        assert result.applied
+        assert result.needed_repair
+
+    def test_the_model_own_patch_applying_is_not_called_a_repair(self) -> None:
+        result = parse_result(0, f"{APPLY_MARKER}0\n")
+        assert result.applied
+        assert not result.needed_repair
+
+    def test_neither_applying_is_not_applied(self) -> None:
+        result = parse_result(91, f"{APPLY_MARKER}1\n")
+        assert not result.applied
+        assert not result.needed_repair
+
+    def test_the_verdict_says_when_a_repair_was_needed(self) -> None:
+        verdict = to_verification(ReproductionResult(True, True, "ok", needed_repair=True))
+        assert "repairing its hunk headers" in verdict.detail

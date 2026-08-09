@@ -41,6 +41,9 @@ NO_PATCH = "model declined to patch"
 # Enough for a rejected-hunk report without bloating the committed record.
 EVIDENCE_CHARS = 600
 UNKNOWN_SHA = "unknown"
+# How the runner words an apply that only succeeded after the hunk headers
+# were recomputed.
+REPAIR_NOTE = "repairing its hunk headers"
 CONTROL_FILE = RESULTS_DIR / "verifier-control.json"
 
 
@@ -133,6 +136,7 @@ def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: s
         detail=result.detail,
         evidence=result.stdout_tail[-EVIDENCE_CHARS:],
         localized=on_target,
+        needed_repair=REPAIR_NOTE in result.detail,
     )
 
 
@@ -152,6 +156,7 @@ def read_attempts(directory: Path) -> list[FixAttempt]:
                     detail=entry.get("detail", ""),
                     evidence=entry.get("evidence", ""),
                     localized=entry.get("localized", False),
+                    needed_repair=entry.get("needed_repair", False),
                 )
             )
     return attempts
@@ -186,6 +191,7 @@ def aggregate(directory: Path, out: Path) -> int:
                         "detail": a.detail,
                         "evidence": a.evidence,
                         "localized": a.localized,
+                        "needed_repair": a.needed_repair,
                     }
                     for a in sorted(attempts, key=lambda a: a.case_id)
                 ],
@@ -278,6 +284,7 @@ def main() -> int:
                         "detail": a.detail,
                         "evidence": a.evidence,
                         "localized": a.localized,
+                        "needed_repair": a.needed_repair,
                     }
                     for a in attempts
                 ],

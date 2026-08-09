@@ -23,12 +23,17 @@ from buildsleuth.dataset.bugswarm import (
     RUN_FAILED,
     checkout_resolution_lines,
 )
+from buildsleuth.pipeline.patch_repair import repair_patch
 from buildsleuth.pipeline.verify import VerificationLevel, VerificationResult
 
 BUILD_ROOT = "/home/travis/build"
 PATCH_PATH = "/tmp/buildsleuth.patch"
-PATCH_LF = "/tmp/buildsleuth.lf.patch"
-PATCH_CRLF = "/tmp/buildsleuth.crlf.patch"
+REPAIRED_PATH = "/tmp/buildsleuth.repaired.patch"
+# The marker carries which patch went in, so a repair can only be credited
+# when the model's own patch was tried first and failed.
+APPLIED_RAW = 0
+APPLIED_NEITHER = 1
+APPLIED_REPAIRED = 2
 DEFAULT_TIMEOUT_SECONDS = 1800
 OUTPUT_TAIL_CHARS = 800
 APPLY_MARKER = "=====BUILDSLEUTH_APPLIED====="
@@ -63,6 +68,9 @@ class ReproductionResult:
     # rerun prints thousands of lines afterwards and the reason a patch was
     # rejected is four words near the start.
     apply_output: str = ""
+    # Whether the model's own patch was rejected and only the version with
+    # recomputed hunk headers went in.
+    needed_repair: bool = False
 
 
 def verification_script(patch: str, repo_name: str) -> str:
@@ -72,7 +80,11 @@ def verification_script(patch: str, repo_name: str) -> str:
     competes with whatever the build script reads, and quoting a diff into a
     shell command corrupts it in ways that look like the model's fault.
     """
-    encoded = base64.b64encode(terminate(patch).encode("utf-8")).decode("ascii")
+    written = terminate(patch)
+    encoded = base64.b64encode(written.encode("utf-8")).decode("ascii")
+    repaired = repair_patch(written)
+    encoded_repaired = base64.b64encode(repaired.encode("utf-8")).decode("ascii")
+
     return "\n".join(
         [
             "set +e",
@@ -82,23 +94,36 @@ def verification_script(patch: str, repo_name: str) -> str:
             'FAILED="$ROOT/failed"',
             *checkout_resolution_lines(repo_name),
             f"echo {encoded} | base64 -d > {PATCH_PATH}",
+            f"echo {encoded_repaired} | base64 -d > {REPAIRED_PATH}",
             'cd "$FAILED/$PROJ" || exit 90',
-            # The same patch with each line ending convention. Some of these
-            # repositories are CRLF throughout and some are LF, and a patch
-            # whose endings do not match the file it edits has every hunk
-            # rejected. Trying one convention only measures whether the model
-            # guessed the repository's line endings, which is not the thing
-            # being tested.
-            f"sed 's/\\r$//' {PATCH_PATH} > {PATCH_LF}",
-            f"sed 's/$/\\r/' {PATCH_LF} > {PATCH_CRLF}",
-            f"git apply --whitespace=nowarn {PATCH_PATH} 2>&1"
-            f" || git apply --whitespace=nowarn {PATCH_LF} 2>&1"
-            f" || git apply --whitespace=nowarn {PATCH_CRLF} 2>&1"
-            f" || git apply --whitespace=nowarn --ignore-whitespace {PATCH_LF} 2>&1"
-            f" || patch -p1 --batch --forward -l < {PATCH_LF} 2>&1",
-            "APPLIED=$?",
+            # Each patch is tried under both line ending conventions. Some of
+            # these repositories are CRLF throughout and some are LF, and a
+            # patch whose endings disagree with the file has every hunk
+            # rejected, which measures the repository rather than the patch.
+            "try_apply() {",
+            '  P="$1"',
+            '  sed \'s/\\r$//\' "$P" > "$P.lf"',
+            '  sed \'s/$/\\r/\' "$P.lf" > "$P.crlf"',
+            '  git apply --whitespace=nowarn "$P" 2>&1 && return 0',
+            '  git apply --whitespace=nowarn "$P.lf" 2>&1 && return 0',
+            '  git apply --whitespace=nowarn "$P.crlf" 2>&1 && return 0',
+            '  git apply --whitespace=nowarn --ignore-whitespace "$P.lf" 2>&1 && return 0',
+            '  patch -p1 --batch --forward -l < "$P.lf" 2>&1 && return 0',
+            "  return 1",
+            "}",
+            # The model's patch exactly as written comes first, so the repair
+            # can only ever be credited when the original genuinely failed.
+            f"try_apply {PATCH_PATH}",
+            f"if [ $? -eq 0 ]; then APPLIED={APPLIED_RAW}",
+            "else",
+            # patch is not atomic, so undo anything a partial attempt left.
+            "  git checkout -- . 2>/dev/null",
+            f"  try_apply {REPAIRED_PATH}",
+            f"  if [ $? -eq 0 ]; then APPLIED={APPLIED_REPAIRED}",
+            f"  else APPLIED={APPLIED_NEITHER}; fi",
+            "fi",
             f'echo "{APPLY_MARKER}$APPLIED"',
-            '[ "$APPLIED" -eq 0 ] || exit 91',
+            f'[ "$APPLIED" -ne {APPLIED_NEITHER} ] || exit 91',
             f"bash {shlex.quote(RUN_FAILED)} 2>&1",
         ]
     )
@@ -178,11 +203,14 @@ def parse_result(returncode: int, output: str) -> ReproductionResult:
     model. The marker says whether the patch itself went in.
     """
     applied = False
+    repaired = False
     lines = output.splitlines()
     marker_at = -1
     for index, line in enumerate(lines):
         if line.startswith(APPLY_MARKER):
-            applied = line[len(APPLY_MARKER) :].strip() == "0"
+            code = line[len(APPLY_MARKER) :].strip()
+            applied = code in (str(APPLIED_RAW), str(APPLIED_REPAIRED))
+            repaired = code == str(APPLIED_REPAIRED)
             marker_at = index
 
     apply_output = ""
@@ -194,6 +222,7 @@ def parse_result(returncode: int, output: str) -> ReproductionResult:
         build_passed=applied and returncode == 0,
         output=output,
         apply_output=apply_output.strip(),
+        needed_repair=repaired,
     )
 
 
@@ -208,16 +237,17 @@ def to_verification(result: ReproductionResult) -> VerificationResult:
             "patch does not apply",
             result.apply_output[-OUTPUT_TAIL_CHARS:],
         )
+    suffix = " after repairing its hunk headers" if result.needed_repair else ""
     if not result.build_passed:
         # APPLIES rather than LINTS: this path reruns the job and never lints,
         # so claiming the patch linted would report a check that never ran.
         return VerificationResult(
-            VerificationLevel.APPLIES, "patch applies but the build still fails", tail
+            VerificationLevel.APPLIES, f"patch applies{suffix} but the build still fails", tail
         )
     # The script reruns the whole job, so a pass covers the rest of the suite.
     return VerificationResult(
         VerificationLevel.NOTHING_ELSE_BROKE,
-        "the original job passes with the patch applied",
+        f"the original job passes with the patch applied{suffix}",
         tail,
     )
 

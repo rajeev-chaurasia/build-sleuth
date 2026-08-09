@@ -34,6 +34,10 @@ class FixAttempt:
     # wrong file cannot fix anything, and separating the two says which
     # stage to work on.
     localized: bool = False
+    # Whether the model's own diff was refused and only the copy with
+    # recomputed hunk headers applied. Counted so the repair has to earn its
+    # place rather than being assumed to help.
+    needed_repair: bool = False
 
 
 class FixReport(BaseModel):
