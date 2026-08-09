@@ -5,6 +5,9 @@ import base64
 from buildsleuth.pipeline.verify import VerificationLevel
 from buildsleuth.sandbox.bugswarm_runner import (
     APPLY_MARKER,
+    PATCH_CRLF,
+    PATCH_LF,
+    PATCH_PATH,
     ReproductionResult,
     parse_result,
     terminate,
@@ -127,3 +130,27 @@ class TestLineEndings:
         assert script.index("git apply --whitespace=nowarn /tmp") < script.index(
             "--ignore-whitespace"
         )
+
+
+class TestBothLineEndingConventions:
+    """Normalising every patch to LF broke the CRLF repositories; preserving
+    line endings broke the LF ones when the model emitted carriage returns.
+    Three cases flipped from applying to not applying on that change alone."""
+
+    def test_tries_the_patch_as_written_first(self) -> None:
+        script = verification_script(PATCH, "repo")
+        assert script.index(f"git apply --whitespace=nowarn {PATCH_PATH}") < script.index(
+            f"git apply --whitespace=nowarn {PATCH_LF}"
+        )
+
+    def test_tries_an_lf_and_a_crlf_copy(self) -> None:
+        script = verification_script(PATCH, "repo")
+        assert PATCH_LF in script
+        assert PATCH_CRLF in script
+
+    def test_builds_the_crlf_copy_from_the_lf_one(self) -> None:
+        # Deriving it from the original would double the carriage returns on
+        # a patch that already had them.
+        script = verification_script(PATCH, "repo")
+        # sed needs the two characters backslash and r, not a carriage return.
+        assert rf"sed 's/$/\r/' {PATCH_LF} > {PATCH_CRLF}" in script

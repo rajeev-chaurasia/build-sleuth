@@ -27,6 +27,8 @@ from buildsleuth.pipeline.verify import VerificationLevel, VerificationResult
 
 BUILD_ROOT = "/home/travis/build"
 PATCH_PATH = "/tmp/buildsleuth.patch"
+PATCH_LF = "/tmp/buildsleuth.lf.patch"
+PATCH_CRLF = "/tmp/buildsleuth.crlf.patch"
 DEFAULT_TIMEOUT_SECONDS = 1800
 OUTPUT_TAIL_CHARS = 800
 APPLY_MARKER = "=====BUILDSLEUTH_APPLIED====="
@@ -76,13 +78,19 @@ def verification_script(patch: str, repo_name: str) -> str:
             *checkout_resolution_lines(repo_name),
             f"echo {encoded} | base64 -d > {PATCH_PATH}",
             'cd "$FAILED/$PROJ" || exit 90',
-            # Strictest first. The whitespace-insensitive retries exist
-            # because these repositories are not all LF, and rejecting an
-            # otherwise correct patch over carriage returns would measure the
-            # repository's line endings rather than the patch.
+            # The same patch with each line ending convention. Some of these
+            # repositories are CRLF throughout and some are LF, and a patch
+            # whose endings do not match the file it edits has every hunk
+            # rejected. Trying one convention only measures whether the model
+            # guessed the repository's line endings, which is not the thing
+            # being tested.
+            f"sed 's/\\r$//' {PATCH_PATH} > {PATCH_LF}",
+            f"sed 's/$/\\r/' {PATCH_LF} > {PATCH_CRLF}",
             f"git apply --whitespace=nowarn {PATCH_PATH} 2>&1"
-            f" || git apply --whitespace=nowarn --ignore-whitespace {PATCH_PATH} 2>&1"
-            f" || patch -p1 --batch --forward -l < {PATCH_PATH} 2>&1",
+            f" || git apply --whitespace=nowarn {PATCH_LF} 2>&1"
+            f" || git apply --whitespace=nowarn {PATCH_CRLF} 2>&1"
+            f" || git apply --whitespace=nowarn --ignore-whitespace {PATCH_LF} 2>&1"
+            f" || patch -p1 --batch --forward -l < {PATCH_LF} 2>&1",
             "APPLIED=$?",
             f'echo "{APPLY_MARKER}$APPLIED"',
             '[ "$APPLIED" -eq 0 ] || exit 91',
