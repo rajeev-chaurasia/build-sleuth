@@ -100,9 +100,15 @@ def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: s
     paths = ranked_paths(located.value) if located is not None else []
 
     contents = read_files_for(case, paths)
-    proposed = propose_fix(
-        client, model, verdict, evidence, list(contents), contents, repo=case.inputs.repo
+    print(
+        f"    localized {paths}, read {len(contents)} file(s)"
+        f" totalling {sum(len(body) for body in contents.values())} chars",
+        flush=True,
     )
+    # Keep the localizer's paths as the editable set. Narrowing it to the
+    # files that happened to be readable leaves the model with nothing it is
+    # allowed to touch when the read comes back empty.
+    proposed = propose_fix(client, model, verdict, evidence, paths, contents, repo=case.inputs.repo)
     if isinstance(proposed, SkipReason):
         return FixAttempt(case_id=case.case_id, attempted=False, skip_reason=proposed.reason)
 
