@@ -29,6 +29,12 @@ DEFAULT_TIMEOUT_SECONDS = 900
 CONTAINER_MEMORY = "2g"
 CONTAINER_CPUS = "2"
 IMAGE_REMOVE_TIMEOUT_SECONDS = 300
+# The build cache sits beside the checkout and sorts before it alphabetically.
+CACHE_DIR = "cacher"
+# A rebuilt virtualenv differs on every path and timestamp it embeds, which
+# buries the maintainer's fix under thousands of lines that are not the fix.
+DIFF_EXCLUDES = ("env", ".git", "__pycache__", "node_modules", "*.pyc", ".tox", "venv")
+DIFF_LINE_LIMIT = 4000
 # A tag looks like owner-repo-jobid, and only the job id is reliably numeric.
 _TAG_RE = re.compile(r"^(?P<slug>.+)-(?P<job_id>\d+)$")
 
@@ -59,6 +65,17 @@ def parse_tag(tag: str) -> tuple[str, int]:
     if match is None:
         raise ArtifactError(f"{tag} does not look like a BugSwarm tag")
     return match.group("slug"), int(match.group("job_id"))
+
+
+def repo_name_from_slug(slug: str) -> str:
+    """The checkout directory name, which is the repository half of the slug.
+
+    BugSwarm joins owner and repository with a hyphen, and both may contain
+    hyphens themselves, so this is a guess. The extraction script falls back
+    to searching when the guess does not exist.
+    """
+    _, _, name = slug.partition("-")
+    return name or slug
 
 
 def in_image(tag: str, script: str, timeout: int = DEFAULT_TIMEOUT_SECONDS) -> str:
@@ -109,7 +126,7 @@ def discard_image(tag: str, timeout: int = IMAGE_REMOVE_TIMEOUT_SECONDS) -> bool
     return completed.returncode == 0
 
 
-def extract_script(job_id: int) -> str:
+def extract_script(job_id: int, repo_name: str) -> str:
     """Read the failing log, the maintainer's fix, and which files it touched.
 
     The layout is discovered rather than assumed. Artifacts built from Travis
@@ -117,9 +134,14 @@ def extract_script(job_id: int) -> str:
     Actions use a different root, and hardcoding the old one silently reports
     every newer artifact as having no log.
 
+    The checkout is picked by repository name. Taking the first directory
+    instead selects the build cache on these images, and the resulting diff
+    describes a virtualenv rather than the maintainer's fix.
+
     Emitted with separators in a single script, because starting a container
     is the expensive part and these images are large.
     """
+    excludes = " ".join(f"-x {shlex.quote(name)}" for name in DIFF_EXCLUDES)
     return "\n".join(
         [
             "set +e",
@@ -130,13 +152,17 @@ def extract_script(job_id: int) -> str:
             'ROOT=$(dirname "$LOG" 2>/dev/null)',
             f'[ -d "$ROOT/failed" ] || ROOT={BUILD_ROOT}',
             'FAILED="$ROOT/failed"; PASSED="$ROOT/passed"',
-            'PROJ=$(ls "$FAILED" 2>/dev/null | head -1)',
+            f"PROJ={shlex.quote(repo_name)}",
+            # Fall back to any directory that is not the build cache.
+            f'if [ ! -d "$FAILED/$PROJ" ]; then PROJ=$(ls "$FAILED" 2>/dev/null'
+            f" | grep -v {shlex.quote(CACHE_DIR)} | head -1); fi",
             'echo "=====BUILDSLEUTH_LOG====="',
             'cat "$LOG" 2>/dev/null || echo "no log"',
             'echo "=====BUILDSLEUTH_DIFF====="',
-            'diff -ruN "$FAILED/$PROJ" "$PASSED/$PROJ" 2>/dev/null | head -4000',
+            f'diff -ruN {excludes} "$FAILED/$PROJ" "$PASSED/$PROJ" 2>/dev/null'
+            f" | head -{DIFF_LINE_LIMIT}",
             'echo "=====BUILDSLEUTH_FILES====="',
-            'diff -rq "$FAILED/$PROJ" "$PASSED/$PROJ" 2>/dev/null'
+            f'diff -rq {excludes} "$FAILED/$PROJ" "$PASSED/$PROJ" 2>/dev/null'
             ' | sed -n "s#^Files $FAILED/$PROJ/\\(.*\\) and .* differ\\$#\\1#p"',
             'echo "=====BUILDSLEUTH_LAYOUT====="',
             'echo "root=$ROOT project=$PROJ log=$LOG"',
@@ -171,6 +197,12 @@ def build_artifact(tag: str, output: str) -> Artifact:
         raise ArtifactError(f"{tag} has no original build log ({layout})")
 
     files = [line.strip() for line in sections.get("files", "").splitlines() if line.strip()]
+    layout = sections.get("layout", "").strip()
+    if f"project={CACHE_DIR}" in layout:
+        # This once passed silently and produced three cases whose ground
+        # truth was a diff of a virtualenv.
+        raise ArtifactError(f"{tag} resolved to the build cache, not a checkout ({layout})")
+
     return Artifact(
         tag=tag,
         slug=slug,

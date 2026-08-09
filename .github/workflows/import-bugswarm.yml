@@ -120,23 +120,27 @@ jobs:
           uv sync --all-groups
           uv run python scripts/validate_dataset.py
 
-      - name: Open a pull request with the new cases
-        # A pull request rather than a push, because a case that nobody looked
-        # at should not land in the benchmark unreviewed.
-        uses: peter-evans/create-pull-request@v7
-        with:
-          branch: dataset/bugswarm-import
-          title: "dataset: import BugSwarm artifacts"
-          commit-message: "dataset: import BugSwarm artifacts as executable cases"
-          body: |
-            Imported from BugSwarm images by the `import-bugswarm` workflow.
-
-            These are the cases where a proposed patch can actually be run,
-            because the image carries the repository at the failing commit
-            and a script that reruns the build. Culprit files come from the
-            maintainer's own fix rather than from a labeller reading a log.
-
-            The subcategory on each is a default and has not been adjudicated.
-          add-paths: |
-            dataset/cases/bugswarm
-            dataset/manifest.json
+      - name: Push the new cases to a branch
+        # A branch rather than a push to main, because a case nobody has
+        # looked at should not land in the benchmark unreviewed. A branch
+        # rather than the pull request API, because opening one needs the
+        # repository to let Actions create pull requests, and turning that
+        # on everywhere to save one click is a bad trade.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add dataset/cases/bugswarm dataset/manifest.json
+          git diff --cached --quiet && echo "nothing imported" && exit 0
+          git commit -m "dataset: import BugSwarm artifacts as executable cases"
+          git push -f origin "$BRANCH"
+          {
+            echo "### Imported cases pushed to \`$BRANCH\`"
+            echo
+            echo "[Open a pull request]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/compare/main...$BRANCH?expand=1)"
+            echo
+            echo "Culprit files come from the maintainer's own fix. The"
+            echo "subcategory on each is a default and has not been adjudicated."
+          } >> "$GITHUB_STEP_SUMMARY"
+        env:
+          BRANCH: dataset/bugswarm-import

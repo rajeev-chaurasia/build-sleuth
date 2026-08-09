@@ -23,6 +23,7 @@ from buildsleuth.dataset.bugswarm import (
     extract_script,
     in_image,
     parse_tag,
+    repo_name_from_slug,
     verification_commands,
 )
 from buildsleuth.models.case import (
@@ -88,9 +89,9 @@ def build_case(case_id: str, tag: str, artifact_files: list[str]) -> TriageCase:
 
 
 def import_one(tag: str, dataset: Path, case_id: str, keep_image: bool = False) -> str:
-    _, job_id = parse_tag(tag)
+    slug, job_id = parse_tag(tag)
     try:
-        output = in_image(tag, extract_script(job_id))
+        output = in_image(tag, extract_script(job_id, repo_name_from_slug(slug)))
         artifact = build_artifact(tag, output)
     finally:
         # Always, including on failure. A partially imported artifact still
