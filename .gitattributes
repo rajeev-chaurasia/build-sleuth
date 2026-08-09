@@ -2,3 +2,9 @@
 *.png binary
 *.gif binary
 *.zip binary
+
+# Reference fixes are applied byte for byte inside a container. Some of these
+# repositories use CRLF throughout, and normalising their line endings on
+# commit makes the patch match nothing, which reads as a broken artifact.
+*.diff -text
+*.patch -text
