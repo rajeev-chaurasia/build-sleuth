@@ -7,7 +7,7 @@
     "repo": "Abjad/abjad",
     "run_id": 289716771,
     "run_attempt": 1,
-    "head_sha": "unknown",
+    "head_sha": "9306968ceadf5a12d4ddbbd037a81a60369300a5",
     "pr_number": null,
     "failed_job_name": "build",
     "failed_step_name": null,
@@ -23,10 +23,10 @@
     "subcategory": "test_assertion",
     "related_to_diff": true,
     "culprit_files": [
-      "abjad/abjad/tools/agenttools/IterationAgent.py",
-      "abjad/abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py",
-      "abjad/abjad/tools/selectiontools/Selection.py",
-      "abjad/abjad/tools/selectortools/Selector.py"
+      "abjad/tools/agenttools/IterationAgent.py",
+      "abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py",
+      "abjad/tools/selectiontools/Selection.py",
+      "abjad/tools/selectortools/Selector.py"
     ],
     "failing_tests": [],
     "fix_commit_sha": null,
@@ -38,8 +38,8 @@
     "verified_by_human": false,
     "verified_date": null,
     "original_url": null,
-    "snapshot_date": "2026-08-08",
-    "notes": "Imported from BugSwarm artifact Abjad-abjad-289716771. Culprit files are the ones the maintainer's own fix touched, taken by diffing the failing and passing trees in the image, rather than read off the log by a labeller. The class follows from the artifact being a reproducible build failure that a human then fixed; the subcategory is a default and has not been adjudicated.",
+    "snapshot_date": "2026-08-09",
+    "notes": "Imported from BugSwarm artifact Abjad-abjad-289716771. Culprit files are the ones the maintainer's own fix touched, taken by diffing the failing and passing trees in the image, rather than read off the log by a labeller. The class follows from the artifact being a reproducible build failure that a human then fixed; the subcategory is a default and has not been adjudicated. The commit and the failing test names come from the BugSwarm catalogue entry, which rates this artifact reproducible at 5/5.",
     "independent_adjudications": 0,
     "adjudicators_agreeing": 0
   },

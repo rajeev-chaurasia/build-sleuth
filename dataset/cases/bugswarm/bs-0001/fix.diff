@@ -1,4 +1,4 @@
-diff -ruN /home/travis/build/failed/Abjad/abjad/abjad/tools/agenttools/IterationAgent.py /home/travis/build/passed/Abjad/abjad/abjad/tools/agenttools/IterationAgent.py
+diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/Abjad/abjad/abjad/tools/agenttools/IterationAgent.py /home/travis/build/passed/Abjad/abjad/abjad/tools/agenttools/IterationAgent.py
 --- /home/travis/build/failed/Abjad/abjad/abjad/tools/agenttools/IterationAgent.py	2019-02-09 21:18:05.000000000 +0000
 +++ /home/travis/build/passed/Abjad/abjad/abjad/tools/agenttools/IterationAgent.py	2019-02-09 21:18:04.000000000 +0000
 @@ -1307,7 +1307,7 @@
@@ -30,7 +30,7 @@ diff -ruN /home/travis/build/failed/Abjad/abjad/abjad/tools/agenttools/Iteration
                      >>> for logical_tie in expression(staff):
                      ...     logical_tie
                      ...
-diff -ruN /home/travis/build/failed/Abjad/abjad/abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py /home/travis/build/passed/Abjad/abjad/abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py
+diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/Abjad/abjad/abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py /home/travis/build/passed/Abjad/abjad/abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py
 --- /home/travis/build/failed/Abjad/abjad/abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py	2019-02-09 21:18:06.000000000 +0000
 +++ /home/travis/build/passed/Abjad/abjad/abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py	2019-02-09 21:18:04.000000000 +0000
 @@ -26,7 +26,10 @@
@@ -45,7 +45,7 @@ diff -ruN /home/travis/build/failed/Abjad/abjad/abjad/tools/quantizationtools/Na
              sub_logical_ties = []
              current_sub_logical_tie = []
              for leaf in logical_tie:
-diff -ruN /home/travis/build/failed/Abjad/abjad/abjad/tools/selectiontools/Selection.py /home/travis/build/passed/Abjad/abjad/abjad/tools/selectiontools/Selection.py
+diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/Abjad/abjad/abjad/tools/selectiontools/Selection.py /home/travis/build/passed/Abjad/abjad/abjad/tools/selectiontools/Selection.py
 --- /home/travis/build/failed/Abjad/abjad/abjad/tools/selectiontools/Selection.py	2019-02-09 21:18:06.000000000 +0000
 +++ /home/travis/build/passed/Abjad/abjad/abjad/tools/selectiontools/Selection.py	2019-02-09 21:18:04.000000000 +0000
 @@ -952,7 +952,7 @@
@@ -57,7 +57,7 @@ diff -ruN /home/travis/build/failed/Abjad/abjad/abjad/tools/selectiontools/Selec
          ):
          r'''Select components by logical tie.
  
-diff -ruN /home/travis/build/failed/Abjad/abjad/abjad/tools/selectortools/Selector.py /home/travis/build/passed/Abjad/abjad/abjad/tools/selectortools/Selector.py
+diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/Abjad/abjad/abjad/tools/selectortools/Selector.py /home/travis/build/passed/Abjad/abjad/abjad/tools/selectortools/Selector.py
 --- /home/travis/build/failed/Abjad/abjad/abjad/tools/selectortools/Selector.py	2019-02-09 21:18:06.000000000 +0000
 +++ /home/travis/build/passed/Abjad/abjad/abjad/tools/selectortools/Selector.py	2019-02-09 21:18:04.000000000 +0000
 @@ -205,7 +205,9 @@
