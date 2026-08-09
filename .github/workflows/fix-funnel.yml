@@ -34,6 +34,21 @@ jobs:
       matrix: ${{ steps.pick.outputs.matrix }}
       count: ${{ steps.pick.outputs.count }}
     steps:
+      - name: Check the model key before spending runners
+        # A secret that stores empty looks identical to one that is set until
+        # a job reads it, and finding out after eight image pulls wastes half
+        # an hour. Only the length is printed, never the value.
+        env:
+          GEMINI: ${{ secrets.BUILDSLEUTH_GEMINI_API_KEY }}
+          OPENROUTER: ${{ secrets.BUILDSLEUTH_OPENROUTER_API_KEY }}
+        run: |
+          echo "gemini key length: ${#GEMINI}"
+          echo "openrouter key length: ${#OPENROUTER}"
+          if [ -z "$GEMINI" ] && [ -z "$OPENROUTER" ] && [ "${{ inputs.control }}" != "true" ]; then
+            echo "::error::no model key is set, so nothing would be measured"
+            exit 1
+          fi
+
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
         with:
