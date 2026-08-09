@@ -32,20 +32,30 @@ RESULTS_DIR = Path("results")
 DEFAULT_DATASET = Path("dataset")
 # Enough to break the patch without making it unparseable, so it fails at
 # apply time the way a genuinely wrong patch does.
-CORRUPTION = "@@ -1,7 +1,5 @@"
+# A line that cannot occur in any of these sources, so the hunk it belongs
+# to can never match.
+CORRUPTION = "buildsleuth_control_line_that_does_not_exist"
+CONTEXT_MARKER = " "
+REMOVED_MARKER = "-"
+FILE_MARKERS = ("--- ", "-- ")
 OUTPUT_TAIL_CHARS = 400
 
 
 def corrupt(diff: str) -> str:
-    """Damage a hunk header so the patch is well formed but wrong.
+    """Damage the patch so it cannot apply, in a way nothing will repair.
 
-    This is the failure the fix stage actually produced on the first executed
-    case: a hunk header claiming more lines than the hunk supplied.
+    Deliberately not the hunk header. That was the first version, and
+    `patch_repair` recomputes headers from the body, so it quietly undid the
+    corruption: the broken patch applied, the build passed, and nine good
+    cases were reported as unable to measure anything.
+
+    Damaging a context line instead cannot be recovered from, because the
+    line it has to match no longer exists in the file.
     """
     lines = diff.splitlines()
     for index, line in enumerate(lines):
-        if line.startswith("@@"):
-            lines[index] = CORRUPTION
+        if line.startswith((CONTEXT_MARKER, REMOVED_MARKER)) and not line.startswith(FILE_MARKERS):
+            lines[index] = line[0] + CORRUPTION
             break
     return "\n".join(lines) + "\n"
 
@@ -67,12 +77,22 @@ def check_case(dataset: Path, case: TriageCase) -> dict[str, object]:
 
     real_passes = real.level is VerificationLevel.NOTHING_ELSE_BROKE
     broken_fails = broken.level < VerificationLevel.NOTHING_ELSE_BROKE
+
+    if not real_passes:
+        reason = f"reference fix only reached {real.level.name}"
+    elif not broken_fails:
+        # The build passes whatever is applied, so nothing about a patch can
+        # be concluded from it. Previously recorded with no reason at all.
+        reason = "the corrupted fix passed too, so the build proves nothing"
+    else:
+        reason = ""
+
     return {
         "case_id": case.case_id,
         "usable": real_passes and broken_fails,
         "reference_level": real.level.name,
         "corrupted_level": broken.level.name,
-        "reason": "" if real_passes else f"reference fix only reached {real.level.name}",
+        "reason": reason,
         "detail": real.detail,
         # Kept because a case marked unusable is a case somebody has to
         # diagnose, and the level alone does not say what went wrong.
