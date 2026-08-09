@@ -40,6 +40,18 @@ opposite responses. Cases where the agent declined to patch are counted apart
 from failures, because declining to patch a flake is correct and scoring it as
 a miss would push a model toward guessing.
 
+**This funnel currently has no data.** Only the first rung can be evaluated
+without the repository checked out at the failing commit, and every case in
+the benchmark stores logs and a diff rather than a checkout, so all 48 are
+marked `verification: none`. The scorer and the container runner both exist
+and are tested; what does not exist is a case they can run against.
+
+Making this measurable means reproducible cases: importing BugSwarm
+artifacts, which ship a failing build, a passing build and the fix diff, or
+pinning a small number of repositories whose test suite can be run from a
+clean container. Until then, treat every claim about fix quality here as
+unproven rather than merely small.
+
 Nothing is scored by asking a model whether an answer looks good. Execution
 decides.
 

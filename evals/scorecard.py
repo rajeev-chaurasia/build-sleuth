@@ -15,6 +15,7 @@ from pydantic import BaseModel, model_validator
 
 from buildsleuth.models.taxonomy import MAX_ERROR_COST, FailureClass
 from evals.scorers.classification import ClassificationReport, classification_metrics
+from evals.scorers.fix_quality import FixAttempt, FixReport, fix_metrics, render_funnel
 from evals.scorers.localization import LocalizationReport, localization_metrics
 
 SCHEMA_VERSION = 1
@@ -76,6 +77,7 @@ class Scorecard(BaseModel):
     created_at: datetime
     classification: ClassificationReport | None = None
     localization: LocalizationReport | None = None
+    fix: FixReport | None = None
     cost: CostSummary = CostSummary()
     per_case: list[CaseResult] = []
 
@@ -89,6 +91,7 @@ def build_scorecard(
     subset: str,
     per_case: Sequence[CaseResult],
     localization_samples: Sequence[tuple[Sequence[str], Sequence[str]]] = (),
+    fix_attempts: Sequence[FixAttempt] = (),
     cost: CostSummary | None = None,
     created_at: datetime | None = None,
 ) -> Scorecard:
@@ -113,6 +116,7 @@ def build_scorecard(
         created_at=created_at if created_at is not None else datetime.now(UTC),
         classification=classification_metrics(pairs) if pairs else None,
         localization=localization_metrics(localization_samples) if localization_samples else None,
+        fix=fix_metrics(fix_attempts) if fix_attempts else None,
         cost=cost if cost is not None else CostSummary(),
         per_case=list(per_case),
     )
@@ -266,5 +270,8 @@ def render_markdown(card: Scorecard) -> str:
         )
 
     failures = [case.case_id for case in card.per_case if case.error]
+    if card.fix is not None:
+        lines += ["", "#### Fix funnel", "", render_funnel(card.fix)]
+
     lines += ["", f"Cases with no verdict: {', '.join(failures) if failures else NONE_MARKER}"]
     return "\n".join(lines)

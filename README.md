@@ -57,6 +57,10 @@ run url -> ingest -> condense -> classify -> localize -> fix -> policy -> verify
            [det]     [det]       [model]     [model]     [model] [det]    [det]     [det, guarded]
 ```
 
+**What `verify` means today, precisely.** It has four rungs: the patch applies, it lints, the failing test passes, nothing else broke. Only the first rung runs in practice. The upper three need the repository checked out at the failing commit inside a container, and the benchmark stores logs and diffs rather than checkouts, so all 48 cases are marked `verification: none`. The container runner is written and tested but has no case to run against yet.
+
+That means **fix quality is currently unmeasured**. Classification and localization have numbers; the fix stage has a patch that provably applies and nothing beyond that. Building reproducible cases, by importing BugSwarm artifacts or pinning a handful of repositories, is the next real piece of work.
+
 Ingest snapshots a run so triage is offline and eval cases stay replayable after GitHub deletes the logs at ninety days. Condensation reduces real logs, which run from 39 to 36,000 lines here, to a few kilobytes around the error. Localization is skipped entirely for flakes and infrastructure failures, which have no culprit file; a guess there sends somebody to read a file that was never at fault.
 
 **The write path is guarded.** The allowlist is empty by default, so a fresh checkout cannot open a pull request anywhere. It refused this repository until it was explicitly opted in. Patch policy rejects anything too large to review, anything carrying what looks like a credential, and any edit to the workflow files unless the failure was in the pipeline itself: a code bug must not be fixed by changing the checks that caught it.
@@ -105,6 +109,7 @@ The annotators also refused to judge whether a failure followed the diff on case
 - **The dataset has outgrown the free tier.** A full run is about ninety model calls and the daily quota ran out mid-run. Full-suite runs need batching, a paid key, or a local model.
 - **The model choice is not settled on quality.** `gemini-3.1-flash-lite` is the default because it completed a run, not because it won a fair comparison. `gemini-3.5-flash` looked stronger on the cases it finished before running out of quota, which is exactly the partial number this harness exists to distrust.
 - Regression tolerances are deliberately loose, because measured run-to-run noise is larger than the drift worth catching. They tighten when the dataset does.
+- **Fix quality has no number yet**, for the reason above. The scorecard reports a fix funnel when one is supplied, and today nothing supplies it. Treat the fix stage as demonstrated once, on one real failure, rather than measured.
 
 ## Documentation
 

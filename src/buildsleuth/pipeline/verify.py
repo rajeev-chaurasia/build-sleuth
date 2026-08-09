@@ -6,9 +6,18 @@ deterministic; nothing here asks a model whether the patch is good.
 """
 
 import subprocess
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import IntEnum
 from pathlib import Path
+
+from buildsleuth.sandbox.docker_runner import (
+    CommandResult,
+    SandboxSpec,
+    build_script,
+    docker_available,
+    run_in_container,
+)
 
 GIT = "git"
 APPLY_CHECK_TIMEOUT_SECONDS = 30
@@ -96,6 +105,57 @@ def check_applies(
 
 def _decode(raw: bytes | None) -> str:
     return raw.decode("utf-8", errors="replace") if raw else ""
+
+
+def verify_patch(
+    patch: str,
+    repo_dir: Path,
+    spec: SandboxSpec | None = None,
+    run: Callable[[SandboxSpec, str, str | None], CommandResult] = run_in_container,
+) -> VerificationResult:
+    """Walk the levels, cheapest first, stopping at the first one that fails.
+
+    Without a sandbox spec a patch can only be checked for whether it applies.
+    That is a real answer and the honest ceiling for a case nobody has written
+    a reproduction for, so it is reported as such rather than dressed up.
+    """
+    applies = check_applies(patch, repo_dir)
+    if not applies.applied or spec is None:
+        return applies
+
+    if not docker_available():
+        return VerificationResult(
+            VerificationLevel.APPLIES,
+            "patch applies, but docker is not available to execute it",
+        )
+
+    tests = run(spec, build_script(spec, apply_patch=True), None)
+    if not tests.ok:
+        return VerificationResult(
+            VerificationLevel.LINTS,
+            "patch applies but the failing test still fails",
+            stdout_tail=tests.output_tail,
+        )
+
+    if not spec.regression_command:
+        return VerificationResult(
+            VerificationLevel.FAILING_TEST_PASSES,
+            "the failing test passes, and no regression command was given to check the rest",
+            stdout_tail=tests.output_tail,
+        )
+
+    regression = run(spec, build_script(spec, apply_patch=True, run_regression=True), None)
+    if not regression.ok:
+        return VerificationResult(
+            VerificationLevel.FAILING_TEST_PASSES,
+            "the failing test passes but something else broke",
+            stdout_tail=regression.output_tail,
+        )
+    return VerificationResult(
+        VerificationLevel.NOTHING_ELSE_BROKE,
+        "the failing test passes and nothing else broke",
+        stdout_tail=regression.output_tail,
+    )
 
 
 def touched_paths(patch: str) -> list[str]:
