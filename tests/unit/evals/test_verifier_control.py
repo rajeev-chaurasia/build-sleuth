@@ -78,7 +78,16 @@ class TestExclusion:
         # which cases are sound.
         assert unmeasurable_cases(tmp_path / "absent.json") == set()
 
-    def test_the_recorded_control_excludes_the_cases_it_found_broken(self) -> None:
-        # The committed control run: five of thirteen reference fixes did not
-        # pass, so those cases cannot measure a patch.
-        assert len(unmeasurable_cases()) == 5
+    def test_the_recorded_control_agrees_with_its_own_summary(self) -> None:
+        # Checks the committed run against its own counts, so a file edited
+        # by hand or written by a half-finished run does not silently change
+        # which cases the funnel measures.
+        record = json.loads(Path("results/verifier-control.json").read_text(encoding="utf-8"))
+        assert len(unmeasurable_cases()) == record["n_checked"] - record["n_usable"]
+
+    def test_every_excluded_case_reached_a_level_below_the_top(self) -> None:
+        record = json.loads(Path("results/verifier-control.json").read_text(encoding="utf-8"))
+        for case in record["cases"]:
+            if not case["usable"]:
+                assert case["reference_level"] != "NOTHING_ELSE_BROKE"
+                assert case["reason"]
