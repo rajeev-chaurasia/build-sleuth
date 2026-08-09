@@ -38,6 +38,8 @@ RESULTS_DIR = Path("results")
 IMAGE_TAG_PREFIX = "bugswarm/cached-images:"
 NO_IMAGE = "case has no runnable image"
 NO_PATCH = "model declined to patch"
+# Enough for a rejected-hunk report without bloating the committed record.
+EVIDENCE_CHARS = 600
 CONTROL_FILE = RESULTS_DIR / "verifier-control.json"
 
 
@@ -90,7 +92,15 @@ def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: s
 
     # The case records owner/name, which resolves the checkout exactly.
     result = verify_in_image(proposed.value.patch, image_tag(case), case.inputs.repo)
-    return FixAttempt(case_id=case.case_id, attempted=True, level=result.level)
+    return FixAttempt(
+        case_id=case.case_id,
+        attempted=True,
+        level=result.level,
+        # The rung alone says a patch failed, not why. Without the reason a
+        # run that moves cannot be told apart from a harness that changed.
+        detail=result.detail,
+        evidence=result.stdout_tail[-EVIDENCE_CHARS:],
+    )
 
 
 def read_attempts(directory: Path) -> list[FixAttempt]:
@@ -106,6 +116,8 @@ def read_attempts(directory: Path) -> list[FixAttempt]:
                     attempted=entry["attempted"],
                     level=VerificationLevel[level] if level else VerificationLevel.NOTHING,
                     skip_reason=entry.get("skip_reason", ""),
+                    detail=entry.get("detail", ""),
+                    evidence=entry.get("evidence", ""),
                 )
             )
     return attempts
@@ -137,6 +149,8 @@ def aggregate(directory: Path, out: Path) -> int:
                         "attempted": a.attempted,
                         "level": a.level.name if a.attempted else None,
                         "skip_reason": a.skip_reason,
+                        "detail": a.detail,
+                        "evidence": a.evidence,
                     }
                     for a in sorted(attempts, key=lambda a: a.case_id)
                 ],
@@ -226,6 +240,8 @@ def main() -> int:
                         "attempted": a.attempted,
                         "level": a.level.name if a.attempted else None,
                         "skip_reason": a.skip_reason,
+                        "detail": a.detail,
+                        "evidence": a.evidence,
                     }
                     for a in attempts
                 ],

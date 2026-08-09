@@ -26,6 +26,10 @@ class FixAttempt:
     attempted: bool
     level: VerificationLevel = VerificationLevel.NOTHING
     skip_reason: str = ""
+    # Why it stopped where it did. The rung is the metric; this is what makes
+    # a number that moved between runs diagnosable rather than mysterious.
+    detail: str = ""
+    evidence: str = ""
 
 
 class FixReport(BaseModel):
