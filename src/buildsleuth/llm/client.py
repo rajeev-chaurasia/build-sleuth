@@ -35,6 +35,9 @@ BACKOFF_MAX_SECONDS = 30.0
 # A per minute limit clears in under a minute, so waiting it out is cheaper
 # than losing the case, and the ordinary backoff ceiling is too low for it.
 RATE_LIMIT_MAX_WAIT_SECONDS = 75.0
+# Enough to sit out a few busy minutes. Three cases were lost to a rate
+# limit that shared the general retry budget and ran it out.
+MAX_RATE_LIMIT_WAITS = 6
 _RETRY_DELAY = re.compile(r'"retryDelay"\s*:\s*"?([0-9.]+)s?"?')
 JITTER_FRACTION = 0.25
 MILLISECONDS_PER_SECOND = 1000.0
@@ -190,7 +193,12 @@ class OpenAICompatClient:
 
     def _post_with_retries(self, payload: dict[str, Any]) -> httpx.Response:
         attempts = self._spec.quirks.max_retries + 1
-        for attempt in range(attempts):
+        # A rate limit is the one failure where waiting is known to work, so
+        # it gets its own budget. Sharing the general one lost three cases to
+        # a busy minute, reported as a model error rather than as congestion.
+        rate_limited_attempts = 0
+        attempt = 0
+        while attempt < attempts:
             last_attempt = attempt == attempts - 1
             try:
                 response = self._http.post(self._url, json=payload, headers=self._headers())
@@ -202,6 +210,7 @@ class OpenAICompatClient:
                         f"{self._spec.name}: timed out after {attempts} attempts"
                     ) from error
                 self._sleep(self._backoff(attempt))
+                attempt += 1
                 continue
 
             if response.is_success:
@@ -211,9 +220,17 @@ class OpenAICompatClient:
                     f"{self._spec.name}: {self._spec.provider.value} daily quota is exhausted."
                     " Wait for it to reset or pick another model."
                 )
+            if _is_rate_limited(response) and rate_limited_attempts < MAX_RATE_LIMIT_WAITS:
+                # Does not consume the general budget: the server said when to
+                # come back, and the case is worth the wait.
+                rate_limited_attempts += 1
+                self._sleep(self._retry_delay(attempt, response))
+                continue
+
             if response.status_code not in RETRYABLE_STATUSES or last_attempt:
                 raise self._error(response)
             self._sleep(self._retry_delay(attempt, response))
+            attempt += 1
         raise ModelError(f"{self._spec.name}: no attempt was made against {self._url}")
 
     def _retry_delay(self, attempt: int, response: httpx.Response) -> float:

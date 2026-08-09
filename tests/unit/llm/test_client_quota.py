@@ -10,13 +10,20 @@ import pytest
 import respx
 
 from buildsleuth.llm.client import (
+    MAX_RATE_LIMIT_WAITS,
     RATE_LIMIT_MAX_WAIT_SECONDS,
     OpenAICompatClient,
     _is_quota_exhausted,
     _retry_after_seconds,
 )
 from buildsleuth.llm.registry import get_model_spec
-from buildsleuth.llm.types import CompletionRequest, Message, QuotaExhaustedError, Role
+from buildsleuth.llm.types import (
+    CompletionRequest,
+    Message,
+    ModelError,
+    QuotaExhaustedError,
+    Role,
+)
 
 SPEC = get_model_spec("gemini-3.5-flash")
 URL = f"{SPEC.base_url}/chat/completions"
@@ -28,6 +35,10 @@ QUOTA_BODY = {
     }
 }
 RATE_LIMIT_BODY = {"error": {"code": 429, "message": "Too many requests, please slow down."}}
+OK_BODY = {
+    "choices": [{"message": {"content": "{}"}, "finish_reason": "stop"}],
+    "usage": {"prompt_tokens": 1, "completion_tokens": 1},
+}
 
 
 def _request() -> CompletionRequest:
@@ -132,3 +143,43 @@ class TestPerMinuteIsNotPerDay:
 
     def test_a_body_with_no_delay_falls_back_to_backoff(self) -> None:
         assert _retry_after_seconds(httpx.Response(429, text="slow down")) is None
+
+
+class TestRateLimitBudget:
+    """Three cases were lost to a rate limit that shared the general retry
+    budget and ran it out, reported as a model error rather than congestion."""
+
+    @respx.mock
+    def test_waits_out_more_rate_limits_than_the_general_budget_allows(self) -> None:
+        sleeps: list[float] = []
+        route = respx.post(URL).mock(
+            side_effect=[httpx.Response(429, text=PER_MINUTE_BODY)] * 4
+            + [httpx.Response(200, json=OK_BODY)]
+        )
+
+        result = _client(sleeps).complete(_request())
+
+        assert result.content == "{}"
+        # More attempts than the general max_retries would have permitted.
+        assert route.call_count == 5
+        assert len(sleeps) == 4
+
+    @respx.mock
+    def test_gives_up_rather_than_waiting_forever(self) -> None:
+        sleeps: list[float] = []
+        respx.post(URL).respond(429, text=PER_MINUTE_BODY)
+
+        with pytest.raises(ModelError):
+            _client(sleeps).complete(_request())
+
+        assert len(sleeps) <= MAX_RATE_LIMIT_WAITS + SPEC.quirks.max_retries
+
+    @respx.mock
+    def test_a_spent_daily_allowance_still_costs_one_request(self) -> None:
+        sleeps: list[float] = []
+        route = respx.post(URL).respond(429, text=PER_DAY_BODY)
+
+        with pytest.raises(QuotaExhaustedError):
+            _client(sleeps).complete(_request())
+
+        assert route.call_count == 1
