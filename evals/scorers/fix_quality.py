@@ -38,6 +38,9 @@ class FixAttempt:
     # recomputed hunk headers applied. Counted so the repair has to earn its
     # place rather than being assumed to help.
     needed_repair: bool = False
+    # Where each anchored edit landed, when the patch was computed from edits
+    # rather than written as a diff. Empty on the unified diff path.
+    edit_notes: str = ""
 
 
 class FixReport(BaseModel):

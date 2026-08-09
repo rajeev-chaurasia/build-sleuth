@@ -49,3 +49,41 @@ class FixProposal(BaseModel):
     @property
     def is_empty(self) -> bool:
         return not self.patch.strip()
+
+
+class AnchoredEdit(BaseModel):
+    """One change, as the text to look for and the text to put in its place.
+
+    The model supplies only what it wants changed. Where that text sits, and
+    what the surrounding lines say, is read out of the file by
+    `pipeline.anchored_edits` rather than retyped from memory.
+    """
+
+    path: str
+    find: str
+    replace: str
+
+
+class EditProposal(BaseModel):
+    """Anchored edits standing in for a patch the model would have written.
+
+    No edits is a legitimate answer for the same reason an empty patch is: a
+    model that cannot fix the cause should say so in `strategy`.
+    """
+
+    edits: list[AnchoredEdit] = Field(default_factory=list)
+    strategy: str = ""
+    expected_effect: str = ""
+
+    @property
+    def is_empty(self) -> bool:
+        return not self.edits
+
+    @property
+    def touched_files(self) -> list[str]:
+        """Paths the edits name, in the order they first appear."""
+        seen: list[str] = []
+        for edit in self.edits:
+            if edit.path not in seen:
+                seen.append(edit.path)
+        return seen

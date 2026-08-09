@@ -108,6 +108,16 @@ One patch went from rejected to fixing the build outright. Two others stopped be
 
 That is the project's thesis applied to formatting instead of judgement: the model proposes, and anything mechanically derivable is computed rather than trusted.
 
+### Not asking the model for the diff at all
+
+Repair cannot reach the four rejections above where the diff was well formed and its context did not match the file. Nothing in the patch says what the file actually contains, so there is nothing to recompute from.
+
+The context is derivable, just not from the diff. It is in the file, which the pipeline already has, so the fix stage now asks for the change instead: the exact text to find and what it becomes. `pipeline/anchored_edits.py` locates that text, splices it, and computes the unified diff with `difflib`. Context lines come from the file, so they cannot disagree with it, and the line endings are the file's own rather than whatever the model typed. An anchor that does not occur in the file, or occurs twice, is a named rejection against a named path, and the proposal is not run at all rather than half applied.
+
+Near misses are placed where the file resolves them: an anchor typed with the wrong line endings, with trailing whitespace, or with the indentation flattened still points at exactly one place. Which tolerance was needed is recorded per case, so the loosest rule cannot quietly become load bearing.
+
+**This is not measured yet.** The funnel above is the unified diff path. `--patch-format edits` is now the default and `--patch-format diff` reruns the old one on the same cases, so the two are comparable when quota allows.
+
 ### Checking the checker
 
 A funnel of near-zeros has two explanations, a model that writes bad patches or a verifier that cannot recognise a good one, and they need opposite responses. So every case is first verified twice with no model involved: once with the maintainer's own fix, which must reach the top rung, and once with that fix deliberately corrupted, which must not.

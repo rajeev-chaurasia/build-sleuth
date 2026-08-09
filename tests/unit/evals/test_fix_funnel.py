@@ -10,7 +10,9 @@ from pathlib import Path
 
 from evals.fix_funnel import (
     IMAGE_TAG_PREFIX,
+    PatchFormat,
     aggregate,
+    edited_patch,
     executable_cases,
     image_tag,
     read_attempts,
@@ -19,6 +21,8 @@ from evals.fix_funnel import (
 from evals.verifier_control import summarize
 
 from buildsleuth.dataset.loader import load_cases
+from buildsleuth.models.triage import AnchoredEdit
+from buildsleuth.pipeline.anchored_edits import patch_from_edits
 from buildsleuth.pipeline.verify import VerificationLevel
 from buildsleuth.sandbox.bugswarm_runner import FILE_MARKER, parse_files, read_script
 
@@ -172,3 +176,49 @@ class TestFilesReachTheModel:
 
     def test_the_read_happens_inside_the_checkout(self) -> None:
         assert 'cd "$FAILED/$PROJ"' in read_script(["a.py"])
+
+
+class TestAnchoredEditsReachTheVerifier:
+    """Four of the nine attempts in the last funnel were rejected because the
+    model retyped context that did not match. Asking for edits instead moves
+    that failure from the container to a reported rejection here."""
+
+    SOURCE = "def go():\n    return 1\n"
+    EDIT = AnchoredEdit(path="a.py", find="    return 1\n", replace="    return 2\n")
+
+    def test_edits_are_the_default_format(self) -> None:
+        assert PatchFormat.EDITS is PatchFormat("edits")
+
+    def test_a_placed_edit_becomes_the_patch_to_verify(self) -> None:
+        built = patch_from_edits([self.EDIT], {"a.py": self.SOURCE})
+        assert edited_patch(built) == built.patch
+        assert "+    return 2" in edited_patch(built)
+
+    def test_an_edit_that_did_not_land_verifies_nothing(self) -> None:
+        # Running half a proposal reports a build failure caused by the half
+        # that is missing, which is worse than reporting that it missed.
+        missing = AnchoredEdit(path="a.py", find="    return 99\n", replace="    return 3\n")
+        built = patch_from_edits([self.EDIT, missing], {"a.py": self.SOURCE})
+        assert edited_patch(built) == ""
+        assert "does not occur" in built.report
+
+    def test_the_notes_survive_a_round_trip_through_the_attempt_file(self, tmp_path: Path) -> None:
+        _attempt_file(
+            tmp_path,
+            "n.json",
+            [
+                {
+                    "case_id": "bs-0010",
+                    "attempted": True,
+                    "level": "APPLIES",
+                    "edit_notes": "placed 1 of 1 edits; a.py matched exactly",
+                }
+            ],
+        )
+        assert "matched exactly" in read_attempts(tmp_path)[0].edit_notes
+
+    def test_an_attempt_file_written_before_the_notes_existed_still_reads(
+        self, tmp_path: Path
+    ) -> None:
+        _attempt_file(tmp_path, "old.json", [{"case_id": "bs-0010", "attempted": True}])
+        assert read_attempts(tmp_path)[0].edit_notes == ""
