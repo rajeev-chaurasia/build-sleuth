@@ -153,6 +153,11 @@ jobs:
           uv run python -m evals.verifier_control --summarize attempts | tee control.txt
           uv run python -m evals.fix_funnel \
             --aggregate attempts --out results/fix-funnel.json | tee funnel.txt || true
+          if ! grep -q attempted funnel.txt; then
+            # A run that measured nothing once finished green, because every
+            # measure step skipped on a missing key and said so quietly.
+            echo "::warning::no patches were measured, check the model key secret"
+          fi
           {
             echo '### Verifier control'
             echo
