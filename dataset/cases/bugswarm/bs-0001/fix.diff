@@ -1,0 +1,100 @@
+diff -ruN /home/travis/build/failed/Abjad/abjad/abjad/tools/agenttools/IterationAgent.py /home/travis/build/passed/Abjad/abjad/abjad/tools/agenttools/IterationAgent.py
+--- /home/travis/build/failed/Abjad/abjad/abjad/tools/agenttools/IterationAgent.py	2019-02-09 21:18:05.000000000 +0000
++++ /home/travis/build/passed/Abjad/abjad/abjad/tools/agenttools/IterationAgent.py	2019-02-09 21:18:04.000000000 +0000
+@@ -1307,7 +1307,7 @@
+         pitched=False,
+         reverse=False,
+         parentage_mask=None,
+-        with_grace_notes=False,
++        with_grace_notes=True,
+         ):
+         r'''Iterates by logical tie.
+ 
+@@ -1395,6 +1395,7 @@
+ 
+                     >>> for logical_tie in abjad.iterate(staff).by_logical_tie(
+                     ...     reverse=True,
++                    ...     with_grace_notes=False,
+                     ...     ):
+                     ...     logical_tie
+                     ...
+@@ -1408,7 +1409,10 @@
+                 ::
+ 
+                     >>> expression = abjad.iterate()
+-                    >>> expression = expression.by_logical_tie(reverse=True)
++                    >>> expression = expression.by_logical_tie(
++                    ...     reverse=True,
++                    ...     with_grace_notes=False,
++                    ...     )
+                     >>> for logical_tie in expression(staff):
+                     ...     logical_tie
+                     ...
+diff -ruN /home/travis/build/failed/Abjad/abjad/abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py /home/travis/build/passed/Abjad/abjad/abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py
+--- /home/travis/build/failed/Abjad/abjad/abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py	2019-02-09 21:18:06.000000000 +0000
++++ /home/travis/build/passed/Abjad/abjad/abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py	2019-02-09 21:18:04.000000000 +0000
+@@ -26,7 +26,10 @@
+ 
+         Returns none.
+         '''
+-        for logical_tie in iterate(argument).by_logical_tie(reverse=True):
++        for logical_tie in iterate(argument).by_logical_tie(
++            reverse=True,
++            with_grace_notes=False,
++            ):
+             sub_logical_ties = []
+             current_sub_logical_tie = []
+             for leaf in logical_tie:
+diff -ruN /home/travis/build/failed/Abjad/abjad/abjad/tools/selectiontools/Selection.py /home/travis/build/passed/Abjad/abjad/abjad/tools/selectiontools/Selection.py
+--- /home/travis/build/failed/Abjad/abjad/abjad/tools/selectiontools/Selection.py	2019-02-09 21:18:06.000000000 +0000
++++ /home/travis/build/passed/Abjad/abjad/abjad/tools/selectiontools/Selection.py	2019-02-09 21:18:04.000000000 +0000
+@@ -952,7 +952,7 @@
+         nontrivial=False,
+         pitched=False,
+         reverse=False,
+-        with_grace_notes=False,
++        with_grace_notes=True,
+         ):
+         r'''Select components by logical tie.
+ 
+diff -ruN /home/travis/build/failed/Abjad/abjad/abjad/tools/selectortools/Selector.py /home/travis/build/passed/Abjad/abjad/abjad/tools/selectortools/Selector.py
+--- /home/travis/build/failed/Abjad/abjad/abjad/tools/selectortools/Selector.py	2019-02-09 21:18:06.000000000 +0000
++++ /home/travis/build/passed/Abjad/abjad/abjad/tools/selectortools/Selector.py	2019-02-09 21:18:04.000000000 +0000
+@@ -205,7 +205,9 @@
+                 )
+         else:
+             raise ValueError(argument)
+-        return self._append_callback(callback)
++        selector = self._append_callback(callback)
++        template = self._get_template(inspect.currentframe())
++        return abjad.new(selector, template=template)
+ 
+     ### PRIVATE METHODS ###
+ 
+@@ -234,7 +236,8 @@
+             function_name = frame_info.function
+             arguments = abjad.Expression._wrap_arguments(frame)
+             stem = self.template or 'abjad.select()'
+-            template = f'{stem}.{function_name}({arguments})'
++            template = '{}.{}({})'
++            template = template.format(stem, function_name, arguments)
+         finally:
+             del frame
+         return template
+@@ -1765,7 +1768,7 @@
+         '''
+         import abjad
+         length_expr = None
+-        if isinstance(inequality, ( int, float, abjad.LengthInequality)):
++        if isinstance(inequality, (int, float, abjad.LengthInequality)):
+             length_expr = inequality
+         elif isinstance(inequality, str) and length is not None:
+             length_expr = abjad.LengthInequality(
+@@ -1799,7 +1802,7 @@
+         self,
+         pitched=False,
+         trivial=True,
+-        with_grace_notes=False,
++        with_grace_notes=True,
+         ):
+         r'''Selects by logical tie.

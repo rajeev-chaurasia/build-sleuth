@@ -1,8 +1,17 @@
 {
   "schema_version": 1,
-  "dataset_hash": "7c81d9be36b6",
-  "case_count": 48,
+  "dataset_hash": "6e9ec4d1edcd",
+  "case_count": 49,
   "cases": [
+    {
+      "case_id": "bs-0001",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
     {
       "case_id": "gm-0001",
       "failure_class": "code_change",

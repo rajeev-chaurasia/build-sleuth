@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "case_id": "bs-0001",
+  "title": "Abjad-abjad build 289716771",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "Abjad/abjad",
+    "run_id": 289716771,
+    "run_attempt": 1,
+    "head_sha": "unknown",
+    "pr_number": null,
+    "failed_job_name": "build",
+    "failed_step_name": null,
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "test_assertion",
+    "related_to_diff": true,
+    "culprit_files": [
+      "abjad/abjad/tools/agenttools/IterationAgent.py",
+      "abjad/abjad/tools/quantizationtools/NaiveAttackPointOptimizer.py",
+      "abjad/abjad/tools/selectiontools/Selection.py",
+      "abjad/abjad/tools/selectortools/Selector.py"
+    ],
+    "failing_tests": [],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "bugswarm",
+    "labeling_method": "imported",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": null,
+    "snapshot_date": "2026-08-08",
+    "notes": "Imported from BugSwarm artifact Abjad-abjad-289716771. Culprit files are the ones the maintainer's own fix touched, taken by diffing the failing and passing trees in the image, rather than read off the log by a labeller. The class follows from the artifact being a reproducible build failure that a human then fixed; the subcategory is a default and has not been adjudicated.",
+    "independent_adjudications": 0,
+    "adjudicators_agreeing": 0
+  },
+  "verification": {
+    "method": "bugswarm_image",
+    "docker_image": "bugswarm/cached-images:Abjad-abjad-289716771",
+    "setup_commands": [],
+    "test_command": "bash /usr/local/bin/run_failed.sh",
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": [
+    "bugswarm",
+    "executable"
+  ]
+}
