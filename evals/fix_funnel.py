@@ -158,7 +158,11 @@ def main() -> int:
 
     settings = load_settings()
     spec = get_model_spec(args.model)
-    client = OpenAICompatClient(spec=spec, api_key=settings.api_key_for(Provider.GEMINI))
+    api_key = settings.api_key_for(spec.provider)
+    if spec.provider is not Provider.OLLAMA and not api_key:
+        print(f"no key configured for {spec.provider}")
+        return 1
+    client = OpenAICompatClient(spec=spec, api_key=api_key)
 
     every_case = load_cases(args.dataset)
     runnable = executable_cases(every_case)

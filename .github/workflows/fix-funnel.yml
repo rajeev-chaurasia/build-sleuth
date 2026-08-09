@@ -7,7 +7,10 @@ name: fix-funnel
 # each image is gigabytes, and two of them will not fit on one disk. One case
 # gets one runner, and the funnel is assembled at the end.
 #
-# Needs a model key in the BUILDSLEUTH_GEMINI_API_KEY repository secret.
+# Needs a model key in a repository secret. Which one depends on the model:
+# BUILDSLEUTH_GEMINI_API_KEY, BUILDSLEUTH_GROQ_API_KEY, or
+# BUILDSLEUTH_OPENROUTER_API_KEY. All three are passed through, and the
+# provider comes from the model in the registry.
 
 on:
   workflow_dispatch:
@@ -76,6 +79,8 @@ jobs:
       - name: Measure ${{ matrix.case_id }}
         env:
           BUILDSLEUTH_GEMINI_API_KEY: ${{ secrets.BUILDSLEUTH_GEMINI_API_KEY }}
+          BUILDSLEUTH_GROQ_API_KEY: ${{ secrets.BUILDSLEUTH_GROQ_API_KEY }}
+          BUILDSLEUTH_OPENROUTER_API_KEY: ${{ secrets.BUILDSLEUTH_OPENROUTER_API_KEY }}
         run: |
           uv run python -m evals.fix_funnel \
             --model "${{ inputs.model }}" \
