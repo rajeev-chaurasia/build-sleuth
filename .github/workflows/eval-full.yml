@@ -1,0 +1,84 @@
+name: eval-full
+
+# Scores a model over the whole dataset, not the smoke subset the pull
+# request gate uses.
+#
+# It runs here rather than on a laptop because a full pass is roughly two
+# model calls per case, and the run that produced the README's headline was
+# cut off partway through by a daily quota. The scorecard is uploaded and the
+# coverage line reported first, so a truncated run is visible rather than
+# looking like a complete one.
+#
+# Needs a model key in a repository secret, matching the model's provider.
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Model to score"
+        required: false
+        default: "gemini-3.1-flash-lite"
+      subset:
+        description: "Case subset, empty for the whole dataset"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  score:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      BUILDSLEUTH_GEMINI_API_KEY: ${{ secrets.BUILDSLEUTH_GEMINI_API_KEY }}
+      BUILDSLEUTH_GROQ_API_KEY: ${{ secrets.BUILDSLEUTH_GROQ_API_KEY }}
+      BUILDSLEUTH_OPENROUTER_API_KEY: ${{ secrets.BUILDSLEUTH_OPENROUTER_API_KEY }}
+      BUILDSLEUTH_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the model key before spending a quota
+        run: |
+          if [ -z "$BUILDSLEUTH_GEMINI_API_KEY" ] && [ -z "$BUILDSLEUTH_OPENROUTER_API_KEY" ]; then
+            echo "::error::no model key is set, so nothing would be scored"
+            exit 1
+          fi
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: uv sync --all-groups
+
+      - name: Score ${{ inputs.model }}
+        run: |
+          if [ -n "${{ inputs.subset }}" ]; then
+            SUBSET="--subset ${{ inputs.subset }}"
+          else
+            SUBSET=""
+          fi
+          uv run python -m evals.run_eval \
+            --model "${{ inputs.model }}" $SUBSET --save | tee scorecard.txt
+
+      - name: Report
+        if: always()
+        run: |
+          {
+            echo "### Scorecard for \`${{ inputs.model }}\`"
+            echo
+            echo '```'
+            cat scorecard.txt
+            echo '```'
+            echo
+            echo "Read the coverage line first. A model that answers only the"
+            echo "cases it finds easy tops every other column."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scorecard-${{ inputs.model }}
+          path: results/
+          if-no-files-found: warn
