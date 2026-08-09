@@ -57,9 +57,13 @@ run url -> ingest -> condense -> classify -> localize -> fix -> policy -> verify
            [det]     [det]       [model]     [model]     [model] [det]    [det]     [det, guarded]
 ```
 
-**What `verify` means today, precisely.** It has four rungs: the patch applies, it lints, the failing test passes, nothing else broke. Only the first rung runs in practice. The upper three need the repository checked out at the failing commit inside a container, and the benchmark stores logs and diffs rather than checkouts, so all 48 cases are marked `verification: none`. The container runner is written and tested but has no case to run against yet.
+**What `verify` means today, precisely.** It has four rungs: the patch applies, it lints, the failing test passes, nothing else broke. The container runner executes all four and has been run end to end against one real reproducible case, this repository at a commit with a known bug. The other 48 benchmark cases are marked `verification: none`, because checking whether a patch works needs the repository checked out at the failing commit and the benchmark stores logs and diffs.
 
-That means **fix quality is currently unmeasured**. Classification and localization have numbers; the fix stage has a patch that provably applies and nothing beyond that. Building reproducible cases, by importing BugSwarm artifacts or pinning a handful of repositories, is the next real piece of work.
+**The one case that has been executed is worth reporting honestly, because the patch failed.** The model diagnosed the bug correctly, in words: the timestamp pattern was anchored to the start of the string rather than each line. Its diff then claimed seven lines in the hunk header and supplied five, so git rejected it as corrupt and nothing changed. Right diagnosis, malformed patch.
+
+That is the argument for execution-based verification in one example. An LLM judge reading that patch would have seen a correct explanation and a plausible-looking diff and passed it. `git apply` did not.
+
+So **fix quality has an N of one and a pass rate of zero**. Classification and localization have real numbers; the fix stage does not yet. Building more reproducible cases, by importing BugSwarm artifacts or pinning a few repositories, is the next real piece of work.
 
 Ingest snapshots a run so triage is offline and eval cases stay replayable after GitHub deletes the logs at ninety days. Condensation reduces real logs, which run from 39 to 36,000 lines here, to a few kilobytes around the error. Localization is skipped entirely for flakes and infrastructure failures, which have no culprit file; a guess there sends somebody to read a file that was never at fault.
 
@@ -109,7 +113,7 @@ The annotators also refused to judge whether a failure followed the diff on case
 - **The dataset has outgrown the free tier.** A full run is about ninety model calls and the daily quota ran out mid-run. Full-suite runs need batching, a paid key, or a local model.
 - **The model choice is not settled on quality.** `gemini-3.1-flash-lite` is the default because it completed a run, not because it won a fair comparison. `gemini-3.5-flash` looked stronger on the cases it finished before running out of quota, which is exactly the partial number this harness exists to distrust.
 - Regression tolerances are deliberately loose, because measured run-to-run noise is larger than the drift worth catching. They tighten when the dataset does.
-- **Fix quality has no number yet**, for the reason above. The scorecard reports a fix funnel when one is supplied, and today nothing supplies it. Treat the fix stage as demonstrated once, on one real failure, rather than measured.
+- **Fix quality is measured on exactly one case, and the patch failed it.** The diagnosis was right and the diff was malformed. One case is an anecdote, not a rate; the honest reading is that fix generation is unproven, not that it is bad.
 
 ## Documentation
 

@@ -10,7 +10,7 @@ import argparse
 import json
 from pathlib import Path
 
-from buildsleuth.config import load_settings
+from buildsleuth.config import Settings, load_settings
 from buildsleuth.guardrails.patch_policy import check_patch
 from buildsleuth.llm.client import OpenAICompatClient
 from buildsleuth.llm.registry import Provider, get_model_spec
@@ -18,10 +18,37 @@ from buildsleuth.pipeline.fix import SkipReason, propose_fix
 from buildsleuth.pipeline.localize import localize, ranked_paths
 from buildsleuth.pipeline.triage import TriageContext, classify
 from buildsleuth.pipeline.verify import check_applies
+from buildsleuth.providers.github.client import GitHubClient
+from buildsleuth.providers.github.provider import GitHubProvider
 from buildsleuth.tools.evidence import Evidence
 
 DEFAULT_MODEL = "gemini-3.1-flash-lite"
 PASSED = "passed"
+
+
+def _read_files(
+    paths: list[str], repo: str, head_sha: str | None, settings: Settings
+) -> dict[str, str]:
+    """File content as it was at the failing commit, not as it is now.
+
+    Reading the working tree hands the model code that may already contain the
+    fix, and it will then invent a plausible explanation for a failure the
+    code in front of it cannot produce. Verified by a container run: a patch
+    written that way applied cleanly and changed nothing.
+    """
+    if not head_sha:
+        return {
+            path: Path(path).read_text(encoding="utf-8") for path in paths if Path(path).is_file()
+        }
+
+    token = settings.github_token.get_secret_value() if settings.github_token else None
+    client = GitHubClient(token=token)
+    try:
+        provider = GitHubProvider(client)
+        found = {path: provider.get_file(repo, path, head_sha) for path in paths}
+    finally:
+        client.close()
+    return {path: body for path, body in found.items() if body is not None}
 
 
 def main() -> int:
@@ -31,6 +58,11 @@ def main() -> int:
     parser.add_argument("--job", default="unknown")
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--files", default="", help="Comma separated paths the model may edit.")
+    parser.add_argument(
+        "--head-sha",
+        default="",
+        help="Read file content at this commit rather than the working tree.",
+    )
     parser.add_argument("--out", type=Path, default=None)
     args = parser.parse_args()
 
@@ -56,9 +88,7 @@ def main() -> int:
     print(f"2 localize   {paths or 'no culprit file, by design for this class'}")
 
     editable = [path.strip() for path in args.files.split(",") if path.strip()] or paths
-    contents = {
-        path: Path(path).read_text(encoding="utf-8") for path in editable if Path(path).is_file()
-    }
+    contents = _read_files(editable, args.repo, args.head_sha or None, settings)
 
     proposed = propose_fix(
         client, args.model, verdict, evidence, list(contents), contents, repo=args.repo

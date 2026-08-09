@@ -23,11 +23,17 @@ NETWORK_NONE = "none"
 
 @dataclass(frozen=True)
 class SandboxSpec:
-    """Everything needed to reproduce one case's failure in a container."""
+    """Everything needed to reproduce one case's failure in a container.
+
+    Two setup phases, because the clone itself has prerequisites. A slim base
+    image has no git, and installing it in `setup_commands` is too late: the
+    clone has already run and failed.
+    """
 
     image: str
     repo_url: str
     head_sha: str
+    pre_clone_commands: list[str] = field(default_factory=list)
     setup_commands: list[str] = field(default_factory=list)
     test_command: str = ""
     regression_command: str = ""
@@ -67,6 +73,7 @@ def build_script(spec: SandboxSpec, apply_patch: bool = False, run_regression: b
     """
     lines = [
         "set -eux",
+        *spec.pre_clone_commands,
         f"git clone --filter=blob:none {shlex.quote(spec.repo_url)} {WORKDIR}",
         f"cd {WORKDIR}",
         f"git checkout {shlex.quote(spec.head_sha)}",
