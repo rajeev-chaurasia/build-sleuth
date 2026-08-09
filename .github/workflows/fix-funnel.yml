@@ -23,6 +23,10 @@ on:
         description: "Recheck the verifier against the maintainer fixes"
         required: false
         default: "false"
+      cases:
+        description: "Comma separated case ids, empty for all"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -71,11 +75,15 @@ jobs:
           if os.environ["CONTROL"] != "true":
               broken = unmeasurable_cases()
               cases = [c for c in cases if c.case_id not in broken]
+          wanted = {name.strip() for name in os.environ["CASES"].split(",") if name.strip()}
+          if wanted:
+              cases = [c for c in cases if c.case_id in wanted]
           print("matrix=" + json.dumps({"include": [{"case_id": c.case_id} for c in cases]}))
           print(f"count={len(cases)}")
           EOF
         env:
           CONTROL: ${{ inputs.control }}
+          CASES: ${{ inputs.cases }}
 
   measure:
     needs: plan
