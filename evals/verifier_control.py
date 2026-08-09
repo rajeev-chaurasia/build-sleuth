@@ -33,6 +33,7 @@ DEFAULT_DATASET = Path("dataset")
 # Enough to break the patch without making it unparseable, so it fails at
 # apply time the way a genuinely wrong patch does.
 CORRUPTION = "@@ -1,7 +1,5 @@"
+OUTPUT_TAIL_CHARS = 400
 
 
 def corrupt(diff: str) -> str:
@@ -73,6 +74,9 @@ def check_case(dataset: Path, case: TriageCase) -> dict[str, object]:
         "corrupted_level": broken.level.name,
         "reason": "" if real_passes else f"reference fix only reached {real.level.name}",
         "detail": real.detail,
+        # Kept because a case marked unusable is a case somebody has to
+        # diagnose, and the level alone does not say what went wrong.
+        "output_tail": real.stdout_tail[-OUTPUT_TAIL_CHARS:],
     }
 
 

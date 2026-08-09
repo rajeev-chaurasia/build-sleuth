@@ -1,0 +1,111 @@
+{
+  "generated_at": "2026-08-09T06:30:00+00:00",
+  "n_usable": 8,
+  "n_checked": 13,
+  "cases": [
+    {
+      "case_id": "bs-0001",
+      "usable": false,
+      "reference_level": "APPLIES",
+      "corrupted_level": "NOTHING",
+      "reason": "reference fix only reached APPLIES",
+      "detail": "patch applies but the build still fails"
+    },
+    {
+      "case_id": "bs-0010",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied"
+    },
+    {
+      "case_id": "bs-0011",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied"
+    },
+    {
+      "case_id": "bs-0012",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied"
+    },
+    {
+      "case_id": "bs-0013",
+      "usable": false,
+      "reference_level": "APPLIES",
+      "corrupted_level": "NOTHING",
+      "reason": "reference fix only reached APPLIES",
+      "detail": "patch applies but the build still fails"
+    },
+    {
+      "case_id": "bs-0014",
+      "usable": false,
+      "reference_level": "APPLIES",
+      "corrupted_level": "NOTHING",
+      "reason": "reference fix only reached APPLIES",
+      "detail": "patch applies but the build still fails"
+    },
+    {
+      "case_id": "bs-0015",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied"
+    },
+    {
+      "case_id": "bs-0016",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied"
+    },
+    {
+      "case_id": "bs-0017",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied"
+    },
+    {
+      "case_id": "bs-0018",
+      "usable": false,
+      "reference_level": "NOTHING",
+      "corrupted_level": "NOTHING",
+      "reason": "reference fix only reached NOTHING",
+      "detail": "patch does not apply"
+    },
+    {
+      "case_id": "bs-0019",
+      "usable": false,
+      "reference_level": "NOTHING",
+      "corrupted_level": "NOTHING",
+      "reason": "reference fix only reached NOTHING",
+      "detail": "patch does not apply"
+    },
+    {
+      "case_id": "bs-0020",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied"
+    },
+    {
+      "case_id": "bs-0021",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied"
+    }
+  ]
+}

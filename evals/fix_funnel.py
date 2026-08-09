@@ -38,6 +38,20 @@ RESULTS_DIR = Path("results")
 IMAGE_TAG_PREFIX = "bugswarm/cached-images:"
 NO_IMAGE = "case has no runnable image"
 NO_PATCH = "model declined to patch"
+CONTROL_FILE = RESULTS_DIR / "verifier-control.json"
+
+
+def unmeasurable_cases(control: Path = CONTROL_FILE) -> set[str]:
+    """Cases where the maintainer's own fix does not pass the verifier.
+
+    Those cannot distinguish a bad patch from a case the harness cannot run,
+    so they are dropped from the funnel entirely rather than scored as
+    failures. Counting them would blame the model for a broken case.
+    """
+    if not control.is_file():
+        return set()
+    record = json.loads(control.read_text(encoding="utf-8"))
+    return {case["case_id"] for case in record.get("cases", []) if not case.get("usable")}
 
 
 def executable_cases(cases: list[TriageCase]) -> list[TriageCase]:
@@ -167,9 +181,18 @@ def main() -> int:
     wanted = {name.strip() for name in args.only.split(",") if name.strip()}
     if wanted:
         runnable = [case for case in runnable if case.case_id in wanted]
+    unmeasurable = unmeasurable_cases()
+    excluded = [case.case_id for case in runnable if case.case_id in unmeasurable]
+    runnable = [case for case in runnable if case.case_id not in unmeasurable]
     if args.limit:
         runnable = runnable[: args.limit]
-    print(f"{len(runnable)} of {len(every_case)} cases can be executed\n", flush=True)
+
+    print(f"{len(runnable)} of {len(every_case)} cases can measure a fix", flush=True)
+    if excluded:
+        # Said out loud, because a funnel over a silently narrowed subset is
+        # the kind of number this harness exists to distrust.
+        print(f"excluded by the verifier control: {', '.join(excluded)}", flush=True)
+    print(flush=True)
 
     attempts: list[FixAttempt] = []
     for case in runnable:

@@ -1,8 +1,9 @@
 """Tests for the check that the verifier can tell a good patch from a bad one."""
 
+import json
 from pathlib import Path
 
-from evals.fix_funnel import executable_cases
+from evals.fix_funnel import executable_cases, unmeasurable_cases
 from evals.verifier_control import CORRUPTION, corrupt, reference_diff
 
 from buildsleuth.dataset.loader import case_dir_for, load_cases, read_case_log
@@ -59,3 +60,25 @@ class TestAgainstTheRealDataset:
         for case in executable_cases(load_cases(DATASET)):
             diff = reference_diff(DATASET, case) or ""
             assert "--- a/" in diff, f"{case.case_id} keeps container paths"
+
+
+class TestExclusion:
+    def test_the_funnel_drops_cases_the_control_marked_unusable(self, tmp_path: Path) -> None:
+        control = tmp_path / "control.json"
+        control.write_text(
+            json.dumps(
+                {"cases": [{"case_id": "a", "usable": False}, {"case_id": "b", "usable": True}]}
+            ),
+            encoding="utf-8",
+        )
+        assert unmeasurable_cases(control) == {"a"}
+
+    def test_a_missing_control_excludes_nothing(self, tmp_path: Path) -> None:
+        # Without a control run the funnel still works, it just cannot say
+        # which cases are sound.
+        assert unmeasurable_cases(tmp_path / "absent.json") == set()
+
+    def test_the_recorded_control_excludes_the_cases_it_found_broken(self) -> None:
+        # The committed control run: five of thirteen reference fixes did not
+        # pass, so those cases cannot measure a patch.
+        assert len(unmeasurable_cases()) == 5
