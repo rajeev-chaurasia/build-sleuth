@@ -100,6 +100,9 @@ jobs:
       BUILDSLEUTH_GEMINI_API_KEY: ${{ secrets.BUILDSLEUTH_GEMINI_API_KEY }}
       BUILDSLEUTH_GROQ_API_KEY: ${{ secrets.BUILDSLEUTH_GROQ_API_KEY }}
       BUILDSLEUTH_OPENROUTER_API_KEY: ${{ secrets.BUILDSLEUTH_OPENROUTER_API_KEY }}
+      # Read only, to fetch the files the model is asked to patch at the
+      # commit that broke. Without it the model patches source it cannot see.
+      BUILDSLEUTH_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 

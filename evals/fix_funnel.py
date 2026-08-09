@@ -19,7 +19,7 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 
-from buildsleuth.config import load_settings
+from buildsleuth.config import Settings, load_settings
 from buildsleuth.dataset.loader import case_dir_for, load_cases, read_case_log
 from buildsleuth.llm.client import OpenAICompatClient
 from buildsleuth.llm.registry import Provider, get_model_spec
@@ -28,6 +28,8 @@ from buildsleuth.pipeline.fix import SkipReason, propose_fix
 from buildsleuth.pipeline.localize import localize, ranked_paths
 from buildsleuth.pipeline.triage import TriageContext, classify
 from buildsleuth.pipeline.verify import VerificationLevel
+from buildsleuth.providers.github.client import GitHubClient
+from buildsleuth.providers.github.provider import GitHubProvider
 from buildsleuth.sandbox.bugswarm_runner import verify_in_image
 from buildsleuth.tools.evidence import Evidence
 from evals.scorers.fix_quality import FixAttempt, fix_metrics, render_funnel
@@ -40,6 +42,7 @@ NO_IMAGE = "case has no runnable image"
 NO_PATCH = "model declined to patch"
 # Enough for a rejected-hunk report without bloating the committed record.
 EVIDENCE_CHARS = 600
+UNKNOWN_SHA = "unknown"
 CONTROL_FILE = RESULTS_DIR / "verifier-control.json"
 
 
@@ -72,7 +75,39 @@ def image_tag(case: TriageCase) -> str:
     return (image or "").removeprefix(IMAGE_TAG_PREFIX)
 
 
-def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: str) -> FixAttempt:
+def read_files_at_commit(case: TriageCase, paths: list[str], settings: Settings) -> dict[str, str]:
+    """Fetch the files the model wants to edit, as they were when it broke.
+
+    Without this the model is asked to write a unified diff for a file it has
+    never seen, and its context lines can only match by luck. That measures
+    whether it can guess the surrounding source, not whether it can fix the
+    bug, and it is why most patches were being rejected at apply time.
+
+    Over HTTP rather than out of the image, because starting a container per
+    case before knowing there is a patch worth running costs minutes each.
+    """
+    if not paths or case.inputs.head_sha == UNKNOWN_SHA:
+        return {}
+
+    token = settings.github_token.get_secret_value() if settings.github_token else None
+    client = GitHubClient(token=token)
+    try:
+        provider = GitHubProvider(client)
+        found = {
+            path: provider.get_file(case.inputs.repo, path, case.inputs.head_sha) for path in paths
+        }
+    finally:
+        client.close()
+    return {path: body for path, body in found.items() if body is not None}
+
+
+def attempt_one(
+    client: OpenAICompatClient,
+    model: str,
+    case: TriageCase,
+    log: str,
+    settings: Settings,
+) -> FixAttempt:
     """Run the pipeline for one case and record how far the patch got."""
     evidence = Evidence(log_text=log)
     triaged = classify(
@@ -83,10 +118,10 @@ def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: s
     located = localize(client, model, verdict, evidence, repo=case.inputs.repo)
     paths = ranked_paths(located.value) if located is not None else []
 
-    # The image holds the source, so the model is given the paths and asked to
-    # patch them blind. Reading the file would mean starting a container per
-    # case before knowing whether there is a patch worth running.
-    proposed = propose_fix(client, model, verdict, evidence, paths, {}, repo=case.inputs.repo)
+    contents = read_files_at_commit(case, paths, settings)
+    proposed = propose_fix(
+        client, model, verdict, evidence, list(contents), contents, repo=case.inputs.repo
+    )
     if isinstance(proposed, SkipReason):
         return FixAttempt(case_id=case.case_id, attempted=False, skip_reason=proposed.reason)
 
@@ -212,7 +247,7 @@ def main() -> int:
     for case in runnable:
         log = read_case_log(case_dir_for(args.dataset, case), case)
         try:
-            attempt = attempt_one(client, args.model, case, log)
+            attempt = attempt_one(client, args.model, case, log, settings)
         except Exception as error:
             # A case that blew up is a case with no result, not a pass.
             attempt = FixAttempt(

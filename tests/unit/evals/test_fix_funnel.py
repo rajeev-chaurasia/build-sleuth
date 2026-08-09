@@ -10,13 +10,16 @@ from pathlib import Path
 
 from evals.fix_funnel import (
     IMAGE_TAG_PREFIX,
+    UNKNOWN_SHA,
     aggregate,
     executable_cases,
     image_tag,
     read_attempts,
+    read_files_at_commit,
 )
 from evals.verifier_control import summarize
 
+from buildsleuth.config import Settings
 from buildsleuth.dataset.loader import load_cases
 from buildsleuth.pipeline.verify import VerificationLevel
 
@@ -141,3 +144,32 @@ class TestControlSummary:
 
     def test_says_so_when_there_is_nothing_to_summarize(self, tmp_path: Path) -> None:
         assert summarize(tmp_path) == 0
+
+
+class TestFilesReachTheModel:
+    """The funnel once passed an empty mapping, so the model was asked to
+    write a unified diff for a file it had never seen. Its context lines
+    could only match by luck, and most patches were rejected at apply time
+    for a reason that was the harness rather than the model."""
+
+    def test_no_paths_means_no_fetch(self) -> None:
+        case = executable_cases(load_cases(DATASET))[0]
+        assert read_files_at_commit(case, [], Settings()) == {}
+
+    def test_an_unknown_commit_is_not_guessed_at(self) -> None:
+        # Reading the default branch instead would hand the model code that
+        # may already contain the fix.
+        case = executable_cases(load_cases(DATASET))[0].model_copy(
+            update={
+                "inputs": executable_cases(load_cases(DATASET))[0].inputs.model_copy(
+                    update={"head_sha": UNKNOWN_SHA}
+                )
+            }
+        )
+        assert read_files_at_commit(case, ["a.py"], Settings()) == {}
+
+    def test_every_executable_case_records_a_real_commit(self) -> None:
+        # Otherwise the fetch is skipped and the model patches blind again.
+        for case in executable_cases(load_cases(DATASET)):
+            assert case.inputs.head_sha != UNKNOWN_SHA, case.case_id
+            assert len(case.inputs.head_sha) >= 7
