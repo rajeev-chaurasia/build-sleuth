@@ -1,6 +1,13 @@
 """Tests for the check that the verifier can tell a good patch from a bad one."""
 
-from evals.verifier_control import CORRUPTION, corrupt
+from pathlib import Path
+
+from evals.fix_funnel import executable_cases
+from evals.verifier_control import CORRUPTION, corrupt, reference_diff
+
+from buildsleuth.dataset.loader import case_dir_for, load_cases, read_case_log
+
+DATASET = Path("dataset")
 
 DIFF = "diff --git a/x.py b/x.py\n--- a/x.py\n+++ b/x.py\n@@ -1,7 +1,7 @@\n-a\n+b\n"
 
@@ -29,3 +36,26 @@ class TestCorrupt:
 
     def test_a_diff_with_no_hunks_is_returned_unchanged_but_terminated(self) -> None:
         assert corrupt("diff --git a/x b/x") == "diff --git a/x b/x\n"
+
+
+class TestAgainstTheRealDataset:
+    """Both entry points once passed dataset/cases where the dataset root was
+    wanted, and every case failed to resolve on a runner. Nothing caught it
+    because neither path was exercised against the real layout."""
+
+    def test_every_executable_case_has_a_readable_reference_fix(self) -> None:
+        cases = executable_cases(load_cases(DATASET))
+        assert cases, "expected executable cases in the dataset"
+        for case in cases:
+            assert reference_diff(DATASET, case), f"{case.case_id} has no reference fix"
+
+    def test_every_executable_case_has_a_readable_log(self) -> None:
+        for case in executable_cases(load_cases(DATASET)):
+            assert read_case_log(case_dir_for(DATASET, case), case).strip()
+
+    def test_reference_fixes_are_ordinary_patches(self) -> None:
+        # Absolute container paths in the header make the patch unapplicable
+        # without knowing how many components to strip.
+        for case in executable_cases(load_cases(DATASET)):
+            diff = reference_diff(DATASET, case) or ""
+            assert "--- a/" in diff, f"{case.case_id} keeps container paths"

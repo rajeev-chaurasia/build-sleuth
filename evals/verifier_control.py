@@ -50,7 +50,7 @@ def corrupt(diff: str) -> str:
 
 
 def reference_diff(dataset: Path, case: TriageCase) -> str | None:
-    path = case_dir_for(dataset / "cases", case) / FIX_DIFF_FILE
+    path = case_dir_for(dataset, case) / FIX_DIFF_FILE
     return path.read_text(encoding="utf-8") if path.is_file() else None
 
 

@@ -20,7 +20,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from buildsleuth.config import load_settings
-from buildsleuth.dataset.loader import load_cases, read_case_log
+from buildsleuth.dataset.loader import case_dir_for, load_cases, read_case_log
 from buildsleuth.llm.client import OpenAICompatClient
 from buildsleuth.llm.registry import Provider, get_model_spec
 from buildsleuth.models.case import TriageCase, VerificationMethod
@@ -173,7 +173,7 @@ def main() -> int:
 
     attempts: list[FixAttempt] = []
     for case in runnable:
-        log = read_case_log(args.dataset / "cases", case)
+        log = read_case_log(case_dir_for(args.dataset, case), case)
         try:
             attempt = attempt_one(client, args.model, case, log)
         except Exception as error:
