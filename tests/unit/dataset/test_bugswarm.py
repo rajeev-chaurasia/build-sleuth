@@ -17,6 +17,8 @@ from buildsleuth.dataset.bugswarm import (
     build_artifact,
     extract_script,
     fetch_metadata,
+    normalize_diff_paths,
+    parse_layout,
     parse_metadata,
     parse_sections,
     parse_tag,
@@ -183,6 +185,49 @@ class TestMetadata:
     def test_an_unrecognised_payload_returns_none(self, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.setattr(bugswarm, "_load_json", lambda url, timeout: {"_error": "not found"})
         assert fetch_metadata(ACTIONS_TAG) is None
+
+
+class TestNormalizeDiffPaths:
+    ROOT = "/home/travis/build"
+    PROJECT = "numpy/numpy"
+    RAW = (
+        f"diff -ruN -x env {ROOT}/failed/{PROJECT}/numpy/core/arrayprint.py"
+        f" {ROOT}/passed/{PROJECT}/numpy/core/arrayprint.py\n"
+        f"--- {ROOT}/failed/{PROJECT}/numpy/core/arrayprint.py\t2016-01-01\n"
+        f"+++ {ROOT}/passed/{PROJECT}/numpy/core/arrayprint.py\t2016-01-02\n"
+        "@@ -1 +1 @@\n-a\n+b\n"
+    )
+
+    def test_rewrites_container_paths_into_a_and_b_form(self) -> None:
+        # How many components to strip varies per artifact, which makes the
+        # reference fix awkward to apply and impossible to compare with what
+        # the model writes.
+        result = normalize_diff_paths(self.RAW, self.ROOT, self.PROJECT)
+        assert "--- a/numpy/core/arrayprint.py" in result
+        assert "+++ b/numpy/core/arrayprint.py" in result
+        assert "diff --git a/numpy/core/arrayprint.py b/numpy/core/arrayprint.py" in result
+        assert self.ROOT not in result
+
+    def test_drops_the_timestamp_from_the_header(self) -> None:
+        assert "2016-01-01" not in normalize_diff_paths(self.RAW, self.ROOT, self.PROJECT)
+
+    def test_leaves_the_body_untouched(self) -> None:
+        result = normalize_diff_paths(self.RAW, self.ROOT, self.PROJECT)
+        assert "@@ -1 +1 @@" in result
+        assert "-a" in result and "+b" in result
+
+    def test_returns_the_diff_unchanged_when_the_layout_is_unknown(self) -> None:
+        assert normalize_diff_paths(self.RAW, "", "") == self.RAW
+
+
+class TestParseLayout:
+    def test_reads_root_and_project(self) -> None:
+        root, project = parse_layout("root=/home/github/build project=hhyo/Archery log=/x.log")
+        assert root == "/home/github/build"
+        assert project == "hhyo/Archery"
+
+    def test_returns_blanks_when_the_line_is_missing(self) -> None:
+        assert parse_layout("") == ("", "")
 
 
 class TestParseSections:

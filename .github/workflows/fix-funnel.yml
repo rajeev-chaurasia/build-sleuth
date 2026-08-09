@@ -59,6 +59,12 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix: ${{ fromJson(needs.plan.outputs.matrix) }}
+    env:
+      # Job level rather than step level, because a step cannot read its own
+      # step-level env in its `if`.
+      BUILDSLEUTH_GEMINI_API_KEY: ${{ secrets.BUILDSLEUTH_GEMINI_API_KEY }}
+      BUILDSLEUTH_GROQ_API_KEY: ${{ secrets.BUILDSLEUTH_GROQ_API_KEY }}
+      BUILDSLEUTH_OPENROUTER_API_KEY: ${{ secrets.BUILDSLEUTH_OPENROUTER_API_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -76,11 +82,20 @@ jobs:
       - name: Install
         run: uv sync --all-groups
 
+      - name: Control for ${{ matrix.case_id }}
+        # Runs the maintainer's own fix, and a corrupted copy of it, through
+        # the same verifier. Without this a funnel of zeros cannot distinguish
+        # a model that writes bad patches from a verifier that cannot
+        # recognise a good one. No model is involved, so it runs first.
+        run: |
+          uv run python -m evals.verifier_control \
+            --only "${{ matrix.case_id }}" \
+            --out "control/${{ matrix.case_id }}.json"
+
       - name: Measure ${{ matrix.case_id }}
-        env:
-          BUILDSLEUTH_GEMINI_API_KEY: ${{ secrets.BUILDSLEUTH_GEMINI_API_KEY }}
-          BUILDSLEUTH_GROQ_API_KEY: ${{ secrets.BUILDSLEUTH_GROQ_API_KEY }}
-          BUILDSLEUTH_OPENROUTER_API_KEY: ${{ secrets.BUILDSLEUTH_OPENROUTER_API_KEY }}
+        # Skipped rather than failed when no key is configured, so the control
+        # above still runs and reports which cases can measure a fix at all.
+        if: env.BUILDSLEUTH_GEMINI_API_KEY != '' || env.BUILDSLEUTH_OPENROUTER_API_KEY != ''
         run: |
           uv run python -m evals.fix_funnel \
             --model "${{ inputs.model }}" \
@@ -88,10 +103,13 @@ jobs:
             --out "attempts/${{ matrix.case_id }}.json"
 
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: attempt-${{ matrix.case_id }}
-          path: attempts/${{ matrix.case_id }}.json
-          if-no-files-found: error
+          path: |
+            attempts/${{ matrix.case_id }}.json
+            control/${{ matrix.case_id }}.json
+          if-no-files-found: warn
 
   report:
     needs: measure
@@ -112,9 +130,17 @@ jobs:
         # the count here is the honest denominator rather than the planned one.
         run: |
           uv sync --all-groups
+          uv run python -m evals.verifier_control --summarize attempts | tee control.txt
           uv run python -m evals.fix_funnel \
-            --aggregate attempts --out results/fix-funnel.json | tee funnel.txt
+            --aggregate attempts --out results/fix-funnel.json | tee funnel.txt || true
           {
+            echo '### Verifier control'
+            echo
+            echo 'The maintainer fix and a corrupted copy, through the same checks.'
+            echo '```'
+            cat control.txt
+            echo '```'
+            echo
             echo '### Fix funnel'
             echo
             echo '```'

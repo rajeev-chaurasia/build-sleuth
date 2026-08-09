@@ -265,6 +265,45 @@ def extract_script(job_id: int, repo_name: str) -> str:
     )
 
 
+def parse_layout(layout: str) -> tuple[str, str]:
+    """Pull the build root and checkout out of the layout line."""
+    fields = dict(
+        part.split("=", 1) for part in layout.split() if "=" in part and not part.startswith("log=")
+    )
+    return fields.get("root", ""), fields.get("project", "")
+
+
+def normalize_diff_paths(diff: str, root: str, project: str) -> str:
+    """Rewrite container paths in the tree diff into a/ and b/ form.
+
+    Diffing two absolute directories produces headers naming paths inside the
+    image, and how many leading components to strip varies per artifact. That
+    makes the maintainer's fix awkward to apply and impossible to compare
+    against what the model produces.
+
+    Rewriting to the usual a/ and b/ form makes it an ordinary patch that
+    applies with -p1 from the checkout root, which is also what lets the
+    reference fix be run through the verifier as a control.
+    """
+    if not root or not project:
+        return diff
+    failed = f"{root}/failed/{project}/"
+    passed = f"{root}/passed/{project}/"
+
+    lines: list[str] = []
+    for line in diff.splitlines():
+        if line.startswith("--- ") and failed in line:
+            lines.append("--- a/" + line.split(failed, 1)[1].split("\t")[0])
+        elif line.startswith("+++ ") and passed in line:
+            lines.append("+++ b/" + line.split(passed, 1)[1].split("\t")[0])
+        elif line.startswith("diff ") and failed in line:
+            relative = line.split(failed, 1)[1].split()[0]
+            lines.append(f"diff --git a/{relative} b/{relative}")
+        else:
+            lines.append(line)
+    return "\n".join(lines)
+
+
 def parse_sections(output: str) -> dict[str, str]:
     """Split the extraction output back into its three parts."""
     sections: dict[str, str] = {}
@@ -293,6 +332,7 @@ def build_artifact(tag: str, output: str) -> Artifact:
 
     files = [line.strip() for line in sections.get("files", "").splitlines() if line.strip()]
     layout = sections.get("layout", "").strip()
+    root, project = parse_layout(layout)
     if f"project={CACHE_DIR}" in layout:
         # This once passed silently and produced three cases whose ground
         # truth was a diff of a virtualenv.
@@ -303,7 +343,7 @@ def build_artifact(tag: str, output: str) -> Artifact:
         slug=slug,
         job_id=job_id,
         failing_log=log,
-        fix_diff=sections.get("diff", "").strip(),
+        fix_diff=normalize_diff_paths(sections.get("diff", "").strip(), root, project),
         culprit_files=files,
     )
 
