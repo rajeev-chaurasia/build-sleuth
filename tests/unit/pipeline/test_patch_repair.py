@@ -96,3 +96,37 @@ class TestDegradesQuietly:
 
     def test_a_header_with_no_body_becomes_an_empty_hunk(self) -> None:
         assert "@@ -0,0 +0,0 @@" in repair_patch("--- a/x\n+++ b/x\n@@ -1,3 +1,3 @@\n")
+
+
+class TestRestoresMissingMarkers:
+    """A model that drops the leading space on a context line produces
+    `malformed patch at line N`, which git refuses just as firmly as bad
+    counts. One measured case failed on a line of source with no marker."""
+
+    def test_an_unmarked_context_line_gets_its_space_back(self) -> None:
+        patch = "--- a/x\n+++ b/x\n@@ -1,3 +1,3 @@\n a\nunmarked = 1\n-b\n+c\n"
+        repaired = repair_patch(patch)
+        assert "\n unmarked = 1\n" in repaired
+        assert "@@ -1,3 +1,3 @@" in repaired
+
+    def test_trailing_prose_is_dropped_rather_than_counted(self) -> None:
+        # Swallowing it as context would invent a hunk longer than the change.
+        patch = "--- a/x\n+++ b/x\n@@ -1,1 +1,1 @@\n-a\n+b\nThis fixes the bug.\n"
+        repaired = repair_patch(patch)
+        assert "This fixes the bug." not in repaired
+        assert "@@ -1,1 +1,1 @@" in repaired
+
+    def test_prose_between_changes_is_kept_as_context(self) -> None:
+        # It sits between marked lines, so it is source the model failed to
+        # mark rather than commentary appended to the diff.
+        patch = "--- a/x\n+++ b/x\n@@ -1,1 +1,1 @@\n-a\nmiddle\n+b\n"
+        repaired = repair_patch(patch)
+        assert "\n middle\n" in repaired
+        assert "@@ -1,2 +1,2 @@" in repaired
+
+    def test_a_well_formed_patch_still_comes_back_unchanged(self) -> None:
+        assert repair_patch(WELL_FORMED) == WELL_FORMED
+
+    def test_markers_are_restored_without_disturbing_line_endings(self) -> None:
+        patch = "--- a/x\r\n+++ b/x\r\n@@ -1,2 +1,2 @@\r\n-a\r\nunmarked\r\n+b\r\n"
+        assert "\r\n unmarked\r\n" in repair_patch(patch)

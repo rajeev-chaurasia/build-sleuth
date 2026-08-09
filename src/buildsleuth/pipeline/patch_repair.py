@@ -12,8 +12,8 @@ the same principle as the rest of the pipeline, applied to formatting instead
 of to judgement.
 
 Nothing here changes what a patch does. Only the declared line counts and the
-markers that carry no content are touched, so a patch that was already well
-formed comes back unchanged.
+per-line markers the format requires are touched, so a patch that was already
+well formed comes back unchanged.
 """
 
 import re
@@ -34,11 +34,28 @@ def _split_ending(line: str) -> tuple[str, str]:
     return line, ""
 
 
-def _is_body(text: str) -> bool:
-    """Whether a line belongs to the hunk body rather than ending it."""
-    if text == "" or text == NO_NEWLINE:
-        return True
-    return text.startswith((CONTEXT, ADDED, REMOVED))
+def _is_marked(text: str) -> bool:
+    """Whether the line carries the marker a unified diff requires."""
+    return text == "" or text == NO_NEWLINE or text.startswith((CONTEXT, ADDED, REMOVED))
+
+
+def _trim_trailing_unmarked(body: list[str]) -> list[str]:
+    """Drop unmarked lines after the last marked one.
+
+    An unmarked line between two marked ones is a context line whose leading
+    space the model dropped. An unmarked line after the last marked one is
+    usually the model explaining itself, and swallowing that as context would
+    invent a hunk longer than the change.
+    """
+    end = len(body)
+    while end > 0 and not _is_marked(body[end - 1]):
+        end -= 1
+    return body[:end]
+
+
+def _restore_marker(text: str) -> str:
+    """Give an unmarked context line the space the format requires."""
+    return text if _is_marked(text) else CONTEXT + text
 
 
 def _counts(body: list[str]) -> tuple[int, int]:
@@ -77,17 +94,18 @@ def repair_patch(patch: str) -> str:
             index += 1
             continue
 
-        body: list[str] = []
+        region: list[str] = []
+        endings: list[str] = []
         cursor = index + 1
         while cursor < len(lines):
-            candidate, _ = _split_ending(lines[cursor])
+            candidate, candidate_ending = _split_ending(lines[cursor])
             if candidate.startswith(FILE_MARKERS) or HUNK_HEADER.match(candidate):
                 break
-            if not _is_body(candidate):
-                break
-            body.append(candidate)
+            region.append(candidate)
+            endings.append(candidate_ending)
             cursor += 1
 
+        body = _trim_trailing_unmarked(region)
         old_count, new_count = _counts(body)
         old_start, new_start = match.group(1), match.group(3)
         # A zero length side is written with a start of zero by convention,
@@ -98,7 +116,11 @@ def repair_patch(patch: str) -> str:
             new_start = "0"
         heading = match.group(5)
         out.append(f"@@ -{old_start},{old_count} +{new_start},{new_count} @@{heading}{ending}")
-        out.extend(lines[index + 1 : cursor])
+        # Only the body that was counted is kept, with any missing context
+        # marker restored. Trailing prose is dropped rather than emitted as
+        # lines git cannot parse.
+        for offset, text in enumerate(body):
+            out.append(_restore_marker(text) + endings[offset])
         index = cursor
 
     return "".join(out)
