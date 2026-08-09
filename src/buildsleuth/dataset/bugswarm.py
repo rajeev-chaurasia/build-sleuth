@@ -169,14 +169,18 @@ def in_image(tag: str, script: str, timeout: int = DEFAULT_TIMEOUT_SECONDS) -> s
             script,
         ],
         capture_output=True,
-        text=True,
-        errors="replace",
+        # Bytes, not text=True. Universal newline translation rewrites every
+        # CRLF in the output to LF, and a repository that uses CRLF then gets
+        # a fix diff whose context lines match nothing. Two cases had all
+        # their hunks rejected that way and looked like broken artifacts.
         timeout=timeout,
         check=False,
     )
-    if completed.returncode != 0 and not completed.stdout:
-        raise ArtifactError(f"{tag}: {completed.stderr.strip()[:200]}")
-    return completed.stdout
+    stdout = completed.stdout.decode("utf-8", errors="replace")
+    if completed.returncode != 0 and not stdout:
+        stderr = completed.stderr.decode("utf-8", errors="replace")
+        raise ArtifactError(f"{tag}: {stderr.strip()[:200]}")
+    return stdout
 
 
 def discard_image(tag: str, timeout: int = IMAGE_REMOVE_TIMEOUT_SECONDS) -> bool:
@@ -290,31 +294,41 @@ def normalize_diff_paths(diff: str, root: str, project: str) -> str:
     failed = f"{root}/failed/{project}/"
     passed = f"{root}/passed/{project}/"
 
+    # Only the header lines are rewritten. Body lines are passed through
+    # untouched, carriage returns included, because a CRLF repository's diff
+    # has to keep them to apply.
     lines: list[str] = []
-    for line in diff.splitlines():
-        if line.startswith("--- ") and failed in line:
-            lines.append("--- a/" + line.split(failed, 1)[1].split("\t")[0])
-        elif line.startswith("+++ ") and passed in line:
-            lines.append("+++ b/" + line.split(passed, 1)[1].split("\t")[0])
-        elif line.startswith("diff ") and failed in line:
-            relative = line.split(failed, 1)[1].split()[0]
-            lines.append(f"diff --git a/{relative} b/{relative}")
+    for line in diff.splitlines(keepends=True):
+        bare = line.rstrip("\r\n")
+        if bare.startswith("--- ") and failed in bare:
+            lines.append("--- a/" + bare.split(failed, 1)[1].split("\t")[0] + "\n")
+        elif bare.startswith("+++ ") and passed in bare:
+            lines.append("+++ b/" + bare.split(passed, 1)[1].split("\t")[0] + "\n")
+        elif bare.startswith("diff ") and failed in bare:
+            relative = bare.split(failed, 1)[1].split()[0]
+            lines.append(f"diff --git a/{relative} b/{relative}\n")
         else:
             lines.append(line)
-    return "\n".join(lines)
+    return "".join(lines)
 
 
 def parse_sections(output: str) -> dict[str, str]:
-    """Split the extraction output back into its three parts."""
+    """Split the extraction output back into its parts, line endings intact.
+
+    Splitting and rejoining with a plain newline would drop the carriage
+    return from every line of a CRLF repository's diff, which is the same way
+    the extraction itself once mangled them.
+    """
     sections: dict[str, str] = {}
     current = ""
-    for line in output.splitlines():
-        if line.startswith("=====BUILDSLEUTH_") and line.endswith("====="):
-            current = line.strip("=").replace("BUILDSLEUTH_", "").lower()
+    for line in output.splitlines(keepends=True):
+        stripped = line.strip()
+        if stripped.startswith("=====BUILDSLEUTH_") and stripped.endswith("====="):
+            current = stripped.strip("=").replace("BUILDSLEUTH_", "").lower()
             sections[current] = ""
             continue
         if current:
-            sections[current] += line + "\n"
+            sections[current] += line
     return sections
 
 

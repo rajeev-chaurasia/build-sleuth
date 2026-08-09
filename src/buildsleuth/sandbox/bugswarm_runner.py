@@ -23,7 +23,7 @@ from buildsleuth.dataset.bugswarm import (
     RUN_FAILED,
     checkout_resolution_lines,
 )
-from buildsleuth.pipeline.verify import VerificationLevel, VerificationResult, normalize_patch
+from buildsleuth.pipeline.verify import VerificationLevel, VerificationResult
 
 BUILD_ROOT = "/home/travis/build"
 PATCH_PATH = "/tmp/buildsleuth.patch"
@@ -32,6 +32,17 @@ OUTPUT_TAIL_CHARS = 800
 APPLY_MARKER = "=====BUILDSLEUTH_APPLIED====="
 # Enough for a rejected-hunk report, which is what git prints on failure.
 APPLY_OUTPUT_LINES = 20
+
+
+def terminate(patch: str) -> str:
+    """Add the trailing newline git needs, and change nothing else.
+
+    Deliberately not `normalize_patch`, which also rewrites CRLF to LF. That
+    is right for a patch written on Windows against a checkout that uses LF,
+    and wrong here: some of these repositories are CRLF throughout, and
+    stripping the carriage returns makes every context line match nothing.
+    """
+    return patch if patch.endswith(("\n", "\r")) else patch + "\n"
 
 
 @dataclass(frozen=True)
@@ -54,7 +65,7 @@ def verification_script(patch: str, repo_name: str) -> str:
     competes with whatever the build script reads, and quoting a diff into a
     shell command corrupts it in ways that look like the model's fault.
     """
-    encoded = base64.b64encode(normalize_patch(patch).encode("utf-8")).decode("ascii")
+    encoded = base64.b64encode(terminate(patch).encode("utf-8")).decode("ascii")
     return "\n".join(
         [
             "set +e",
@@ -65,10 +76,13 @@ def verification_script(patch: str, repo_name: str) -> str:
             *checkout_resolution_lines(repo_name),
             f"echo {encoded} | base64 -d > {PATCH_PATH}",
             'cd "$FAILED/$PROJ" || exit 90',
-            # git apply is stricter and reports better; patch is the fallback
-            # for a checkout that is not a git repository.
+            # Strictest first. The whitespace-insensitive retries exist
+            # because these repositories are not all LF, and rejecting an
+            # otherwise correct patch over carriage returns would measure the
+            # repository's line endings rather than the patch.
             f"git apply --whitespace=nowarn {PATCH_PATH} 2>&1"
-            f" || patch -p1 --batch --forward < {PATCH_PATH} 2>&1",
+            f" || git apply --whitespace=nowarn --ignore-whitespace {PATCH_PATH} 2>&1"
+            f" || patch -p1 --batch --forward -l < {PATCH_PATH} 2>&1",
             "APPLIED=$?",
             f'echo "{APPLY_MARKER}$APPLIED"',
             '[ "$APPLIED" -eq 0 ] || exit 91',

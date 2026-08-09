@@ -238,3 +238,33 @@ class TestParseSections:
 
 def test_verification_reruns_the_failing_build() -> None:
     assert verification_commands(TRAVIS_TAG) == ["bash /usr/local/bin/run_failed.sh"]
+
+
+class TestCarriageReturnsSurviveExtraction:
+    """A CRLF repository's diff has to keep its carriage returns or it applies
+    to nothing. Two cases were marked broken artifacts for exactly this."""
+
+    CRLF_DIFF = "--- a/x.py\r\n+++ b/x.py\r\n@@ -1 +1 @@\r\n-a\r\n+b\r\n"
+
+    def test_sections_keep_line_endings(self) -> None:
+        output = (
+            "=====BUILDSLEUTH_LOG=====\nboom\n"
+            f"=====BUILDSLEUTH_DIFF=====\n{self.CRLF_DIFF}"
+            "=====BUILDSLEUTH_FILES=====\nx.py\n"
+        )
+        assert "\r\n" in parse_sections(output)["diff"]
+
+    def test_a_separator_is_recognised_even_with_a_carriage_return(self) -> None:
+        output = "=====BUILDSLEUTH_LOG=====\r\nboom\r\n"
+        assert parse_sections(output)["log"].strip() == "boom"
+
+    def test_rewriting_paths_leaves_the_body_endings_alone(self) -> None:
+        root, project = "/home/travis/build", "a/b"
+        raw = (
+            f"--- {root}/failed/{project}/x.py\t2016-01-01\r\n"
+            f"+++ {root}/passed/{project}/x.py\t2016-01-02\r\n"
+            "@@ -1 +1 @@\r\n-a\r\n+b\r\n"
+        )
+        result = normalize_diff_paths(raw, root, project)
+        assert result.startswith("--- a/x.py\n")
+        assert "-a\r\n" in result

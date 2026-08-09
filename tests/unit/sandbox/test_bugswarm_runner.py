@@ -7,6 +7,7 @@ from buildsleuth.sandbox.bugswarm_runner import (
     APPLY_MARKER,
     ReproductionResult,
     parse_result,
+    terminate,
     to_verification,
     verification_script,
 )
@@ -94,3 +95,35 @@ class TestApplyOutput:
 
     def test_excludes_the_marker_itself(self) -> None:
         assert APPLY_MARKER not in parse_result(0, f"a\n{APPLY_MARKER}0\n").apply_output
+
+
+CRLF_PATCH = "--- a/x.py\r\n+++ b/x.py\r\n@@ -1 +1 @@\r\n-a\r\n+b\r\n"
+
+
+class TestLineEndings:
+    """Two cases had every hunk rejected because carriage returns were
+    stripped somewhere between the container and git apply. The repository
+    was CRLF throughout, so LF context lines matched nothing."""
+
+    def test_carriage_returns_survive_into_the_script(self) -> None:
+        script = verification_script(CRLF_PATCH, "repo")
+        decoded = base64.b64decode(script.split("echo ")[1].split(" |")[0]).decode()
+        assert "\r\n" in decoded
+
+    def test_terminate_leaves_crlf_alone(self) -> None:
+        assert terminate(CRLF_PATCH) == CRLF_PATCH
+
+    def test_terminate_adds_the_newline_git_requires(self) -> None:
+        assert terminate("--- a/x").endswith("\n")
+
+    def test_terminate_does_not_double_terminate_a_crlf_patch(self) -> None:
+        assert not terminate(CRLF_PATCH).endswith("\r\n\n")
+
+    def test_the_apply_chain_retries_without_whitespace_sensitivity(self) -> None:
+        # Otherwise a correct patch is rejected over line endings, which
+        # measures the repository rather than the patch.
+        script = verification_script(CRLF_PATCH, "repo")
+        assert "--ignore-whitespace" in script
+        assert script.index("git apply --whitespace=nowarn /tmp") < script.index(
+            "--ignore-whitespace"
+        )
