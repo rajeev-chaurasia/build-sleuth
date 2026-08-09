@@ -67,14 +67,21 @@ class TestRepoNameFromSlug:
 
 
 class TestExtractScript:
-    def test_names_the_checkout_rather_than_taking_the_first_directory(self) -> None:
+    def test_finds_the_checkout_by_name_rather_than_taking_the_first_directory(self) -> None:
         script = extract_script(75136021799, "Archery")
-        assert "PROJ=Archery" in script
+        assert "-name Archery" in script
         # Taking the first directory is what selected the build cache.
         assert 'ls "$FAILED" 2>/dev/null | head -1' not in script
 
+    def test_handles_the_checkout_being_nested_under_the_owner(self) -> None:
+        # These images use failed/<owner>/<repo>, and resolving to <owner>
+        # prefixes every culprit path with the repository directory name.
+        script = extract_script(1, "Archery")
+        assert f"-maxdepth {bugswarm.CHECKOUT_SEARCH_DEPTH} -type d" in script
+        assert 'PROJ=${DIR#"$FAILED/"}' in script
+
     def test_skips_the_build_cache_when_falling_back(self) -> None:
-        assert f"grep -v {CACHE_DIR}" in extract_script(1, "missing")
+        assert f"! -name {CACHE_DIR}" in extract_script(1, "missing")
 
     def test_finds_the_log_instead_of_assuming_the_travis_path(self) -> None:
         script = extract_script(75136021799, "Archery")

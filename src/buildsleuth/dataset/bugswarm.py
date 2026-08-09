@@ -43,6 +43,9 @@ METADATA_URL = "http://www.api.bugswarm.org/v1/artifacts"
 METADATA_TIMEOUT_SECONDS = 30
 # The catalogue joins failing test names with a hash.
 TEST_SEPARATOR = "#"
+# Deep enough for failed/<owner>/<repo>, shallow enough not to match a
+# directory inside the checkout that happens to share the repository name.
+CHECKOUT_SEARCH_DEPTH = 2
 UNKNOWN_SHA = "unknown"
 # A tag looks like owner-repo-jobid, and only the job id is reliably numeric.
 _TAG_RE = re.compile(r"^(?P<slug>.+)-(?P<job_id>\d+)$")
@@ -219,10 +222,15 @@ def extract_script(job_id: int, repo_name: str) -> str:
             'ROOT=$(dirname "$LOG" 2>/dev/null)',
             f'[ -d "$ROOT/failed" ] || ROOT={BUILD_ROOT}',
             'FAILED="$ROOT/failed"; PASSED="$ROOT/passed"',
-            f"PROJ={shlex.quote(repo_name)}",
-            # Fall back to any directory that is not the build cache.
-            f'if [ ! -d "$FAILED/$PROJ" ]; then PROJ=$(ls "$FAILED" 2>/dev/null'
-            f" | grep -v {shlex.quote(CACHE_DIR)} | head -1); fi",
+            # Travis-era images put the checkout at failed/<repo>, later ones
+            # at failed/<owner>/<repo>. Searching for it by name keeps the
+            # extracted paths relative to the repository root in both, and a
+            # stray leading directory would make every culprit path wrong.
+            f'DIR=$(find "$FAILED" -maxdepth {CHECKOUT_SEARCH_DEPTH} -type d'
+            f" -name {shlex.quote(repo_name)} 2>/dev/null | head -1)",
+            'if [ -z "$DIR" ]; then DIR=$(find "$FAILED" -mindepth 1 -maxdepth 1 -type d'
+            f" ! -name {shlex.quote(CACHE_DIR)} 2>/dev/null | head -1); fi",
+            'PROJ=${DIR#"$FAILED/"}',
             'echo "=====BUILDSLEUTH_LOG====="',
             'cat "$LOG" 2>/dev/null || echo "no log"',
             'echo "=====BUILDSLEUTH_DIFF====="',
