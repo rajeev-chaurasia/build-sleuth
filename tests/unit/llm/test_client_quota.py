@@ -9,7 +9,12 @@ import httpx
 import pytest
 import respx
 
-from buildsleuth.llm.client import OpenAICompatClient
+from buildsleuth.llm.client import (
+    RATE_LIMIT_MAX_WAIT_SECONDS,
+    OpenAICompatClient,
+    _is_quota_exhausted,
+    _retry_after_seconds,
+)
 from buildsleuth.llm.registry import get_model_spec
 from buildsleuth.llm.types import CompletionRequest, Message, QuotaExhaustedError, Role
 
@@ -76,3 +81,54 @@ def test_quota_error_does_not_leak_the_api_key() -> None:
         client.complete(_request())
 
     assert "sk-secret-123" not in str(error.value)
+
+
+PER_MINUTE_BODY = (
+    '{"error":{"code":429,"message":"You exceeded your current quota",'
+    '"details":[{"@type":"type.googleapis.com/google.rpc.QuotaFailure",'
+    '"violations":[{"quotaId":"GenerateRequestsPerMinutePerProjectPerModel"}]},'
+    '{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"26s"}]}}'
+)
+PER_DAY_BODY = (
+    '{"error":{"code":429,"message":"You exceeded your current quota",'
+    '"details":[{"@type":"type.googleapis.com/google.rpc.QuotaFailure",'
+    '"violations":[{"quotaId":"GenerateRequestsPerDayPerProjectPerModel"}]}]}}'
+)
+
+
+class TestPerMinuteIsNotPerDay:
+    """Both carry the same 'exceeded your current quota' wording, and only the
+    quota id separates them. Treating the per minute one as fatal cost 13 of
+    61 cases on every full run, always the same ones."""
+
+    def test_a_per_minute_limit_is_not_fatal(self) -> None:
+        response = httpx.Response(429, text=PER_MINUTE_BODY)
+        assert not _is_quota_exhausted(response)
+
+    def test_a_per_day_limit_is_still_fatal(self) -> None:
+        # Retrying this spends three more requests against an allowance that
+        # is already gone.
+        response = httpx.Response(429, text=PER_DAY_BODY)
+        assert _is_quota_exhausted(response)
+
+    def test_the_stated_delay_is_read_from_the_body(self) -> None:
+        # Gemini puts it in a RetryInfo detail, not a Retry-After header.
+        assert _retry_after_seconds(httpx.Response(429, text=PER_MINUTE_BODY)) == 26.0
+
+    def test_a_header_still_wins_when_present(self) -> None:
+        response = httpx.Response(429, headers={"retry-after": "5"}, text=PER_MINUTE_BODY)
+        assert _retry_after_seconds(response) == 5.0
+
+    def test_the_wait_is_capped(self) -> None:
+        body = '{"details":[{"retryDelay":"9999s"}]}'
+        delay = _retry_after_seconds(httpx.Response(429, text=body))
+        assert delay == RATE_LIMIT_MAX_WAIT_SECONDS
+
+    def test_a_minute_long_wait_is_allowed(self) -> None:
+        # The ordinary backoff ceiling is 30 seconds, too low to clear a per
+        # minute window, so the case would be lost rather than delayed.
+        body = '{"details":[{"retryDelay":"55s"}]}'
+        assert _retry_after_seconds(httpx.Response(429, text=body)) == 55.0
+
+    def test_a_body_with_no_delay_falls_back_to_backoff(self) -> None:
+        assert _retry_after_seconds(httpx.Response(429, text="slow down")) is None
