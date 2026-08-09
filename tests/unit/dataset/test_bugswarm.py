@@ -76,9 +76,18 @@ class TestExtractScript:
     def test_handles_the_checkout_being_nested_under_the_owner(self) -> None:
         # These images use failed/<owner>/<repo>, and resolving to <owner>
         # prefixes every culprit path with the repository directory name.
-        script = extract_script(1, "Archery")
-        assert f"-maxdepth {bugswarm.CHECKOUT_SEARCH_DEPTH} -type d" in script
-        assert 'PROJ=${DIR#"$FAILED/"}' in script
+        script = extract_script(1, "hhyo/Archery")
+        assert "PROJ=hhyo/Archery" in script
+        assert "PROJ=Archery" in script
+
+    def test_prefers_the_full_path_when_owner_and_repo_match(self) -> None:
+        # numpy/numpy and scikit-learn/scikit-learn are both in the catalogue.
+        # Searching by name alone finds the owner directory first, which is
+        # what prefixed five culprit paths with the repository name.
+        script = extract_script(1, "numpy/numpy")
+        full = script.index("PROJ=numpy/numpy")
+        bare = script.index("PROJ=numpy\n")
+        assert full < bare
 
     def test_skips_the_build_cache_when_falling_back(self) -> None:
         assert f"! -name {CACHE_DIR}" in extract_script(1, "missing")

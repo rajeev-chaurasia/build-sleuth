@@ -16,13 +16,12 @@ import subprocess
 from dataclasses import dataclass
 
 from buildsleuth.dataset.bugswarm import (
-    CACHE_DIR,
-    CHECKOUT_SEARCH_DEPTH,
     CONTAINER_CPUS,
     CONTAINER_MEMORY,
     DOCKER,
     IMAGE_PREFIX,
     RUN_FAILED,
+    checkout_resolution_lines,
 )
 from buildsleuth.pipeline.verify import VerificationLevel, VerificationResult, normalize_patch
 
@@ -57,12 +56,9 @@ def verification_script(patch: str, repo_name: str) -> str:
             'ROOT=$(dirname "$LOG" 2>/dev/null)',
             f'[ -d "$ROOT/failed" ] || ROOT={BUILD_ROOT}',
             'FAILED="$ROOT/failed"',
-            f'DIR=$(find "$FAILED" -maxdepth {CHECKOUT_SEARCH_DEPTH} -type d'
-            f" -name {shlex.quote(repo_name)} 2>/dev/null | head -1)",
-            'if [ -z "$DIR" ]; then DIR=$(find "$FAILED" -mindepth 1 -maxdepth 1 -type d'
-            f" ! -name {shlex.quote(CACHE_DIR)} 2>/dev/null | head -1); fi",
+            *checkout_resolution_lines(repo_name),
             f"echo {encoded} | base64 -d > {PATCH_PATH}",
-            'cd "$DIR" || exit 90',
+            'cd "$FAILED/$PROJ" || exit 90',
             # git apply is stricter and reports better; patch is the fallback
             # for a checkout that is not a git repository.
             f"git apply --whitespace=nowarn {PATCH_PATH} 2>&1"

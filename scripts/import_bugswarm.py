@@ -25,7 +25,6 @@ from buildsleuth.dataset.bugswarm import (
     fetch_metadata,
     in_image,
     parse_tag,
-    repo_name_from_slug,
     verification_commands,
 )
 from buildsleuth.models.case import (
@@ -103,8 +102,9 @@ def build_case(
 def import_one(tag: str, dataset: Path, case_id: str, keep_image: bool = False) -> str:
     slug, job_id = parse_tag(tag)
     metadata = fetch_metadata(tag)
-    # The catalogue names the repository exactly; the slug only implies it.
-    checkout = metadata.repo_name if metadata else repo_name_from_slug(slug)
+    # The full owner/name, because searching by repository name alone lands on
+    # the owner directory when the two match, as they do for numpy/numpy.
+    checkout = metadata.repo if metadata else slug.replace("-", "/", 1)
     try:
         output = in_image(tag, extract_script(job_id, checkout))
         artifact = build_artifact(tag, output)

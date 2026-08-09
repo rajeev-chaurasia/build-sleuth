@@ -196,6 +196,34 @@ def discard_image(tag: str, timeout: int = IMAGE_REMOVE_TIMEOUT_SECONDS) -> bool
     return completed.returncode == 0
 
 
+def checkout_resolution_lines(repo_path: str) -> list[str]:
+    """Shell that sets DIR and PROJ to the checkout inside an artifact image.
+
+    Travis-era images put the checkout at failed/<repo>, later ones at
+    failed/<owner>/<repo>. The full owner/name path is tried first because
+    searching by repository name alone picks the owner directory whenever the
+    two are the same, and numpy/numpy and scikit-learn/scikit-learn are both
+    in the catalogue. That left every culprit path prefixed with the
+    repository directory, which scores a correct answer as a miss.
+
+    Searching is kept only as the fallback for a name the catalogue did not
+    supply, and it skips the build cache.
+    """
+    _, _, name = repo_path.partition("/")
+    name = name or repo_path
+    return [
+        f'if [ -d "$FAILED"/{shlex.quote(repo_path)} ]; then PROJ={shlex.quote(repo_path)}',
+        f'elif [ -d "$FAILED"/{shlex.quote(name)} ]; then PROJ={shlex.quote(name)}',
+        "else",
+        f'  DIR=$(find "$FAILED" -maxdepth {CHECKOUT_SEARCH_DEPTH} -type d'
+        f" -name {shlex.quote(name)} 2>/dev/null | head -1)",
+        '  if [ -z "$DIR" ]; then DIR=$(find "$FAILED" -mindepth 1 -maxdepth 1 -type d'
+        f" ! -name {shlex.quote(CACHE_DIR)} 2>/dev/null | head -1); fi",
+        '  PROJ=${DIR#"$FAILED/"}',
+        "fi",
+    ]
+
+
 def extract_script(job_id: int, repo_name: str) -> str:
     """Read the failing log, the maintainer's fix, and which files it touched.
 
@@ -222,15 +250,7 @@ def extract_script(job_id: int, repo_name: str) -> str:
             'ROOT=$(dirname "$LOG" 2>/dev/null)',
             f'[ -d "$ROOT/failed" ] || ROOT={BUILD_ROOT}',
             'FAILED="$ROOT/failed"; PASSED="$ROOT/passed"',
-            # Travis-era images put the checkout at failed/<repo>, later ones
-            # at failed/<owner>/<repo>. Searching for it by name keeps the
-            # extracted paths relative to the repository root in both, and a
-            # stray leading directory would make every culprit path wrong.
-            f'DIR=$(find "$FAILED" -maxdepth {CHECKOUT_SEARCH_DEPTH} -type d'
-            f" -name {shlex.quote(repo_name)} 2>/dev/null | head -1)",
-            'if [ -z "$DIR" ]; then DIR=$(find "$FAILED" -mindepth 1 -maxdepth 1 -type d'
-            f" ! -name {shlex.quote(CACHE_DIR)} 2>/dev/null | head -1); fi",
-            'PROJ=${DIR#"$FAILED/"}',
+            *checkout_resolution_lines(repo_name),
             'echo "=====BUILDSLEUTH_LOG====="',
             'cat "$LOG" 2>/dev/null || echo "no log"',
             'echo "=====BUILDSLEUTH_DIFF====="',

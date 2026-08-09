@@ -20,7 +20,6 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from buildsleuth.config import load_settings
-from buildsleuth.dataset.bugswarm import parse_tag, repo_name_from_slug
 from buildsleuth.dataset.loader import load_cases, read_case_log
 from buildsleuth.llm.client import OpenAICompatClient
 from buildsleuth.llm.registry import Provider, get_model_spec
@@ -75,9 +74,8 @@ def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: s
     if isinstance(proposed, SkipReason):
         return FixAttempt(case_id=case.case_id, attempted=False, skip_reason=proposed.reason)
 
-    tag = image_tag(case)
-    slug, _ = parse_tag(tag)
-    result = verify_in_image(proposed.value.patch, tag, repo_name_from_slug(slug))
+    # The case records owner/name, which resolves the checkout exactly.
+    result = verify_in_image(proposed.value.patch, image_tag(case), case.inputs.repo)
     return FixAttempt(case_id=case.case_id, attempted=True, level=result.level)
 
 
