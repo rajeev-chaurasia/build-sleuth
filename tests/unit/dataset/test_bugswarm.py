@@ -5,14 +5,19 @@ produced cases that looked fine and carried ground truth describing a
 virtualenv, which is worse than an import that fails loudly.
 """
 
+import urllib.request
+
 import pytest
 
+from buildsleuth.dataset import bugswarm
 from buildsleuth.dataset.bugswarm import (
     CACHE_DIR,
     Artifact,
     ArtifactError,
     build_artifact,
     extract_script,
+    fetch_metadata,
+    parse_metadata,
     parse_sections,
     parse_tag,
     repo_name_from_slug,
@@ -120,6 +125,48 @@ class TestBuildArtifact:
             _output(files="sql/utils/tests.py", layout="root=/home/github/build project=Archery"),
         )
         assert artifact.culprit_files == ["sql/utils/tests.py"]
+
+
+class TestMetadata:
+    def test_reads_the_commit_and_failing_tests(self) -> None:
+        meta = parse_metadata(
+            {
+                "repo": "scikit-learn/scikit-learn",
+                "test_framework": "unittest",
+                "metrics": {"num_of_changed_files": 1},
+                "failed_job": {
+                    "trigger_sha": "abc123",
+                    "failed_tests": "test_a (mod.A)#test_b (mod.B)",
+                },
+            }
+        )
+        assert meta.head_sha == "abc123"
+        assert meta.failing_tests == ["test_a (mod.A)", "test_b (mod.B)"]
+        assert meta.repo_name == "scikit-learn"
+
+    def test_survives_an_entry_with_no_failing_tests(self) -> None:
+        meta = parse_metadata({"repo": "a/b", "failed_job": {"trigger_sha": "s"}})
+        assert meta.failing_tests == []
+
+    def test_falls_back_when_the_commit_is_blank(self) -> None:
+        # The catalogue stores an empty string rather than omitting the key.
+        assert parse_metadata({"repo": "a/b", "failed_job": {"trigger_sha": ""}}).head_sha == (
+            "unknown"
+        )
+
+    def test_unreachable_catalogue_returns_none_rather_than_raising(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        # An import should degrade to weaker ground truth, not fail outright.
+        def refuse(*args: object, **kwargs: object) -> None:
+            raise OSError("no route to host")
+
+        monkeypatch.setattr(urllib.request, "urlopen", refuse)
+        assert fetch_metadata(ACTIONS_TAG) is None
+
+    def test_an_unrecognised_payload_returns_none(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setattr(bugswarm, "_load_json", lambda url, timeout: {"_error": "not found"})
+        assert fetch_metadata(ACTIONS_TAG) is None
 
 
 class TestParseSections:

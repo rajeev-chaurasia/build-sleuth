@@ -12,10 +12,14 @@ the artifact being a reproducible build failure at a commit a human then
 fixed.
 """
 
+import json
 import re
 import shlex
 import subprocess
+import urllib.parse
+import urllib.request
 from dataclasses import dataclass, field
+from typing import Any
 
 IMAGE_PREFIX = "bugswarm/cached-images"
 BUILD_ROOT = "/home/travis/build"
@@ -35,6 +39,11 @@ CACHE_DIR = "cacher"
 # buries the maintainer's fix under thousands of lines that are not the fix.
 DIFF_EXCLUDES = ("env", ".git", "__pycache__", "node_modules", "*.pyc", ".tox", "venv")
 DIFF_LINE_LIMIT = 4000
+METADATA_URL = "http://www.api.bugswarm.org/v1/artifacts"
+METADATA_TIMEOUT_SECONDS = 30
+# The catalogue joins failing test names with a hash.
+TEST_SEPARATOR = "#"
+UNKNOWN_SHA = "unknown"
 # A tag looks like owner-repo-jobid, and only the job id is reliably numeric.
 _TAG_RE = re.compile(r"^(?P<slug>.+)-(?P<job_id>\d+)$")
 
@@ -65,6 +74,64 @@ def parse_tag(tag: str) -> tuple[str, int]:
     if match is None:
         raise ArtifactError(f"{tag} does not look like a BugSwarm tag")
     return match.group("slug"), int(match.group("job_id"))
+
+
+@dataclass(frozen=True)
+class ArtifactMetadata:
+    """What the catalogue knows about an artifact without pulling the image."""
+
+    repo: str
+    head_sha: str
+    failing_tests: list[str]
+    test_framework: str
+    changed_files: int
+
+    @property
+    def repo_name(self) -> str:
+        _, _, name = self.repo.partition("/")
+        return name
+
+
+def parse_failing_tests(raw: str) -> list[str]:
+    """Split the catalogue's failing test string into individual test names."""
+    return [name.strip() for name in raw.split(TEST_SEPARATOR) if name.strip()]
+
+
+def parse_metadata(record: dict[str, Any]) -> ArtifactMetadata:
+    failed_job = record.get("failed_job", {})
+    return ArtifactMetadata(
+        repo=record.get("repo", ""),
+        head_sha=failed_job.get("trigger_sha", "") or UNKNOWN_SHA,
+        failing_tests=parse_failing_tests(failed_job.get("failed_tests") or ""),
+        test_framework=record.get("test_framework", ""),
+        changed_files=record.get("metrics", {}).get("num_of_changed_files", 0),
+    )
+
+
+def fetch_metadata(tag: str, timeout: int = METADATA_TIMEOUT_SECONDS) -> ArtifactMetadata | None:
+    """Look the artifact up in the BugSwarm catalogue.
+
+    Worth a request per import because it supplies the commit the build ran
+    at and the names of the tests that failed. Diffing the trees in the image
+    yields neither, and a case without them cannot say which test a patch is
+    supposed to make pass.
+
+    Returns None when the catalogue is unreachable or does not know the tag,
+    so an import degrades to the weaker ground truth rather than failing.
+    """
+    record = _load_json(f"{METADATA_URL}/{urllib.parse.quote(tag)}", timeout)
+    if record is None or "failed_job" not in record:
+        return None
+    return parse_metadata(record)
+
+
+def _load_json(url: str, timeout: int) -> dict[str, Any] | None:
+    try:
+        with urllib.request.urlopen(url, timeout=timeout) as response:
+            payload = json.load(response)
+    except (OSError, ValueError):
+        return None
+    return payload if isinstance(payload, dict) else None
 
 
 def repo_name_from_slug(slug: str) -> str:

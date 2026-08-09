@@ -18,9 +18,11 @@ from pathlib import Path
 from buildsleuth.dataset.bugswarm import (
     IMAGE_PREFIX,
     ArtifactError,
+    ArtifactMetadata,
     build_artifact,
     discard_image,
     extract_script,
+    fetch_metadata,
     in_image,
     parse_tag,
     repo_name_from_slug,
@@ -44,15 +46,24 @@ DEFAULT_SUBCATEGORY = "test_assertion"
 UNKNOWN_SHA = "unknown"
 
 
-def build_case(case_id: str, tag: str, artifact_files: list[str]) -> TriageCase:
+def build_case(
+    case_id: str, tag: str, artifact_files: list[str], metadata: ArtifactMetadata | None
+) -> TriageCase:
     slug, job_id = parse_tag(tag)
+    catalogue_note = (
+        " The commit and the failing test names come from the BugSwarm"
+        " catalogue entry, which rates this artifact reproducible at 5/5."
+        if metadata is not None
+        else " The catalogue was unreachable, so the commit is unknown and no"
+        " failing tests are recorded."
+    )
     return TriageCase(
         case_id=case_id,
         title=f"{slug} build {job_id}"[:120],
         inputs=CaseInputs(
-            repo=slug.replace("-", "/", 1),
+            repo=metadata.repo if metadata else slug.replace("-", "/", 1),
             run_id=job_id,
-            head_sha=UNKNOWN_SHA,
+            head_sha=metadata.head_sha if metadata else UNKNOWN_SHA,
             failed_job_name="build",
             log_files=[CASE_LOG_PATH],
         ),
@@ -63,6 +74,7 @@ def build_case(case_id: str, tag: str, artifact_files: list[str]) -> TriageCase:
             # follows from the code at that commit by construction.
             related_to_diff=True,
             culprit_files=artifact_files,
+            failing_tests=metadata.failing_tests if metadata else [],
         ),
         provenance=Provenance(
             source=CaseSource.BUGSWARM,
@@ -76,7 +88,7 @@ def build_case(case_id: str, tag: str, artifact_files: list[str]) -> TriageCase:
                 " the image, rather than read off the log by a labeller. The"
                 " class follows from the artifact being a reproducible build"
                 " failure that a human then fixed; the subcategory is a"
-                " default and has not been adjudicated."
+                " default and has not been adjudicated." + catalogue_note
             ),
         ),
         verification=Verification(
@@ -90,8 +102,11 @@ def build_case(case_id: str, tag: str, artifact_files: list[str]) -> TriageCase:
 
 def import_one(tag: str, dataset: Path, case_id: str, keep_image: bool = False) -> str:
     slug, job_id = parse_tag(tag)
+    metadata = fetch_metadata(tag)
+    # The catalogue names the repository exactly; the slug only implies it.
+    checkout = metadata.repo_name if metadata else repo_name_from_slug(slug)
     try:
-        output = in_image(tag, extract_script(job_id, repo_name_from_slug(slug)))
+        output = in_image(tag, extract_script(job_id, checkout))
         artifact = build_artifact(tag, output)
     finally:
         # Always, including on failure. A partially imported artifact still
@@ -105,7 +120,7 @@ def import_one(tag: str, dataset: Path, case_id: str, keep_image: bool = False) 
     if artifact.fix_diff:
         (target / FIX_DIFF_FILE).write_text(artifact.fix_diff, encoding="utf-8", newline="\n")
 
-    case = build_case(case_id, tag, artifact.culprit_files)
+    case = build_case(case_id, tag, artifact.culprit_files, metadata)
     (target / "case.json").write_text(
         case.model_dump_json(indent=2, exclude_none=False) + "\n", encoding="utf-8"
     )
