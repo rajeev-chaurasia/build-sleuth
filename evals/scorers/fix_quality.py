@@ -30,6 +30,10 @@ class FixAttempt:
     # a number that moved between runs diagnosable rather than mysterious.
     detail: str = ""
     evidence: str = ""
+    # Whether the model was even editing the right file. A patch for the
+    # wrong file cannot fix anything, and separating the two says which
+    # stage to work on.
+    localized: bool = False
 
 
 class FixReport(BaseModel):

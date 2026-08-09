@@ -99,10 +99,15 @@ def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: s
     located = localize(client, model, verdict, evidence, repo=case.inputs.repo)
     paths = ranked_paths(located.value) if located is not None else []
 
+    # Whether the patch could ever have worked. A fix rate alone cannot say
+    # if the model wrote a bad patch or patched the wrong file, and at this
+    # sample size that difference is most of the movement between runs.
+    on_target = bool(set(paths) & set(case.ground_truth.culprit_files))
+
     contents = read_files_for(case, paths)
     print(
-        f"    localized {paths}, read {len(contents)} file(s)"
-        f" totalling {sum(len(body) for body in contents.values())} chars",
+        f"    localized {paths} ({'on target' if on_target else 'wrong file'}),"
+        f" read {len(contents)} file(s)",
         flush=True,
     )
     # Keep the localizer's paths as the editable set. Narrowing it to the
@@ -110,7 +115,12 @@ def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: s
     # allowed to touch when the read comes back empty.
     proposed = propose_fix(client, model, verdict, evidence, paths, contents, repo=case.inputs.repo)
     if isinstance(proposed, SkipReason):
-        return FixAttempt(case_id=case.case_id, attempted=False, skip_reason=proposed.reason)
+        return FixAttempt(
+            case_id=case.case_id,
+            attempted=False,
+            skip_reason=proposed.reason,
+            localized=on_target,
+        )
 
     # The case records owner/name, which resolves the checkout exactly.
     result = verify_in_image(proposed.value.patch, image_tag(case), case.inputs.repo)
@@ -122,6 +132,7 @@ def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: s
         # run that moves cannot be told apart from a harness that changed.
         detail=result.detail,
         evidence=result.stdout_tail[-EVIDENCE_CHARS:],
+        localized=on_target,
     )
 
 
@@ -140,6 +151,7 @@ def read_attempts(directory: Path) -> list[FixAttempt]:
                     skip_reason=entry.get("skip_reason", ""),
                     detail=entry.get("detail", ""),
                     evidence=entry.get("evidence", ""),
+                    localized=entry.get("localized", False),
                 )
             )
     return attempts
@@ -173,6 +185,7 @@ def aggregate(directory: Path, out: Path) -> int:
                         "skip_reason": a.skip_reason,
                         "detail": a.detail,
                         "evidence": a.evidence,
+                        "localized": a.localized,
                     }
                     for a in sorted(attempts, key=lambda a: a.case_id)
                 ],
@@ -264,6 +277,7 @@ def main() -> int:
                         "skip_reason": a.skip_reason,
                         "detail": a.detail,
                         "evidence": a.evidence,
+                        "localized": a.localized,
                     }
                     for a in attempts
                 ],
