@@ -19,6 +19,10 @@ on:
         description: "Model to measure"
         required: false
         default: "gemini-3.1-flash-lite"
+      control:
+        description: "Recheck the verifier against the maintainer fixes"
+        required: false
+        default: "false"
 
 permissions:
   contents: read
@@ -40,15 +44,23 @@ jobs:
         run: |
           uv sync --all-groups
           uv run python - <<'EOF' >> "$GITHUB_OUTPUT"
-          import json
+          import json, os
           from pathlib import Path
           from buildsleuth.dataset.loader import load_cases
-          from evals.fix_funnel import executable_cases
+          from evals.fix_funnel import executable_cases, unmeasurable_cases
 
           cases = executable_cases(load_cases(Path("dataset")))
+          # A case whose own reference fix does not pass cannot measure a
+          # patch, so it does not get a runner unless the control is being
+          # rechecked.
+          if os.environ["CONTROL"] != "true":
+              broken = unmeasurable_cases()
+              cases = [c for c in cases if c.case_id not in broken]
           print("matrix=" + json.dumps({"include": [{"case_id": c.case_id} for c in cases]}))
           print(f"count={len(cases)}")
           EOF
+        env:
+          CONTROL: ${{ inputs.control }}
 
   measure:
     needs: plan
@@ -87,16 +99,24 @@ jobs:
         # the same verifier. Without this a funnel of zeros cannot distinguish
         # a model that writes bad patches from a verifier that cannot
         # recognise a good one. No model is involved, so it runs first.
+        #
+        # Off by default: the answer is committed in results, and rerunning it
+        # doubles the container time on every case.
+        if: inputs.control == 'true'
         run: |
           uv run python -m evals.verifier_control \
             --only "${{ matrix.case_id }}" \
             --out "control/${{ matrix.case_id }}.json"
 
       - name: Measure ${{ matrix.case_id }}
-        # Skipped rather than failed when no key is configured, so the control
-        # above still runs and reports which cases can measure a fix at all.
-        if: env.BUILDSLEUTH_GEMINI_API_KEY != '' || env.BUILDSLEUTH_OPENROUTER_API_KEY != ''
+        # The key check is in bash rather than a step `if`, because the env
+        # context did not resolve the secret there and the step silently
+        # skipped on every case even with the secret set.
         run: |
+          if [ -z "$BUILDSLEUTH_GEMINI_API_KEY" ] && [ -z "$BUILDSLEUTH_OPENROUTER_API_KEY" ]; then
+            echo "no model key configured, control only"
+            exit 0
+          fi
           uv run python -m evals.fix_funnel \
             --model "${{ inputs.model }}" \
             --only "${{ matrix.case_id }}" \
