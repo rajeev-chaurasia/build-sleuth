@@ -1,6 +1,6 @@
-diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/web2py/web2py/gluon/html.py /home/travis/build/passed/web2py/web2py/gluon/html.py
---- /home/travis/build/failed/web2py/web2py/gluon/html.py	2019-04-09 23:34:13.000000000 +0000
-+++ /home/travis/build/passed/web2py/web2py/gluon/html.py	2019-04-09 23:34:13.000000000 +0000
+diff --git a/gluon/html.py b/gluon/html.py
+--- a/gluon/html.py
++++ b/gluon/html.py
 @@ -274,27 +274,27 @@
      if not isinstance(args, (list, tuple)):
          args = [args]

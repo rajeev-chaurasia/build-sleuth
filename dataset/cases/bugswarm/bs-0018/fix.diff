@@ -1,6 +1,6 @@
-diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/hivesolutions/appier/src/appier/model.py /home/travis/build/passed/hivesolutions/appier/src/appier/model.py
---- /home/travis/build/failed/hivesolutions/appier/src/appier/model.py	2019-05-02 22:13:16.000000000 +0000
-+++ /home/travis/build/passed/hivesolutions/appier/src/appier/model.py	2019-05-02 22:13:16.000000000 +0000
+diff --git a/src/appier/model.py b/src/appier/model.py
+--- a/src/appier/model.py
++++ b/src/appier/model.py
 @@ -489,6 +489,7 @@
          if fill: cls.fill(model)
          if build: cls.build(model, map = map, rules = rules, meta = meta)

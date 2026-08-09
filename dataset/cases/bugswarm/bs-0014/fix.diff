@@ -1,6 +1,6 @@
-diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/scikit-learn/scikit-learn/sklearn/mixture/gmm.py /home/travis/build/passed/scikit-learn/scikit-learn/sklearn/mixture/gmm.py
---- /home/travis/build/failed/scikit-learn/scikit-learn/sklearn/mixture/gmm.py	2019-04-30 16:14:22.000000000 +0000
-+++ /home/travis/build/passed/scikit-learn/scikit-learn/sklearn/mixture/gmm.py	2019-04-30 16:14:24.000000000 +0000
+diff --git a/sklearn/mixture/gmm.py b/sklearn/mixture/gmm.py
+--- a/sklearn/mixture/gmm.py
++++ b/sklearn/mixture/gmm.py
 @@ -211,7 +211,7 @@
      ...                       10 + np.random.randn(300, 1)))
      >>> g.fit(obs) # doctest: +NORMALIZE_WHITESPACE

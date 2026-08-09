@@ -1,6 +1,6 @@
-diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/numpy/numpy/numpy/core/arrayprint.py /home/travis/build/passed/numpy/numpy/numpy/core/arrayprint.py
---- /home/travis/build/failed/numpy/numpy/numpy/core/arrayprint.py	2019-05-02 18:58:47.000000000 +0000
-+++ /home/travis/build/passed/numpy/numpy/numpy/core/arrayprint.py	2019-05-02 18:58:47.000000000 +0000
+diff --git a/numpy/core/arrayprint.py b/numpy/core/arrayprint.py
+--- a/numpy/core/arrayprint.py
++++ b/numpy/core/arrayprint.py
 @@ -426,12 +426,15 @@
  # gracefully handle recursive calls, when object arrays contain themselves
  @_recursive_guard()

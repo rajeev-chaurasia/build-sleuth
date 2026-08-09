@@ -1,6 +1,6 @@
-diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/Charcoal-SE/SmokeDetector/findspam.py /home/travis/build/passed/Charcoal-SE/SmokeDetector/findspam.py
---- /home/travis/build/failed/Charcoal-SE/SmokeDetector/findspam.py	2019-04-30 23:20:34.000000000 +0000
-+++ /home/travis/build/passed/Charcoal-SE/SmokeDetector/findspam.py	2019-04-30 23:20:34.000000000 +0000
+diff --git a/findspam.py b/findspam.py
+--- a/findspam.py
++++ b/findspam.py
 @@ -15,7 +15,7 @@
          'sites': ["patents.stackexchange.com"], 'reason': "Phone number detected", 'validation_method': 'checkphonenumbers', 'title': True, 'body': False, 'username': False},
       {'regex': u"(?i)\\b(nigg(a|er)|asshole|fag|fuck(ing?)?|shit|whore)s?\\b", 'all': True,

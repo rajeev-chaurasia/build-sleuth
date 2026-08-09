@@ -1,6 +1,6 @@
-diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/bwhmather/verktyg/verktyg/requests.py /home/travis/build/passed/bwhmather/verktyg/verktyg/requests.py
---- /home/travis/build/failed/bwhmather/verktyg/verktyg/requests.py	2019-05-03 05:30:11.000000000 +0000
-+++ /home/travis/build/passed/bwhmather/verktyg/verktyg/requests.py	2019-05-03 05:30:11.000000000 +0000
+diff --git a/verktyg/requests.py b/verktyg/requests.py
+--- a/verktyg/requests.py
++++ b/verktyg/requests.py
 @@ -351,9 +351,12 @@
          :attr:`parameter_storage_class` to a different type.  This might
          be necessary if the order of the form data is important.

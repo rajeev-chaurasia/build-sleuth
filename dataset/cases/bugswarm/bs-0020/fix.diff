@@ -1,6 +1,6 @@
-diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/getnikola/nikola/nikola/metadata_extractors.py /home/travis/build/passed/getnikola/nikola/nikola/metadata_extractors.py
---- /home/travis/build/failed/getnikola/nikola/nikola/metadata_extractors.py	2019-05-01 13:18:04.000000000 +0000
-+++ /home/travis/build/passed/getnikola/nikola/nikola/metadata_extractors.py	2019-05-01 13:18:04.000000000 +0000
+diff --git a/nikola/metadata_extractors.py b/nikola/metadata_extractors.py
+--- a/nikola/metadata_extractors.py
++++ b/nikola/metadata_extractors.py
 @@ -239,6 +239,11 @@
      priority = MetaPriority.fallback
      conditions = [(MetaCondition.config_bool, 'FILE_METADATA_REGEXP')]

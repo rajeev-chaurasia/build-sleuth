@@ -1,6 +1,6 @@
-diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/hivesolutions/appier/src/appier/storage.py /home/travis/build/passed/hivesolutions/appier/src/appier/storage.py
---- /home/travis/build/failed/hivesolutions/appier/src/appier/storage.py	2019-05-01 17:05:28.000000000 +0000
-+++ /home/travis/build/passed/hivesolutions/appier/src/appier/storage.py	2019-05-01 17:05:28.000000000 +0000
+diff --git a/src/appier/storage.py b/src/appier/storage.py
+--- a/src/appier/storage.py
++++ b/src/appier/storage.py
 @@ -56,23 +56,27 @@
      def read(cls, file, *args, **kwargs):
          raise exceptions.NotImplementedError()
