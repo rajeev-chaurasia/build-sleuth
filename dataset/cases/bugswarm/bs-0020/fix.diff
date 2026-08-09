@@ -1,0 +1,14 @@
+diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/getnikola/nikola/nikola/metadata_extractors.py /home/travis/build/passed/getnikola/nikola/nikola/metadata_extractors.py
+--- /home/travis/build/failed/getnikola/nikola/nikola/metadata_extractors.py	2019-05-01 13:18:04.000000000 +0000
++++ /home/travis/build/passed/getnikola/nikola/nikola/metadata_extractors.py	2019-05-01 13:18:04.000000000 +0000
+@@ -239,6 +239,11 @@
+     priority = MetaPriority.fallback
+     conditions = [(MetaCondition.config_bool, 'FILE_METADATA_REGEXP')]
+ 
++    def _extract_metadata_from_text(self, source_text: str) -> dict:
++        """Extract metadata from text."""
++        # This extractor does not use the source text, and as such, this method returns an empty dict.
++        return {}
++
+     def extract_filename(self, filename: str, lang: str) -> dict:
+         """Try to read the metadata from the filename based on the given re.

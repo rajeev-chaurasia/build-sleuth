@@ -1,10 +1,118 @@
 {
   "schema_version": 1,
-  "dataset_hash": "6e9ec4d1edcd",
-  "case_count": 49,
+  "dataset_hash": "02282a4b5e6e",
+  "case_count": 61,
   "cases": [
     {
       "case_id": "bs-0001",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0010",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0011",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0012",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0013",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0014",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0015",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0016",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0017",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0018",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0019",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0020",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0021",
       "failure_class": "code_change",
       "source": "bugswarm",
       "tags": [

@@ -1,0 +1,13 @@
+diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/dnanexus/dx-toolkit/src/python/dxpy/utils/__init__.py /home/travis/build/passed/dnanexus/dx-toolkit/src/python/dxpy/utils/__init__.py
+--- /home/travis/build/failed/dnanexus/dx-toolkit/src/python/dxpy/utils/__init__.py	2019-05-02 20:28:42.000000000 +0000
++++ /home/travis/build/passed/dnanexus/dx-toolkit/src/python/dxpy/utils/__init__.py	2019-05-02 20:28:48.000000000 +0000
+@@ -166,7 +166,8 @@
+         except ValueError:
+             try:
+                 t = int(time.mktime(dateutil.parser.parse(t).timetuple())*1000)
+-            except (ValueError, OverflowError):
++                assert t > 0
++            except (ValueError, OverflowError, AssertionError):
+                 raise ValueError(error_msg.format(t=t))
+     elif isinstance(t, int):
+         units_multipliers = {'ms': 1, 's': 1000}

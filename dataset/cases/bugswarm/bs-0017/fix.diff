@@ -1,0 +1,12 @@
+diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/web2py/web2py/gluon/validators.py /home/travis/build/passed/web2py/web2py/gluon/validators.py
+--- /home/travis/build/failed/web2py/web2py/gluon/validators.py	2019-05-03 21:11:44.000000000 +0000
++++ /home/travis/build/passed/web2py/web2py/gluon/validators.py	2019-05-03 21:11:45.000000000 +0000
+@@ -2847,7 +2847,7 @@
+         self.salt = salt
+ 
+     def __call__(self, value):
+-        v = v and str(v)[:self.max_length]
++        v = value and str(value)[:self.max_length]
+         if not v or len(v) < self.min_length:
+             return ('', translate(self.error_message))
+         if isinstance(value, LazyCrypt):

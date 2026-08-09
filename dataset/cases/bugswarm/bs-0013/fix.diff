@@ -1,0 +1,12 @@
+diff -ruN -x env -x .git -x __pycache__ -x node_modules -x '*.pyc' -x .tox -x venv /home/travis/build/failed/scikit-learn/scikit-learn/sklearn/datasets/samples_generator.py /home/travis/build/passed/scikit-learn/scikit-learn/sklearn/datasets/samples_generator.py
+--- /home/travis/build/failed/scikit-learn/scikit-learn/sklearn/datasets/samples_generator.py	2019-05-04 04:09:43.000000000 +0000
++++ /home/travis/build/passed/scikit-learn/scikit-learn/sklearn/datasets/samples_generator.py	2019-05-04 04:09:42.000000000 +0000
+@@ -387,7 +387,7 @@
+     if return_indicator in (True, 'sparse', 'dense'):
+         lb = MultiLabelBinarizer(sparse_output=(return_indicator == 'sparse'))
+         Y = lb.fit([range(n_classes)]).transform(Y)
+-    else:
++    elif return_indicator is not False:
+         raise ValueError("return_indicator must be either 'sparse', 'dense' "
+                          'or False.')
+     if return_distributions:

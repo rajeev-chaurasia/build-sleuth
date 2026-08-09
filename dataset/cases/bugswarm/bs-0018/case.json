@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "case_id": "bs-0018",
+  "title": "hivesolutions-appier build 119017017",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "hivesolutions/appier",
+    "run_id": 119017017,
+    "run_attempt": 1,
+    "head_sha": "c68bc584ca82eb911ca628340acbcd77d891aa48",
+    "pr_number": null,
+    "failed_job_name": "build",
+    "failed_step_name": null,
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "test_assertion",
+    "related_to_diff": true,
+    "culprit_files": [
+      "src/appier/model.py"
+    ],
+    "failing_tests": [
+      "test_references (appier.test.model.ModelTest)"
+    ],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "bugswarm",
+    "labeling_method": "imported",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": null,
+    "snapshot_date": "2026-08-09",
+    "notes": "Imported from BugSwarm artifact hivesolutions-appier-119017017. Culprit files are the ones the maintainer's own fix touched, taken by diffing the failing and passing trees in the image, rather than read off the log by a labeller. The class follows from the artifact being a reproducible build failure that a human then fixed; the subcategory is a default and has not been adjudicated. The commit and the failing test names come from the BugSwarm catalogue entry, which rates this artifact reproducible at 5/5.",
+    "independent_adjudications": 0,
+    "adjudicators_agreeing": 0
+  },
+  "verification": {
+    "method": "bugswarm_image",
+    "docker_image": "bugswarm/cached-images:hivesolutions-appier-119017017",
+    "setup_commands": [],
+    "test_command": "bash /usr/local/bin/run_failed.sh",
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": [
+    "bugswarm",
+    "executable"
+  ]
+}
