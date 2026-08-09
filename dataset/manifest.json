@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "dataset_hash": "6c63457ee021",
-  "case_count": 61,
+  "dataset_hash": "794ede31d1b2",
+  "case_count": 71,
   "cases": [
     {
       "case_id": "bs-0001",
@@ -113,6 +113,96 @@
     },
     {
       "case_id": "bs-0021",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0022",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0024",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0026",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0028",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0029",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0030",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0031",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0032",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0033",
+      "failure_class": "code_change",
+      "source": "bugswarm",
+      "tags": [
+        "bugswarm",
+        "executable"
+      ]
+    },
+    {
+      "case_id": "bs-0034",
       "failure_class": "code_change",
       "source": "bugswarm",
       "tags": [

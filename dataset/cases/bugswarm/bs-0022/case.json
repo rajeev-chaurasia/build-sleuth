@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "case_id": "bs-0022",
+  "title": "Charcoal-SE-SmokeDetector build 47018467",
+  "inputs": {
+    "provider": "github_actions",
+    "repo": "Charcoal-SE/SmokeDetector",
+    "run_id": 47018467,
+    "run_attempt": 1,
+    "head_sha": "006be9f0b8c8da5abf1f0acf41457b44c7de1e41",
+    "pr_number": null,
+    "failed_job_name": "build",
+    "failed_step_name": null,
+    "log_files": [
+      "logs/failed_job.txt"
+    ],
+    "diff_file": null,
+    "workflow_file": null,
+    "passing_run_log": null
+  },
+  "ground_truth": {
+    "failure_class": "code_change",
+    "subcategory": "test_assertion",
+    "related_to_diff": true,
+    "culprit_files": [
+      "findspam.py"
+    ],
+    "failing_tests": [
+      "test.test_regexes::test_regexes[What is the value of MD5 checksums if the MD5 hash itself could potentially also have been manipulated?----False]",
+      "test.test_regexes::test_regexes[Probability: 6 Dice are rolled:: Which is more likely, that you get exactly one 6, or that you get 6 different numbers?----False]",
+      "test.test_regexes::test_regexes[The Challenge of Controlling a Powerful AI--Serban Tanasa--False]",
+      "test.test_regexes::test_regexes[Reproducing image of a spiral using TikZ--Kristoffer Ryhl--False]",
+      "test.test_regexes::test_regexes[What's a real-world example of \"overfitting\"?--user3851283--False]",
+      "test.test_regexes::test_regexes[Cannot access http://stackoverflow::com/ with proxy enabled---superuser::com-False]"
+    ],
+    "fix_commit_sha": null,
+    "fix_summary": null
+  },
+  "provenance": {
+    "source": "bugswarm",
+    "labeling_method": "imported",
+    "verified_by_human": false,
+    "verified_date": null,
+    "original_url": null,
+    "snapshot_date": "2026-08-09",
+    "notes": "Imported from BugSwarm artifact Charcoal-SE-SmokeDetector-47018467. Culprit files are the ones the maintainer's own fix touched, taken by diffing the failing and passing trees in the image, rather than read off the log by a labeller. The class follows from the artifact being a reproducible build failure that a human then fixed; the subcategory is a default and has not been adjudicated. The commit and the failing test names come from the BugSwarm catalogue entry, which rates this artifact reproducible at 5/5.",
+    "independent_adjudications": 0,
+    "adjudicators_agreeing": 0
+  },
+  "verification": {
+    "method": "bugswarm_image",
+    "docker_image": "bugswarm/cached-images:Charcoal-SE-SmokeDetector-47018467",
+    "setup_commands": [],
+    "test_command": "bash /usr/local/bin/run_failed.sh",
+    "no_new_breaks_command": null,
+    "timeout_seconds": 600
+  },
+  "tags": [
+    "bugswarm",
+    "executable"
+  ]
+}

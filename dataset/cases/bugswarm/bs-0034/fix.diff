@@ -1,0 +1,12 @@
+diff --git a/plugins/Time/plugin.py b/plugins/Time/plugin.py
+--- a/plugins/Time/plugin.py
++++ b/plugins/Time/plugin.py
+@@ -114,7 +114,7 @@
+         and see if it will work.
+         If the <time string> is not given, defaults to now.
+         """
+-        if not s:
++        if not s or s == 'now':
+             irc.reply(str(int(time.time())))
+             return
+         if not parse:
