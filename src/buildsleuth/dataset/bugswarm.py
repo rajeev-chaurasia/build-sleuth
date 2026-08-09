@@ -112,21 +112,34 @@ def discard_image(tag: str, timeout: int = IMAGE_REMOVE_TIMEOUT_SECONDS) -> bool
 def extract_script(job_id: int) -> str:
     """Read the failing log, the maintainer's fix, and which files it touched.
 
-    Emitted with separators rather than three docker runs, because starting a
-    container is the expensive part and these images are large.
+    The layout is discovered rather than assumed. Artifacts built from Travis
+    put everything under /home/travis/build; later ones built from GitHub
+    Actions use a different root, and hardcoding the old one silently reports
+    every newer artifact as having no log.
+
+    Emitted with separators in a single script, because starting a container
+    is the expensive part and these images are large.
     """
-    project = f"$(ls {FAILED_DIR} | head -1)"
     return "\n".join(
         [
-            "set -e",
-            f"PROJ={project}",
+            "set +e",
+            # The log names the job, so find it and let it reveal the root.
+            f'LOG=$(find / -maxdepth 6 -name "{job_id}-orig.log" 2>/dev/null | head -1)',
+            'if [ -z "$LOG" ]; then'
+            ' LOG=$(find / -maxdepth 6 -name "*-orig.log" 2>/dev/null | head -1); fi',
+            'ROOT=$(dirname "$LOG" 2>/dev/null)',
+            f'[ -d "$ROOT/failed" ] || ROOT={BUILD_ROOT}',
+            'FAILED="$ROOT/failed"; PASSED="$ROOT/passed"',
+            'PROJ=$(ls "$FAILED" 2>/dev/null | head -1)',
             'echo "=====BUILDSLEUTH_LOG====="',
-            f'cat {BUILD_ROOT}/{job_id}-orig.log 2>/dev/null || echo "no log"',
+            'cat "$LOG" 2>/dev/null || echo "no log"',
             'echo "=====BUILDSLEUTH_DIFF====="',
-            f'diff -ruN "{FAILED_DIR}/$PROJ" "{PASSED_DIR}/$PROJ" 2>/dev/null | head -4000 || true',
+            'diff -ruN "$FAILED/$PROJ" "$PASSED/$PROJ" 2>/dev/null | head -4000',
             'echo "=====BUILDSLEUTH_FILES====="',
-            f'diff -rq "{FAILED_DIR}/$PROJ" "{PASSED_DIR}/$PROJ" 2>/dev/null'
-            f' | sed -n "s#^Files {FAILED_DIR}/$PROJ/\\(.*\\) and .* differ\\$#\\1#p" || true',
+            'diff -rq "$FAILED/$PROJ" "$PASSED/$PROJ" 2>/dev/null'
+            ' | sed -n "s#^Files $FAILED/$PROJ/\\(.*\\) and .* differ\\$#\\1#p"',
+            'echo "=====BUILDSLEUTH_LAYOUT====="',
+            'echo "root=$ROOT project=$PROJ log=$LOG"',
         ]
     )
 
@@ -151,7 +164,11 @@ def build_artifact(tag: str, output: str) -> Artifact:
 
     log = sections.get("log", "").strip()
     if not log or log == "no log":
-        raise ArtifactError(f"{tag} has no original build log")
+        # Report what the image actually looked like. The first version of
+        # this said only "no log", which read as a broken artifact when the
+        # real cause was an unfamiliar directory layout.
+        layout = sections.get("layout", "").strip() or "layout not reported"
+        raise ArtifactError(f"{tag} has no original build log ({layout})")
 
     files = [line.strip() for line in sections.get("files", "").splitlines() if line.strip()]
     return Artifact(
