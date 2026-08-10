@@ -79,32 +79,32 @@ run url -> ingest -> condense -> classify -> localize -> fix -> repair -> policy
 
 ### The fix funnel
 
-**Withdrawn pending re-measurement.** The figures that stood here were produced through an apply step that accepted patches `git apply` rejects, so the rate they reported was not the rate the model achieved. The section will return when it has been measured through the corrected checks.
+Measured on the 20 executable cases the control below found sound, with `gemini-3.1-flash-lite`. The model is shown the file it asked to edit, read out of the artifact itself, and every patch is applied by `git apply` only.
 
-What is established, and does not depend on that run:
-
-- **20 of 23 executable cases can measure a fix.** The maintainer's own patch reaches the top rung on each, and a deliberately damaged copy of it reaches nothing.
-- The 3 excluded cases are excluded for a stated reason: their reference fix does not make the build pass, all three failing at dependency install or package download inside the image.
-
-Withdrawing a number rather than restating it is the point. The previous figures looked reasonable, were internally consistent, and were wrong.
-
-### Repairing what the model should not have to get right
-
-A hunk header declares how many lines the hunk covers. That is arithmetic the diff already contains, so it is not something a model needs to supply correctly, and git refuses the whole patch when it disagrees. Three of the rejections above failed exactly that way, discarding changes that may have been right.
-
-So the counts are recomputed from the hunk body, and a context line missing its leading space gets it back. Nothing in the body's content is altered, and a well formed patch comes back byte identical.
-
-**The repair has to earn its place.** The model's own patch is applied first, and the repaired copy is only tried when the original is genuinely refused, so the run reports what the repair rescued rather than assuming it helped. The counts below came from the withdrawn run and are shown as the shape of the effect, not as current figures:
-
-| | before repair | after |
+| stage | cases | share of attempted |
 | --- | --- | --- |
-| applies cleanly | 1 | 2 |
-| fixed the build | 0 | 1 |
-| rejected as malformed | 3 | 1 |
+| patch attempted | 20 | 1.00 |
+| applies cleanly | 5 | 0.25 |
+| failing test passes | 2 | 0.10 |
+| nothing else broke | 2 | 0.10 |
 
-One patch went from rejected to fixing the build outright. Two others stopped being malformed and started failing as honest context mismatches, which is the real problem showing through rather than a formatting error hiding it.
+**Three quarters of patches are rejected before anything runs.** Splitting that by cause is the useful part, and it needs the localization result alongside the patch:
 
-That is the project's thesis applied to formatting instead of judgement: the model proposes, and anything mechanically derivable is computed rather than trusted.
+| outcome | cases |
+| --- | --- |
+| well formed, context did not match the file | 5 |
+| patched a file that was not the culprit | 5 |
+| malformed diff | 5 |
+| applied, did not fix the failure | 3 |
+| fixed the build and broke nothing | 2 |
+
+Localization was on target for 14 of 20. So in most cases the model finds the right file, is handed that file's exact contents, and still writes a diff git will not take. The failures split three ways almost evenly, which is why a single rate is the wrong summary: aiming at the wrong file, mis-copying context, and emitting malformed output need three different fixes.
+
+No LLM judge produces this table. A judge reading the 15 rejected patches would have seen a confident explanation and a plausible diff on most of them.
+
+**A deterministic repair sits between the model and the verifier**, because a hunk header states line counts the diff already contains and a model has no business getting them wrong. It recomputes those counts and restores context markers the model dropped, and it is only credited when the model's own patch is refused first.
+
+On this run it rescued nothing. Five patches were still malformed in ways it cannot reconstruct, which is the honest result: it fixes arithmetic, not a diff that was never coherent. An earlier run where it converted a rejection into a working fix was measured through the broken verifier, so that result does not stand.
 
 ### Checking the checker
 
