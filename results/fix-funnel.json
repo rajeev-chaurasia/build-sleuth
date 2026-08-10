@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-08-09T17:19:23.175642+00:00",
+  "generated_at": "2026-08-10T09:09:49.285969+00:00",
   "report": {
-    "n_cases": 9,
-    "n_attempted": 9,
+    "n_cases": 20,
+    "n_attempted": 20,
     "n_skipped": 0,
-    "applies": 2,
-    "lints": 1,
-    "failing_test_passes": 1,
-    "nothing_else_broke": 1
+    "applies": 5,
+    "lints": 2,
+    "failing_test_passes": 2,
+    "nothing_else_broke": 2
   },
   "attempts": [
     {
@@ -16,7 +16,7 @@
       "level": "NOTHING",
       "skip_reason": "",
       "detail": "patch does not apply",
-      "evidence": "unk #1 FAILED at 235.\n1 out of 1 hunk FAILED -- saving rejects to file verktyg/requests.py.rej\nerror: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\nerror: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\nerror: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\nerror: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\npatching file verktyg/requests.py\nHunk #1 FAILED at 235.\n1 out of 1 hunk FAILED -- saving rejects to file verktyg/requests.py.rej",
+      "evidence": "error: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\nerror: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\nerror: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\nerror: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\nerror: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply\nerror: patch failed: verktyg/requests.py:235\nerror: verktyg/requests.py: patch does not apply",
       "localized": true,
       "needed_repair": false
     },
@@ -26,7 +26,7 @@
       "level": "NOTHING",
       "skip_reason": "",
       "detail": "patch does not apply",
-      "evidence": "fatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\npatch: **** Only garbage was found in the patch input.\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\npatch: **** Only garbage was found in the patch input.",
+      "evidence": "fatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input",
       "localized": false,
       "needed_repair": false
     },
@@ -36,7 +36,7 @@
       "level": "NOTHING",
       "skip_reason": "",
       "detail": "patch does not apply",
-      "evidence": "le findspam.py\npatch: **** unexpected end of file in patch\nerror: patch failed: findspam.py:18\nerror: findspam.py: patch does not apply\nerror: patch failed: findspam.py:18\nerror: findspam.py: patch does not apply\nerror: patch failed: findspam.py:18\nerror: findspam.py: patch does not apply\nerror: patch failed: findspam.py:18\nerror: findspam.py: patch does not apply\npatching file findspam.py\npatch: **** malformed patch at line 4:       {'regex': u\"(?i)\\\\b(crap)\\\\b\", 'all': True, 'sites': [], 'reason': \"Offensive {} detected\", 'insensitive': True, 'title': True, 'body': False, 'username': False},",
+      "evidence": "fatal: corrupt patch at line 5\nfatal: corrupt patch at line 5\nfatal: corrupt patch at line 5\nerror: patch failed: findspam.py:18\nerror: findspam.py: patch does not apply\nerror: patch failed: findspam.py:18\nerror: findspam.py: patch does not apply\nerror: patch failed: findspam.py:18\nerror: findspam.py: patch does not apply",
       "localized": true,
       "needed_repair": false
     },
@@ -46,7 +46,7 @@
       "level": "NOTHING",
       "skip_reason": "",
       "detail": "patch does not apply",
-      "evidence": "fatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\npatch: **** Only garbage was found in the patch input.\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\npatch: **** Only garbage was found in the patch input.",
+      "evidence": "fatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input",
       "localized": false,
       "needed_repair": false
     },
@@ -56,7 +56,7 @@
       "level": "APPLIES",
       "skip_reason": "",
       "detail": "patch applies but the build still fails",
-      "evidence": "new archive\u001b[0m\n/home/travis/.casher/bin/casher:213:in `cache_archive_name': undefined method `[]' for nil:NilClass (NoMethodError)\n\tfrom /home/travis/.casher/bin/casher:143:in `push'\n\tfrom /home/travis/.casher/bin/casher:53:in `block in run'\n\tfrom /home/travis/.rvm/rubies/ruby-1.9.3-p551/lib/ruby/1.9.1/timeout.rb:69:in `timeout'\n\tfrom /home/travis/.casher/bin/casher:53:in `run'\n\tfrom /home/travis/.casher/bin/casher:263:in `<main>'\n\ntravis_time:end:36b61c9c:start=1786295534259643709,finish=1786295535636741913,duration=1377098204\n\u001b[0Ktravis_fold:end:cache.2\n\u001b[0K\nDone. Your build exited with 1.\n",
+      "evidence": "new archive\u001b[0m\n/home/travis/.casher/bin/casher:213:in `cache_archive_name': undefined method `[]' for nil:NilClass (NoMethodError)\n\tfrom /home/travis/.casher/bin/casher:143:in `push'\n\tfrom /home/travis/.casher/bin/casher:53:in `block in run'\n\tfrom /home/travis/.rvm/rubies/ruby-1.9.3-p551/lib/ruby/1.9.1/timeout.rb:69:in `timeout'\n\tfrom /home/travis/.casher/bin/casher:53:in `run'\n\tfrom /home/travis/.casher/bin/casher:263:in `<main>'\n\ntravis_time:end:0fa6aee0:start=1786351773374812533,finish=1786351774788043878,duration=1413231345\n\u001b[0Ktravis_fold:end:cache.2\n\u001b[0K\nDone. Your build exited with 1.\n",
       "localized": true,
       "needed_repair": false
     },
@@ -66,7 +66,7 @@
       "level": "NOTHING",
       "skip_reason": "",
       "detail": "patch does not apply",
-      "evidence": " FAILED at 2847.\n1 out of 1 hunk FAILED -- saving rejects to file gluon/validators.py.rej\nerror: patch failed: gluon/validators.py:2847\nerror: gluon/validators.py: patch does not apply\nerror: patch failed: gluon/validators.py:2847\nerror: gluon/validators.py: patch does not apply\nerror: patch failed: gluon/validators.py:2847\nerror: gluon/validators.py: patch does not apply\nerror: patch failed: gluon/validators.py:2847\nerror: gluon/validators.py: patch does not apply\npatching file gluon/validators.py\nHunk #1 FAILED at 2847.\n1 out of 1 hunk FAILED -- saving rejects to file gluon/validators.py.rej",
+      "evidence": "fatal: corrupt patch at line 11\nfatal: corrupt patch at line 11\nfatal: corrupt patch at line 11\nerror: patch failed: gluon/validators.py:2847\nerror: gluon/validators.py: patch does not apply\nerror: patch failed: gluon/validators.py:2847\nerror: gluon/validators.py: patch does not apply\nerror: patch failed: gluon/validators.py:2847\nerror: gluon/validators.py: patch does not apply",
       "localized": true,
       "needed_repair": false
     },
@@ -76,19 +76,29 @@
       "level": "NOTHING",
       "skip_reason": "",
       "detail": "patch does not apply",
-      "evidence": "ects to file src/appier/typesf.py.rej\nerror: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\nerror: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\nerror: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\nerror: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\npatching file src/appier/typesf.py\nHunk #1 FAILED at 355.\nHunk #2 FAILED at 405.\nHunk #3 FAILED at 414.\n3 out of 3 hunks FAILED -- saving rejects to file src/appier/typesf.py.rej",
+      "evidence": "error: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\nerror: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\nerror: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\nerror: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\nerror: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply\nerror: patch failed: src/appier/typesf.py:355\nerror: src/appier/typesf.py: patch does not apply",
+      "localized": true,
+      "needed_repair": false
+    },
+    {
+      "case_id": "bs-0019",
+      "attempted": true,
+      "level": "NOTHING",
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "error: patch failed: src/appier/storage.py:59\nerror: src/appier/storage.py: patch does not apply\nerror: patch failed: src/appier/storage.py:59\nerror: src/appier/storage.py: patch does not apply\nerror: patch failed: src/appier/storage.py:59\nerror: src/appier/storage.py: patch does not apply\nerror: patch failed: src/appier/storage.py:59\nerror: src/appier/storage.py: patch does not apply\nerror: patch failed: src/appier/storage.py:59\nerror: src/appier/storage.py: patch does not apply\nerror: patch failed: src/appier/storage.py:59\nerror: src/appier/storage.py: patch does not apply",
       "localized": true,
       "needed_repair": false
     },
     {
       "case_id": "bs-0020",
       "attempted": true,
-      "level": "NOTHING_ELSE_BROKE",
+      "level": "NOTHING",
       "skip_reason": "",
-      "detail": "the original job passes with the patch applied after repairing its hunk headers",
-      "evidence": "ome/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:32:in `block in catch'\n\tfrom /home/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:32:in `catch'\n\tfrom /home/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:32:in `catch'\n\tfrom /home/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:103:in `timeout'\n\tfrom /home/travis/.casher/bin/casher:53:in `run'\n\tfrom /home/travis/.casher/bin/casher:263:in `<main>'\n\ntravis_time:end:1950cd50:start=1786295911054420290,finish=1786295912491189276,duration=1436768986\n\u001b[0Ktravis_fold:end:cache.2\n\u001b[0K\nDone. Your build exited with 0.\n",
+      "detail": "patch does not apply",
+      "evidence": "error: corrupt patch at line 11\nerror: corrupt patch at line 11\nerror: corrupt patch at line 11\nerror: patch failed: nikola/plugin_categories.py:415\nerror: nikola/plugin_categories.py: patch does not apply\nerror: patch failed: nikola/plugin_categories.py:415\nerror: nikola/plugin_categories.py: patch does not apply\nerror: patch failed: nikola/plugin_categories.py:415\nerror: nikola/plugin_categories.py: patch does not apply",
       "localized": false,
-      "needed_repair": true
+      "needed_repair": false
     },
     {
       "case_id": "bs-0021",
@@ -96,9 +106,111 @@
       "level": "NOTHING",
       "skip_reason": "",
       "detail": "patch does not apply",
-      "evidence": "rejects to file numpy/core/arrayprint.py.rej\nerror: patch failed: numpy/core/arrayprint.py:781\nerror: numpy/core/arrayprint.py: patch does not apply\nerror: patch failed: numpy/core/arrayprint.py:781\nerror: numpy/core/arrayprint.py: patch does not apply\nerror: patch failed: numpy/core/arrayprint.py:781\nerror: numpy/core/arrayprint.py: patch does not apply\nerror: patch failed: numpy/core/arrayprint.py:781\nerror: numpy/core/arrayprint.py: patch does not apply\npatching file numpy/core/arrayprint.py\nHunk #1 FAILED at 781.\n1 out of 1 hunk FAILED -- saving rejects to file numpy/core/arrayprint.py.rej",
+      "evidence": "error: corrupt patch at line 9\nerror: corrupt patch at line 9\nerror: corrupt patch at line 9\nerror: patch failed: numpy/core/arrayprint.py:781\nerror: numpy/core/arrayprint.py: patch does not apply\nerror: patch failed: numpy/core/arrayprint.py:781\nerror: numpy/core/arrayprint.py: patch does not apply\nerror: patch failed: numpy/core/arrayprint.py:781\nerror: numpy/core/arrayprint.py: patch does not apply",
+      "localized": true,
+      "needed_repair": false
+    },
+    {
+      "case_id": "bs-0022",
+      "attempted": true,
+      "level": "NOTHING",
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "fatal: corrupt patch at line 8\nfatal: corrupt patch at line 8\nfatal: corrupt patch at line 8\nerror: patch failed: findspam.py:16\nerror: findspam.py: patch does not apply\nerror: patch failed: findspam.py:16\nerror: findspam.py: patch does not apply\nerror: patch failed: findspam.py:16\nerror: findspam.py: patch does not apply",
+      "localized": true,
+      "needed_repair": false
+    },
+    {
+      "case_id": "bs-0024",
+      "attempted": true,
+      "level": "NOTHING_ELSE_BROKE",
+      "skip_reason": "",
+      "detail": "the original job passes with the patch applied",
+      "evidence": "ython3.3/site-packages/requests/__init__.py\", line 100, in <module>\n    check_compatibility(urllib3.__version__, chardet_version, charset_normalizer_version)\n  File \"/home/travis/virtualenv/python3.3.5/lib/python3.3/site-packages/requests/__init__.py\", line 85, in check_compatibility\n    raise Exception(\"You need either charset_normalizer or chardet installed\")\nException: You need either charset_normalizer or chardet installed\n\ntravis_time:end:2452e210:start=1786352140082829665,finish=1786352140219228178,duration=136398513\n\u001b[0Ktravis_fold:end:after_success\n\u001b[0K\nDone. Your build exited with 0.\n",
+      "localized": true,
+      "needed_repair": false
+    },
+    {
+      "case_id": "bs-0026",
+      "attempted": true,
+      "level": "NOTHING",
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "error: corrupt patch at line 9\nerror: corrupt patch at line 9\nerror: corrupt patch at line 9\nerror: patch failed: lib/transaction.py:443\nerror: lib/transaction.py: patch does not apply\nerror: patch failed: lib/transaction.py:443\nerror: lib/transaction.py: patch does not apply\nerror: patch failed: lib/transaction.py:443\nerror: lib/transaction.py: patch does not apply",
+      "localized": true,
+      "needed_repair": false
+    },
+    {
+      "case_id": "bs-0028",
+      "attempted": true,
+      "level": "NOTHING",
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "error: unrecognized input\nerror: unrecognized input\nerror: unrecognized input\nerror: unrecognized input\nerror: unrecognized input\nerror: unrecognized input",
+      "localized": true,
+      "needed_repair": false
+    },
+    {
+      "case_id": "bs-0029",
+      "attempted": true,
+      "level": "APPLIES",
+      "skip_reason": "",
+      "detail": "patch applies but the build still fails",
+      "evidence": "-----------------------------------------------------------------\nRan 90 tests in 11.187s\n\nFAILED (failures=1, errors=1, skipped=1)\nnot running tst_unicode3.py ...\nnot running tst_diskless.py ...\nnot running tst_filepath.py ...\nnot running tst_cdf5.py ...\nnot running tst_dap.py ...\n\nnetcdf4-python version: 1.3.0\nHDF5 lib version:       1.8.4\nnetcdf lib version:     4.1.1\nnumpy version           1.9.1\n\ntravis_time:end:28aed715:start=1786352394604075107,finish=1786352406157464744,duration=11553389637\n\u001b[0K\n\u001b[31;1mThe command \"python run_all.py\" exited with 1.\u001b[0m\n\nDone. Your build exited with 1.\n",
+      "localized": false,
+      "needed_repair": false
+    },
+    {
+      "case_id": "bs-0030",
+      "attempted": true,
+      "level": "NOTHING",
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "fatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input\nfatal: unrecognized input",
+      "localized": true,
+      "needed_repair": false
+    },
+    {
+      "case_id": "bs-0031",
+      "attempted": true,
+      "level": "NOTHING",
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "fatal: corrupt patch at line 13\nfatal: corrupt patch at line 13\nfatal: corrupt patch at line 13\nerror: {{cookiecutter.project_slug}}/config/settings/production.py: No such file or directory\nerror: {{cookiecutter.project_slug}}/config/settings/production.py: No such file or directory\nerror: {{cookiecutter.project_slug}}/config/settings/production.py: No such file or directory",
+      "localized": false,
+      "needed_repair": false
+    },
+    {
+      "case_id": "bs-0032",
+      "attempted": true,
+      "level": "NOTHING",
+      "skip_reason": "",
+      "detail": "patch does not apply",
+      "evidence": "fatal: corrupt patch at line 9\nfatal: corrupt patch at line 9\nfatal: corrupt patch at line 9\nerror: {{cookiecutter.project_slug}}/config/settings/production.py: No such file or directory\nerror: {{cookiecutter.project_slug}}/config/settings/production.py: No such file or directory\nerror: {{cookiecutter.project_slug}}/config/settings/production.py: No such file or directory",
+      "localized": false,
+      "needed_repair": false
+    },
+    {
+      "case_id": "bs-0033",
+      "attempted": true,
+      "level": "NOTHING_ELSE_BROKE",
+      "skip_reason": "",
+      "detail": "the original job passes with the patch applied",
+      "evidence": "a.py\", line 636, in read\n    data.read_file(self.filename)\n  File \"/home/travis/virtualenv/python3.5.6/lib/python3.5/site-packages/coverage/data.py\", line 295, in read_file\n    filename, exc.__class__.__name__, exc,\ncoverage.misc.CoverageException: Couldn't read data from '/home/travis/build/failed/spesmilo/electrum/.coverage': UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe6 in position 98: invalid continuation byte\n\ntravis_time:end:0dd25ef8:start=1786352721233844071,finish=1786352721392201469,duration=158357398\n\u001b[0Ktravis_fold:end:after_success.2\n\u001b[0K\nDone. Your build exited with 0.\n",
+      "localized": true,
+      "needed_repair": false
+    },
+    {
+      "case_id": "bs-0034",
+      "attempted": true,
+      "level": "APPLIES",
+      "skip_reason": "",
+      "detail": "patch applies but the build still fails",
+      "evidence": "N\" =~ ^3\\.[4-9] ]] ; then pip install --no-index --find-links=/home/travis/build/failed/requirements -v git+https://github.com/ProgVal/irctest.git; fi\" exited with 0.\u001b[0m\ntravis_time:start:0972a985\n\u001b[0K$ if [[ \"$TRAVIS_PYTHON_VERSION\" =~ ^3\\.[4-9] ]] ; then python -m irctest irctest.controllers.limnoria; fi\ntravis_time:end:0972a985:start=1786352978499848404,finish=1786352978502009509,duration=2161105,event=script\n\u001b[0K\u001b[32;1mThe command \"if [[ \"$TRAVIS_PYTHON_VERSION\" =~ ^3\\.[4-9] ]] ; then python -m irctest irctest.controllers.limnoria; fi\" exited with 0.\u001b[0m\n\n\nDone. Your build exited with 1.\n",
       "localized": true,
       "needed_repair": false
     }
-  ]
+  ],
+  "model": "gemini-3.1-flash-lite",
+  "note": "Measured on the twenty executable cases the verifier control found sound, applying with git apply only. The three excluded cases are named in results/verifier-control.json."
 }

@@ -6,6 +6,7 @@ place where retries and redaction happen.
 """
 
 import random
+import re
 import time
 from collections.abc import Callable
 from types import TracebackType
@@ -31,6 +32,13 @@ DEFAULT_TIMEOUT_SECONDS = 180.0
 BACKOFF_BASE_SECONDS = 0.5
 BACKOFF_MULTIPLIER = 2.0
 BACKOFF_MAX_SECONDS = 30.0
+# A per minute limit clears in under a minute, so waiting it out is cheaper
+# than losing the case, and the ordinary backoff ceiling is too low for it.
+RATE_LIMIT_MAX_WAIT_SECONDS = 75.0
+# Enough to sit out a few busy minutes. Three cases were lost to a rate
+# limit that shared the general retry budget and ran it out.
+MAX_RATE_LIMIT_WAITS = 6
+_RETRY_DELAY = re.compile(r'"retryDelay"\s*:\s*"?([0-9.]+)s?"?')
 JITTER_FRACTION = 0.25
 MILLISECONDS_PER_SECOND = 1000.0
 ERROR_PREVIEW_CHARS = 200
@@ -52,10 +60,34 @@ RETRYABLE_STATUSES = frozenset(
 # second kind cannot succeed and burns three more requests against the very
 # quota that is already exhausted, so it fails fast instead.
 _QUOTA_EXHAUSTED_MARKERS = ("exceeded your current quota", "quota_exceeded", "billing details")
+# Gemini returns the same "exceeded your current quota" wording whether the
+# limit is per minute or per day, and only the quota id distinguishes them.
+# Treating a per minute limit as fatal cost 13 of 61 cases on every full run,
+# always the same ones, because the request pacing is deterministic.
+_PER_MINUTE_MARKERS = ("perminute", "per minute", "requests per minute", "rpm")
+_PER_DAY_MARKERS = ("perday", "per day", "requests per day", "daily limit")
+
+
+def _is_rate_limited(response: httpx.Response) -> bool:
+    """A 429 that will pass on its own, so waiting is the right response."""
+    if response.status_code != httpx.codes.TOO_MANY_REQUESTS:
+        return False
+    body = response.text.lower().replace("_", "")
+    if any(marker in body for marker in _PER_DAY_MARKERS):
+        return False
+    return any(marker in body for marker in _PER_MINUTE_MARKERS)
 
 
 def _is_quota_exhausted(response: httpx.Response) -> bool:
+    """A 429 that will not pass until the allowance resets.
+
+    Retrying this kind spends three more requests against an allowance that
+    is already gone, so it fails fast. A per minute limit is deliberately not
+    counted here: it clears by itself and the request is worth retrying.
+    """
     if response.status_code != httpx.codes.TOO_MANY_REQUESTS:
+        return False
+    if _is_rate_limited(response):
         return False
     body = response.text.lower()
     return any(marker in body for marker in _QUOTA_EXHAUSTED_MARKERS)
@@ -161,7 +193,12 @@ class OpenAICompatClient:
 
     def _post_with_retries(self, payload: dict[str, Any]) -> httpx.Response:
         attempts = self._spec.quirks.max_retries + 1
-        for attempt in range(attempts):
+        # A rate limit is the one failure where waiting is known to work, so
+        # it gets its own budget. Sharing the general one lost three cases to
+        # a busy minute, reported as a model error rather than as congestion.
+        rate_limited_attempts = 0
+        attempt = 0
+        while attempt < attempts:
             last_attempt = attempt == attempts - 1
             try:
                 response = self._http.post(self._url, json=payload, headers=self._headers())
@@ -173,6 +210,7 @@ class OpenAICompatClient:
                         f"{self._spec.name}: timed out after {attempts} attempts"
                     ) from error
                 self._sleep(self._backoff(attempt))
+                attempt += 1
                 continue
 
             if response.is_success:
@@ -182,9 +220,17 @@ class OpenAICompatClient:
                     f"{self._spec.name}: {self._spec.provider.value} daily quota is exhausted."
                     " Wait for it to reset or pick another model."
                 )
+            if _is_rate_limited(response) and rate_limited_attempts < MAX_RATE_LIMIT_WAITS:
+                # Does not consume the general budget: the server said when to
+                # come back, and the case is worth the wait.
+                rate_limited_attempts += 1
+                self._sleep(self._retry_delay(attempt, response))
+                continue
+
             if response.status_code not in RETRYABLE_STATUSES or last_attempt:
                 raise self._error(response)
             self._sleep(self._retry_delay(attempt, response))
+            attempt += 1
         raise ModelError(f"{self._spec.name}: no attempt was made against {self._url}")
 
     def _retry_delay(self, attempt: int, response: httpx.Response) -> float:
@@ -250,14 +296,26 @@ class OpenAICompatClient:
 
 
 def _retry_after_seconds(response: httpx.Response) -> float | None:
-    """Parse a numeric Retry-After, ignoring the HTTP-date form we never see."""
+    """How long the server asked us to wait, from the header or the body.
+
+    Gemini states it as a retryDelay inside the error payload rather than as
+    a Retry-After header, and a per minute limit needs the best part of a
+    minute, which is longer than the backoff would ever choose on its own.
+    """
     raw = response.headers.get("retry-after")
+    if raw is None:
+        raw = _stated_retry_delay(response.text)
     if raw is None:
         return None
     try:
-        seconds = float(raw.strip())
+        seconds = float(raw.strip().removesuffix("s"))
     except ValueError:
         return None
     if seconds < 0.0:
         return None
-    return min(seconds, BACKOFF_MAX_SECONDS)
+    return min(seconds, RATE_LIMIT_MAX_WAIT_SECONDS)
+
+
+def _stated_retry_delay(body: str) -> str | None:
+    match = _RETRY_DELAY.search(body)
+    return match.group(1) if match else None

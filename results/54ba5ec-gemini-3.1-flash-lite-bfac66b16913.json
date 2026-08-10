@@ -1,24 +1,24 @@
 {
   "schema_version": 1,
-  "git_sha": "60835cc",
+  "git_sha": "54ba5ec",
   "model": "gemini-3.1-flash-lite",
   "prompt_hash": "bfac66b16913",
-  "dataset_hash": "7c81d9be36b6",
+  "dataset_hash": "794ede31d1b2",
   "subset": "full",
-  "created_at": "2026-08-06T08:34:21.046820Z",
+  "created_at": "2026-08-09T23:00:08.128731Z",
   "classification": {
     "per_class": {
       "code_change": {
-        "precision": 0.9285714285714286,
-        "recall": 0.896551724137931,
-        "f1": 0.912280701754386,
-        "support": 29
+        "precision": 0.9508196721311475,
+        "recall": 0.9508196721311475,
+        "f1": 0.9508196721311475,
+        "support": 61
       },
       "flaky_test": {
         "precision": 1.0,
         "recall": 0.5,
         "f1": 0.6666666666666666,
-        "support": 2
+        "support": 4
       },
       "infra_environment": {
         "precision": 0.5,
@@ -33,12 +33,12 @@
         "support": 3
       }
     },
-    "macro_f1": 0.7614035087719299,
-    "accuracy": 0.8648648648648649,
+    "macro_f1": 0.7710382513661203,
+    "accuracy": 0.9154929577464789,
     "confusion": {
       "counts": {
         "code_change": {
-          "code_change": 26,
+          "code_change": 58,
           "infra_environment": 3
         },
         "pipeline_config": {
@@ -46,32 +46,287 @@
           "code_change": 1
         },
         "flaky_test": {
-          "code_change": 1,
-          "flaky_test": 1
+          "flaky_test": 2,
+          "code_change": 2
         },
         "infra_environment": {
           "infra_environment": 3
         }
       }
     },
-    "cost_weighted_error": 0.22972972972972974
+    "cost_weighted_error": 0.14084507042253522
   },
   "localization": {
-    "hit_at_1": 0.5,
-    "hit_at_5": 0.5416666666666666,
-    "mrr": 0.5208333333333334,
-    "n_evaluated": 24
+    "hit_at_1": 0.5087719298245614,
+    "hit_at_5": 0.5789473684210527,
+    "mrr": 0.543859649122807,
+    "n_evaluated": 57
   },
+  "fix": null,
   "cost": {
-    "total_input_tokens": 268606,
-    "total_output_tokens": 9496,
-    "total_requests": 48,
-    "wall_seconds": 253.62867270002607,
+    "total_input_tokens": 509660,
+    "total_output_tokens": 19045,
+    "total_requests": 71,
+    "wall_seconds": 697.6159397790001,
     "estimated_usd": 0.0,
-    "list_price_usd": 0.030659000000000002,
-    "schema_failure_rate": 0.0
+    "list_price_usd": 0.058584,
+    "schema_failure_rate": 0.0,
+    "repairs": 0
   },
   "per_case": [
+    {
+      "case_id": "bs-0001",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": 2,
+      "latency_ms": 2178.3257969999995,
+      "error": null
+    },
+    {
+      "case_id": "bs-0010",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 3150.111122999995,
+      "error": null
+    },
+    {
+      "case_id": "bs-0011",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 2508.295505999996,
+      "error": null
+    },
+    {
+      "case_id": "bs-0012",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 1873.048126999997,
+      "error": null
+    },
+    {
+      "case_id": "bs-0013",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": 2,
+      "latency_ms": 4789.446196,
+      "error": null
+    },
+    {
+      "case_id": "bs-0014",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 1788.3537069999988,
+      "error": null
+    },
+    {
+      "case_id": "bs-0015",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 74340.62169399999,
+      "error": null
+    },
+    {
+      "case_id": "bs-0016",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 9933.021056000001,
+      "error": null
+    },
+    {
+      "case_id": "bs-0017",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 3023.402740999984,
+      "error": null
+    },
+    {
+      "case_id": "bs-0018",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 5412.514598000002,
+      "error": null
+    },
+    {
+      "case_id": "bs-0019",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 1956.7173679999996,
+      "error": null
+    },
+    {
+      "case_id": "bs-0020",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 2194.0665559999957,
+      "error": null
+    },
+    {
+      "case_id": "bs-0021",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 2389.392845000003,
+      "error": null
+    },
+    {
+      "case_id": "bs-0022",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 2861.657671000017,
+      "error": null
+    },
+    {
+      "case_id": "bs-0024",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 1834.3046640000011,
+      "error": null
+    },
+    {
+      "case_id": "bs-0026",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 90564.794831,
+      "error": null
+    },
+    {
+      "case_id": "bs-0028",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 1949.2966280000132,
+      "error": null
+    },
+    {
+      "case_id": "bs-0029",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": 2,
+      "latency_ms": 2123.650120999997,
+      "error": null
+    },
+    {
+      "case_id": "bs-0030",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 1891.746189999992,
+      "error": null
+    },
+    {
+      "case_id": "bs-0031",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 1815.1633219999894,
+      "error": null
+    },
+    {
+      "case_id": "bs-0032",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": null,
+      "latency_ms": 1761.755423000011,
+      "error": null
+    },
+    {
+      "case_id": "bs-0033",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": false,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 2162.948408000034,
+      "error": null
+    },
+    {
+      "case_id": "bs-0034",
+      "truth_class": "code_change",
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
+      "localization_rank": 1,
+      "latency_ms": 2045.3951579999625,
+      "error": null
+    },
     {
       "case_id": "gm-0001",
       "truth_class": "code_change",
@@ -80,7 +335,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 3945.3402000071947,
+      "latency_ms": 1987.0685579999758,
       "error": null
     },
     {
@@ -91,7 +346,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 2322.635499993339,
+      "latency_ms": 1865.5018270000028,
       "error": null
     },
     {
@@ -102,7 +357,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": 1,
-      "latency_ms": 2189.3326000135858,
+      "latency_ms": 6268.063495000035,
       "error": null
     },
     {
@@ -113,7 +368,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 2021.2774999963585,
+      "latency_ms": 8011.214093999968,
       "error": null
     },
     {
@@ -124,7 +379,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": 1180.6281000026502,
+      "latency_ms": 4195.916533000001,
       "error": null
     },
     {
@@ -135,7 +390,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": 1,
-      "latency_ms": 2172.3236000107136,
+      "latency_ms": 23042.183375000037,
       "error": null
     },
     {
@@ -146,7 +401,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": 1,
-      "latency_ms": 2260.138600016944,
+      "latency_ms": 61067.12030299997,
       "error": null
     },
     {
@@ -157,7 +412,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": 1364.667299989378,
+      "latency_ms": 1160.3442019999761,
       "error": null
     },
     {
@@ -168,30 +423,30 @@
       "subcategory_correct": false,
       "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": 1252.8606000123546,
+      "latency_ms": 1179.2026759999885,
       "error": null
     },
     {
       "case_id": "gm-0104",
       "truth_class": "code_change",
-      "predicted_class": null,
-      "correct": false,
-      "subcategory_correct": false,
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": null,
-      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+      "latency_ms": 1647.80097900001,
+      "error": null
     },
     {
       "case_id": "gm-0105",
       "truth_class": "code_change",
-      "predicted_class": null,
-      "correct": false,
-      "subcategory_correct": false,
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": null,
-      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+      "latency_ms": 2308.8601370000106,
+      "error": null
     },
     {
       "case_id": "gm-0106",
@@ -201,96 +456,96 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 2207.5231000198983,
+      "latency_ms": 2680.8547179999778,
       "error": null
     },
     {
       "case_id": "gm-0107",
       "truth_class": "code_change",
-      "predicted_class": null,
-      "correct": false,
+      "predicted_class": "code_change",
+      "correct": true,
       "subcategory_correct": false,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": null,
-      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+      "latency_ms": 2159.1096189999917,
+      "error": null
     },
     {
       "case_id": "gm-0108",
       "truth_class": "code_change",
-      "predicted_class": null,
-      "correct": false,
-      "subcategory_correct": false,
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
       "related_to_diff_correct": null,
-      "localization_rank": null,
-      "latency_ms": null,
-      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+      "localization_rank": 1,
+      "latency_ms": 1702.056808000009,
+      "error": null
     },
     {
       "case_id": "gm-0109",
       "truth_class": "code_change",
-      "predicted_class": null,
-      "correct": false,
-      "subcategory_correct": false,
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
       "related_to_diff_correct": null,
-      "localization_rank": null,
-      "latency_ms": null,
-      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+      "localization_rank": 1,
+      "latency_ms": 2042.076078999969,
+      "error": null
     },
     {
       "case_id": "gm-0110",
       "truth_class": "code_change",
-      "predicted_class": null,
-      "correct": false,
-      "subcategory_correct": false,
-      "related_to_diff_correct": null,
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": false,
       "localization_rank": null,
-      "latency_ms": null,
-      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+      "latency_ms": 1632.545553,
+      "error": null
     },
     {
       "case_id": "gm-0111",
       "truth_class": "flaky_test",
-      "predicted_class": null,
-      "correct": false,
-      "subcategory_correct": false,
-      "related_to_diff_correct": null,
+      "predicted_class": "flaky_test",
+      "correct": true,
+      "subcategory_correct": true,
+      "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": null,
-      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+      "latency_ms": 1153.3305030000065,
+      "error": null
     },
     {
       "case_id": "gm-0112",
       "truth_class": "code_change",
-      "predicted_class": null,
-      "correct": false,
-      "subcategory_correct": false,
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": null,
-      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+      "latency_ms": 2407.0294789999593,
+      "error": null
     },
     {
       "case_id": "gm-0113",
       "truth_class": "flaky_test",
-      "predicted_class": null,
+      "predicted_class": "code_change",
       "correct": false,
       "subcategory_correct": false,
-      "related_to_diff_correct": null,
+      "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": null,
-      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+      "latency_ms": 8256.416081999987,
+      "error": null
     },
     {
       "case_id": "gm-0114",
       "truth_class": "code_change",
-      "predicted_class": null,
-      "correct": false,
-      "subcategory_correct": false,
+      "predicted_class": "code_change",
+      "correct": true,
+      "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": null,
-      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+      "latency_ms": 7872.427377000008,
+      "error": null
     },
     {
       "case_id": "gm-0115",
@@ -300,19 +555,19 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 8222.991799993906,
+      "latency_ms": 84200.54940199998,
       "error": null
     },
     {
       "case_id": "gm-0116",
       "truth_class": "code_change",
-      "predicted_class": null,
-      "correct": false,
+      "predicted_class": "code_change",
+      "correct": true,
       "subcategory_correct": false,
-      "related_to_diff_correct": null,
+      "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": null,
-      "error": "QuotaExhaustedError: gemini-3.1-flash-lite: gemini daily quota is exhausted. Wait for it to reset or pick another model."
+      "latency_ms": 3961.7174910000017,
+      "error": null
     },
     {
       "case_id": "gm-0117",
@@ -322,7 +577,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": true,
       "localization_rank": 1,
-      "latency_ms": 8908.680799999274,
+      "latency_ms": 2911.303772999986,
       "error": null
     },
     {
@@ -333,7 +588,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": 1,
-      "latency_ms": 7862.655800010543,
+      "latency_ms": 1839.8370099999966,
       "error": null
     },
     {
@@ -344,7 +599,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": 1,
-      "latency_ms": 8059.765599988168,
+      "latency_ms": 4826.243196000007,
       "error": null
     },
     {
@@ -355,7 +610,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 7926.65360000683,
+      "latency_ms": 2036.1102140000185,
       "error": null
     },
     {
@@ -366,7 +621,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": null,
       "localization_rank": 1,
-      "latency_ms": 8067.8594000055455,
+      "latency_ms": 2033.5283009999898,
       "error": null
     },
     {
@@ -377,7 +632,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 7978.211000008741,
+      "latency_ms": 1758.3842340000047,
       "error": null
     },
     {
@@ -388,7 +643,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": null,
       "localization_rank": 1,
-      "latency_ms": 8024.701300018933,
+      "latency_ms": 2114.8379880000334,
       "error": null
     },
     {
@@ -399,7 +654,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 8328.922600019723,
+      "latency_ms": 2759.713171000044,
       "error": null
     },
     {
@@ -410,7 +665,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 8040.2179999800865,
+      "latency_ms": 2876.064895000013,
       "error": null
     },
     {
@@ -421,7 +676,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 7583.396300004097,
+      "latency_ms": 32141.810420999944,
       "error": null
     },
     {
@@ -432,7 +687,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": 1,
-      "latency_ms": 7817.46540000313,
+      "latency_ms": 60767.213159999985,
       "error": null
     },
     {
@@ -443,7 +698,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 8498.744199983776,
+      "latency_ms": 2252.892553000038,
       "error": null
     },
     {
@@ -454,7 +709,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": 1,
-      "latency_ms": 7900.25439998135,
+      "latency_ms": 4904.6999119999555,
       "error": null
     },
     {
@@ -465,7 +720,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": 1,
-      "latency_ms": 7584.892600018065,
+      "latency_ms": 2688.173944999903,
       "error": null
     },
     {
@@ -476,7 +731,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": 2,
-      "latency_ms": 8241.92969998694,
+      "latency_ms": 2246.9790149999653,
       "error": null
     },
     {
@@ -487,7 +742,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 7545.158699998865,
+      "latency_ms": 1485.808784000028,
       "error": null
     },
     {
@@ -498,7 +753,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": 1,
-      "latency_ms": 8261.139799986267,
+      "latency_ms": 2108.2543119999855,
       "error": null
     },
     {
@@ -509,7 +764,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 7793.2365000015125,
+      "latency_ms": 1564.8779160000004,
       "error": null
     },
     {
@@ -520,7 +775,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 8036.156599991955,
+      "latency_ms": 1749.9303600000076,
       "error": null
     },
     {
@@ -531,7 +786,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 8129.01229999261,
+      "latency_ms": 40947.826650000025,
       "error": null
     },
     {
@@ -542,7 +797,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 4205.975299992133,
+      "latency_ms": 59168.11218400005,
       "error": null
     },
     {
@@ -553,7 +808,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 7775.701000005938,
+      "latency_ms": 1767.6130869999724,
       "error": null
     },
     {
@@ -564,7 +819,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 4138.302399980603,
+      "latency_ms": 967.5440910000361,
       "error": null
     },
     {
@@ -575,7 +830,7 @@
       "subcategory_correct": false,
       "related_to_diff_correct": null,
       "localization_rank": null,
-      "latency_ms": 7910.932900005719,
+      "latency_ms": 2005.206420000036,
       "error": null
     },
     {
@@ -586,7 +841,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 4087.44459997979,
+      "latency_ms": 921.8383030000723,
       "error": null
     },
     {
@@ -597,7 +852,7 @@
       "subcategory_correct": true,
       "related_to_diff_correct": true,
       "localization_rank": null,
-      "latency_ms": 4344.153799989726,
+      "latency_ms": 1156.5535790000467,
       "error": null
     }
   ]

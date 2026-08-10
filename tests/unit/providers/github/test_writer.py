@@ -241,13 +241,13 @@ def make_body(
         evidence=["line one", "line two"] if evidence is None else evidence,
         verification=verification,
         run_url="https://github.com/o/r/actions/runs/42",
-        model="claude-test-model",
+        model="example-model-v1",
     )
 
 
 def test_pr_body_names_the_model_and_the_classification() -> None:
     body = make_body()
-    assert "claude-test-model" in body
+    assert "example-model-v1" in body
     assert "dependency" in body
     assert "version_conflict" in body
     assert "pin urllib3 below 2.0" in body

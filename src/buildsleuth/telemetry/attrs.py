@@ -45,14 +45,11 @@ OPERATION_EXECUTE_TOOL = "execute_tool"
 OPERATION_TEXT_COMPLETION = "text_completion"
 OPERATION_EMBEDDINGS = "embeddings"
 
-# Well-known `gen_ai.provider.name` values (Development). BuildSleuth talks to
-# every provider over an OpenAI-compatible API, so the wire format is not a
-# reliable discriminator and the provider must be passed in explicitly.
+# The `gen_ai.provider.name` value for an OpenAI-compatible endpoint, which is
+# how every provider here is reached, so the wire format cannot discriminate
+# between them and the provider is passed in explicitly. The convention defines
+# further values for native APIs, none of which this project speaks.
 PROVIDER_OPENAI = "openai"
-PROVIDER_ANTHROPIC = "anthropic"
-PROVIDER_AZURE_OPENAI = "azure.ai.openai"
-PROVIDER_GCP_GEMINI = "gcp.gemini"
-PROVIDER_MISTRAL_AI = "mistral_ai"
 
 # Span name conventions. Inference spans are `{gen_ai.operation.name}
 # {gen_ai.request.model}`, for example "chat gpt-4o-mini". Agent spans fall back

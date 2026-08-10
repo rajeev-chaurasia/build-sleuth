@@ -7,6 +7,7 @@ from evals.fix_funnel import executable_cases, unmeasurable_cases
 from evals.verifier_control import CORRUPTION, corrupt, reference_diff
 
 from buildsleuth.dataset.loader import case_dir_for, load_cases, read_case_log
+from buildsleuth.pipeline.patch_repair import repair_patch
 
 DATASET = Path("dataset")
 
@@ -14,28 +15,39 @@ DIFF = "diff --git a/x.py b/x.py\n--- a/x.py\n+++ b/x.py\n@@ -1,7 +1,7 @@\n-a\n+
 
 
 class TestCorrupt:
-    def test_damages_the_hunk_header(self) -> None:
-        # The same failure the fix stage produced on the first executed case:
-        # a hunk header claiming more lines than the hunk supplies.
+    """The corruption must be one nothing downstream can undo. The first
+    version damaged the hunk header, and patch_repair recomputes headers from
+    the body, so the broken patch applied and nine good cases were reported
+    as unable to measure anything."""
+
+    def test_damages_a_line_the_file_must_match(self) -> None:
         assert CORRUPTION in corrupt(DIFF)
-        assert "@@ -1,7 +1,7 @@" not in corrupt(DIFF)
 
-    def test_leaves_the_patch_parseable(self) -> None:
-        broken = corrupt(DIFF)
-        assert broken.startswith("diff --git")
-        assert "--- a/x.py" in broken
-        assert "+++ b/x.py" in broken
+    def test_survives_a_repair_pass(self) -> None:
+        # This is the property that matters. Recomputing headers must not
+        # turn the corrupted patch back into a working one.
+        assert CORRUPTION in repair_patch(corrupt(DIFF))
 
-    def test_only_damages_the_first_hunk(self) -> None:
-        two_hunks = DIFF + "@@ -20,3 +20,3 @@\n-c\n+d\n"
-        assert corrupt(two_hunks).count("@@ -20,3 +20,3 @@") == 1
+    def test_leaves_the_headers_alone(self) -> None:
+        # Damaging the header is exactly what repair undoes.
+        assert "@@ -1,7 +1,7 @@" in corrupt(DIFF)
+
+    def test_keeps_the_line_marker(self) -> None:
+        # Dropping it would make the patch malformed rather than unmatchable,
+        # which is a different failure from the one being tested.
+        corrupted = [line for line in corrupt(DIFF).splitlines() if CORRUPTION in line]
+        assert corrupted[0][0] in " -"
+
+    def test_does_not_damage_the_file_header(self) -> None:
+        # "--- a/x.py" starts with a hyphen but is not a removal line.
+        assert "--- a/x.py" in corrupt(DIFF)
 
     def test_ends_with_a_newline_so_git_accepts_it(self) -> None:
-        # A patch missing its trailing newline is rejected as corrupt for the
-        # wrong reason, which would make this control pass by accident.
+        # A patch missing its trailing newline is rejected for the wrong
+        # reason, which would make this control pass by accident.
         assert corrupt(DIFF).endswith("\n")
 
-    def test_a_diff_with_no_hunks_is_returned_unchanged_but_terminated(self) -> None:
+    def test_a_diff_with_no_body_is_returned_terminated(self) -> None:
         assert corrupt("diff --git a/x b/x") == "diff --git a/x b/x\n"
 
 
@@ -89,5 +101,6 @@ class TestExclusion:
         record = json.loads(Path("results/verifier-control.json").read_text(encoding="utf-8"))
         for case in record["cases"]:
             if not case["usable"]:
-                assert case["reference_level"] != "NOTHING_ELSE_BROKE"
+                # Either the reference fix fell short, or the corrupted one
+                # passed as well. Both are unusable and both must say why.
                 assert case["reason"]
