@@ -58,7 +58,13 @@ The lesson generalises past this bug: a metric that looks like a limitation of t
 
 **Benchmark cases that cannot measure anything.** Running each maintainer fix through the verifier before trusting it showed that four of thirteen do not pass their own fix. Had they stayed in, the reported rate would have been computed over cases where no patch could ever have succeeded.
 
-**A fix rate that was measuring my own harness.** The funnel's first numbers came from a fix stage handed an empty set of file contents, so the model was writing a unified diff for source it had never read and its context lines could only match by accident. Supplying the file upstream at the same commit was no better, because these artifacts are patched for reproducibility and upstream disagrees with the image. Reading the file out of the artifact itself is the version now reported, and it scores worse than either: the earlier apply rate was luck, not capability.
+**A fix rate that was measuring my own harness.** The funnel's first numbers came from a fix stage handed an empty set of file contents, so the model was writing a unified diff for source it had never read and its context lines could only match by accident. Supplying the file upstream at the same commit was no better, because these artifacts are patched for reproducibility and upstream disagrees with the image. The file now comes out of the artifact itself, which is the copy the patch is applied to.
+
+**A verifier that accepted patches git rejects, and a control that caught it.** Two changes made to fix real bugs combined into a worse one. The apply step gained `patch -l` as a fallback, which matches context fuzzily, and the pipeline gained a repair pass that recomputes hunk headers. The control damages a patch deliberately and requires it to fail, and the repair was quietly undoing that damage while the fuzzy fallback accepted what survived.
+
+A patch referencing a line that exists in no file applied cleanly, and the build passed, on 16 of 22 cases. Every apply rate measured through it was inflated. Corrupting a context line instead, which no repair can reconstruct, and applying only with `git apply` restored the property: **20 of 23 cases now discriminate, against 3 before, and no case accepts the damaged patch.**
+
+This is the strongest argument in the project for checking the checker. Both underlying changes were correct in isolation, both were tested, and together they silently disabled the check that would have caught them.
 
 **A benchmark my own mining had skewed.** Filtering to pull request events produced 42 cases with zero infrastructure failures, where guessing `code_change` scored 0.857. Re-mining across all event types found the missing class.
 
@@ -73,28 +79,14 @@ run url -> ingest -> condense -> classify -> localize -> fix -> repair -> policy
 
 ### The fix funnel
 
-Measured on the nine executable cases the control below found sound, with `gemini-3.1-flash-lite`. The model is shown the file it asked to edit, read out of the artifact itself.
+**Withdrawn pending re-measurement.** The figures that stood here were produced through an apply step that accepted patches `git apply` rejects, so the rate they reported was not the rate the model achieved. The section will return when it has been measured through the corrected checks.
 
-| stage | cases | share of attempted |
-| --- | --- | --- |
-| patch attempted | 9 | 1.00 |
-| applies cleanly | 2 | 0.22 |
-| failing test passes | 1 | 0.11 |
-| nothing else broke | 1 | 0.11 |
+What is established, and does not depend on that run:
 
-**Seven of nine patches are rejected before anything is run.** Splitting that by cause is the useful part, and it needs the localization result alongside the patch:
+- **20 of 23 executable cases can measure a fix.** The maintainer's own patch reaches the top rung on each, and a deliberately damaged copy of it reaches nothing.
+- The 3 excluded cases are excluded for a stated reason: their reference fix does not make the build pass, all three failing at dependency install or package download inside the image.
 
-| outcome | cases |
-| --- | --- |
-| well formed, context did not match the file | 4 |
-| patched a file that was not the culprit | 2 |
-| still malformed after repair | 1 |
-| applied, did not fix the failure | 1 |
-| fixed the build and broke nothing | 1 |
-
-Localization was on target for 6 of 9. So the model is usually looking at the right file, has been handed that file's exact contents, and still writes a diff whose context does not match it.
-
-No LLM judge produces this table. A judge reading those seven patches would have seen a correct explanation and a plausible-looking diff.
+Withdrawing a number rather than restating it is the point. The previous figures looked reasonable, were internally consistent, and were wrong.
 
 ### Repairing what the model should not have to get right
 
@@ -102,7 +94,7 @@ A hunk header declares how many lines the hunk covers. That is arithmetic the di
 
 So the counts are recomputed from the hunk body, and a context line missing its leading space gets it back. Nothing in the body's content is altered, and a well formed patch comes back byte identical.
 
-**The repair has to earn its place.** The model's own patch is applied first, and the repaired copy is only tried when the original is genuinely refused, so the run reports what the repair rescued rather than assuming it helped:
+**The repair has to earn its place.** The model's own patch is applied first, and the repaired copy is only tried when the original is genuinely refused, so the run reports what the repair rescued rather than assuming it helped. The counts below came from the withdrawn run and are shown as the shape of the effect, not as current figures:
 
 | | before repair | after |
 | --- | --- | --- |
