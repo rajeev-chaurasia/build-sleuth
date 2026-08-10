@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-09T12:40:00+00:00",
-  "n_usable": 9,
-  "n_checked": 13,
+  "generated_at": "2026-08-09T22:40:00+00:00",
+  "n_usable": 20,
+  "n_checked": 23,
   "cases": [
     {
       "case_id": "bs-0001",
@@ -9,8 +9,8 @@
       "reference_level": "APPLIES",
       "corrupted_level": "NOTHING",
       "reason": "reference fix only reached APPLIES",
-      "detail": "patch applies but the build still fails",
-      "output_tail": "6.0 (from Abjad==3.0) (from versions: )\nNo matching distribution found for sphinx>=1.6.0 (from Abjad==3.0)\n\ntravis_time:end:087c1f35:start=1786277595484213874,finish=1786277596315286941,duration=831073067\n\u001b[0K\n\u001b[31;1mThe command \"pip install --no-index --find-links=/home/travis/build/failed/requirements -e .[development,ipython]\" failed and exited with 1 during .\u001b[0m\n\nYour build has been stopped.\n"
+      "detail": "patch applies after repairing its hunk headers but the build still fails",
+      "output_tail": "sfies the requirement roman (from Abjad==3.0.0) (from versions: )\nNo matching distribution found for roman (from Abjad==3.0.0)\n\ntravis_time:end:033481d0:start=1786320294598024309,finish=1786320295704122551,duration=1106098242\n\u001b[0K\n\u001b[31;1mThe command \"pip install --no-index --find-links=/home/travis/build/failed/requirements -e .\" failed and exited with 1 during .\u001b[0m\n\nYour build has been stopped.\n"
     },
     {
       "case_id": "bs-0010",
@@ -19,7 +19,7 @@
       "corrupted_level": "NOTHING",
       "reason": "",
       "detail": "the original job passes with the patch applied",
-      "output_tail": "es verktyg setup.py\" exited with 0.\u001b[0m\ntravis_fold:start:after_success\n\u001b[0Ktravis_time:start:0536e9dc\n\u001b[0K$ coveralls\nSubmitting coverage to coveralls.io...\nCoverage submitted!\nCouldn't find a repository matching this job.\n'url'\n\ntravis_time:end:0536e9dc:start=1786277572340839679,finish=1786277573845693196,duration=1504853517\n\u001b[0Ktravis_fold:end:after_success\n\u001b[0K\nDone. Your build exited with 0.\n"
+      "output_tail": "kes verktyg setup.py\" exited with 0.\u001b[0m\ntravis_fold:start:after_success\n\u001b[0Ktravis_time:start:02762e8c\n\u001b[0K$ coveralls\nSubmitting coverage to coveralls.io...\nCoverage submitted!\nCouldn't find a repository matching this job.\n'url'\n\ntravis_time:end:02762e8c:start=1786320204767955393,finish=1786320205691920262,duration=923964869\n\u001b[0Ktravis_fold:end:after_success\n\u001b[0K\nDone. Your build exited with 0.\n"
     },
     {
       "case_id": "bs-0011",
@@ -28,7 +28,7 @@
       "corrupted_level": "NOTHING",
       "reason": "",
       "detail": "the original job passes with the patch applied",
-      "output_tail": "-2.6.4\ncollected 29 items\n\ntest/test_parsing.py ............\ntest/test_regexes.py .................\n\n========================== 29 passed in 0.06 seconds ===========================\n\ntravis_time:end:13a95b9c:start=1786277543030972018,finish=1786277543223978595,duration=193006577\n\u001b[0K\n\u001b[32;1mThe command \"python -W default::Warning -m pytest test\" exited with 0.\u001b[0m\n\nDone. Your build exited with 0.\n"
+      "output_tail": "-2.6.4\ncollected 29 items\n\ntest/test_parsing.py ............\ntest/test_regexes.py .................\n\n========================== 29 passed in 0.10 seconds ===========================\n\ntravis_time:end:21ea897e:start=1786320196671605904,finish=1786320196929093416,duration=257487512\n\u001b[0K\n\u001b[32;1mThe command \"python -W default::Warning -m pytest test\" exited with 0.\u001b[0m\n\nDone. Your build exited with 0.\n"
     },
     {
       "case_id": "bs-0012",
@@ -37,7 +37,7 @@
       "corrupted_level": "NOTHING",
       "reason": "",
       "detail": "the original job passes with the patch applied",
-      "output_tail": "-2.6.4\ncollected 29 items\n\ntest/test_parsing.py ............\ntest/test_regexes.py .................\n\n========================== 29 passed in 0.09 seconds ===========================\n\ntravis_time:end:16644780:start=1786277773500677509,finish=1786277773742411016,duration=241733507\n\u001b[0K\n\u001b[32;1mThe command \"python -W default::Warning -m pytest test\" exited with 0.\u001b[0m\n\nDone. Your build exited with 0.\n"
+      "output_tail": "-2.6.4\ncollected 29 items\n\ntest/test_parsing.py ............\ntest/test_regexes.py .................\n\n========================== 29 passed in 0.09 seconds ===========================\n\ntravis_time:end:2688be8c:start=1786320426197002197,finish=1786320426449084171,duration=252081974\n\u001b[0K\n\u001b[32;1mThe command \"python -W default::Warning -m pytest test\" exited with 0.\u001b[0m\n\nDone. Your build exited with 0.\n"
     },
     {
       "case_id": "bs-0013",
@@ -64,7 +64,7 @@
       "corrupted_level": "NOTHING",
       "reason": "",
       "detail": "the original job passes with the patch applied",
-      "output_tail": " sleeping for 0.0\nTask 1 sleeping for 0.125\nTask 2 sleeping for 0.25\nTask 3 sleeping for 0.375\nTask 4 sleeping for 0.5\nTask 5 sleeping for 0.625\nTask 6 sleeping for 0.75\nTask 7 sleeping for 0.875\n\ntravis_time:end:24338000:start=1786277975234082833,finish=1786277981269048506,duration=6034965673\n\u001b[0K\n\u001b[32;1mThe command \"test/test_dxpy_utils.py -v\" exited with 0.\u001b[0m\n\nDone. Your build exited with 0.\n"
+      "output_tail": " sleeping for 0.0\nTask 1 sleeping for 0.125\nTask 2 sleeping for 0.25\nTask 3 sleeping for 0.375\nTask 4 sleeping for 0.5\nTask 5 sleeping for 0.625\nTask 6 sleeping for 0.75\nTask 7 sleeping for 0.875\n\ntravis_time:end:1c170c46:start=1786320651802062536,finish=1786320657876660866,duration=6074598330\n\u001b[0K\n\u001b[32;1mThe command \"test/test_dxpy_utils.py -v\" exited with 0.\u001b[0m\n\nDone. Your build exited with 0.\n"
     },
     {
       "case_id": "bs-0016",
@@ -73,7 +73,7 @@
       "corrupted_level": "NOTHING",
       "reason": "",
       "detail": "the original job passes with the patch applied",
-      "output_tail": "80,duration=3989010\n\u001b[0Ktravis_fold:end:after_success.1\n\u001b[0Ktravis_fold:start:after_success.2\n\u001b[0Ktravis_time:start:1e715110\n\u001b[0K$ if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then coveralls --config_file=gluon/tests/coverage.ini; fi\n\ntravis_time:end:1e715110:start=1786278019854329984,finish=1786278019858257118,duration=3927134\n\u001b[0Ktravis_fold:end:after_success.2\n\u001b[0K\nDone. Your build exited with 0.\n"
+      "output_tail": "31,duration=4108749\n\u001b[0Ktravis_fold:end:after_success.1\n\u001b[0Ktravis_fold:start:after_success.2\n\u001b[0Ktravis_time:start:12119206\n\u001b[0K$ if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then coveralls --config_file=gluon/tests/coverage.ini; fi\n\ntravis_time:end:12119206:start=1786320646895424676,finish=1786320646899419830,duration=3995154\n\u001b[0Ktravis_fold:end:after_success.2\n\u001b[0K\nDone. Your build exited with 0.\n"
     },
     {
       "case_id": "bs-0017",
@@ -82,7 +82,7 @@
       "corrupted_level": "NOTHING",
       "reason": "",
       "detail": "the original job passes with the patch applied",
-      "output_tail": "ommit=:sha\u001b[0m\n\n\u001b[42mTip:\u001b[0m\u001b[32m See an example python repo: https://github.com/codecov/example-python\u001b[0m\n\u001b[92mSupport channels:\u001b[0m\n  Email:   hello@codecov.io\n  Gitter:  https://gitter.im/codecov/support\n  Twitter: @codecov\n\n\ntravis_time:end:00fae8e8:start=1786278073262036526,finish=1786278073351024677,duration=88988151\n\u001b[0Ktravis_fold:end:after_success.2\n\u001b[0K\nDone. Your build exited with 0.\n"
+      "output_tail": "mmit=:sha\u001b[0m\n\n\u001b[42mTip:\u001b[0m\u001b[32m See an example python repo: https://github.com/codecov/example-python\u001b[0m\n\u001b[92mSupport channels:\u001b[0m\n  Email:   hello@codecov.io\n  Gitter:  https://gitter.im/codecov/support\n  Twitter: @codecov\n\n\ntravis_time:end:1bc25b5d:start=1786320684241289044,finish=1786320684362903416,duration=121614372\n\u001b[0Ktravis_fold:end:after_success.2\n\u001b[0K\nDone. Your build exited with 0.\n"
     },
     {
       "case_id": "bs-0018",
@@ -91,16 +91,16 @@
       "corrupted_level": "NOTHING",
       "reason": "",
       "detail": "the original job passes with the patch applied",
-      "output_tail": ":start:after_success\n\u001b[0Ktravis_time:start:029f2771\n\u001b[0K$ if [[ $TRAVIS_PYTHON_VERSION != \"3.2\" ]]; then coveralls; fi\nSubmitting coverage to coveralls.io...\nCoverage submitted!\nCouldn't find a repository matching this job.\n'url'\n\ntravis_time:end:029f2771:start=1786278178996675042,finish=1786278180294014136,duration=1297339094\n\u001b[0Ktravis_fold:end:after_success\n\u001b[0K\nDone. Your build exited with 0.\n"
+      "output_tail": ":start:after_success\n\u001b[0Ktravis_time:start:12a3c878\n\u001b[0K$ if [[ $TRAVIS_PYTHON_VERSION != \"3.2\" ]]; then coveralls; fi\nSubmitting coverage to coveralls.io...\nCoverage submitted!\nCouldn't find a repository matching this job.\n'url'\n\ntravis_time:end:12a3c878:start=1786320848373640789,finish=1786320849834294111,duration=1460653322\n\u001b[0Ktravis_fold:end:after_success\n\u001b[0K\nDone. Your build exited with 0.\n"
     },
     {
       "case_id": "bs-0019",
-      "usable": false,
-      "reference_level": "APPLIES",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
       "corrupted_level": "NOTHING",
-      "reason": "reference fix only reached APPLIES",
-      "detail": "patch applies but the build still fails",
-      "output_tail": "-----------------------------------------------------------\nRan 47 tests in 0.719s\n\nFAILED (errors=2)\n\ntravis_time:end:0833667b:start=1786278309832938759,finish=1786278310837685544,duration=1004746785\n\u001b[0K\n\u001b[31;1mThe command \"if [[ $TRAVIS_PYTHON_VERSION != \"3.2\" ]]; then coverage run --source=appier setup.py test; else python setup.py test; fi\" exited with 1.\u001b[0m\n\nDone. Your build exited with 1.\n"
+      "reason": "",
+      "detail": "the original job passes with the patch applied",
+      "output_tail": "]]; then coverage run --source=appier setup.py test; else python setup.py test; fi\" exited with 0.\u001b[0m\ntravis_fold:start:after_success\n\u001b[0Ktravis_time:start:1652fe5c\n\u001b[0K$ if [[ $TRAVIS_PYTHON_VERSION != \"3.2\" ]]; then coveralls; fi\n\ntravis_time:end:1652fe5c:start=1786320897130519008,finish=1786320897134364740,duration=3845732\n\u001b[0Ktravis_fold:end:after_success\n\u001b[0K\nDone. Your build exited with 0.\n"
     },
     {
       "case_id": "bs-0020",
@@ -108,8 +108,8 @@
       "reference_level": "NOTHING_ELSE_BROKE",
       "corrupted_level": "NOTHING",
       "reason": "",
-      "detail": "the original job passes with the patch applied",
-      "output_tail": "-2.2.7/lib/ruby/2.2.0/timeout.rb:32:in `catch'\n\tfrom /home/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:103:in `timeout'\n\tfrom /home/travis/.casher/bin/casher:53:in `run'\n\tfrom /home/travis/.casher/bin/casher:263:in `<main>'\n\ntravis_time:end:01c7f1ef:start=1786278502820159859,finish=1786278504259692001,duration=1439532142\n\u001b[0Ktravis_fold:end:cache.2\n\u001b[0K\nDone. Your build exited with 0.\n"
+      "detail": "the original job passes with the patch applied after repairing its hunk headers",
+      "output_tail": "-2.2.7/lib/ruby/2.2.0/timeout.rb:32:in `catch'\n\tfrom /home/travis/.rvm/rubies/ruby-2.2.7/lib/ruby/2.2.0/timeout.rb:103:in `timeout'\n\tfrom /home/travis/.casher/bin/casher:53:in `run'\n\tfrom /home/travis/.casher/bin/casher:263:in `<main>'\n\ntravis_time:end:027d5741:start=1786321043864391942,finish=1786321045297729168,duration=1433337226\n\u001b[0Ktravis_fold:end:cache.2\n\u001b[0K\nDone. Your build exited with 0.\n"
     },
     {
       "case_id": "bs-0021",
@@ -118,7 +118,97 @@
       "corrupted_level": "NOTHING",
       "reason": "",
       "detail": "the original job passes with the patch applied",
-      "output_tail": "[0Ktravis_fold:end:cache.2\n\u001b[0Ktravis_fold:start:after_success\n\u001b[0Ktravis_time:start:04d8ded7\n\u001b[0K$ ./tools/travis-upload-wheel.sh\n+export CLOUD_CONTAINER_NAME=travis-dev-wheels\n+CLOUD_CONTAINER_NAME=travis-dev-wheels\n+[[ '' == 1 ]]\n\ntravis_time:end:04d8ded7:start=1786278552422732712,finish=1786278552428775993,duration=6043281\n\u001b[0Ktravis_fold:end:after_success\n\u001b[0K\nDone. Your build exited with 0.\n"
+      "output_tail": "[0Ktravis_fold:end:cache.2\n\u001b[0Ktravis_fold:start:after_success\n\u001b[0Ktravis_time:start:21a61946\n\u001b[0K$ ./tools/travis-upload-wheel.sh\n+export CLOUD_CONTAINER_NAME=travis-dev-wheels\n+CLOUD_CONTAINER_NAME=travis-dev-wheels\n+[[ '' == 1 ]]\n\ntravis_time:end:21a61946:start=1786321187608752770,finish=1786321187615312973,duration=6560203\n\u001b[0Ktravis_fold:end:after_success\n\u001b[0K\nDone. Your build exited with 0.\n"
+    },
+    {
+      "case_id": "bs-0022",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied",
+      "output_tail": "-2.6.4\ncollected 29 items\n\ntest/test_parsing.py ............\ntest/test_regexes.py .................\n\n========================== 29 passed in 0.19 seconds ===========================\n\ntravis_time:end:0daf11c0:start=1786321108752787652,finish=1786321109124056214,duration=371268562\n\u001b[0K\n\u001b[32;1mThe command \"python -W default::Warning -m pytest test\" exited with 0.\u001b[0m\n\nDone. Your build exited with 0.\n"
+    },
+    {
+      "case_id": "bs-0024",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied",
+      "output_tail": "5/lib/python3.3/site-packages/requests/__init__.py\", line 85, in check_compatibility\n    raise Exception(\"You need either charset_normalizer or chardet installed\")\nException: You need either charset_normalizer or chardet installed\n\ntravis_time:end:01655e68:start=1786321220472047235,finish=1786321220605098131,duration=133050896\n\u001b[0Ktravis_fold:end:after_success\n\u001b[0K\nDone. Your build exited with 0.\n"
+    },
+    {
+      "case_id": "bs-0026",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied",
+      "output_tail": ":start:after_success\n\u001b[0Ktravis_time:start:01508f40\n\u001b[0K$ if [ \"$TRAVIS_BRANCH\" = \"master\" ]; then pip install --no-index --find-links=/home/travis/build/failed/requirements pycurl==7.43.0 requests==2.18.4 && contrib/make_locale; fi\n\ntravis_time:end:01508f40:start=1786321356627811737,finish=1786321356632122378,duration=4310641\n\u001b[0Ktravis_fold:end:after_success\n\u001b[0K\nDone. Your build exited with 0.\n"
+    },
+    {
+      "case_id": "bs-0028",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied",
+      "output_tail": "unning tst_cdf5.py ...\nnot running tst_dap.py ...\n\nnetcdf4-python version: 1.3.2\nHDF5 lib version:       1.8.11\nnetcdf lib version:     4.1.3\nnumpy version           1.13.3\ncython version          0.27.3\n\ntravis_time:end:1622be04:start=1786321573035167580,finish=1786321584205811631,duration=11170644051\n\u001b[0K\n\u001b[32;1mThe command \"python run_all.py\" exited with 0.\u001b[0m\n\nDone. Your build exited with 0.\n"
+    },
+    {
+      "case_id": "bs-0029",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied",
+      "output_tail": "running tst_filepath.py ...\nnot running tst_cdf5.py ...\nnot running tst_dap.py ...\n\nnetcdf4-python version: 1.3.0\nHDF5 lib version:       1.8.4\nnetcdf lib version:     4.1.1\nnumpy version           1.9.1\n\ntravis_time:end:16e97f08:start=1786321499749958744,finish=1786321513966560749,duration=14216602005\n\u001b[0K\n\u001b[32;1mThe command \"python run_all.py\" exited with 0.\u001b[0m\n\nDone. Your build exited with 0.\n"
+    },
+    {
+      "case_id": "bs-0030",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied",
+      "output_tail": "running tst_filepath.py ...\nnot running tst_cdf5.py ...\nnot running tst_dap.py ...\n\nnetcdf4-python version: 1.3.0\nHDF5 lib version:       1.8.4\nnetcdf lib version:     4.1.1\nnumpy version           1.9.1\n\ntravis_time:end:060540b4:start=1786321622727423879,finish=1786321636674876243,duration=13947452364\n\u001b[0K\n\u001b[32;1mThe command \"python run_all.py\" exited with 0.\u001b[0m\n\nDone. Your build exited with 0.\n"
+    },
+    {
+      "case_id": "bs-0031",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied",
+      "output_tail": "d/failed/pydanny/cookiecutter-django, inifile: setup.cfg\nplugins: ipdb\ncollected 2 items\n\ntests/test_cookiecutter_substitution.py ..\n\n=========================== 2 passed in 0.56 seconds ===========================\n\ntravis_time:end:34ecdff9:start=1786321710569726241,finish=1786321711726409531,duration=1156683290\n\u001b[0K\n\u001b[32;1mThe command \"py.test\" exited with 0.\u001b[0m\n\nDone. Your build exited with 0.\n"
+    },
+    {
+      "case_id": "bs-0032",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied after repairing its hunk headers",
+      "output_tail": "d/pydanny/cookiecutter-django, inifile: setup.cfg\nplugins: ipdb-0.1\ncollected 5 items\n\ntests/test_cookiecutter_substitution.py .....\n\n=========================== 5 passed in 1.49 seconds ===========================\n\ntravis_time:end:299717b6:start=1786321757203389244,finish=1786321759311615593,duration=2108226349\n\u001b[0K\n\u001b[32;1mThe command \"py.test\" exited with 0.\u001b[0m\n\nDone. Your build exited with 0.\n"
+    },
+    {
+      "case_id": "bs-0033",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied",
+      "output_tail": ".__name__, exc,\ncoverage.misc.CoverageException: Couldn't read data from '/home/travis/build/failed/spesmilo/electrum/.coverage': UnicodeDecodeError: 'utf-8' codec can't decode byte 0xe6 in position 98: invalid continuation byte\n\ntravis_time:end:07111578:start=1786321984328649797,finish=1786321984475838845,duration=147189048\n\u001b[0Ktravis_fold:end:after_success.2\n\u001b[0K\nDone. Your build exited with 0.\n"
+    },
+    {
+      "case_id": "bs-0034",
+      "usable": true,
+      "reference_level": "NOTHING_ELSE_BROKE",
+      "corrupted_level": "NOTHING",
+      "reason": "",
+      "detail": "the original job passes with the patch applied",
+      "output_tail": "0K$ if [[ \"$TRAVIS_PYTHON_VERSION\" =~ ^3\\.[4-9] ]] ; then python -m irctest irctest.controllers.limnoria; fi\ntravis_time:end:05fa8f94:start=1786322151045077625,finish=1786322151047352413,duration=2274788,event=script\n\u001b[0K\u001b[32;1mThe command \"if [[ \"$TRAVIS_PYTHON_VERSION\" =~ ^3\\.[4-9] ]] ; then python -m irctest irctest.controllers.limnoria; fi\" exited with 0.\u001b[0m\n\n\nDone. Your build exited with 0.\n"
     }
   ]
 }
