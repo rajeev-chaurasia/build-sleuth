@@ -128,3 +128,58 @@ uv run python -m evals.compare_models --models a,b,c             # every axis at
 uv run python -m evals.trials --model M --trials 3               # measure the noise
 uv run python -m evals.diff_baseline --baseline X --current Y    # the gate itself
 ```
+
+## Why the method is shaped this way
+
+Each rule below exists because its absence produced a wrong number that looked
+right. They are recorded here so a future change does not quietly undo one.
+
+**Coverage is read before any other column.** A model that crashes on 60 of
+100 cases and answers the rest correctly beats an honest model on accuracy,
+macro F1 and cost-weighted error at once. Every one of those metrics is
+computed over the cases a model managed, so failing to answer is rewarded
+unless coverage is gated first. A lost verdict is therefore a regression, not
+an absence of news.
+
+**A partial run is not a small run.** The scorecard records how many cases
+produced a verdict and why the others did not. When a fifth of the benchmark
+started disappearing, the number that exposed it was coverage: the discarded
+cases were identical between runs, and a genuinely exhausted daily quota
+cannot produce the same boundary twice. The cause was a per-minute rate limit
+sharing the wording of a spent daily allowance, and both being treated as
+fatal. Without coverage as a first-class column it would have read as a
+limitation of the free tier.
+
+**Output budgets are sized for how a model works, not for the answer.** A
+reasoning model spends hidden thinking tokens against the same budget as the
+reply. A budget sized for a short verdict leaves such a model nothing to
+answer with, and it scores as incapable. One model was reported unrankable at
+3 of 6 for this reason, and went to best in class when the budget changed. The
+registry now carries a `reasoning` flag and a test asserts every reasoning
+model gets the larger budget.
+
+**Fix quality is scored by execution, never by a judge.** The rejected patches
+in the funnel are mostly well argued and plausible looking. A model asked to
+grade them would pass many, because the failure is in whether the context
+lines match a file it cannot see, not in the reasoning. `git apply` has no
+opinion about how convincing a patch is.
+
+**The verifier is itself verified, on every case, before it is trusted.** Each
+case runs the maintainer's own fix, which must reach the top rung, and a
+deliberately damaged copy, which must not. A case failing either test is
+excluded from fix metrics and named, because it cannot distinguish a bad patch
+from a case the harness cannot run.
+
+That control has caught the harness twice. Once when a repository using CRLF
+throughout had its patch silently normalised to LF at four separate layers,
+one of them a `.gitattributes` rule applying on commit, which made every hunk
+fail and looked like a broken artifact. And once when two changes that were
+each correct and each tested combined into a verifier that accepted patches
+git rejects: a repair pass recomputed the hunk headers the control had
+deliberately damaged, while a fuzzy `patch` fallback accepted whatever
+survived. A patch referencing a line present in no file applied cleanly, and
+the build passed, on 16 of 22 cases.
+
+The general lesson is the reason this document exists. A measurement that
+looks like a property of the world is often a property of the instrument, and
+only a check that runs against a known answer can tell the two apart.
