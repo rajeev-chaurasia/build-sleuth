@@ -2,12 +2,47 @@
 
 ## The shape of it
 
-```
-run url -> ingest -> condense -> classify -> localize -> fix -> policy -> verify -> draft PR
-           [det]     [det]       [model]     [model]     [model] [det]    [det]     [det, guarded]
+```mermaid
+flowchart LR
+    URL([run url]):::io
+
+    subgraph Ingest["gather once, then work offline"]
+        ING[ingest]:::det --> CON[condense]:::det
+    end
+
+    subgraph Reason["the model proposes"]
+        CLS[classify]:::llm --> LOC[localize]:::llm --> FIX[fix]:::llm
+    end
+
+    subgraph Gate["deterministic checks decide"]
+        REP[repair]:::det --> POL[policy]:::det --> VER[verify]:::sandbox
+    end
+
+    PR[draft pull request]:::guarded
+    REC[recommendation<br/>rerun, pin, quarantine]:::io
+
+    URL --> ING
+    CON --> CLS
+    LOC -.->|"flake or infra, no culprit file exists"| REC
+    FIX -.->|"confidence below the bar"| REC
+    FIX --> REP
+    VER -->|allowlist and patch policy| PR
+
+    classDef det fill:#1f6f43,stroke:#0d3b24,color:#ffffff
+    classDef llm fill:#8a4b08,stroke:#4d2904,color:#ffffff
+    classDef sandbox fill:#1d4f8c,stroke:#0e2947,color:#ffffff
+    classDef guarded fill:#7a1d3f,stroke:#420f22,color:#ffffff
+    classDef io fill:#3f3f46,stroke:#1f1f23,color:#ffffff
 ```
 
-Three model calls, surrounded by deterministic code on both sides. Everything a model returns is a pydantic-validated proposal; only `guardrails/` and `pipeline/verify.py` may approve anything.
+| colour | meaning |
+| --- | --- |
+| green | deterministic, no model call, unit tested |
+| amber | model call, output validated as a proposal and scored by the eval harness |
+| blue | runs in a container, judged by whether the build passes |
+| red | writes to a repository, and only behind an allowlist that is empty by default |
+
+Three model calls, surrounded by deterministic code on both sides. Everything a model returns is a pydantic-validated proposal; only `guardrails/` and `pipeline/verify.py` may approve anything. The dotted paths matter as much as the solid one: for a flake or a runner outage there is no culprit file to name, and the honest output is a recommendation rather than a patch.
 
 ## Why the stages split where they do
 
@@ -25,14 +60,20 @@ One subtlety worth knowing: the diff comes from comparing the pull request's bas
 
 | Package | Responsibility |
 | --- | --- |
+| `models/` | Every pydantic model. The stage boundaries are these types, so a change here is a change to the contract. |
 | `providers/` | `CIProvider` protocol and its GitHub implementation. One `GitHubWriter` is the only code that writes. |
 | `condense/` | Pure text reduction. No model, no network. |
 | `llm/` | One OpenAI-compatible client for every provider, plus a registry, rate limiter, and structured-output enforcement. |
+| `prompts/` | Versioned markdown, content hashed into every scorecard so a metric traces to the prompt that produced it. |
 | `pipeline/` | One module per stage, each a typed function. |
 | `tools/` | Read-only views over a case's evidence, so drill-down works offline. |
 | `guardrails/` | Allowlist and patch policy. Small enough to audit in a minute. |
 | `sandbox/` | Container execution for checking a patch really works. |
+| `dataset/` | Loading and validating cases, and importing executable artifacts. |
+| `telemetry/` | OpenTelemetry setup and the attribute names, kept in one file. |
 | `evals/` | Scoring, scorecards, and the regression gate. Imports `buildsleuth`, never the reverse. |
+
+The dependency rule is one way: `evals/` may import `buildsleuth`, and nothing in `buildsleuth` may import `evals`. That is what stops a metric quietly influencing the thing it measures.
 
 ## Decisions that cost something
 

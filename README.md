@@ -134,7 +134,15 @@ uv run python -m evals.verifier_control                        # can these cases
 uv run python -m evals.fix_funnel --model M                    # how far do the patches get?
 ```
 
-The last two start containers holding a whole CI environment, so they run on disposable machines rather than a laptop: `gh workflow run fix-funnel.yml`. Importing new executable cases works the same way, one artifact per runner:
+The last two start containers holding an entire CI environment, several gigabytes each, so they run on disposable machines rather than a laptop:
+
+```bash
+gh workflow run eval-full.yml       # score a model over the whole dataset
+gh workflow run fix-funnel.yml      # run every proposed patch and see how far it gets
+gh workflow run import-bugswarm.yml # add executable cases, one artifact per runner
+```
+
+Candidates for that last one come from a query rather than a hand-picked list, so the selection criteria are inspectable and repeatable:
 
 ```bash
 uv run python scripts/select_bugswarm.py --limit 12
@@ -147,6 +155,8 @@ BUILDSLEUTH_GITHUB_TOKEN=...     # fine grained, Actions: read
 BUILDSLEUTH_GEMINI_API_KEY=...   # free tier from aistudio.google.com
 BUILDSLEUTH_PR_ALLOWLIST=        # empty means no repository may be written to
 ```
+
+Only the first is needed to fetch a run. The eval harness runs its baselines with no key at all, so the numbers below can be reproduced in part before signing up for anything.
 
 Traces are hand-written OpenTelemetry with `gen_ai` attributes and go to any OTLP backend. `docker/phoenix` starts one with a single command.
 
@@ -167,23 +177,35 @@ The annotators also refused to judge whether a failure followed the diff on case
 
 ## Caveats, kept current
 
-- 71 cases, target is 80. Small enough that a handful of cases moves a number.
-- **The fix funnel rests on nine cases, and single runs move.** Nine is enough to say most patches are rejected before execution, which is a large and repeatable effect across every configuration tried. It is not enough to rank models on fix quality, and individual cases flip between runs. Treat the funnel shape as the result and the exact counts as noisy.
-- **One fix out of nine is an anecdote with error bars, not a rate.** It is reported because the funnel shape around it is informative, not because the number is stable.
-- **The patch repair is deterministic and narrow.** It recomputes counts and restores missing markers. It cannot rescue a patch whose context does not match the file, which is now the largest remaining failure at four of nine.
-- Class balance is skewed: 38 `code_change`, 4 flaky, 3 infrastructure, 3 pipeline config. That is roughly what mining public repositories yields, and it is why macro F1 rather than accuracy is the headline.
+- **71 cases, and the class balance is heavily skewed:** 61 `code_change`, 4 flaky, 3 pipeline config, 3 infrastructure. That is roughly what mining public repositories yields, and it is why macro F1 rather than accuracy is the headline. It also means the three small classes are each measured on a handful of cases.
+- **The 23 executable cases are all `code_change`,** so they widen what can be verified by execution without widening class coverage at all.
+- **The fix funnel rests on 20 cases.** Twenty supports "most patches are rejected before execution", which is a large effect. It does not support ranking two models on fix quality, and the 2 successes are an anecdote with error bars rather than a 10 percent rate to quote.
+- **Every apply rate published before 2026-08-10 is withdrawn.** They were measured through a verifier that accepted patches git rejects. The figures above are the first taken through checks proven to discriminate.
+- **Three executable cases are excluded** because their own reference fix does not make the build pass, all three failing at dependency install or package download inside the image. They are named in the control record rather than dropped quietly.
+- **The patch repair is deterministic and narrow.** It recomputes hunk counts and restores missing markers, and on the current run it rescued nothing. It cannot help a patch whose context does not match the file, which is now the largest single failure at 5 of 20.
+- **The model choice is not settled on quality.** `gemini-3.1-flash-lite` is the default because it completes a full pass on a free tier, not because it won a fair comparison against larger models on equal coverage.
 - A full run is about 140 model calls and takes roughly twelve minutes, most of it waiting out per-minute rate limits. That is the free tier working as intended, not a failure.
-- **The model choice is not settled on quality.** `gemini-3.1-flash-lite` is the default because it completed a run, not because it won a fair comparison. `gemini-3.5-flash` looked stronger on the cases it finished before running out of quota, which is exactly the partial number this harness exists to distrust.
 - Regression tolerances are deliberately loose, because measured run-to-run noise is larger than the drift worth catching. They tighten when the dataset does.
-- **Five executable cases are excluded because their own reference fix does not pass the verifier.** Two of those do not even apply, which points at the extraction rather than at the cases. That is unfinished work, and until it is finished the measurable subset is smaller than the importable one.
-- Class balance is unchanged by the import: the 13 executable cases are all `code_change`, so they widen fix coverage and not class coverage.
 
 ## Documentation
 
-- [Architecture](docs/architecture.md), and the decisions that cost something
-- [Taxonomy](docs/taxonomy.md), with its literature grounding and open edges
-- [Eval methodology](docs/eval-methodology.md), including what the numbers do not mean
-- [Dataset](dataset/README.md), how cases were mined and labelled
+- [Architecture](docs/architecture.md), the pipeline diagram and the decisions that cost something
+- [Taxonomy](docs/taxonomy.md), the failure classes, their literature grounding and open edges
+- [Eval methodology](docs/eval-methodology.md), how each metric is computed and what it does not mean
+- [Dataset](dataset/README.md), how cases were mined, labelled and verified
+- [Contributing](CONTRIBUTING.md), the gates, the style rules and the invariants that are load bearing
+
+## Results in this repository
+
+Every number in this README is backed by a file, and each is regenerated by a command rather than edited by hand.
+
+| file | what it holds |
+| --- | --- |
+| `results/54ba5ec-gemini-3.1-flash-lite-*.json` | the classification and localization scorecard, all 71 cases |
+| `results/54ba5ec-baseline-regex-none.json` | the regex baseline over the same 71 |
+| `results/fix-funnel.json` | the fix funnel, per case, with the reason each patch stopped where it did |
+| `results/verifier-control.json` | which cases can measure a fix, and why the others cannot |
+| `results/baseline.json` | pointer to the scorecard the regression gate compares against |
 
 ## License
 
