@@ -17,6 +17,7 @@ distrust.
 import argparse
 import json
 from datetime import UTC, datetime
+from enum import StrEnum
 from pathlib import Path
 
 from buildsleuth.config import load_settings
@@ -24,7 +25,9 @@ from buildsleuth.dataset.loader import case_dir_for, load_cases, read_case_log
 from buildsleuth.llm.client import OpenAICompatClient
 from buildsleuth.llm.registry import Provider, get_model_spec
 from buildsleuth.models.case import TriageCase, VerificationMethod
-from buildsleuth.pipeline.fix import SkipReason, propose_fix
+from buildsleuth.models.triage import EditProposal, FixProposal
+from buildsleuth.pipeline.anchored_edits import EditResult, patch_from_edits
+from buildsleuth.pipeline.fix import SkipReason, propose_edits, propose_fix
 from buildsleuth.pipeline.localize import localize, ranked_paths
 from buildsleuth.pipeline.triage import TriageContext, classify
 from buildsleuth.pipeline.verify import VerificationLevel
@@ -47,6 +50,29 @@ UNKNOWN_SHA = "unknown"
 # were recomputed.
 REPAIR_NOTE = "repairing its hunk headers"
 CONTROL_FILE = RESULTS_DIR / "verifier-control.json"
+
+
+class PatchFormat(StrEnum):
+    """What the model is asked to produce.
+
+    `EDITS` is the default because a unified diff makes the model responsible
+    for retyping context it does not need to retype, which rejected four of
+    the nine attempts in the run recorded in `results/fix-funnel.json`.
+    `DIFF` stays selectable so the two can be compared on the same cases.
+    """
+
+    EDITS = "edits"
+    DIFF = "diff"
+
+
+def edited_patch(result: EditResult) -> str:
+    """The patch to verify, or nothing when an edit could not be placed.
+
+    A proposal whose anchors did not all land is not verified at all. Running
+    the half of it that matched would report a build failure caused by the
+    missing half, which is the kind of number this harness exists to distrust.
+    """
+    return result.patch if result.ok else ""
 
 
 def unmeasurable_cases(control: Path = CONTROL_FILE) -> set[str]:
@@ -93,7 +119,13 @@ def read_files_for(case: TriageCase, paths: list[str]) -> dict[str, str]:
     return read_files_in_image(image_tag(case), case.inputs.repo, paths)
 
 
-def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: str) -> FixAttempt:
+def attempt_one(
+    client: OpenAICompatClient,
+    model: str,
+    case: TriageCase,
+    log: str,
+    patch_format: PatchFormat = PatchFormat.EDITS,
+) -> FixAttempt:
     """Run the pipeline for one case and record how far the patch got."""
     evidence = Evidence(log_text=log)
     triaged = classify(
@@ -118,7 +150,8 @@ def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: s
     # Keep the localizer's paths as the editable set. Narrowing it to the
     # files that happened to be readable leaves the model with nothing it is
     # allowed to touch when the read comes back empty.
-    proposed = propose_fix(client, model, verdict, evidence, paths, contents, repo=case.inputs.repo)
+    ask = propose_edits if patch_format is PatchFormat.EDITS else propose_fix
+    proposed = ask(client, model, verdict, evidence, paths, contents, repo=case.inputs.repo)
     if isinstance(proposed, SkipReason):
         return FixAttempt(
             case_id=case.case_id,
@@ -127,8 +160,16 @@ def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: s
             localized=on_target,
         )
 
+    value = proposed.value
+    patch = value.patch if isinstance(value, FixProposal) else ""
+    edit_notes = ""
+    if isinstance(value, EditProposal):
+        built = patch_from_edits(value.edits, contents)
+        patch, edit_notes = edited_patch(built), built.report
+        print(f"    {edit_notes}", flush=True)
+
     # The case records owner/name, which resolves the checkout exactly.
-    result = verify_in_image(proposed.value.patch, image_tag(case), case.inputs.repo)
+    result = verify_in_image(patch, image_tag(case), case.inputs.repo)
     return FixAttempt(
         case_id=case.case_id,
         attempted=True,
@@ -139,6 +180,10 @@ def attempt_one(client: OpenAICompatClient, model: str, case: TriageCase, log: s
         evidence=result.stdout_tail[-EVIDENCE_CHARS:],
         localized=on_target,
         needed_repair=REPAIR_NOTE in result.detail,
+        # Where each anchor landed. A funnel that moved because the edits
+        # stopped matching has to be distinguishable from one that moved
+        # because the fixes got better.
+        edit_notes=edit_notes,
     )
 
 
@@ -159,6 +204,7 @@ def read_attempts(directory: Path) -> list[FixAttempt]:
                     evidence=entry.get("evidence", ""),
                     localized=entry.get("localized", False),
                     needed_repair=entry.get("needed_repair", False),
+                    edit_notes=entry.get("edit_notes", ""),
                 )
             )
     return attempts
@@ -194,6 +240,7 @@ def aggregate(directory: Path, out: Path) -> int:
                         "evidence": a.evidence,
                         "localized": a.localized,
                         "needed_repair": a.needed_repair,
+                        "edit_notes": a.edit_notes,
                     }
                     for a in sorted(attempts, key=lambda a: a.case_id)
                 ],
@@ -220,6 +267,13 @@ def main() -> int:
         help="Combine attempt files written by per-case runs into one funnel.",
     )
     parser.add_argument("--out", type=Path, default=None)
+    parser.add_argument(
+        "--patch-format",
+        type=PatchFormat,
+        choices=list(PatchFormat),
+        default=PatchFormat.EDITS,
+        help="Whether the model returns anchored edits or writes the diff itself.",
+    )
     args = parser.parse_args()
 
     if args.aggregate is not None:
@@ -255,7 +309,7 @@ def main() -> int:
     for case in runnable:
         log = read_case_log(case_dir_for(args.dataset, case), case)
         try:
-            attempt = attempt_one(client, args.model, case, log)
+            attempt = attempt_one(client, args.model, case, log, args.patch_format)
         except Exception as error:
             # A case that blew up is a case with no result, not a pass. The
             # message goes in too: recording only the class name turned a
@@ -280,6 +334,10 @@ def main() -> int:
             {
                 "model": args.model,
                 "generated_at": datetime.now(UTC).isoformat(),
+                # Two funnels asked for different things, so the format they
+                # asked for is part of the result rather than context somebody
+                # has to remember.
+                "patch_format": args.patch_format.value,
                 "n_cases_in_dataset": len(every_case),
                 "report": report.model_dump(mode="json"),
                 "attempts": [
@@ -292,6 +350,7 @@ def main() -> int:
                         "evidence": a.evidence,
                         "localized": a.localized,
                         "needed_repair": a.needed_repair,
+                        "edit_notes": a.edit_notes,
                     }
                     for a in attempts
                 ],

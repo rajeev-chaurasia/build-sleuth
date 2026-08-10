@@ -45,23 +45,35 @@ Measured on those 20 cases with `gemini-3.1-flash-lite`. The model is shown the 
 | stage | cases | share of attempted |
 | --- | --- | --- |
 | patch attempted | 20 | 1.00 |
-| applies cleanly | 5 | 0.25 |
-| failing test passes | 2 | 0.10 |
-| nothing else broke | 2 | 0.10 |
-
-Three quarters are rejected before anything runs, and the split is the useful part:
+| applies cleanly | 13 | 0.65 |
+| failing test passes | 6 | 0.30 |
+| nothing else broke | 6 | 0.30 |
 
 | outcome | cases |
 | --- | --- |
-| context did not match the file | 5 |
-| patched a file that was not the culprit | 5 |
-| malformed diff | 5 |
-| applied, did not fix the failure | 3 |
-| fixed the build and broke nothing | 2 |
+| fixed the build and broke nothing | 6 |
+| applied, did not fix the failure | 7 |
+| aimed at a file that was not the culprit | 4 |
+| rejected before it ran | 3 |
 
-Localization was on target for 14 of 20. So the model usually finds the right file, is handed that file's exact contents, and still writes a diff git will not take. The failures divide almost evenly three ways, which is why one rate is the wrong summary: aiming at the wrong file, mis-copying context, and emitting malformed output need three different fixes.
+Localization was on target for 14 of 20, so a fifth of the failures are the model reading the wrong file rather than writing a bad patch. Those are two different problems and the funnel keeps them apart.
 
-An LLM judge would not produce this table. Reading the fifteen rejected patches it would have seen a confident explanation and a plausible diff on most of them.
+An LLM judge would not produce this table. It would read the patches, find them well argued, and have no way to know which ones a build accepts.
+
+### Not asking the model for a diff at all
+
+A unified diff makes the model responsible for retyping the surrounding lines exactly, and mis-copied context was the single largest rejection. That context is derivable, just not from the diff: it is in the file, which the pipeline already has.
+
+So the fix stage asks for the change instead of the patch. The model returns the exact text to find and what it becomes, `pipeline/anchored_edits.py` locates that text and computes the diff with `difflib`. Context lines come from the file, so they cannot disagree with it, and the line endings are the file's own rather than whatever the model typed. An anchor that does not occur, or occurs twice, is a named rejection rather than a silently wrong patch.
+
+The same 20 cases, the same model, the same verifier, changing only what the model is asked to produce:
+
+| | unified diff | anchored edits |
+| --- | --- | --- |
+| applies cleanly | 5 | **13** |
+| fixed the build | 2 | **6** |
+
+Localization was identical across both runs, so the difference is the format and not the target. Both records are kept, in `results/fix-funnel.json` and `results/fix-funnel-diff-format.json`.
 
 ## What the measurement catches
 

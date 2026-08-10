@@ -8,12 +8,14 @@ from buildsleuth.llm.types import CompletionRequest, CompletionResult, Role, Usa
 from buildsleuth.models.taxonomy import FailureClass
 from buildsleuth.models.triage import FixProposal, TriageVerdict
 from buildsleuth.pipeline.fix import (
+    EDITS_PROMPT_NAME,
     MAX_FILE_CHARS,
     MIN_CONFIDENCE,
     NO_DIFF,
     NO_FILES,
     SkipReason,
     build_messages,
+    propose_edits,
     propose_fix,
     render_file_contents,
     should_attempt,
@@ -81,6 +83,16 @@ def _proposal_json(patch: str = PATCH, strategy: str = "call the new name") -> s
             "strategy": strategy,
             "expected_effect": "test_new_call passes",
             "touched_files": ["src/app.py"],
+        }
+    )
+
+
+def _edits_json(find: str = "    return 1\n", replace: str = "    return 2\n") -> str:
+    return json.dumps(
+        {
+            "edits": [{"path": "src/app.py", "find": find, "replace": replace}],
+            "strategy": "call the new name",
+            "expected_effect": "test_new_call passes",
         }
     )
 
@@ -257,3 +269,71 @@ def test_build_messages_produces_a_single_user_turn() -> None:
 
     assert len(messages) == 1
     assert messages[0].role is Role.USER
+
+
+class TestAnchoredEdits:
+    """The preferred path. The model names the text to change and the diff is
+    computed from the file, so context lines cannot disagree with it."""
+
+    def test_edits_come_back_parsed(self) -> None:
+        client = ScriptedClient([_edits_json()])
+
+        result = propose_edits(client, MODEL, _verdict(), _evidence(), CULPRITS, FILE_CONTENTS)
+
+        assert not isinstance(result, SkipReason)
+        assert result.value.edits[0].find == "    return 1\n"
+        assert result.value.edits[0].replace == "    return 2\n"
+        assert result.value.touched_files == ["src/app.py"]
+        assert result.value.is_empty is False
+
+    def test_no_edits_is_a_valid_proposal_rather_than_an_error(self) -> None:
+        client = ScriptedClient([json.dumps({"edits": [], "strategy": "needs src/dep.py"})])
+
+        result = propose_edits(client, MODEL, _verdict(), _evidence(), CULPRITS, FILE_CONTENTS)
+
+        assert not isinstance(result, SkipReason)
+        assert result.value.is_empty is True
+        assert result.value.touched_files == []
+
+    @pytest.mark.parametrize("failure_class", UNPATCHABLE)
+    def test_a_skipped_verdict_never_reaches_the_model(self, failure_class: FailureClass) -> None:
+        client = ScriptedClient([_edits_json()])
+
+        result = propose_edits(
+            client, MODEL, _verdict(failure_class), _evidence(), CULPRITS, FILE_CONTENTS
+        )
+
+        assert isinstance(result, SkipReason)
+        assert client.requests == []
+
+    def test_the_schema_offered_to_the_model_asks_for_edits_not_a_diff(self) -> None:
+        client = ScriptedClient([_edits_json()])
+
+        propose_edits(client, MODEL, _verdict(), _evidence(), CULPRITS, FILE_CONTENTS)
+
+        schema = client.requests[0].response_schema or {}
+        fields = schema.get("$defs", {})["AnchoredEdit"]["properties"]
+
+        assert set(fields) == {"path", "find", "replace"}
+        assert "patch" not in schema["properties"]
+
+    def test_the_shipped_prompt_carries_the_same_context_as_the_diff_prompt(self) -> None:
+        messages = build_messages(
+            _verdict(),
+            _evidence(),
+            CULPRITS,
+            FILE_CONTENTS,
+            load_prompt(EDITS_PROMPT_NAME),
+            repo=REPO,
+        )
+
+        body = messages[0].content
+        assert REPO in body
+        assert FAILING_LOG in body
+        assert "def old_call() -> int:" in body
+        assert "+new_call()" in body
+
+    def test_the_shipped_prompt_tells_the_model_not_to_write_a_diff(self) -> None:
+        text = load_prompt(EDITS_PROMPT_NAME).text
+        assert "Do not write a diff" in text
+        assert "exactly once" in text

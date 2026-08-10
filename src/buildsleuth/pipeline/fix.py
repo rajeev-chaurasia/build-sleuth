@@ -9,15 +9,18 @@ most annoying way possible.
 
 from dataclasses import dataclass
 
+from pydantic import BaseModel
+
 from buildsleuth.condense.router import DEFAULT_MAX_CHARS, condense
 from buildsleuth.llm.structured import StructuredResult, complete_structured
 from buildsleuth.llm.types import Message, ModelClient, Role
 from buildsleuth.models.taxonomy import FailureClass
-from buildsleuth.models.triage import FixProposal, TriageVerdict
+from buildsleuth.models.triage import EditProposal, FixProposal, TriageVerdict
 from buildsleuth.prompts.loader import Prompt, load_prompt
 from buildsleuth.tools.evidence import Evidence
 
 FIX_PROMPT_NAME = "fix"
+EDITS_PROMPT_NAME = "fix_edits"
 MIN_CONFIDENCE = 0.6
 MAX_FILE_CHARS = 12_000
 NO_FILES = "none supplied"
@@ -86,6 +89,31 @@ def build_messages(
     return [Message(role=Role.USER, content=body)]
 
 
+def _propose[T: BaseModel](
+    client: ModelClient,
+    model: str,
+    verdict: TriageVerdict,
+    evidence: Evidence,
+    culprit_files: list[str],
+    file_contents: dict[str, str],
+    prompt: Prompt | None,
+    prompt_name: str,
+    output_model: type[T],
+    repo: str,
+) -> StructuredResult[T] | SkipReason:
+    skip = should_attempt(verdict, culprit_files)
+    if skip is not None:
+        return skip
+
+    active = prompt if prompt is not None else load_prompt(prompt_name)
+    return complete_structured(
+        client=client,
+        model=model,
+        messages=build_messages(verdict, evidence, culprit_files, file_contents, active, repo=repo),
+        output_model=output_model,
+    )
+
+
 def propose_fix(
     client: ModelClient,
     model: str,
@@ -96,15 +124,47 @@ def propose_fix(
     prompt: Prompt | None = None,
     repo: str = UNKNOWN_FIELD,
 ) -> StructuredResult[FixProposal] | SkipReason:
-    """Ask for a patch, or explain why one was not worth attempting."""
-    skip = should_attempt(verdict, culprit_files)
-    if skip is not None:
-        return skip
+    """Ask for a unified diff, or explain why a patch was not worth attempting."""
+    return _propose(
+        client,
+        model,
+        verdict,
+        evidence,
+        culprit_files,
+        file_contents,
+        prompt,
+        FIX_PROMPT_NAME,
+        FixProposal,
+        repo,
+    )
 
-    active = prompt if prompt is not None else load_prompt(FIX_PROMPT_NAME)
-    return complete_structured(
-        client=client,
-        model=model,
-        messages=build_messages(verdict, evidence, culprit_files, file_contents, active, repo=repo),
-        output_model=FixProposal,
+
+def propose_edits(
+    client: ModelClient,
+    model: str,
+    verdict: TriageVerdict,
+    evidence: Evidence,
+    culprit_files: list[str],
+    file_contents: dict[str, str],
+    prompt: Prompt | None = None,
+    repo: str = UNKNOWN_FIELD,
+) -> StructuredResult[EditProposal] | SkipReason:
+    """Ask for anchored edits, which is the preferred way to get a patch.
+
+    The model names the text to change instead of writing a diff, and
+    `pipeline.anchored_edits` computes the diff from the file. Context lines
+    then come from the checkout rather than from the model's memory of it,
+    which is what the unified diff path keeps getting wrong.
+    """
+    return _propose(
+        client,
+        model,
+        verdict,
+        evidence,
+        culprit_files,
+        file_contents,
+        prompt,
+        EDITS_PROMPT_NAME,
+        EditProposal,
+        repo,
     )
