@@ -193,7 +193,6 @@ The annotators also refused to judge whether a failure followed the diff on case
 - [Taxonomy](docs/taxonomy.md), the failure classes, their literature grounding and open edges
 - [Eval methodology](docs/eval-methodology.md), how each metric is computed and what it does not mean
 - [Dataset](dataset/README.md), how cases were mined, labelled and verified
-- [Contributing](CONTRIBUTING.md), the gates, the style rules and the invariants that are load bearing
 
 ## Results in this repository
 
