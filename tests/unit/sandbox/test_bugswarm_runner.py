@@ -32,10 +32,18 @@ class TestVerificationScript:
     def test_reruns_the_original_job(self) -> None:
         assert "run_failed.sh" in verification_script(PATCH, "repo")
 
-    def test_falls_back_to_patch_when_the_checkout_is_not_a_git_repo(self) -> None:
+    def test_applies_only_with_git_apply(self) -> None:
+        # The chain used to end in `patch -l`, which matches context fuzzily.
+        # A deliberately broken patch applied and the build passed on 16 of
+        # 22 control cases, which would have inflated every apply rate.
         script = verification_script(PATCH, "repo")
         assert "git apply" in script
-        assert "patch -p1" in script
+        assert "patch -p1" not in script
+
+    def test_does_not_relax_whitespace_matching(self) -> None:
+        # The line ending variants handle the real problem explicitly, so
+        # nothing needs a looser comparison on top.
+        assert "--ignore-whitespace" not in verification_script(PATCH, "repo")
 
 
 class TestParseResult:
@@ -121,14 +129,12 @@ class TestLineEndings:
     def test_terminate_does_not_double_terminate_a_crlf_patch(self) -> None:
         assert not terminate(CRLF_PATCH).endswith("\r\n\n")
 
-    def test_the_apply_chain_retries_without_whitespace_sensitivity(self) -> None:
+    def test_the_chain_tries_each_line_ending_form(self) -> None:
         # Otherwise a correct patch is rejected over line endings, which
         # measures the repository rather than the patch.
         script = verification_script(CRLF_PATCH, "repo")
-        assert "--ignore-whitespace" in script
-        assert script.index('git apply --whitespace=nowarn "$P"') < script.index(
-            "--ignore-whitespace"
-        )
+        for target in ('"$P"', '"$P.lf"', '"$P.crlf"'):
+            assert f"git apply --whitespace=nowarn {target}" in script
 
 
 class TestBothLineEndingConventions:

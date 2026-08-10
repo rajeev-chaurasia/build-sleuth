@@ -100,6 +100,12 @@ def verification_script(patch: str, repo_name: str) -> str:
             # these repositories are CRLF throughout and some are LF, and a
             # patch whose endings disagree with the file has every hunk
             # rejected, which measures the repository rather than the patch.
+            # Only git apply, and only on the three line ending forms. The
+            # earlier chain ended in `patch -l`, which matches context fuzzily
+            # and so accepted a patch whose context line did not exist in the
+            # file at all. The control caught it: a deliberately broken patch
+            # applied and the build passed on 16 of 22 cases, which would have
+            # inflated every apply rate the funnel reports.
             "try_apply() {",
             '  P="$1"',
             '  sed \'s/\\r$//\' "$P" > "$P.lf"',
@@ -107,8 +113,6 @@ def verification_script(patch: str, repo_name: str) -> str:
             '  git apply --whitespace=nowarn "$P" 2>&1 && return 0',
             '  git apply --whitespace=nowarn "$P.lf" 2>&1 && return 0',
             '  git apply --whitespace=nowarn "$P.crlf" 2>&1 && return 0',
-            '  git apply --whitespace=nowarn --ignore-whitespace "$P.lf" 2>&1 && return 0',
-            '  patch -p1 --batch --forward -l < "$P.lf" 2>&1 && return 0',
             "  return 1",
             "}",
             # The model's patch exactly as written comes first, so the repair
