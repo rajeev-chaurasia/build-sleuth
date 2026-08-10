@@ -40,6 +40,8 @@ NO_IMAGE = "case has no runnable image"
 NO_PATCH = "model declined to patch"
 # Enough for a rejected-hunk report without bloating the committed record.
 EVIDENCE_CHARS = 600
+# Enough for a provider message to name its own cause.
+SKIP_REASON_CHARS = 300
 UNKNOWN_SHA = "unknown"
 # How the runner words an apply that only succeeded after the hunk headers
 # were recomputed.
@@ -255,9 +257,14 @@ def main() -> int:
         try:
             attempt = attempt_one(client, args.model, case, log)
         except Exception as error:
-            # A case that blew up is a case with no result, not a pass.
+            # A case that blew up is a case with no result, not a pass. The
+            # message goes in too: recording only the class name turned a
+            # whole run into twenty identical ModelError lines that said
+            # nothing about whether the fault was the model or the harness.
             attempt = FixAttempt(
-                case_id=case.case_id, attempted=False, skip_reason=f"{type(error).__name__}"
+                case_id=case.case_id,
+                attempted=False,
+                skip_reason=f"{type(error).__name__}: {error}"[:SKIP_REASON_CHARS],
             )
         attempts.append(attempt)
         reached = attempt.level.name if attempt.attempted else f"skipped: {attempt.skip_reason}"
