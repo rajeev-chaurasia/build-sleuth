@@ -85,3 +85,25 @@ def test_empty_answer_after_reasoning_names_the_cause() -> None:
         client.complete(
             CompletionRequest(model=spec.api_model, messages=[Message(role=Role.USER, content="x")])
         )
+
+
+class TestEveryReasoningModelIsFlagged:
+    """A model that thinks before answering has that thinking billed to the
+    same output budget. Unflagged, one spent 2038 tokens reasoning and
+    returned nothing, which reads as a broken model rather than a budget
+    sized for a short verdict. The 550B was written off this way once."""
+
+    REASONING_MODELS = (
+        "openrouter-nemotron-550b",
+        "openrouter-nemotron-9b",
+        "openrouter-gpt-oss-20b",
+    )
+
+    @pytest.mark.parametrize("name", REASONING_MODELS)
+    def test_it_gets_the_larger_budget(self, name: str) -> None:
+        assert output_token_budget(get_model_spec(name)) == REASONING_OUTPUT_TOKENS
+
+    def test_a_direct_model_keeps_the_small_one(self) -> None:
+        # Otherwise every call pays for headroom nothing uses.
+        spec = get_model_spec("gemini-3.1-flash-lite")
+        assert output_token_budget(spec) == DIRECT_OUTPUT_TOKENS

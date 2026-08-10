@@ -186,6 +186,11 @@ MODEL_SPECS: tuple[ModelSpec, ...] = (
         # 50 requests/day is the un-topped-up allowance, so this model cannot
         # carry a full eval sweep on its own.
         quirks=ProviderQuirks(
+            # It thinks before answering, and the provider bills that to the
+            # same budget. Unflagged it spent 2038 tokens reasoning and
+            # returned nothing, which reads as a broken model rather than a
+            # budget sized for a short verdict.
+            reasoning=True,
             native_json_schema=True,
             supports_tools=True,
             rpm=20,
@@ -226,6 +231,8 @@ MODEL_SPECS: tuple[ModelSpec, ...] = (
         provider=Provider.OPENROUTER,
         base_url=OPENROUTER_BASE_URL,
         quirks=ProviderQuirks(
+            # A hybrid reasoning model, so the same budget rule applies.
+            reasoning=True,
             native_json_schema=True,
             supports_tools=True,
             rpm=20,
