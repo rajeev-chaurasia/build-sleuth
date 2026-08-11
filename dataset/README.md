@@ -5,12 +5,24 @@ replayable after GitHub expires the original logs (90 day default retention).
 
 ## Current status
 
-6 cases: 5 mined from real GitHub Actions runs and 1 hand-written synthetic
-case. **Human verification is pending: `verified_by_human` is false on every
-case, and no case carries the `smoke` tag.** The labels below were assigned by
-reading the snapshotted logs, so treat them as a first pass that a reviewer
-still has to confirm. `TriageCase` refuses to accept a `smoke` tag on an
-unverified case, so the PR gate cannot silently run on unreviewed labels.
+71 cases: 47 mined from real GitHub Actions runs, 23 imported from BugSwarm
+artifacts, and 1 hand-written synthetic case. The 23 BugSwarm cases each carry a
+container image and a failing test command, so a proposed fix on them can be run
+rather than only read.
+
+Label scrutiny is tracked two ways, and they are not the same claim. 6 cases are
+verified by a human (`gm-0001` through `gm-0005` and `sy-0001`), and those same 6
+are the only cases tagged `smoke`. A further 45 are unanimously adjudicated,
+which `Provenance.trusted` also accepts, putting 48 cases in reach of the pull
+request gate. `TriageCase` refuses a `smoke` tag on an unverified case, so the
+gate cannot silently run on unreviewed labels.
+
+| Class | Cases |
+|---|---|
+| `code_change` | 61 |
+| `flaky_test` | 4 |
+| `infra_environment` | 3 |
+| `pipeline_config` | 3 |
 
 ## Layout
 
@@ -22,6 +34,10 @@ dataset/
       case.json
       logs/failed_job.txt    cleaned log of the failed job
       diff.patch             the change under test, when the run had a PR
+    bugswarm/<case_id>/      imported from a BugSwarm artifact
+      case.json
+      logs/failed_job.txt
+      fix.diff               the maintainer's own fix, for scoring a proposal
     synthetic/<case_id>/     hand-written, never presented as real
 ```
 
@@ -70,13 +86,15 @@ while investigating a flake only wastes time.
 
 ### Known limitations
 
-- `LabelingMethod` has no value for "read the failed job log", which is how
-  every case here was actually labelled. The closest existing value is used and
-  each `provenance.notes` says so plainly.
 - None of the mined runs has a rerun attempt, a linked fix commit, or a linked
-  issue, so no case is labelled from the confirmation signals those provide.
-- `verification.method` is `none` everywhere. No case is reproduced in a
-  container yet, so no fix can be scored as verified.
+  issue, so no mined case is labelled from the confirmation signals those
+  provide. The 23 imported cases carry `imported` instead, and their culprit
+  files come from the maintainer's own fix rather than from a labeller.
+- `verification.method` is `none` on the 48 mined and synthetic cases, so no fix
+  can be scored as verified on them. Only the 23 BugSwarm cases are executable.
+- The classes are heavily unbalanced towards `code_change`, which is 61 of the
+  71 cases. Accuracy flatters a model on this mix, so the scorecard leads with
+  macro F1 over all four classes.
 
 ## Adding a case
 
@@ -106,14 +124,11 @@ measured on.
 
 ## Case index
 
-| Case | Repo | Class / subcategory | Related to diff |
-|---|---|---|---|
-| gm-0001 | apache/airflow | `code_change` / `lint_or_format` | yes |
-| gm-0002 | home-assistant/core | `code_change` / `dependency_conflict` | yes |
-| gm-0003 | pandas-dev/pandas | `pipeline_config` / `action_version` | no |
-| gm-0004 | scikit-learn/scikit-learn | `code_change` / `lint_or_format` | yes |
-| gm-0005 | PrefectHQ/prefect | `code_change` / `compile_error` | yes |
-| sy-0001 | synthetic | `flaky_test` / `async_wait` | no |
+`manifest.json` is the index: every case id with its failure class, source and
+tags, plus the case count and the dataset hash. It is rebuilt from the cases on
+disk rather than maintained by hand, so prefer it over a table here, which would
+go stale the next time a case is added. The repo, the subcategory and the
+labelling notes live in each `case.json`.
 
 The mined logs are unmodified except for three things: the UTF-8 BOM that
 GitHub puts on downloaded logs is dropped, `clean_log` is applied again to
