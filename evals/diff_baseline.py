@@ -10,11 +10,15 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
+from evals.baselines import MAJORITY_MODEL_NAME, REGEX_MODEL_NAME
 from evals.scorecard import Scorecard, load_scorecard
 
 # Guard against float representation noise so a drift that equals the tolerance
 # exactly (0.80 - 0.78 lands slightly above 0.02 in binary) is not flagged.
 FLOAT_SLACK = 1e-9
+
+# Neither baseline calls a model, so both replay a dataset identically.
+DETERMINISTIC_MODELS = frozenset({MAJORITY_MODEL_NAME, REGEX_MODEL_NAME})
 
 MACRO_F1 = "macro_f1"
 ACCURACY = "accuracy"
@@ -50,9 +54,9 @@ class Tolerances(BaseModel):
 
     These have to sit above the run-to-run noise or the gate fires on the
     noise, and a gate that cries wolf gets ignored. Two runs of one model over
-    the current six cases swung macro F1 by 0.26, so the tolerances below are
-    deliberately loose. Measure yours with `python -m evals.trials`, and
-    tighten these as the dataset grows and the spread falls.
+    six cases swung macro F1 by 0.26, so the tolerances below are deliberately
+    loose. They apply to model runs only; see `tolerances_for`, which drops them
+    to zero when neither side of the comparison involves a model.
     """
 
     macro_f1_drop: float = 0.30
@@ -62,6 +66,28 @@ class Tolerances(BaseModel):
     # Answering fewer cases inflates every other metric, so coverage is held
     # to a tighter bound than accuracy itself.
     coverage_drop: float = 0.0
+
+
+def tolerances_for(baseline: Scorecard, current: Scorecard) -> Tolerances:
+    """Tolerances sized to the noise the comparison can actually contain.
+
+    Slack that cannot absorb noise does not protect the gate, it only hides
+    real movement. Both baselines replay the dataset without a model, and
+    `python -m evals.trials --model baseline-regex --trials 3` over 71 cases
+    put the spread at exactly 0.000 on every metric, so a baseline-to-baseline
+    comparison has nothing to forgive. The pull request gate runs keyless and
+    therefore lands here, which is where a loose bound did real damage: a
+    macro F1 fall of 0.198 sat inside the 0.30 default and reported ok.
+    """
+    if baseline.model in DETERMINISTIC_MODELS and current.model in DETERMINISTIC_MODELS:
+        return Tolerances(
+            macro_f1_drop=0.0,
+            accuracy_drop=0.0,
+            cost_weighted_error_rise=0.0,
+            hit_at_1_drop=0.0,
+            coverage_drop=0.0,
+        )
+    return Tolerances()
 
 
 class ComparisonReport(BaseModel):
@@ -234,7 +260,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--baseline", type=Path, required=True, help="baseline scorecard JSON")
     parser.add_argument("--current", type=Path, required=True, help="current scorecard JSON")
     args = parser.parse_args(argv)
-    report = compare(load_scorecard(args.baseline), load_scorecard(args.current), Tolerances())
+    baseline, current = load_scorecard(args.baseline), load_scorecard(args.current)
+    report = compare(baseline, current, tolerances_for(baseline, current))
     print(render_comparison_markdown(report))
     return EXIT_REGRESSED if report.regressed else EXIT_OK
 

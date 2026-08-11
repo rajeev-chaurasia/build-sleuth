@@ -7,7 +7,8 @@ on every metric than one that answered them all, and the gate passed it.
 from datetime import UTC, datetime
 
 import pytest
-from evals.diff_baseline import Tolerances, compare
+from evals.baselines import REGEX_MODEL_NAME
+from evals.diff_baseline import Tolerances, compare, tolerances_for
 from evals.scorecard import CaseResult, Scorecard, build_scorecard, render_markdown
 
 from buildsleuth.models.taxonomy import FailureClass
@@ -131,6 +132,47 @@ def test_identical_scorecards_still_pass() -> None:
     """The gate must not cry wolf on an unchanged run."""
     results = [_answered("c1", CODE, CODE), _answered("c2", FLAKE, CODE)]
     assert not compare(_card(results), _card(results), Tolerances()).regressed
+
+
+def test_baseline_comparisons_get_no_tolerance() -> None:
+    """Measured spread over three runs of 71 cases was 0.000 on every metric.
+
+    The pull request gate runs keyless, so it compares one baseline against
+    another. Slack it does not need is slack that hides real movement.
+    """
+    card = _card([_answered("c1", CODE, CODE)], model=REGEX_MODEL_NAME)
+    tol = tolerances_for(card, card)
+    assert tol.macro_f1_drop == 0.0
+    assert tol.accuracy_drop == 0.0
+    assert tol.cost_weighted_error_rise == 0.0
+    assert tol.hit_at_1_drop == 0.0
+
+
+def test_model_comparisons_keep_the_loose_tolerance() -> None:
+    """Two runs of one model genuinely disagree, so that slack has to stay."""
+    card = _card([_answered("c1", CODE, CODE)], model="gemini-3.1-flash-lite")
+    assert tolerances_for(card, card).macro_f1_drop == Tolerances().macro_f1_drop
+
+
+def test_a_baseline_regression_inside_the_old_slack_now_fails() -> None:
+    """The defect this closes: a real fall that the 0.30 default reported as ok."""
+    truths = [CODE] * 4 + [FLAKE] * 4
+    baseline = _card(
+        [_answered(f"c{i}", truth, truth) for i, truth in enumerate(truths)],
+        model=REGEX_MODEL_NAME,
+    )
+    # Same cases, one now misclassified. A real change, not run-to-run noise.
+    current = _card(
+        [_answered(f"c{i}", truth, CODE if i == 7 else truth) for i, truth in enumerate(truths)],
+        model=REGEX_MODEL_NAME,
+    )
+
+    assert baseline.classification is not None
+    assert current.classification is not None
+    drop = baseline.classification.macro_f1 - current.classification.macro_f1
+    assert 0.0 < drop < Tolerances().macro_f1_drop
+    assert not compare(baseline, current, Tolerances()).regressed
+    assert compare(baseline, current, tolerances_for(baseline, current)).regressed
 
 
 def test_scorecard_shows_how_many_cases_were_evaluated() -> None:
