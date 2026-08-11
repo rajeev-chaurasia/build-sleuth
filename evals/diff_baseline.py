@@ -22,6 +22,9 @@ COST_WEIGHTED_ERROR = "cost_weighted_error"
 HIT_AT_1 = "hit_at_1"
 COVERAGE = "coverage"
 
+CLASSIFICATION_REPORT = "classification"
+LOCALIZATION_REPORT = "localization"
+
 SYMBOL_UP = "^"
 SYMBOL_DOWN = "v"
 SYMBOL_FLAT = "="
@@ -67,6 +70,7 @@ class ComparisonReport(BaseModel):
     newly_failing_cases: list[str] = []
     newly_passing_cases: list[str] = []
     incomparable_reasons: list[str] = []
+    lost_reports: list[str] = []
 
 
 def _coverage(card: Scorecard) -> float:
@@ -78,13 +82,36 @@ def _coverage(card: Scorecard) -> float:
 
 
 def _comparability_problems(baseline: Scorecard, current: Scorecard) -> list[str]:
-    """Metrics only mean the same thing when the subset and dataset match."""
+    """Metrics only mean the same thing when the subset, dataset and model match.
+
+    The prompt hash is deliberately not checked. Showing what a prompt edit did
+    to the numbers is the whole point of the gate, so a prompt that moved is a
+    comparison to make, not one to refuse. A different model is another matter:
+    one model's scores say nothing about whether this revision got worse, and
+    without this check the difference between two models reads as drift.
+    """
     problems: list[str] = []
+    if baseline.model != current.model:
+        problems.append(f"model changed: {baseline.model} to {current.model}")
     if baseline.subset != current.subset:
         problems.append(f"subset changed: {baseline.subset} to {current.subset}")
     if baseline.dataset_hash != current.dataset_hash:
         problems.append(f"dataset changed: {baseline.dataset_hash} to {current.dataset_hash}")
     return problems
+
+
+def _lost_reports(baseline: Scorecard, current: Scorecard) -> list[str]:
+    """Reports the baseline carried and this run does not.
+
+    Named rather than counted, because these fail the gate without producing a
+    metric row, and a verdict whose every row reads ok is one nobody can act on.
+    """
+    lost: list[str] = []
+    if baseline.classification is not None and current.classification is None:
+        lost.append(CLASSIFICATION_REPORT)
+    if baseline.localization is not None and current.localization is None:
+        lost.append(LOCALIZATION_REPORT)
+    return lost
 
 
 def _metric_delta(
@@ -112,9 +139,7 @@ def compare(baseline: Scorecard, current: Scorecard, tol: Tolerances) -> Compari
     deltas: list[MetricDelta] = [
         _metric_delta(COVERAGE, _coverage(baseline), _coverage(current), tol.coverage_drop, True)
     ]
-    lost_reports = (baseline.classification is not None and current.classification is None) or (
-        baseline.localization is not None and current.localization is None
-    )
+    lost = _lost_reports(baseline, current)
     if baseline.classification is not None and current.classification is not None:
         before, after = baseline.classification, current.classification
         deltas += [
@@ -147,12 +172,13 @@ def compare(baseline: Scorecard, current: Scorecard, tol: Tolerances) -> Compari
     problems = _comparability_problems(baseline, current)
     return ComparisonReport(
         deltas=deltas,
-        regressed=any(delta.regressed for delta in deltas) or lost_reports or bool(problems),
+        regressed=any(delta.regressed for delta in deltas) or bool(lost) or bool(problems),
         newly_failing_cases=newly_failing,
         newly_passing_cases=sorted(
             case.case_id for case in shared if case.correct and not was_correct[case.case_id]
         ),
         incomparable_reasons=problems,
+        lost_reports=lost,
     )
 
 
@@ -188,6 +214,11 @@ def render_comparison_markdown(report: ComparisonReport) -> str:
             "",
             f"Newly failing cases: {_case_list(report.newly_failing_cases)}",
             f"Newly passing cases: {_case_list(report.newly_passing_cases)}",
+            *(
+                ["", "Reports lost since the baseline: " + ", ".join(report.lost_reports)]
+                if report.lost_reports
+                else []
+            ),
             *(
                 ["", "Not comparable: " + "; ".join(report.incomparable_reasons)]
                 if report.incomparable_reasons

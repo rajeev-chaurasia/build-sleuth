@@ -35,11 +35,17 @@ def _crashed(case_id: str, truth: FailureClass) -> CaseResult:
     )
 
 
-def _card(results: list[CaseResult], subset: str = "smoke", dataset: str = "d1") -> Scorecard:
+def _card(
+    results: list[CaseResult],
+    subset: str = "smoke",
+    dataset: str = "d1",
+    model: str = "test-model",
+    prompt_hash: str = "p1",
+) -> Scorecard:
     return build_scorecard(
         git_sha="abc1234",
-        model="test-model",
-        prompt_hash="p1",
+        model=model,
+        prompt_hash=prompt_hash,
         dataset_hash=dataset,
         subset=subset,
         per_case=results,
@@ -94,6 +100,31 @@ def test_comparing_different_datasets_is_refused() -> None:
     report = compare(baseline, current, Tolerances())
     assert report.regressed
     assert any("dataset changed" in reason for reason in report.incomparable_reasons)
+
+
+def test_comparing_different_models_is_refused() -> None:
+    """Two models share a subset and a dataset, so nothing else caught this.
+
+    The keyless pull request gate scored the regex baseline and compared it
+    against a scorecard from a model, and the gap between the two models was
+    reported as a regression in the revision under test.
+    """
+    baseline = _card([_answered("c1", CODE, CODE)], model="gemini-3.1-flash-lite")
+    current = _card([_answered("c1", CODE, CODE)], model="baseline-regex")
+
+    report = compare(baseline, current, Tolerances())
+    assert report.regressed
+    assert any("model changed" in reason for reason in report.incomparable_reasons)
+
+
+def test_comparing_across_prompt_hashes_is_allowed() -> None:
+    """Showing what a prompt edit did to the numbers is what the gate is for."""
+    baseline = _card([_answered("c1", CODE, CODE)], prompt_hash="p1")
+    current = _card([_answered("c1", CODE, CODE)], prompt_hash="p2")
+
+    report = compare(baseline, current, Tolerances())
+    assert report.incomparable_reasons == []
+    assert not report.regressed
 
 
 def test_identical_scorecards_still_pass() -> None:

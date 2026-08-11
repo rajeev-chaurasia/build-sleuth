@@ -149,7 +149,17 @@ def test_losing_a_report_is_a_regression() -> None:
     """Skipping a missing report would let a total collapse pass the gate."""
     baseline = _card()
     current = _card().model_copy(update={"classification": None, "localization": None})
-    assert compare(baseline, current, TOL).regressed is True
+    report = compare(baseline, current, TOL)
+    assert report.regressed is True
+    assert report.lost_reports == ["classification", "localization"]
+
+
+def test_a_lost_report_is_named_in_the_comparison() -> None:
+    """A lost report produces no metric row, so the verdict has to say so."""
+    current = _card().model_copy(update={"localization": None})
+    rendered = render_comparison_markdown(compare(_card(), current, TOL))
+    assert "Verdict: **REGRESSED**" in rendered
+    assert "Reports lost since the baseline: localization" in rendered
 
 
 def test_render_comparison_markdown() -> None:
